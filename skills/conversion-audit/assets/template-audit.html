@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zenith Prep Academy — Conversion Audit | Autonomous</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pathway+Extreme:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--deep-blue:#151795;--blue:#006aff;--cyan:#00d5ff;--purple:#8c18c5;--bright-purple:#b42aff;--dark:#0a0a12;--white:#fff;--gray:#a0a0b0;--light-gray:#d0d0dd;--green:#66bb6a;--amber:#ffb74d;--red:#ef5350}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pathway Extreme',sans-serif;background:var(--dark);color:var(--light-gray);font-size:17px;line-height:1.7}
+.page{max-width:1000px;margin:0 auto;padding:50px 36px}
+.hero{background:linear-gradient(135deg,var(--deep-blue) 0%,var(--purple) 50%,var(--dark) 100%);padding:64px 52px;border-radius:22px;margin-bottom:44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,213,255,0.12),transparent 70%);pointer-events:none}
+.hero-label{font-family:'Outfit',sans-serif;font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:3px;color:var(--cyan);margin-bottom:14px}
+.hero h1{font-family:'Outfit',sans-serif;font-weight:700;font-size:44px;color:var(--white);line-height:1.15;margin-bottom:16px}
+.hero h1 .hl{background:linear-gradient(90deg,var(--cyan),var(--bright-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:19px;color:var(--light-gray);max-width:650px}
+.section{margin-bottom:44px}
+.section h2{font-family:'Outfit',sans-serif;font-weight:600;font-size:30px;color:var(--white);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.section h3{font-family:'Outfit',sans-serif;font-weight:600;font-size:20px;color:var(--white);margin:24px 0 12px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:15px;padding:26px;margin-bottom:14px}
+.card-cyan{border-color:rgba(0,213,255,0.22)}.card-green{border-color:rgba(102,187,106,0.22)}.card-purple{border-color:rgba(180,42,255,0.22)}.card-blue{border-color:rgba(0,106,255,0.22)}.card-amber{border-color:rgba(255,183,77,0.22)}.card-red{border-color:rgba(239,83,80,0.22)}
+.card-title{font-family:'Outfit',sans-serif;font-weight:600;font-size:18px;color:var(--white);margin-bottom:10px}
+.callout{background:linear-gradient(135deg,rgba(0,106,255,0.08),rgba(180,42,255,0.08));border:1px solid rgba(0,213,255,0.2);border-radius:15px;padding:26px;margin:22px 0}
+.callout-title{font-family:'Outfit',sans-serif;font-weight:600;color:var(--cyan);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+.divider{width:55px;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:2px;margin:44px 0}
+ul{padding-left:0;list-style:none}ul li{position:relative;padding-left:22px;margin-bottom:8px}ul li::before{content:'→';position:absolute;left:0;color:var(--cyan);font-weight:600}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
+@media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.hero h1{font-size:32px}.hero{padding:40px 28px}}
+
+/* A4 Print Styles */
+@page {
+    size: A4;
+    margin: 14mm 14mm;
+}
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+    body {
+        background: var(--dark) !important;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    .page {
+        max-width: 100%;
+        padding: 0;
+    }
+    /* Prevent splitting inside key elements */
+    .card, .callout, table, .before-after {
+        break-inside: avoid;
+    }
+    /* Keep headings glued to next content */
+    h2, h3, .card-title, .section h2 {
+        break-after: avoid;
+    }
+    /* Keep sections together where possible */
+    .section {
+        break-inside: avoid;
+        margin-bottom: 18px;
+    }
+    /* Compact hero for print */
+    .hero {
+        padding: 32px 36px !important;
+        margin-bottom: 22px !important;
+        break-after: auto;
+    }
+    .hero h1 { font-size: 30px !important; }
+    .hero p { font-size: 15px !important; }
+    .hero::before { display: none; }
+    /* Compact everything */
+    .section h2 { font-size: 22px; margin-bottom: 12px; }
+    .section h3 { font-size: 16px; margin: 14px 0 8px; }
+    .card { padding: 14px; margin-bottom: 8px; }
+    .callout { padding: 16px; margin: 12px 0; }
+    .divider { margin: 16px 0; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 12px; }
+    .score-value { font-size: 26px !important; }
+    .score-block { padding: 12px; }
+    .grid-4 { gap: 8px; }
+    .grid-3 { gap: 8px; }
+    .grid-2 { gap: 8px; }
+    ul li { margin-bottom: 4px; font-size: 13px; }
+    .ba-card { padding: 10px; }
+    .before-after { gap: 8px; }
+    .status { font-size: 10px; padding: 2px 8px; }
+}
+table{width:100%;border-collapse:separate;border-spacing:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);margin:14px 0}
+th{font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);background:rgba(0,213,255,0.08);padding:13px 18px;text-align:left}
+td{padding:13px 18px;border-top:1px solid rgba(255,255,255,0.06);font-size:15px}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.score-block{text-align:center;padding:20px;border-radius:14px}
+.score-value{font-family:'Outfit',sans-serif;font-weight:700;font-size:36px}
+.score-label{font-family:'Outfit',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--gray);margin-top:4px}
+.status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;font-family:'Outfit',sans-serif}
+.s-ok{background:rgba(102,187,106,0.2);color:var(--green)}.s-warn{background:rgba(255,183,77,0.2);color:var(--amber)}.s-bad{background:rgba(239,83,80,0.2);color:var(--red)}.s-miss{background:rgba(239,83,80,0.15);color:var(--red)}
+code{background:rgba(0,213,255,0.1);color:var(--cyan);padding:2px 8px;border-radius:6px;font-size:14px;font-family:monospace}
+.before-after{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.ba-card{padding:16px;border-radius:10px}
+.ba-before{background:rgba(239,83,80,0.08);border:1px solid rgba(239,83,80,0.15)}
+.ba-after{background:rgba(102,187,106,0.08);border:1px solid rgba(102,187,106,0.15)}
+.ba-label{font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-label">Conversion Audit</div>
+    <h1>Zenith Prep Academy <span class="hl">Landing Page Audit</span></h1>
+    <p>Comprehensive analysis of copywriting, SEO, and frontend design — with actionable recommendations to increase consultation bookings.</p>
+    <div style="display:flex;gap:32px;margin-top:28px;flex-wrap:wrap">
+        <div><span style="font-family:'Outfit',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gray)">Website</span><br><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:17px;color:var(--white)">zenithprepacademy.com</span></div>
+        <div><span style="font-family:'Outfit',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gray)">Date</span><br><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:17px;color:var(--white)">January 30, 2026</span></div>
+        <div><span style="font-family:'Outfit',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gray)">Goal</span><br><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:17px;color:var(--white)">Maximize Consultation Bookings</span></div>
+    </div>
+</div>
+
+<!-- OVERALL SCORES -->
+<div class="section">
+    <h2>📊 Overall Scores</h2>
+    <div class="grid-4">
+        <div class="card card-amber">
+            <div class="score-block">
+                <div class="score-value" style="color:var(--amber)">6.5<span style="font-size:18px">/10</span></div>
+                <div class="score-label">Copywriting</div>
+            </div>
+        </div>
+        <div class="card card-red">
+            <div class="score-block">
+                <div class="score-value" style="color:var(--red)">5.5<span style="font-size:18px">/10</span></div>
+                <div class="score-label">SEO</div>
+            </div>
+        </div>
+        <div class="card card-red">
+            <div class="score-block">
+                <div class="score-value" style="color:var(--red)">5.0<span style="font-size:18px">/10</span></div>
+                <div class="score-label">Frontend Design</div>
+            </div>
+        </div>
+        <div class="card" style="border-color:rgba(255,183,77,0.3)">
+            <div class="score-block">
+                <div class="score-value" style="background:linear-gradient(90deg,var(--amber),var(--red));-webkit-background-clip:text;-webkit-text-fill-color:transparent">5.7<span style="font-size:18px">/10</span></div>
+                <div class="score-label">Overall</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px">
+        <div class="callout-title">Conversion Rate Projections</div>
+        <div class="grid-3" style="margin-top:12px">
+            <div style="text-align:center;padding:16px;background:rgba(239,83,80,0.08);border-radius:12px">
+                <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:28px;color:var(--red)">2-3%</div>
+                <div style="font-size:13px;color:var(--gray)">Current State</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:rgba(255,183,77,0.08);border-radius:12px">
+                <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:28px;color:var(--amber)">3.5-4.5%</div>
+                <div style="font-size:13px;color:var(--gray)">After Quick Wins</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:rgba(102,187,106,0.08);border-radius:12px">
+                <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:28px;color:var(--green)">8-12%</div>
+                <div style="font-size:13px;color:var(--gray)">After Full Redesign</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- QUICK WINS -->
+<div class="section">
+    <h2>⚡ Top 5 Quick Wins</h2>
+    <p style="margin-bottom:18px">Highest-impact changes that can be implemented immediately:</p>
+
+    <div class="card card-green" style="margin-bottom:12px">
+        <div class="card-title">1. Move the Guarantee to the Hero</div>
+        <p>Your 100% tuition-back guarantee is <strong style="color:var(--white)">buried mid-page</strong>. This is your competitive moat — make it unmissable. For a $50K+ service, this is the single strongest trust signal you have.</p>
+        <div class="before-after">
+            <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Now</div><p style="font-size:14px">Guarantee appears after 1,500+ words of scrolling</p></div>
+            <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">Recommended</div><p style="font-size:14px">"If not accepted to their tier, we refund 100%. Period." — visible in hero</p></div>
+        </div>
+    </div>
+
+    <div class="card card-green" style="margin-bottom:12px">
+        <div class="card-title">2. Change CTA Button Color</div>
+        <p>Current navy buttons <strong style="color:var(--white)">blend into the header</strong>. Use a high-contrast accent color (coral, amber, or teal) to make CTAs pop.</p>
+        <div class="before-after">
+            <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Now</div><p style="font-size:14px">Navy button on navy header = invisible</p></div>
+            <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">Recommended</div><p style="font-size:14px">High-contrast accent color, impossible to miss</p></div>
+        </div>
+    </div>
+
+    <div class="card card-green" style="margin-bottom:12px">
+        <div class="card-title">3. Rewrite the H1 Headline</div>
+        <p>Current headline assumes ignorance. Reframe as aspiration.</p>
+        <div class="before-after">
+            <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Now</div><p style="font-size:14px">"Afraid of Making a Critical College Admissions Mistake?"</p></div>
+            <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">Options</div><p style="font-size:14px">"Start in 6th Grade. Own the Ivy League." or "Your Child Is 8X More Likely to Get Accepted"</p></div>
+        </div>
+    </div>
+
+    <div class="card card-green" style="margin-bottom:12px">
+        <div class="card-title">4. Implement FAQ Schema</div>
+        <p>You have FAQ content on the page but <strong style="color:var(--white)">no structured data markup</strong>. Missing rich snippets in Google search results.</p>
+    </div>
+
+    <div class="card card-green">
+        <div class="card-title">5. Cut Page Length by 40%</div>
+        <p>3,000+ words creates scroll fatigue. Most visitors should see: <strong style="color:var(--white)">Hook → Proof → Guarantee → CTA</strong>. Create expandable sections for deep readers.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COPYWRITING AUDIT -->
+<div class="section">
+    <h2>✍️ Part 1: Copywriting Audit — 6.5/10</h2>
+
+    <h3 style="color:var(--green)">Strengths</h3>
+    <div class="grid-3" style="margin-bottom:20px">
+        <div class="card card-green">
+            <div class="card-title">Fear-Based Hook</div>
+            <p style="font-size:14px">Triggers parental anxiety effectively for the target audience (affluent, achievement-oriented parents).</p>
+        </div>
+        <div class="card card-green">
+            <div class="card-title">Specific Numbers</div>
+            <p style="font-size:14px">"8X more likely," "500% higher acceptance," "90%+ accepted" — quantified claims build trust.</p>
+        </div>
+        <div class="card card-green">
+            <div class="card-title">Social Proof</div>
+            <p style="font-size:14px">20+ video testimonials from named parents with specific stories. This is your strongest conversion asset.</p>
+        </div>
+    </div>
+
+    <h3 style="color:var(--red)">Critical Issues</h3>
+
+    <div class="card card-red" style="margin-bottom:12px">
+        <div class="card-title">Issue 1: Fragmented Value Proposition</div>
+        <p>Multiple competing headlines fight for attention. Within 2 scrolls, you see "Afraid of Making a Mistake," "Your Child Is 8X More Likely," and "Perfect Grades Don't Guarantee." Pick one. Own it.</p>
+        <div class="before-after">
+            <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Now</div><p style="font-size:14px">3+ competing headlines, no clear primary message</p></div>
+            <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">Fix</div><p style="font-size:14px">One hero message: "Your child is 8X more likely to get accepted. Guaranteed."</p></div>
+        </div>
+    </div>
+
+    <div class="card card-red" style="margin-bottom:12px">
+        <div class="card-title">Issue 2: Weak CTAs</div>
+        <p>"Book A Free Consultation" is generic and doesn't communicate value.</p>
+        <div class="before-after">
+            <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Now</div><p style="font-size:14px">"Book A Free Consultation"</p></div>
+            <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">Better</div><p style="font-size:14px">"Get Your Free Admissions Assessment" or "See Your Child's Acceptance Odds"</p></div>
+        </div>
+    </div>
+
+    <div class="card card-red" style="margin-bottom:12px">
+        <div class="card-title">Issue 3: Testimonials Lack Outcome Specificity</div>
+        <p>Parent names given, but testimonials focus on <em>process</em> rather than <em>outcomes</em>.</p>
+        <div class="before-after">
+            <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Now</div><p style="font-size:14px">"Alex - daughter in 7th grade"</p></div>
+            <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">Better</div><p style="font-size:14px">"Alex's Daughter: 7th Grade → Princeton '28"</p></div>
+        </div>
+    </div>
+
+    <div class="card card-red">
+        <div class="card-title">Issue 4: Too Much Copy</div>
+        <p>3,000+ words causes scroll fatigue. Parents are busy. Cut by 40%. Create a "full story" expandable for those who want depth.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEO AUDIT -->
+<div class="section">
+    <h2>🔍 Part 2: SEO Audit — 5.5/10</h2>
+
+    <h3>Technical Status</h3>
+    <table>
+        <thead><tr><th>Element</th><th>Status</th><th>Priority</th></tr></thead>
+        <tbody>
+            <tr><td style="color:var(--white)">Meta Title</td><td><span class="status s-warn">Generic</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Meta Description</td><td><span class="status s-warn">Needs Work</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">H1 Tag</td><td><span class="status s-ok">Present</span></td><td>OK</td></tr>
+            <tr><td style="color:var(--white)">Heading Hierarchy</td><td><span class="status s-warn">Disorganized</span></td><td><span class="status s-warn">Medium</span></td></tr>
+            <tr><td style="color:var(--white)">Schema: Organization</td><td><span class="status s-ok">Present</span></td><td>—</td></tr>
+            <tr><td style="color:var(--white)">Schema: LocalBusiness</td><td><span class="status s-miss">Missing</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Schema: FAQPage</td><td><span class="status s-miss">Missing</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Schema: Review/Rating</td><td><span class="status s-miss">Missing</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Schema: Service</td><td><span class="status s-miss">Missing</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Core Web Vitals</td><td><span class="status s-warn">Needs Testing</span></td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Mobile Optimization</td><td><span class="status s-ok">Present</span></td><td>OK</td></tr>
+        </tbody>
+    </table>
+
+    <div class="card card-red" style="margin-top:18px;margin-bottom:12px">
+        <div class="card-title">Meta Title & Description — Underoptimized</div>
+        <div class="before-after">
+            <div class="ba-card ba-before">
+                <div class="ba-label" style="color:var(--red)">Current</div>
+                <p style="font-size:14px"><em>"Zenith Prep Academy offers top-notch college consulting for 6th through 12th graders. Contact us for expert guidance on college profile development!"</em></p>
+                <p style="font-size:12px;color:var(--red);margin-top:6px">❌ "Top-notch" is filler, no value prop, no CTA, no guarantee</p>
+            </div>
+            <div class="ba-card ba-after">
+                <div class="ba-label" style="color:var(--green)">Recommended</div>
+                <p style="font-size:14px"><strong style="color:var(--white)">Title:</strong> College Consulting with a Guarantee | Zenith Prep Academy</p>
+                <p style="font-size:14px"><strong style="color:var(--white)">Desc:</strong> 8X higher Ivy League acceptance rates. Start 6th-12th grade. 100% tuition-back guarantee. Free assessment available.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-red">
+        <div class="card-title">Missing Schema = Missing Search Features</div>
+        <p>Without FAQPage schema → no FAQ rich snippets. Without AggregateRating → no star ratings in SERPs. Without LocalBusiness → hurts local search visibility. Each of these is a 15-minute implementation with immediate impact.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DESIGN AUDIT -->
+<div class="section">
+    <h2>🎨 Part 3: Frontend Design Audit — 5.0/10</h2>
+
+    <div class="callout">
+        <div class="callout-title">Critical Design Observation</div>
+        <p>The page uses a <strong style="color:var(--white)">generic navy/gold "trustworthy education" palette</strong> that looks like every competitor. For a $50K+ service, the visual experience should feel premium and memorable — not templated.</p>
+    </div>
+
+    <h3>Recommended Design Directions</h3>
+    <div class="grid-3">
+        <div class="card card-cyan">
+            <div class="card-title">📰 Editorial / Magazine</div>
+            <p style="font-size:14px">Sophisticated serif typography, black/cream palette, editorial photography. Signals authority and exclusivity.</p>
+        </div>
+        <div class="card card-purple">
+            <div class="card-title">✨ Modern Minimalist</div>
+            <p style="font-size:14px">Clean sans-serif, data-as-art, generous whitespace. Signals innovation and clarity.</p>
+        </div>
+        <div class="card card-green">
+            <div class="card-title">🤝 Warm / Human</div>
+            <p style="font-size:14px">Approachable design, authentic photography of real students/families. Signals trust and relatability.</p>
+        </div>
+    </div>
+
+    <h3>Specific Design Issues</h3>
+    <div class="card card-red" style="margin-bottom:12px">
+        <div class="card-title">CTA Buttons Are Invisible</div>
+        <p>Navy buttons on a navy header. No contrast = no clicks. Use coral, amber, or teal for high-contrast CTAs.</p>
+    </div>
+    <div class="card card-red" style="margin-bottom:12px">
+        <div class="card-title">No Visual Hierarchy</div>
+        <p>Everything has the same weight. Hero, social proof, programs, testimonials — they all blur together. Need clear section breaks and intentional spacing.</p>
+    </div>
+    <div class="card card-red">
+        <div class="card-title">Template Aesthetic</div>
+        <p>The page looks like a WordPress theme with stock photos. For a premium service targeting affluent families, this undermines credibility. Custom photography and intentional design would transform perception.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- IMPLEMENTATION ROADMAP -->
+<div class="section">
+    <h2>🗺️ Implementation Roadmap</h2>
+
+    <h3 style="color:var(--green)">Immediate (This Week)</h3>
+    <table>
+        <thead><tr><th>Action</th><th>Category</th><th>Impact</th></tr></thead>
+        <tbody>
+            <tr><td style="color:var(--white)">Move guarantee to hero section</td><td>Copy</td><td><span class="status s-bad">Very High</span></td></tr>
+            <tr><td style="color:var(--white)">Change CTA button color</td><td>Design</td><td><span class="status s-bad">Very High</span></td></tr>
+            <tr><td style="color:var(--white)">Rewrite H1 headline</td><td>Copy</td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Add FAQ schema markup</td><td>SEO</td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Optimize meta title/description</td><td>SEO</td><td><span class="status s-bad">High</span></td></tr>
+        </tbody>
+    </table>
+
+    <h3 style="color:var(--amber)">Short-Term (2-4 Weeks)</h3>
+    <table>
+        <thead><tr><th>Action</th><th>Category</th><th>Impact</th></tr></thead>
+        <tbody>
+            <tr><td style="color:var(--white)">Add all missing schema types</td><td>SEO</td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Restructure heading hierarchy</td><td>SEO</td><td><span class="status s-warn">Medium</span></td></tr>
+            <tr><td style="color:var(--white)">Rewrite testimonials with outcomes</td><td>Copy</td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Cut page length by 40%</td><td>Copy</td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Make CTAs outcome-focused</td><td>Copy</td><td><span class="status s-bad">High</span></td></tr>
+        </tbody>
+    </table>
+
+    <h3 style="color:var(--bright-purple)">Long-Term (1-3 Months)</h3>
+    <table>
+        <thead><tr><th>Action</th><th>Category</th><th>Impact</th></tr></thead>
+        <tbody>
+            <tr><td style="color:var(--white)">Full visual redesign (pick design direction)</td><td>Design</td><td><span class="status s-bad">Very High</span></td></tr>
+            <tr><td style="color:var(--white)">Create dedicated keyword landing pages</td><td>SEO</td><td><span class="status s-bad">High</span></td></tr>
+            <tr><td style="color:var(--white)">Add blog/content freshness signals</td><td>SEO</td><td><span class="status s-warn">Medium</span></td></tr>
+            <tr><td style="color:var(--white)">Build interactive journey visualization</td><td>Design</td><td><span class="status s-warn">Medium</span></td></tr>
+            <tr><td style="color:var(--white)">A/B test new hero variations</td><td>All</td><td><span class="status s-bad">High</span></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONCLUSION -->
+<div class="section">
+    <div class="hero" style="text-align:center;padding:50px">
+        <div class="hero-label">Bottom Line</div>
+        <h1 style="font-size:32px">Strong fundamentals.<br><span class="hl">Underperforming execution.</span></h1>
+        <p style="margin:16px auto;max-width:600px">Zenith has a differentiated service, proven results, and extensive social proof. The landing page undermines these strengths through generic design, scattered messaging, and SEO gaps.</p>
+        <div style="display:flex;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap">
+            <div><span style="font-family:'Outfit',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gray)">Single Biggest Win</span><br><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;color:var(--white)">Guarantee in the hero section</span></div>
+            <div><span style="font-family:'Outfit',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gray)">Biggest Risk</span><br><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;color:var(--white)">"Safe" design that blends in</span></div>
+            <div><span style="font-family:'Outfit',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gray)">CVR Potential</span><br><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;color:var(--green)">2-3% → 8-12%</span></div>
+        </div>
+    </div>
+</div>
+
+<div style="text-align:center;padding:36px 0;color:var(--gray);font-size:13px;">
+    <p>Prepared by Autonomous Technologies — Confidential</p>
+    <p style="margin-top:6px">January 30, 2026</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+# Hazn Skills Reference
+
+Hazn includes 15 specialized skills covering the full marketing website lifecycle. Skills are domain expertise encoded as detailed instructions that agents follow.
+
+---
+
+## Skill Index
+
+| Category | Skill | Purpose |
+|----------|-------|---------|
+| **Strategy** | `b2b-marketing-ux` | UX strategy, page architecture, conversion design |
+| | `b2b-ux-reference` | Deep reference for UX decisions, buyer psychology, trust patterns |
+| **Content** | `b2b-website-copywriter` | Conversion copy for B2B services websites |
+| | `landing-page-copywriter` | High-converting landing page copy (PAS, AIDA, StoryBrand) |
+| | `seo-blog-writer` | SEO + AEO + GEO optimized blog posts |
+| **Design** | `b2b-wireframe` | Mid-fidelity HTML wireframes for layout validation |
+| | `frontend-design` | Visual aesthetics, avoiding generic AI design |
+| | `ui-audit` | UX/UI audits based on design principles |
+| **Development** | `payload-nextjs-stack` | Next.js + Payload CMS + Tailwind implementation |
+| **SEO** | `keyword-research` | Keyword discovery, intent analysis, content opportunity mapping |
+| | `seo-audit` | Technical SEO audits |
+| | `seo-optimizer` | On-page and technical SEO implementation |
+| | `entity-knowledge-graph` | Entity optimization for AI citation (GEO) |
+| **Audits** | `conversion-audit` | CRO/conversion audit with branded reports |
+| | `website-audit` | Comprehensive multi-dimensional site audits |
+
+---
+
+## Skill Details
+
+### b2b-marketing-ux
+
+**Purpose:** UX strategy, page architecture, and conversion design for B2B services websites.
+
+**When to use:**
+- Building a new marketing website for an agency/consultancy
+- Redesigning an existing B2B services site
+- Defining page structure and content hierarchy
+- Planning conversion flows
+
+**Key outputs:**
+- Page blueprints (homepage, services, packages, case studies)
+- Content hierarchy recommendations
+- Trust signal placement
+- Responsive design requirements
+
+**Pairs with:** `b2b-wireframe` (downstream), `payload-nextjs-stack` (downstream), `b2b-ux-reference` (deep reference)
+
+---
+
+### b2b-ux-reference
+
+**Purpose:** Comprehensive UX reference covering buyer psychology, trust frameworks, conversion optimization, forms UX, accessibility, and measurement.
+
+**When to use:**
+- Need deeper grounding on any UX principle
+- Handling complex buyer personas
+- Optimizing conversion flows
+- Making difficult UX tradeoffs
+
+**Key topics:**
+- B2B buyer psychology
+- Trust-building patterns
+- Form UX best practices
+- Mobile UX for B2B
+- Accessibility requirements
+- Measurement frameworks
+
+**Note:** This is a reference skill — use alongside `b2b-marketing-ux` for deeper context.
+
+---
+
+### b2b-website-copywriter
+
+**Purpose:** Write high-converting copy for B2B services websites.
+
+**When to use:**
+- Writing homepage copy
+- Creating services page content
+- Crafting case study narratives
+- Writing packages/pricing page copy
+- Developing about page content
+
+**Key outputs:**
+- Headlines and value propositions
+- Section-by-section copy
+- CTA copy
+- Social proof framing
+- Full page copy documents
+
+**Frameworks:** PAS (Problem-Agitate-Solution), AIDA, StoryBrand, 4U Formula
+
+---
+
+### landing-page-copywriter
+
+**Purpose:** Conversion-focused copy for standalone landing pages.
+
+**When to use:**
+- Single landing pages for campaigns
+- Lead generation pages
+- Product launch pages
+- Event registration pages
+
+**Key outputs:**
+- Hero copy (headline, subhead, CTA)
+- Benefit sections
+- Social proof blocks
+- FAQ content
+- Final CTA sections
+
+---
+
+### seo-blog-writer
+
+**Purpose:** Write blog posts optimized for SEO, Answer Engines (AEO), and Generative Engines (GEO).
+
+**When to use:**
+- Creating blog content from keyword research
+- Writing thought leadership articles
+- Building topical authority
+- Content that needs to be cited by AI
+
+**Key outputs:**
+- 1,500-3,000 word articles
+- Complete frontmatter (meta, schema, entities)
+- TL;DR blocks for AI extraction
+- FAQ sections with schema
+- Internal/external link suggestions
+
+**Pairs with:** `keyword-research` (upstream), `entity-knowledge-graph` (entity optimization)
+
+---
+
+### b2b-wireframe
+
+**Purpose:** Create mid-fidelity HTML wireframes for layout validation before development.
+
+**When to use:**
+- After UX strategy, before code
+- Getting stakeholder approval on layouts
+- Validating responsive behavior
+- Reviewing content hierarchy visually
+
+**Key outputs:**
+- Standalone HTML wireframe files
+- Responsive layouts (mobile, tablet, desktop)
+- Section manifest for production handoff
+- Realistic placeholder content
+
+**Pairs with:** `b2b-marketing-ux` (upstream), `payload-nextjs-stack` (downstream)
+
+---
+
+### frontend-design
+
+**Purpose:** Create distinctive, production-grade frontend interfaces with high design quality.
+
+**When to use:**
+- Avoiding generic AI aesthetics
+- Setting visual direction
+- Making typography and color decisions
+- Creating memorable interfaces
+
+**Key principles:**
+- Distinctive over generic
+- Typography as personality
+- Purposeful color usage
+- Intentional whitespace
+- Subtle, meaningful animation
+
+---
+
+### ui-audit
+
+**Purpose:** Automated UI audits evaluating interfaces against proven UX principles.
+
+**When to use:**
+- Reviewing existing designs
+- Quality checking new work
+- Identifying UX issues
+- Prioritizing design improvements
+
+**Evaluation areas:**
+- Visual hierarchy
+- Accessibility
+- Cognitive load
+- Navigation clarity
+- Consistency
+
+---
+
+### payload-nextjs-stack
+
+**Purpose:** Production code for marketing websites on Payload CMS + Next.js + Tailwind.
+
+**When to use:**
+- Building from approved wireframes
+- Creating CMS content models
+- Implementing page components
+- Setting up SEO and performance
+
+**Key outputs:**
+- Payload collection configs
+- React section components
+- Dynamic page rendering
+- SEO metadata setup
+- Image optimization
+
+**Pairs with:** `b2b-wireframe` (consumes section manifest), `b2b-marketing-ux` (UX decisions)
+
+---
+
+### keyword-research
+
+**Purpose:** SEO keyword research and content strategy.
+
+**When to use:**
+- Starting a content strategy
+- Finding blog topics
+- Identifying search opportunities
+- Competitive content analysis
+
+**Key outputs:**
+- Keyword lists with metrics
+- Search intent classification
+- Content opportunities
+- Questions (PAA data)
+- Topical authority maps (optional)
+
+**Output format:** JSON at `./outputs/keyword-research.json`
+
+---
+
+### seo-audit
+
+**Purpose:** Technical SEO audits for existing websites.
+
+**When to use:**
+- Auditing client sites
+- Pre-launch SEO reviews
+- Identifying technical issues
+- Competitive SEO analysis
+
+**Key outputs:**
+- Meta tag analysis
+- Heading structure review
+- Core Web Vitals assessment
+- Schema markup evaluation
+- Actionable recommendations
+
+---
+
+### seo-optimizer
+
+**Purpose:** Implement technical SEO optimizations in Next.js sites.
+
+**When to use:**
+- Adding meta tags
+- Implementing structured data
+- Optimizing Core Web Vitals
+- Setting up sitemaps and robots.txt
+
+**Key outputs:**
+- Metadata configurations
+- JSON-LD schema markup
+- Image optimization setup
+- Font loading optimization
+
+---
+
+### entity-knowledge-graph
+
+**Purpose:** Optimize content for entity clarity, knowledge graph alignment, and AI engine citation.
+
+**When to use:**
+- Improving AI citation likelihood
+- Entity markup implementation
+- Knowledge graph presence
+- GEO optimization
+
+**Key outputs:**
+- Entity maps
+- Schema markup for entities
+- Content recommendations for citability
+- Same-as link suggestions
+
+---
+
+### conversion-audit
+
+**Purpose:** Comprehensive conversion/CRO audits with branded HTML reports.
+
+**When to use:**
+- Auditing client landing pages
+- Sales call preparation
+- Delivering value-add reports
+- Identifying conversion issues
+
+**Key outputs:**
+- Branded HTML audit report
+- Scores for Copy, SEO, Design
+- Before/after recommendations
+- Implementation roadmap
+- CVR projections
+
+---
+
+### website-audit
+
+**Purpose:** Comprehensive multi-dimensional website audits combining copy, SEO, visual, and CRO analysis.
+
+**When to use:**
+- Full site audits (not just landing pages)
+- Multi-page analysis
+- Comprehensive client deliverables
+
+**Key outputs:**
+- Combined audit report
+- Section-by-section analysis
+- Prioritized recommendations
+
+---
+
+## Skill Workflow
+
+Skills are designed to chain together:
+
+```
+Strategy & Research
+├── b2b-marketing-ux (page blueprints)
+├── keyword-research (content opportunities)
+└── b2b-ux-reference (deep context)
+        ↓
+Content & Design
+├── b2b-website-copywriter (page copy)
+├── landing-page-copywriter (landing pages)
+├── b2b-wireframe (layout validation)
+└── frontend-design (visual direction)
+        ↓
+Development
+├── payload-nextjs-stack (production code)
+└── seo-optimizer (technical SEO)
+        ↓
+Content & Growth
+├── seo-blog-writer (blog posts)
+└── entity-knowledge-graph (AI citation)
+        ↓
+Analysis & Optimization
+├── conversion-audit (CRO analysis)
+├── website-audit (full audit)
+├── seo-audit (technical SEO)
+└── ui-audit (UX review)
+```
+
+---
+
+## Adding Custom Skills
+
+To add a custom skill:
+
+1. Create a folder in `skills/your-skill-name/`
+2. Add `SKILL.md` with frontmatter and instructions
+3. Optionally add `references/` for supporting docs
+4. Optionally add `assets/` for templates
+
+Skill frontmatter format:
+
+```yaml
+---
+name: your-skill-name
+description: "One-line description for skill matching"
+---
+
+# Skill Title
+
+[Detailed instructions...]
+```

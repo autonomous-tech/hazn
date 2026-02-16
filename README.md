@@ -147,6 +147,27 @@ npx hazn install --directory /path/to/project --tools claude-code --yes
 
 Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Documentation
+
+- [Skills Reference](docs/SKILLS.md) — 15 specialized domain skills
+- [Agents Reference](docs/AGENTS.md) — 8 expert agent personas
+- [Workflows Reference](docs/WORKFLOWS.md) — 4 structured workflows
+
+## Skills Included
+
+Hazn ships with 15 production-ready skills:
+
+| Category | Skills |
+|----------|--------|
+| **Strategy** | b2b-marketing-ux, b2b-ux-reference |
+| **Content** | b2b-website-copywriter, landing-page-copywriter, seo-blog-writer |
+| **Design** | b2b-wireframe, frontend-design, ui-audit |
+| **Development** | payload-nextjs-stack |
+| **SEO** | keyword-research, seo-audit, seo-optimizer, entity-knowledge-graph |
+| **Audits** | conversion-audit, website-audit |
+
+See [Skills Reference](docs/SKILLS.md) for detailed documentation.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
