@@ -1,6 +1,12 @@
-# 🎯 Hazn
+<p align="center">
+  <img src="assets/avatar.png" alt="Hazn" width="180" />
+</p>
 
-**AI-driven marketing website development framework**
+<h1 align="center">Hazn</h1>
+
+<p align="center">
+  <strong>AI-driven marketing website development framework</strong>
+</p>
 
 Hazn transforms your AI coding assistant into a team of specialized marketing experts. From strategy to deployment, Hazn guides you through building high-converting B2B websites.
 
