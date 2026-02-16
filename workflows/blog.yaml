@@ -1,0 +1,83 @@
+# Blog Content Pipeline Workflow
+# Triggered by: /hazn-content or /hazn-blog
+
+name: blog
+description: SEO-optimized blog content creation pipeline
+trigger: /hazn-content
+
+phases:
+  - id: research
+    name: Keyword Research
+    actions:
+      - Identify seed topics from strategy
+      - Discover long-tail opportunities
+      - Analyze competitor content
+      - Map keywords to intent
+    outputs:
+      - .hazn/outputs/keyword-research.md
+
+  - id: planning
+    name: Content Planning
+    actions:
+      - Create content calendar
+      - Define pillar/cluster structure
+      - Assign priorities
+    outputs:
+      - .hazn/outputs/content-calendar.md
+
+  - id: writing
+    name: Content Creation
+    agent: content-writer
+    per_article:
+      - Research topic depth
+      - Write draft (1500-3000 words)
+      - Optimize for primary keyword
+      - Add internal links
+      - Create meta tags
+      - Add FAQ section with schema
+    outputs:
+      - content/blog/{slug}.md
+
+  - id: optimization
+    name: SEO Polish
+    agent: seo-specialist
+    actions:
+      - Verify keyword placement
+      - Check header structure
+      - Add structured data
+      - Optimize images
+      - Internal linking pass
+
+article_template: |
+  ---
+  title: "{title}"
+  description: "{meta_description}"
+  slug: "{slug}"
+  publishedAt: "{date}"
+  keywords: [{keywords}]
+  author: "{author}"
+  ---
+
+  # {title}
+
+  {intro - hook the reader, include primary keyword}
+
+  ## {H2 - secondary keyword}
+
+  {content}
+
+  ## {H2 - secondary keyword}
+
+  {content}
+
+  ## FAQ
+
+  ### {Question 1}
+  {Answer}
+
+  ### {Question 2}
+  {Answer}
+
+estimated_duration:
+  per_article: "1-2 hours"
+  initial_setup: "2-3 hours"

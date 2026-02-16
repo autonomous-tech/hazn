@@ -1,0 +1,89 @@
+# Full Website Build Workflow
+# Triggered by: /hazn-website
+
+name: website
+description: Complete marketing website from strategy to deployment
+trigger: /hazn-website
+
+phases:
+  - id: strategy
+    name: Strategy & Positioning
+    agent: strategist
+    command: /hazn-strategy
+    outputs:
+      - .hazn/outputs/strategy.md
+    required: true
+
+  - id: ux
+    name: UX Architecture
+    agent: ux-architect
+    command: /hazn-ux
+    depends_on: [strategy]
+    outputs:
+      - .hazn/outputs/ux-blueprint.md
+    required: true
+
+  - id: copy
+    name: Conversion Copy
+    agent: copywriter
+    command: /hazn-copy
+    depends_on: [strategy, ux]
+    outputs:
+      - .hazn/outputs/copy/
+    required: false
+    note: Can be done in parallel with wireframes
+
+  - id: wireframe
+    name: Wireframe Validation
+    agent: wireframer
+    command: /hazn-wireframe
+    depends_on: [ux]
+    outputs:
+      - .hazn/outputs/wireframes/
+    required: false
+    note: Optional but recommended for stakeholder sign-off
+
+  - id: dev
+    name: Development
+    agent: developer
+    command: /hazn-dev
+    depends_on: [ux]
+    optional_inputs: [copy, wireframe]
+    outputs:
+      - src/
+      - app/
+    required: true
+
+  - id: seo
+    name: SEO Optimization
+    agent: seo-specialist
+    command: /hazn-seo
+    depends_on: [dev]
+    outputs:
+      - .hazn/outputs/seo-checklist.md
+    required: true
+
+  - id: content
+    name: Blog Content
+    agent: content-writer
+    command: /hazn-content
+    depends_on: [strategy, seo]
+    outputs:
+      - content/blog/
+    required: false
+    note: Post-launch content pipeline
+
+checkpoints:
+  - after: strategy
+    message: "Strategy complete. Review .hazn/outputs/strategy.md before proceeding."
+  
+  - after: wireframe
+    message: "Wireframes ready. Get stakeholder approval before development."
+  
+  - after: dev
+    message: "Core build complete. Review in browser before SEO optimization."
+
+estimated_duration:
+  quick: "2-3 days (skip wireframes, minimal copy)"
+  standard: "1-2 weeks (full process)"
+  thorough: "3-4 weeks (extensive copy, multiple revisions)"

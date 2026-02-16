@@ -1,0 +1,46 @@
+# Site Audit Workflow
+# Triggered by: /hazn-audit
+
+name: audit
+description: Comprehensive website audit with actionable recommendations
+trigger: /hazn-audit
+
+phases:
+  - id: scope
+    name: Define Scope
+    actions:
+      - Confirm URL to audit
+      - Select audit types (conversion, copy, visual, SEO)
+      - Gather analytics access if available
+      - Identify primary conversion goal
+
+  - id: analysis
+    name: Run Analysis
+    agent: auditor
+    parallel_tracks:
+      - conversion_audit
+      - copy_audit
+      - visual_audit
+      - seo_audit
+    
+  - id: synthesis
+    name: Synthesize Findings
+    actions:
+      - Aggregate scores
+      - Prioritize by impact/effort
+      - Identify quick wins
+      - Create roadmap
+
+  - id: report
+    name: Generate Report
+    outputs:
+      - .hazn/outputs/audit-report.html
+      - .hazn/outputs/audit-summary.md
+
+deliverables:
+  - Branded HTML audit report
+  - Prioritized fix list
+  - Before/after recommendations
+  - Implementation roadmap
+
+estimated_duration: "2-4 hours"

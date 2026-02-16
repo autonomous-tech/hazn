@@ -1,0 +1,56 @@
+{
+  "name": "hazn",
+  "version": "0.1.0",
+  "description": "AI-driven marketing website development framework with specialized agents for strategy, UX, development, SEO, and content.",
+  "keywords": [
+    "ai",
+    "agents",
+    "marketing",
+    "website",
+    "seo",
+    "ux",
+    "nextjs",
+    "payload-cms",
+    "claude",
+    "cursor",
+    "windsurf"
+  ],
+  "author": "Rizwan Qaiser <riz@autonomous.so>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/autonomous-tech/hazn"
+  },
+  "homepage": "https://hazn.dev",
+  "bin": {
+    "hazn": "./bin/cli.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "bin",
+    "src",
+    "agents",
+    "workflows",
+    "templates",
+    "skills"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^9.2.23",
+    "ora": "^8.0.1",
+    "yaml": "^2.4.1",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}

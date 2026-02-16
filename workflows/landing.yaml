@@ -1,0 +1,61 @@
+# Quick Landing Page Workflow
+# Triggered by: /hazn-landing
+
+name: landing
+description: Fast path for single landing pages
+trigger: /hazn-landing
+
+phases:
+  - id: brief
+    name: Quick Brief
+    actions:
+      - What's the offer?
+      - Who's the audience?
+      - What's the desired action?
+      - Any existing brand guidelines?
+    duration: "15 minutes"
+
+  - id: structure
+    name: Page Structure
+    agent: ux-architect
+    actions:
+      - Define 5-7 sections
+      - Outline content needs per section
+    outputs:
+      - .hazn/outputs/landing-blueprint.md
+    duration: "30 minutes"
+
+  - id: copy
+    name: Write Copy
+    agent: copywriter
+    actions:
+      - Headlines and subheads
+      - Body copy per section
+      - CTA copy
+      - Social proof framing
+    outputs:
+      - .hazn/outputs/copy/landing.md
+    duration: "1-2 hours"
+
+  - id: build
+    name: Build Page
+    agent: developer
+    actions:
+      - Create single page component
+      - Implement responsive design
+      - Add form handling
+      - Basic SEO meta
+    outputs:
+      - app/landing/page.tsx
+    duration: "2-4 hours"
+
+total_duration: "4-8 hours"
+
+skip_for_speed:
+  - Wireframes (go straight to code)
+  - Extensive keyword research
+  - Full strategy document
+
+notes: |
+  This workflow is for speed. Use /hazn-website for anything 
+  more than a single landing page or when strategy work is needed.
