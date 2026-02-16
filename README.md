@@ -4,169 +4,149 @@
 
 Hazn transforms your AI coding assistant into a team of specialized marketing experts. From strategy to deployment, Hazn guides you through building high-converting B2B websites.
 
-[![npm version](https://img.shields.io/npm/v/hazn.svg)](https://www.npmjs.com/package/hazn)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+📖 **[View Documentation](https://autonomous-tech.github.io/hazn/)** (GitHub Pages)
 
-## Why Hazn?
+---
 
-Traditional AI tools generate code. Hazn generates **strategy-informed, conversion-optimized websites**.
+## Overview
 
-- 🎯 **Domain Expert Agents** — Strategist, UX Architect, Copywriter, Developer, SEO Specialist
-- 📋 **Structured Workflows** — Proven processes from strategy to deployment
-- 🔄 **Artifact Chaining** — Each phase builds on the last
-- ⚡ **Works with your tools** — Claude Code, Cursor, Windsurf
+| Component | Count | Description |
+|-----------|-------|-------------|
+| **Agents** | 8 | Specialized expert personas (Strategist, UX Architect, Developer, etc.) |
+| **Skills** | 15 | Deep domain knowledge (SEO, copywriting, conversion optimization, etc.) |
+| **Workflows** | 4 | End-to-end processes (website build, audit, blog pipeline, landing page) |
+
+---
 
 ## Quick Start
 
 ```bash
-npx hazn install
-```
+# Clone this repo
+git clone git@github.com:autonomous-tech/hazn.git
 
-Then open your project in Claude Code, Cursor, or Windsurf and run:
+# Copy to your project
+cp -r hazn/.hazn your-project/
+cp hazn/HAZN.md your-project/
 
-```
+# Open in Claude Code / Cursor / Windsurf and run:
 /hazn-help
 ```
+
+---
+
+## Agents
+
+| Agent | Trigger | Role |
+|-------|---------|------|
+| **Strategist** | `/hazn-strategy` | Market positioning, audience definition, competitive analysis |
+| **UX Architect** | `/hazn-ux` | Page blueprints, information architecture, user flows |
+| **Copywriter** | `/hazn-copy` | Headlines, value props, CTAs, full page copy |
+| **Wireframer** | `/hazn-wireframe` | Mid-fidelity layouts for validation |
+| **Developer** | `/hazn-dev` | Next.js + Payload CMS + Tailwind implementation |
+| **SEO Specialist** | `/hazn-seo` | Technical SEO, schema, content optimization |
+| **Content Writer** | `/hazn-content` | Blog posts, keyword-optimized articles |
+| **Auditor** | `/hazn-audit` | Multi-dimensional website analysis |
+
+---
+
+## Skills
+
+### Strategy
+- `b2b-marketing-ux` — UX strategy, page architecture, conversion design
+- `b2b-ux-reference` — Deep reference for buyer psychology, trust patterns
+
+### Content
+- `b2b-website-copywriter` — Conversion copy for B2B services websites
+- `landing-page-copywriter` — High-converting landing page copy
+- `seo-blog-writer` — SEO + AEO + GEO optimized blog posts
+
+### Design
+- `b2b-wireframe` — Mid-fidelity HTML wireframes
+- `frontend-design` — Visual aesthetics, avoiding generic AI design
+- `ui-audit` — UX/UI audits based on design principles
+
+### Development
+- `payload-nextjs-stack` — Next.js + Payload CMS + Tailwind patterns
+
+### SEO
+- `keyword-research` — Keyword discovery, intent analysis, content mapping
+- `seo-audit` — Technical SEO audits
+- `seo-optimizer` — On-page and technical SEO implementation
+- `entity-knowledge-graph` — Entity optimization for AI citation (GEO)
+
+### Audits
+- `conversion-audit` — CRO audits with branded reports
+- `website-audit` — Comprehensive multi-dimensional site audits
+
+---
 
 ## Workflows
 
 ### Full Website Build
-
-Complete marketing website from scratch:
-
 ```
-/hazn-strategy → /hazn-ux → /hazn-copy → /hazn-wireframe → /hazn-dev → /hazn-seo
+/hazn-website
 ```
+Strategy → UX → Copy → Wireframe → Development → SEO
 
-**Outputs:**
-- Market positioning & messaging strategy
-- UX blueprints with section-by-section specs
-- Conversion-focused copy for all pages
-- Wireframes for stakeholder approval
-- Production Next.js + Payload CMS code
-- Technical SEO implementation
+**Duration:** 1-4 weeks
 
 ### Site Audit
-
-Analyze existing websites:
-
 ```
 /hazn-audit
 ```
+Conversion + Copy + Visual + SEO analysis with actionable recommendations.
 
-**Outputs:**
-- Conversion/CRO analysis
-- Copy effectiveness review
-- Visual/UX assessment
-- Technical SEO audit
-- Prioritized recommendations
+**Duration:** 2-4 hours
 
 ### Blog Content Pipeline
-
-SEO-optimized content creation:
-
 ```
 /hazn-content
 ```
+Keyword research → Content calendar → SEO-optimized articles
 
-**Outputs:**
-- Keyword research & mapping
-- Content calendar
-- SEO-optimized articles
-- Schema markup
+**Duration:** 1-2 hours per article
 
-## Agents
+### Quick Landing Page
+```
+/hazn-landing
+```
+Brief → Structure → Copy → Build
 
-| Agent | Role |
-|-------|------|
-| **Strategist** | Market positioning, audience definition, competitive analysis |
-| **UX Architect** | Information architecture, page blueprints, user flows |
-| **Copywriter** | Headlines, value props, CTAs, full page copy |
-| **Wireframer** | Mid-fidelity layouts for validation |
-| **Developer** | Next.js + Payload CMS + Tailwind implementation |
-| **SEO Specialist** | Technical SEO, schema, content optimization |
-| **Content Writer** | Blog posts, keyword-optimized articles |
-| **Auditor** | Multi-dimensional website analysis |
+**Duration:** 4-8 hours
 
-## Tech Stack
+---
 
-Hazn generates code for:
+## Project Structure
+
+```
+.hazn/
+├── agents/          # Agent persona definitions
+├── workflows/       # Workflow YAML configs
+├── skills/          # Domain expertise (15 skills)
+├── outputs/         # Generated artifacts
+└── config.json      # Project config
+
+HAZN.md              # Quick reference card
+```
+
+---
+
+## Documentation
+
+- [Agents Reference](docs/AGENTS.md) — Detailed agent documentation
+- [Skills Reference](docs/SKILLS.md) — All 15 skills with usage guides
+- [Workflows Reference](docs/WORKFLOWS.md) — Workflow phases and customization
+
+---
+
+## Tech Stack (for generated sites)
 
 - **Framework:** Next.js 14+ (App Router)
 - **CMS:** Payload CMS 3.x
 - **Styling:** Tailwind CSS
 - **Deployment:** Vercel / Self-hosted
 
-## Project Structure
-
-After installation:
-
-```
-your-project/
-├── HAZN.md              — Quick reference
-└── .hazn/
-    ├── agents/          — Agent personas
-    ├── workflows/       — Workflow definitions
-    ├── skills/          — Domain expertise
-    ├── outputs/         — Generated artifacts
-    └── config.json      — Configuration
-```
-
-## Commands
-
-| Command | Description |
-|---------|-------------|
-| `npx hazn install` | Install Hazn into a project |
-| `npx hazn list` | List available agents and workflows |
-| `npx hazn help [topic]` | Get help on specific topics |
-
-### In-IDE Commands
-
-| Command | Description |
-|---------|-------------|
-| `/hazn-help` | Contextual guidance |
-| `/hazn-website` | Full website workflow |
-| `/hazn-audit` | Site audit |
-| `/hazn-strategy` | Strategy phase |
-| `/hazn-ux` | UX architecture phase |
-| `/hazn-copy` | Copywriting phase |
-| `/hazn-wireframe` | Wireframe phase |
-| `/hazn-dev` | Development phase |
-| `/hazn-seo` | SEO optimization phase |
-| `/hazn-content` | Blog content pipeline |
-
-## Non-Interactive Install
-
-For CI/CD or automated setups:
-
-```bash
-npx hazn install --directory /path/to/project --tools claude-code --yes
-```
-
-## Contributing
-
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Documentation
-
-- [Skills Reference](docs/SKILLS.md) — 15 specialized domain skills
-- [Agents Reference](docs/AGENTS.md) — 8 expert agent personas
-- [Workflows Reference](docs/WORKFLOWS.md) — 4 structured workflows
-
-## Skills Included
-
-Hazn ships with 15 production-ready skills:
-
-| Category | Skills |
-|----------|--------|
-| **Strategy** | b2b-marketing-ux, b2b-ux-reference |
-| **Content** | b2b-website-copywriter, landing-page-copywriter, seo-blog-writer |
-| **Design** | b2b-wireframe, frontend-design, ui-audit |
-| **Development** | payload-nextjs-stack |
-| **SEO** | keyword-research, seo-audit, seo-optimizer, entity-knowledge-graph |
-| **Audits** | conversion-audit, website-audit |
-
-See [Skills Reference](docs/SKILLS.md) for detailed documentation.
+---
 
 ## License
 
