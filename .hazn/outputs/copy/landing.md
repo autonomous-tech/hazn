@@ -8,7 +8,7 @@
 
 ## Hero
 
-**Badge:** Private Beta
+**Badge:** Open Source
 
 **Headline:** Build marketing sites with expert AI agents
 
@@ -17,7 +17,7 @@
 **Primary CTA:** Request Access →
 **Secondary CTA:** GitHub
 
-**Terminal Badge:** $ hazn install
+**Terminal Badge:** $ git clone autonomous-tech/hazn
 
 ---
 
@@ -91,7 +91,7 @@
 
 1. **Install Hazn**
    Clone the repo and copy agents, workflows, and skills to your project.
-   `npx hazn init`
+   `git clone https://github.com/autonomous-tech/hazn.git`
 
 2. **Run a Workflow**
    Start a full build or analyze an existing site with guided agents.
@@ -99,15 +99,15 @@
 
 3. **Ship It**
    Agents produce artifacts that feed the next step. Deploy when ready.
-   `npm run deploy`
+   `vercel deploy`
 
 ---
 
 ## CTA
 
 **Headline:** Ready to build smarter?
-**Subhead:** Get early access to Hazn. Currently in private beta.
-**CTA:** Request Access →
+**Subhead:** Hazn is open source. Clone the repo and start building.
+**CTA:** View on GitHub →
 
 ---
 

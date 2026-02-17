@@ -34,15 +34,12 @@ A skill that gives AI assistants the ability to perform structured UI audits. Ba
 
 ## Installation
 
+This skill is bundled with Hazn. To use it standalone:
+
 ```bash
-# Agent Skills (Vercel)
-npx skills add uxtools/ui-audit
-
-# ClawdHub
-clawdhub install ui-audit
-
-# npm
-npm install ui-audit
+# Clone and copy to your project
+git clone https://github.com/autonomous-tech/hazn.git
+cp -r hazn/skills/ui-audit your-project/.hazn/skills/
 ```
 
 ## Usage
