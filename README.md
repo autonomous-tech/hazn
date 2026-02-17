@@ -10,7 +10,7 @@
 
 Hazn transforms your AI coding assistant into a team of specialized marketing experts. From strategy to deployment, Hazn guides you through building high-converting B2B websites.
 
-📖 **[View Documentation](https://autonomous-tech.github.io/hazn/)** (GitHub Pages)
+📖 **[View Documentation](https://rizqaiser.com/hazn/docs/)**
 
 ---
 
