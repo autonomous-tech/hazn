@@ -160,4 +160,4 @@ MIT — see [LICENSE](LICENSE).
 
 ---
 
-Built by [Autonomous](https://autonomous.so)
+Built by [Autonomous](https://autonomoustech.ca)
