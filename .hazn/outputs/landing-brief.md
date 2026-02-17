@@ -10,7 +10,7 @@ Hazn — an AI-driven framework that transforms coding assistants (Claude Code, 
 - Anyone frustrated with generic AI-generated websites
 
 ## What's the desired action?
-Request early access (email riz@autonomous.so)
+Request early access (email rizwan@autonomoustech.ca)
 
 ## Brand guidelines?
 - No emojis — use Lucide/shadcn icons
