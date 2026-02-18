@@ -10,7 +10,7 @@
 
 Hazn transforms your AI coding assistant into a team of specialized marketing experts. From strategy to deployment, Hazn guides you through building high-converting B2B websites.
 
-📖 **[View Documentation](https://rizqaiser.com/hazn/docs/)**
+📖 **[View Documentation](docs/)**
 
 ---
 
@@ -26,17 +26,50 @@ Hazn transforms your AI coding assistant into a team of specialized marketing ex
 
 ## Quick Start
 
+### Option 1: npx (recommended)
+
 ```bash
-# Clone this repo
-git clone git@github.com:autonomous-tech/hazn.git
+# Run directly from GitHub (no install needed)
+cd your-project
+npx github:autonomous-tech/hazn install
+```
 
-# Copy to your project
-cp -r hazn/.hazn your-project/
-cp hazn/HAZN.md your-project/
+### Option 2: Clone + Link
 
-# Open in Claude Code / Cursor / Windsurf and run:
+```bash
+# Clone the repo
+git clone https://github.com/autonomous-tech/hazn.git
+
+# Link globally
+cd hazn
+npm install
+npm link
+
+# Install in your project
+cd your-project
+hazn install
+```
+
+### Option 3: Direct execution
+
+```bash
+# Clone once, run from anywhere
+git clone https://github.com/autonomous-tech/hazn.git ~/hazn
+
+# Install in your project
+cd your-project
+node ~/hazn/bin/cli.js install
+```
+
+### After installation
+
+Open your project in Claude Code / Cursor / Windsurf and run:
+
+```
 /hazn-help
 ```
+
+The installer creates `.hazn/` with agents, workflows, skills, and a `HAZN.md` quick reference in your project root.
 
 ---
 
@@ -124,15 +157,32 @@ Brief → Structure → Copy → Build
 
 ## Project Structure
 
-```
-.hazn/
-├── agents/          # Agent persona definitions
-├── workflows/       # Workflow YAML configs
-├── skills/          # Domain expertise (15 skills)
-├── outputs/         # Generated artifacts
-└── config.json      # Project config
+After running `hazn install`, your project will have:
 
-HAZN.md              # Quick reference card
+```
+your-project/
+├── HAZN.md              # Quick reference card
+└── .hazn/
+    ├── agents/          # Agent persona definitions
+    ├── workflows/       # Workflow YAML configs
+    ├── skills/          # Domain expertise (15 skills)
+    ├── outputs/         # Generated artifacts (created during use)
+    └── config.json      # Installation config
+```
+
+### Repository Structure
+
+The Hazn repo itself is organized as:
+
+```
+hazn/
+├── agents/          # Source agent definitions
+├── skills/          # Source skill definitions
+├── workflows/       # Source workflow configs
+├── templates/       # Templates (HAZN.md, etc.)
+├── src/             # CLI source code
+├── bin/             # CLI entry point
+└── docs/            # Documentation
 ```
 
 ---
