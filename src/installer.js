@@ -143,14 +143,41 @@ async function setupClaudeCode(targetDir, haznDir) {
   const haznInclude = `
 ## Hazn Framework
 
-This project uses Hazn for AI-driven website development.
+This project uses Hazn for AI-driven marketing website development.
 
-- Read \`.hazn/agents/\` for available agent personas
-- Read \`.hazn/workflows/\` for workflow definitions
-- Run \`/hazn-help\` for contextual guidance
-- Outputs go to \`.hazn/outputs/\`
+### Trigger Handling
 
-See HAZN.md for commands and quick reference.
+When the user types any of these triggers, read the corresponding agent file and follow its instructions:
+
+| Trigger | Agent File |
+|---------|------------|
+| \`/hazn-help\` | Check \`.hazn/outputs/\` state and recommend next step |
+| \`/hazn-strategy\` | Read \`.hazn/agents/strategist.md\` and follow it |
+| \`/hazn-ux\` | Read \`.hazn/agents/ux-architect.md\` and follow it |
+| \`/hazn-copy\` | Read \`.hazn/agents/copywriter.md\` and follow it |
+| \`/hazn-wireframe\` | Read \`.hazn/agents/wireframer.md\` and follow it |
+| \`/hazn-dev\` | Read \`.hazn/agents/developer.md\` and follow it |
+| \`/hazn-seo\` | Read \`.hazn/agents/seo-specialist.md\` and follow it |
+| \`/hazn-content\` | Read \`.hazn/agents/content-writer.md\` and follow it |
+| \`/hazn-audit\` | Read \`.hazn/agents/auditor.md\` and follow it |
+| \`/hazn-website\` | Read \`.hazn/workflows/website.yaml\` for full workflow |
+| \`/hazn-landing\` | Read \`.hazn/workflows/landing.yaml\` for landing page workflow |
+
+### /hazn-help Behavior
+
+When user types \`/hazn-help\`:
+1. Check what exists in \`.hazn/outputs/\` (strategy.md, ux-blueprint.md, copy/, wireframes/)
+2. Recommend the next logical step based on what's missing
+3. If nothing exists, start with \`/hazn-strategy\`
+
+### Key Directories
+
+- \`.hazn/agents/\` — Agent persona definitions (read when triggered)
+- \`.hazn/workflows/\` — Workflow definitions
+- \`.hazn/skills/\` — Deep domain knowledge (reference as needed)
+- \`.hazn/outputs/\` — Generated artifacts (strategy.md, ux-blueprint.md, etc.)
+
+See HAZN.md for quick reference.
 `;
 
   if (await fs.pathExists(claudeMdPath)) {
