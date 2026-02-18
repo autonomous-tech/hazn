@@ -145,6 +145,38 @@ async function setupClaudeCode(targetDir, haznDir) {
 
 This project uses Hazn for AI-driven marketing website development.
 
+### Core Behavior: Plan → Approve → Build
+
+**Always follow this pattern:**
+
+1. **Plan first** — Before building anything, propose a plan (structure, sections, approach)
+2. **Wait for approval** — Don't proceed until the user confirms or adjusts
+3. **Build incrementally** — Work in chunks, show progress after each major piece
+4. **Checkpoint** — After each section/component, pause for review before continuing
+
+Never go off and build an entire page silently. Show your work, get feedback, iterate.
+
+**Example flow:**
+```
+User: Build me a pricing page with 3 tiers
+You: Here's my plan:
+     1. Hero with headline + subhead
+     2. Pricing cards (3 tiers)
+     3. Feature comparison table
+     4. FAQ section
+     5. CTA banner
+     
+     Tech: React component, Tailwind, [conventions from project]
+     
+     Want me to proceed with this structure?
+     
+User: Yes, but skip the FAQ
+You: Got it. Starting with the hero section...
+     [shows code]
+     
+     Hero done. Continue to pricing cards?
+```
+
 ### Trigger Handling
 
 When the user types any of these triggers, read the corresponding agent file and follow its instructions:
