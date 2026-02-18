@@ -209,6 +209,10 @@ Guide the user through the fast path for a single landing page.`,
 
 This project uses Hazn for AI-driven marketing website development.
 
+### Model Preference
+
+Always use the most capable available model (e.g., claude-sonnet-4, opus) for Hazn workflows unless the user specifies otherwise. Quality and reasoning matter more than speed for marketing website development.
+
 ### Core Behavior: Plan → Approve → Build
 
 **Always follow this pattern:**
