@@ -118,12 +118,13 @@ export async function install(options) {
 
     console.log(chalk.cyan('\n📁 Created:\n'));
     console.log(`  ${targetDir}/`);
-    console.log('  ├── HAZN.md          — Quick reference & commands');
+    console.log('  ├── HAZN.md              — Quick reference');
+    console.log('  ├── .claude/commands/    — Slash commands (/hazn-*)');
     console.log('  └── .hazn/');
-    console.log('      ├── agents/      — Agent personas');
-    console.log('      ├── workflows/   — Workflow definitions');
-    console.log('      ├── skills/      — Domain skills');
-    console.log('      └── outputs/     — Generated artifacts\n');
+    console.log('      ├── agents/          — Agent personas');
+    console.log('      ├── workflows/       — Workflow definitions');
+    console.log('      ├── skills/          — Domain skills');
+    console.log('      └── outputs/         — Generated artifacts\n');
 
     console.log(chalk.cyan('🚀 Next steps:\n'));
     console.log('  1. Open this folder in Claude Code / Cursor / Windsurf');
@@ -138,6 +139,69 @@ export async function install(options) {
 }
 
 async function setupClaudeCode(targetDir, haznDir) {
+  // Create .claude/commands/ for custom slash commands
+  const commandsDir = path.join(targetDir, '.claude', 'commands');
+  await fs.ensureDir(commandsDir);
+
+  // Define commands and their prompts
+  const commands = {
+    'hazn-help': `Check the .hazn/outputs/ directory to see what artifacts exist (strategy.md, ux-blueprint.md, copy/, wireframes/).
+
+Based on what exists, recommend the next logical step:
+- If nothing exists → suggest /hazn-strategy
+- If strategy.md exists but no ux-blueprint.md → suggest /hazn-ux  
+- If ux-blueprint.md exists but no copy/ → suggest /hazn-copy
+- If copy exists but no wireframes/ → suggest /hazn-wireframe
+- If wireframes exist → suggest /hazn-dev
+
+Show current state and give clear guidance on what to do next.`,
+
+    'hazn-strategy': `Read .hazn/agents/strategist.md and follow its instructions exactly.
+
+You are now the Strategist agent. Guide the user through strategic foundations for their website.`,
+
+    'hazn-ux': `Read .hazn/agents/ux-architect.md and follow its instructions exactly.
+
+You are now the UX Architect agent. Create page blueprints and information architecture.`,
+
+    'hazn-copy': `Read .hazn/agents/copywriter.md and follow its instructions exactly.
+
+You are now the Copywriter agent. Write conversion-focused copy for the website.`,
+
+    'hazn-wireframe': `Read .hazn/agents/wireframer.md and follow its instructions exactly.
+
+You are now the Wireframer agent. Create mid-fidelity wireframes for layout validation.`,
+
+    'hazn-dev': `Read .hazn/agents/developer.md and follow its instructions exactly.
+
+You are now the Developer agent. Build with Next.js + Payload CMS + Tailwind.`,
+
+    'hazn-seo': `Read .hazn/agents/seo-specialist.md and follow its instructions exactly.
+
+You are now the SEO Specialist agent. Handle technical SEO and content optimization.`,
+
+    'hazn-content': `Read .hazn/agents/content-writer.md and follow its instructions exactly.
+
+You are now the Content Writer agent. Create SEO-optimized blog posts and articles.`,
+
+    'hazn-audit': `Read .hazn/agents/auditor.md and follow its instructions exactly.
+
+You are now the Auditor agent. Perform multi-dimensional website analysis.`,
+
+    'hazn-website': `Read .hazn/workflows/website.yaml to understand the full website build workflow.
+
+Guide the user through the complete process: Strategy → UX → Copy → Wireframe → Dev → SEO`,
+
+    'hazn-landing': `Read .hazn/workflows/landing.yaml to understand the landing page workflow.
+
+Guide the user through the fast path for a single landing page.`,
+  };
+
+  // Write each command file
+  for (const [name, content] of Object.entries(commands)) {
+    await fs.writeFile(path.join(commandsDir, `${name}.md`), content);
+  }
+
   // Add to CLAUDE.md if it exists, or create it
   const claudeMdPath = path.join(targetDir, 'CLAUDE.md');
   const haznInclude = `
@@ -175,30 +239,21 @@ User: "Yes, but skip the FAQ"
 
 You: "Got it. Starting with the hero section... [shows code]. Hero done. Continue to pricing cards?"
 
-### Trigger Handling
+### Slash Commands
 
-When the user types any of these triggers, read the corresponding agent file and follow its instructions:
+Hazn registers these commands in \`.claude/commands/\`:
 
-| Trigger | Agent File |
-|---------|------------|
-| \`/hazn-help\` | Check \`.hazn/outputs/\` state and recommend next step |
-| \`/hazn-strategy\` | Read \`.hazn/agents/strategist.md\` and follow it |
-| \`/hazn-ux\` | Read \`.hazn/agents/ux-architect.md\` and follow it |
-| \`/hazn-copy\` | Read \`.hazn/agents/copywriter.md\` and follow it |
-| \`/hazn-wireframe\` | Read \`.hazn/agents/wireframer.md\` and follow it |
-| \`/hazn-dev\` | Read \`.hazn/agents/developer.md\` and follow it |
-| \`/hazn-seo\` | Read \`.hazn/agents/seo-specialist.md\` and follow it |
-| \`/hazn-content\` | Read \`.hazn/agents/content-writer.md\` and follow it |
-| \`/hazn-audit\` | Read \`.hazn/agents/auditor.md\` and follow it |
-| \`/hazn-website\` | Read \`.hazn/workflows/website.yaml\` for full workflow |
-| \`/hazn-landing\` | Read \`.hazn/workflows/landing.yaml\` for landing page workflow |
-
-### /hazn-help Behavior
-
-When user types \`/hazn-help\`:
-1. Check what exists in \`.hazn/outputs/\` (strategy.md, ux-blueprint.md, copy/, wireframes/)
-2. Recommend the next logical step based on what's missing
-3. If nothing exists, start with \`/hazn-strategy\`
+- \`/hazn-help\` — Check progress and get next step recommendation
+- \`/hazn-strategy\` — Run Strategist agent
+- \`/hazn-ux\` — Run UX Architect agent
+- \`/hazn-copy\` — Run Copywriter agent
+- \`/hazn-wireframe\` — Run Wireframer agent
+- \`/hazn-dev\` — Run Developer agent
+- \`/hazn-seo\` — Run SEO Specialist agent
+- \`/hazn-content\` — Run Content Writer agent
+- \`/hazn-audit\` — Run Auditor agent
+- \`/hazn-website\` — Full website workflow
+- \`/hazn-landing\` — Landing page workflow
 
 ### Key Directories
 
