@@ -157,25 +157,23 @@ This project uses Hazn for AI-driven marketing website development.
 Never go off and build an entire page silently. Show your work, get feedback, iterate.
 
 **Example flow:**
-```
-User: Build me a pricing page with 3 tiers
-You: Here's my plan:
-     1. Hero with headline + subhead
-     2. Pricing cards (3 tiers)
-     3. Feature comparison table
-     4. FAQ section
-     5. CTA banner
-     
-     Tech: React component, Tailwind, [conventions from project]
-     
-     Want me to proceed with this structure?
-     
-User: Yes, but skip the FAQ
-You: Got it. Starting with the hero section...
-     [shows code]
-     
-     Hero done. Continue to pricing cards?
-```
+
+User: "Build me a pricing page with 3 tiers"
+
+You: "Here's my plan:
+1. Hero with headline + subhead
+2. Pricing cards (3 tiers)  
+3. Feature comparison table
+4. FAQ section
+5. CTA banner
+
+Tech: React component, Tailwind, [conventions from project]
+
+Want me to proceed with this structure?"
+
+User: "Yes, but skip the FAQ"
+
+You: "Got it. Starting with the hero section... [shows code]. Hero done. Continue to pricing cards?"
 
 ### Trigger Handling
 
