@@ -204,7 +204,7 @@ Guide the user through the complete process: Strategy → UX → Copy → Wirefr
 
 Guide the user through the fast path for a single landing page.`,
 
-    'hazn-analytics-audit': `Read .hazn/workflows/analytics-audit.yaml and execute the MarTech & Attribution audit pipeline. Phases: setup → data collection (GA4/GSC/site inspection) → analysis → adversarial review → client report. Requires Python 3.10+ with google-analytics-data, google-auth-oauthlib. See .hazn/docs/ANALYTICS-AUDIT.md for prerequisites.`,
+    'hazn-analytics-audit': `Read .hazn/workflows/analytics-audit.yaml and execute the MarTech & Attribution audit pipeline. Phases: setup → data collection (GA4/GSC/site inspection) → analysis → adversarial review → client report. Requires Python 3.10+ with google-analytics-data, google-auth-oauthlib, google-api-python-client. Prerequisites: GA4 property ID with Data API access, OAuth credentials at ~/.config/ga4-audit/credentials.json.`,
   };
 
   // Write each command file

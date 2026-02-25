@@ -292,7 +292,7 @@ Full MarTech & Attribution audit pipeline for sites with GA4 and optional GSC ac
 ### Deliverables
 - `.hazn/outputs/analytics-audit/<domain>-audit.md` — Full markdown audit
 - `.hazn/outputs/analytics-audit/client-report/index.html` — Branded HTML report
-- `.hazn/outputs/analytics-audit/data/` — Raw GA4/GSC JSON data
+- `.hazn/outputs/analytics-audit/` — Raw GA4/GSC JSON data files
 
 ### Duration
 3-6 hours depending on site complexity and data volume.

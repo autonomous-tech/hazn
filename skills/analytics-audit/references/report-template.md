@@ -250,7 +250,7 @@
 
 ## Q. Organic Search Performance (GSC)
 
-> **Data source:** `output/gsc_audit_data.json` — Google Search Console API data
+> **Data source:** `.hazn/outputs/analytics-audit/gsc_audit_data.json` — Google Search Console API data
 > **Note:** If GSC data is not available, skip this section and note "GSC data not collected for this audit."
 
 ### Search Visibility Summary
@@ -321,10 +321,10 @@
 - Conversion action mapping from ad platform configs
 
 ### Data Sources
-- `output/ga4_audit_data.json`
-- `output/ga4_audit_extra.json`
-- `output/gsc_audit_data.json`
-- `output/site_inspection.json`
+- `.hazn/outputs/analytics-audit/ga4_audit_data.json`
+- `.hazn/outputs/analytics-audit/ga4_audit_extra.json`
+- `.hazn/outputs/analytics-audit/gsc_audit_data.json`
+- `.hazn/outputs/analytics-audit/site_inspection.json`
 - Live site HTML source
 
 ---
