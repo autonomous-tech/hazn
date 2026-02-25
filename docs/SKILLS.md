@@ -1,6 +1,6 @@
 # Hazn Skills Reference
 
-Hazn includes 15 specialized skills covering the full marketing website lifecycle. Skills are domain expertise encoded as detailed instructions that agents follow.
+Hazn includes 22 specialized skills covering the full marketing website lifecycle. Skills are domain expertise encoded as detailed instructions that agents follow.
 
 ---
 
@@ -13,6 +13,9 @@ Hazn includes 15 specialized skills covering the full marketing website lifecycl
 | **Content** | `b2b-website-copywriter` | Conversion copy for B2B services websites |
 | | `landing-page-copywriter` | High-converting landing page copy (PAS, AIDA, StoryBrand) |
 | | `seo-blog-writer` | SEO + AEO + GEO optimized blog posts |
+| | `email-sequence` | B2B email automation (welcome, trial, nurture sequences) |
+| | `cold-email` | B2B outbound prospecting and follow-up sequences |
+| | `copy-editing` | Copy improvement using Seven Sweeps framework |
 | **Design** | `b2b-wireframe` | Mid-fidelity HTML wireframes for layout validation |
 | | `frontend-design` | Visual aesthetics, avoiding generic AI design |
 | | `ui-audit` | UX/UI audits based on design principles |
@@ -21,6 +24,10 @@ Hazn includes 15 specialized skills covering the full marketing website lifecycl
 | | `seo-audit` | Technical SEO audits |
 | | `seo-optimizer` | On-page and technical SEO implementation |
 | | `entity-knowledge-graph` | Entity optimization for AI citation (GEO) |
+| | `ai-seo` | AI search optimization (LLM citations, AI Overviews, GEO/AEO) |
+| | `programmatic-seo` | Scaled page generation with Next.js + Payload CMS |
+| **CRO** | `ab-test-setup` | Experiment design with PostHog integration |
+| | `analytics-tracking` | GA4 + PostHog measurement setup for Next.js |
 | **Audits** | `conversion-audit` | CRO/conversion audit with branded reports |
 | | `website-audit` | Comprehensive multi-dimensional site audits |
 
@@ -287,6 +294,156 @@ Hazn includes 15 specialized skills covering the full marketing website lifecycl
 
 ---
 
+### ai-seo
+
+**Purpose:** AI search optimization for LLM citations, AI Overviews, and generative engine visibility.
+
+**When to use:**
+- Optimizing content for AI citation
+- Getting into Google AI Overviews
+- GEO (Generative Engine Optimization)
+- AEO (Answer Engine Optimization)
+- Configuring bot access for AI crawlers
+
+**Key outputs:**
+- Content extractability improvements
+- AI-friendly content structure
+- Bot access configuration (robots.txt, meta tags)
+- Citation-optimized formatting
+- GEO/AEO audit reports
+
+**Pairs with:** `entity-knowledge-graph` (entity optimization), `seo-blog-writer` (content creation)
+
+---
+
+### programmatic-seo
+
+**Purpose:** Scaled page generation using Next.js and Payload CMS patterns.
+
+**When to use:**
+- Creating hundreds/thousands of SEO pages
+- Template-based page scaling
+- Dynamic route generation
+- Location/service/category page matrices
+
+**Key outputs:**
+- Next.js dynamic route patterns
+- Payload CMS collection configs for scale
+- Template architecture
+- Data pipeline setup
+- Internal linking strategies
+
+**Pairs with:** `payload-nextjs-stack` (implementation), `keyword-research` (opportunity identification)
+
+---
+
+### ab-test-setup
+
+**Purpose:** Experiment design and A/B test implementation with PostHog.
+
+**When to use:**
+- Setting up conversion experiments
+- Testing landing page variations
+- Validating copy or design changes
+- Building experiment frameworks
+
+**Key outputs:**
+- Hypothesis documentation (problem, hypothesis, metric, success criteria)
+- PostHog feature flag setup
+- Sample size calculations
+- Test duration estimates
+- Statistical analysis interpretation
+- Experiment reports
+
+**Pairs with:** `analytics-tracking` (measurement), `conversion-audit` (identifying what to test)
+
+---
+
+### analytics-tracking
+
+**Purpose:** Measurement setup for marketing websites using GA4 and PostHog.
+
+**When to use:**
+- Setting up analytics on new sites
+- Implementing event tracking
+- Next.js App Router integration
+- GDPR-compliant consent management
+
+**Key outputs:**
+- GA4 + PostHog dual-stack configuration
+- Next.js App Router integration code
+- Consent-aware loading patterns
+- Custom event tracking
+- Conversion tracking setup
+- UTM parameter handling
+
+**Pairs with:** `ab-test-setup` (experiments), `payload-nextjs-stack` (implementation)
+
+---
+
+### email-sequence
+
+**Purpose:** B2B email automation sequences for nurturing and conversion.
+
+**When to use:**
+- Building welcome sequences
+- Creating trial onboarding flows
+- Designing lead nurture sequences
+- Re-engagement campaigns
+
+**Key outputs:**
+- Sequence architecture (timing, triggers)
+- Email copy for each touchpoint
+- ESP implementation guides (ConvertKit, ActiveCampaign, etc.)
+- Segmentation recommendations
+- Deliverability best practices
+
+**Pairs with:** `b2b-website-copywriter` (voice consistency), `cold-email` (outbound sequences)
+
+---
+
+### cold-email
+
+**Purpose:** B2B outbound email prospecting sequences.
+
+**When to use:**
+- Building outbound sales sequences
+- Cold prospecting campaigns
+- Follow-up sequence design
+- Domain/sender reputation management
+
+**Key outputs:**
+- Prospecting frameworks (BASHO, Challenger, etc.)
+- Multi-step follow-up sequences
+- Subject line variations
+- CAN-SPAM/GDPR compliance checklist
+- Domain warmup guidance
+- Deliverability optimization
+
+**Pairs with:** `email-sequence` (automation patterns), `b2b-website-copywriter` (voice)
+
+---
+
+### copy-editing
+
+**Purpose:** Systematic copy improvement using the Seven Sweeps framework.
+
+**When to use:**
+- Polishing draft copy
+- Improving existing website content
+- Tightening marketing messages
+- B2B-specific copy optimization
+
+**Key outputs:**
+- Edited copy with tracked changes
+- Seven Sweeps analysis (clarity, concision, flow, tone, proof, action, scan)
+- B2B-specific improvements
+- Before/after comparisons
+
+**Pairs with:** `b2b-website-copywriter` (initial drafts), `landing-page-copywriter` (landing page polish)
+
+---
+
 ### conversion-audit
 
 **Purpose:** Comprehensive conversion/CRO audits with branded HTML reports.
@@ -335,19 +492,26 @@ Strategy & Research
 Content & Design
 ├── b2b-website-copywriter (page copy)
 ├── landing-page-copywriter (landing pages)
+├── copy-editing (polish & improve)
 ├── b2b-wireframe (layout validation)
 └── frontend-design (visual direction)
         ↓
 Development
 ├── payload-nextjs-stack (production code)
-└── seo-optimizer (technical SEO)
+├── seo-optimizer (technical SEO)
+├── analytics-tracking (measurement setup)
+└── programmatic-seo (scaled pages)
         ↓
 Content & Growth
 ├── seo-blog-writer (blog posts)
-└── entity-knowledge-graph (AI citation)
+├── entity-knowledge-graph (AI citation)
+├── ai-seo (AI search optimization)
+├── email-sequence (nurture automation)
+└── cold-email (outbound sequences)
         ↓
 Analysis & Optimization
 ├── conversion-audit (CRO analysis)
+├── ab-test-setup (experiments)
 ├── website-audit (full audit)
 ├── seo-audit (technical SEO)
 └── ui-audit (UX review)

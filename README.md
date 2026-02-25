@@ -19,8 +19,21 @@ Hazn transforms your AI coding assistant into a team of specialized marketing ex
 | Component | Count | Description |
 |-----------|-------|-------------|
 | **Agents** | 8 | Specialized expert personas (Strategist, UX Architect, Developer, etc.) |
-| **Skills** | 15 | Deep domain knowledge (SEO, copywriting, conversion optimization, etc.) |
-| **Workflows** | 4 | End-to-end processes (website build, audit, blog pipeline, landing page) |
+| **Skills** | 22 | Deep domain knowledge (SEO, copywriting, conversion optimization, etc.) |
+| **Workflows** | 6 | End-to-end processes (website build, audit, blog pipeline, landing page, email, optimization) |
+
+---
+
+## What's New 🚀
+
+**Marketing Skills Upgrade** — Added 7 new skills based on analysis of [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills):
+
+- **AI-first SEO:** `ai-seo` and `programmatic-seo` for LLM citations and scaled content
+- **Growth stack:** `ab-test-setup` and `analytics-tracking` for PostHog + GA4 integration
+- **Outbound:** `email-sequence` and `cold-email` for B2B prospecting automation
+- **Copy polish:** `copy-editing` framework for refining existing content
+
+Plus two new workflows: `/email` for campaign design and `/optimize` for post-launch A/B testing.
 
 ---
 
@@ -98,6 +111,7 @@ The installer creates `.hazn/` with agents, workflows, skills, and a `HAZN.md` q
 - `b2b-website-copywriter` — Conversion copy for B2B services websites
 - `landing-page-copywriter` — High-converting landing page copy
 - `seo-blog-writer` — SEO + AEO + GEO optimized blog posts
+- `copy-editing` — Copy improvement framework
 
 ### Design
 - `b2b-wireframe` — Mid-fidelity HTML wireframes
@@ -112,10 +126,18 @@ The installer creates `.hazn/` with agents, workflows, skills, and a `HAZN.md` q
 - `seo-audit` — Technical SEO audits
 - `seo-optimizer` — On-page and technical SEO implementation
 - `entity-knowledge-graph` — Entity optimization for AI citation (GEO)
+- `ai-seo` — AI search optimization (LLM citations, AEO, GEO)
+- `programmatic-seo` — Scaled page generation
 
 ### Audits
 - `conversion-audit` — CRO audits with branded reports
 - `website-audit` — Comprehensive multi-dimensional site audits
+
+### Marketing & Analytics
+- `ab-test-setup` — A/B testing with PostHog
+- `analytics-tracking` — GA4 + PostHog setup
+- `email-sequence` — B2B email automation
+- `cold-email` — B2B outbound prospecting
 
 ---
 
@@ -152,6 +174,22 @@ Keyword research → Content calendar → SEO-optimized articles
 Brief → Structure → Copy → Build
 
 **Duration:** 4-8 hours
+
+### Email Campaign
+```
+/email
+```
+Audience → Sequence design → Copy → Automation setup
+
+**Duration:** 2-4 hours
+
+### Post-Launch Optimization
+```
+/optimize
+```
+Analytics setup → A/B test design → Implementation → Analysis
+
+**Duration:** Ongoing
 
 ---
 
@@ -190,7 +228,7 @@ hazn/
 ## Documentation
 
 - [Agents Reference](docs/AGENTS.md) — Detailed agent documentation
-- [Skills Reference](docs/SKILLS.md) — All 15 skills with usage guides
+- [Skills Reference](docs/SKILLS.md) — All 22 skills with usage guides
 - [Workflows Reference](docs/WORKFLOWS.md) — Workflow phases and customization
 
 ---
