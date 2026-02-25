@@ -18,7 +18,7 @@ export async function install(options) {
   let config = {
     tools: options.tools.split(','),
     workflows: options.workflows === 'all' 
-      ? ['website', 'audit', 'blog', 'landing'] 
+      ? ['website', 'audit', 'blog', 'landing', 'analytics-audit']
       : options.workflows.split(','),
     includeSkills: true,
     includeTemplates: true,
@@ -46,6 +46,7 @@ export async function install(options) {
           { name: 'Site Audit', value: 'audit', checked: true },
           { name: 'Blog Content Pipeline', value: 'blog', checked: true },
           { name: 'Landing Page (fast)', value: 'landing', checked: true },
+          { name: 'Analytics Audit (GA4/MarTech)', value: 'analytics-audit', checked: false },
         ],
       },
       {
@@ -89,6 +90,12 @@ export async function install(options) {
       );
     }
 
+    spinner.text = 'Copying scripts...';
+    await fs.copy(
+      path.join(PACKAGE_ROOT, 'scripts'),
+      path.join(haznDir, 'scripts')
+    );
+
     spinner.text = 'Writing configuration...';
     await fs.writeJson(path.join(haznDir, 'config.json'), {
       version: '0.1.0',
@@ -124,6 +131,7 @@ export async function install(options) {
     console.log('      ├── agents/          — Agent personas');
     console.log('      ├── workflows/       — Workflow definitions');
     console.log('      ├── skills/          — Domain skills');
+    console.log('      ├── scripts/         — Python collector scripts');
     console.log('      └── outputs/         — Generated artifacts\n');
 
     console.log(chalk.cyan('🚀 Next steps:\n'));
@@ -195,6 +203,8 @@ Guide the user through the complete process: Strategy → UX → Copy → Wirefr
     'hazn-landing': `Read .hazn/workflows/landing.yaml to understand the landing page workflow.
 
 Guide the user through the fast path for a single landing page.`,
+
+    'hazn-analytics-audit': `Read .hazn/workflows/analytics-audit.yaml and execute the MarTech & Attribution audit pipeline. Phases: setup → data collection (GA4/GSC/site inspection) → analysis → adversarial review → client report. Requires Python 3.10+ with google-analytics-data, google-auth-oauthlib. See .hazn/docs/ANALYTICS-AUDIT.md for prerequisites.`,
   };
 
   // Write each command file
@@ -258,12 +268,14 @@ Hazn registers these commands in \`.claude/commands/\`:
 - \`/hazn-audit\` — Run Auditor agent
 - \`/hazn-website\` — Full website workflow
 - \`/hazn-landing\` — Landing page workflow
+- \`/hazn-analytics-audit\` — MarTech & Attribution audit with GA4/GSC data
 
 ### Key Directories
 
 - \`.hazn/agents/\` — Agent persona definitions (read when triggered)
 - \`.hazn/workflows/\` — Workflow definitions
 - \`.hazn/skills/\` — Deep domain knowledge (reference as needed)
+- \`.hazn/scripts/\` — Python collector scripts (GA4, GSC)
 - \`.hazn/outputs/\` — Generated artifacts (strategy.md, ux-blueprint.md, etc.)
 
 See HAZN.md for quick reference.

@@ -18,9 +18,9 @@ Hazn transforms your AI coding assistant into a team of specialized marketing ex
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| **Agents** | 8 | Specialized expert personas (Strategist, UX Architect, Developer, etc.) |
-| **Skills** | 22 | Deep domain knowledge (SEO, copywriting, conversion optimization, etc.) |
-| **Workflows** | 6 | End-to-end processes (website build, audit, blog pipeline, landing page, email, optimization) |
+| **Agents** | 12 | Specialized expert personas (Strategist, UX Architect, Developer, Analytics, etc.) |
+| **Skills** | 25 | Deep domain knowledge (SEO, copywriting, conversion optimization, analytics, etc.) |
+| **Workflows** | 7 | End-to-end processes (website build, audit, blog, landing page, email, optimization, analytics audit) |
 
 ---
 
@@ -34,6 +34,8 @@ Hazn transforms your AI coding assistant into a team of specialized marketing ex
 - **Copy polish:** `copy-editing` framework for refining existing content
 
 Plus two new workflows: `/email` for campaign design and `/optimize` for post-launch A/B testing.
+
+**Analytics Audit Pipeline** — Full MarTech & Attribution audit with GA4/GSC data collection, 4 specialized agents, adversarial review, and branded HTML client reports.
 
 ---
 
@@ -98,6 +100,10 @@ The installer creates `.hazn/` with agents, workflows, skills, and a `HAZN.md` q
 | **SEO Specialist** | `/hazn-seo` | Technical SEO, schema, content optimization |
 | **Content Writer** | `/hazn-content` | Blog posts, keyword-optimized articles |
 | **Auditor** | `/hazn-audit` | Multi-dimensional website analysis |
+| **Analytics Inspector** | `/hazn-analytics-audit` | Site tracking tag inspection |
+| **Analytics Report Writer** | `/hazn-analytics-audit` | MarTech audit reports |
+| **Analytics Adversary** | `/hazn-analytics-audit` | Red-team audit review |
+| **Analytics Client Reporter** | `/hazn-analytics-audit` | Branded HTML client reports |
 
 ---
 
@@ -136,6 +142,9 @@ The installer creates `.hazn/` with agents, workflows, skills, and a `HAZN.md` q
 ### Marketing & Analytics
 - `ab-test-setup` — A/B testing with PostHog
 - `analytics-tracking` — GA4 + PostHog setup
+- `analytics-audit` — GA4 property audit and attribution analysis
+- `analytics-audit-martech` — MarTech stack assessment and roadmap
+- `analytics-audit-client-report` — Branded HTML client report generator
 - `email-sequence` — B2B email automation
 - `cold-email` — B2B outbound prospecting
 
@@ -191,6 +200,14 @@ Analytics setup → A/B test design → Implementation → Analysis
 
 **Duration:** Ongoing
 
+### Analytics Audit
+```
+/hazn-analytics-audit
+```
+GA4/GSC data collection → Site inspection → Analysis → Adversarial review → Client report
+
+**Duration:** 3-6 hours
+
 ---
 
 ## Project Structure
@@ -203,7 +220,8 @@ your-project/
 └── .hazn/
     ├── agents/          # Agent persona definitions
     ├── workflows/       # Workflow YAML configs
-    ├── skills/          # Domain expertise (15 skills)
+    ├── skills/          # Domain expertise (25 skills)
+    ├── scripts/         # Python collector scripts
     ├── outputs/         # Generated artifacts (created during use)
     └── config.json      # Installation config
 ```
@@ -216,6 +234,7 @@ The Hazn repo itself is organized as:
 hazn/
 ├── agents/          # Source agent definitions
 ├── skills/          # Source skill definitions
+├── scripts/         # Python collector scripts
 ├── workflows/       # Source workflow configs
 ├── templates/       # Templates (HAZN.md, etc.)
 ├── src/             # CLI source code
@@ -228,7 +247,7 @@ hazn/
 ## Documentation
 
 - [Agents Reference](docs/AGENTS.md) — Detailed agent documentation
-- [Skills Reference](docs/SKILLS.md) — All 22 skills with usage guides
+- [Skills Reference](docs/SKILLS.md) — All 25 skills with usage guides
 - [Workflows Reference](docs/WORKFLOWS.md) — Workflow phases and customization
 
 ---

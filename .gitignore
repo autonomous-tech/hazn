@@ -6,3 +6,6 @@ node_modules/
 dist/
 coverage/
 .nyc_output/
+__pycache__/
+*.pyc
+.venv/

@@ -16,6 +16,7 @@ AI-driven marketing website development framework.
 | `/hazn-dev` | Build with Next.js + Payload CMS |
 | `/hazn-seo` | Technical SEO optimization |
 | `/hazn-content` | Blog content pipeline |
+| `/hazn-analytics-audit` | GA4/GSC MarTech & Attribution audit |
 
 ## Workflows
 
@@ -43,6 +44,10 @@ AI-driven marketing website development framework.
 - **Developer** — Next.js + Payload CMS implementation
 - **SEO Specialist** — Technical SEO & content optimization
 - **Auditor** — Multi-dimensional site analysis
+- **Analytics Inspector** — Site tracking tag inspection
+- **Analytics Report Writer** — MarTech audit reports
+- **Analytics Adversary** — Red-team audit review
+- **Analytics Client Reporter** — Branded HTML client reports
 
 ## Project Structure
 

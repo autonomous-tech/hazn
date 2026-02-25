@@ -1,6 +1,6 @@
 # Hazn Agents Reference
 
-Hazn includes 8 specialized agent personas. Each agent has a specific role, activation trigger, and expertise area.
+Hazn includes 12 specialized agent personas. Each agent has a specific role, activation trigger, and expertise area.
 
 ## Agent Index
 
@@ -14,6 +14,10 @@ Hazn includes 8 specialized agent personas. Each agent has a specific role, acti
 | **SEO Specialist** | Technical SEO, schema, content optimization | `/hazn-seo` |
 | **Content Writer** | Blog posts, keyword-optimized articles | `/hazn-content` |
 | **Auditor** | Multi-dimensional website analysis | `/hazn-audit` |
+| **Analytics Inspector** | Site HTML inspection for tracking tags | `/hazn-analytics-audit` |
+| **Analytics Report Writer** | MarTech audit report from collected data | `/hazn-analytics-audit` |
+| **Analytics Adversary** | Red-team review of audit claims and data | `/hazn-analytics-audit` |
+| **Analytics Client Reporter** | Branded HTML client report generation | `/hazn-analytics-audit` |
 
 ---
 
@@ -175,6 +179,73 @@ Hazn includes 8 specialized agent personas. Each agent has a specific role, acti
 
 ---
 
+### Analytics Inspector
+
+**File:** `agents/analytics-inspector.md`
+
+**Role:** Inspect site HTML via curl for tracking codes (GA4, GTM, Meta Pixel, etc.)
+
+**Process:**
+1. Fetch HTML source via `curl -sL <URL>`
+2. Extract tracking systems, pixels, tag managers, consent configuration
+3. Parse Shopify-specific configs (Web Pixels Manager, Trekkie S2S)
+4. Save tag inventory as JSON
+
+**Output:** `.hazn/outputs/analytics-audit/site_inspection.json`
+
+---
+
+### Analytics Report Writer
+
+**File:** `agents/analytics-report-writer.md`
+
+**Role:** Generate comprehensive MarTech audit reports from collected data.
+
+**Prerequisites:** GA4/GSC data + site inspection complete.
+
+**Process:**
+1. Read all data sources (GA4, GSC, site inspection JSON)
+2. Write sections A-Q using `analytics-audit` + `analytics-audit-martech` skills
+3. Cross-reference data between sources for accuracy
+
+**Output:** `.hazn/outputs/analytics-audit/<domain>-audit.md`
+
+---
+
+### Analytics Adversary
+
+**File:** `agents/analytics-adversary.md`
+
+**Role:** Red-team review of audit claims.
+
+**Process:**
+1. Verify every number against source JSON data
+2. Challenge assumptions and flag unsupported claims
+3. Check internal consistency across sections
+4. Scrutinize recommendations for proportionality
+
+**Output:** Adversarial review with critical issues, data accuracy concerns, and missing analysis.
+
+---
+
+### Analytics Client Reporter
+
+**File:** `agents/analytics-client-reporter.md`
+
+**Role:** Convert markdown audit into branded HTML client report.
+
+**Prerequisites:** Completed and reviewed markdown audit report.
+
+**Process:**
+1. Read markdown report + JSON data files
+2. Use `analytics-audit-client-report` skill for design system
+3. Generate single-file HTML with embedded CSS
+4. Verify against quality checklist
+
+**Output:** `.hazn/outputs/analytics-audit/client-report/index.html`
+
+---
+
 ## Agent Interaction Patterns
 
 ### Sequential Workflow
@@ -186,6 +257,7 @@ Strategist → UX Architect → Copywriter → Wireframer → Developer → SEO 
 - Copywriter and Wireframer can work in parallel after UX
 - Content Writer can work alongside Developer
 - Auditor can run independently
+- Analytics audit agents run independently of the website build pipeline
 
 ### On-Demand
 - Any agent can be invoked directly with its trigger command
