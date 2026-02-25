@@ -162,40 +162,80 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-### GA4 Setup
+### GA4 Setup (Consent-Aware)
 
-#### Install gtag
+> **⚠️ GDPR Compliance:** GA4 must NOT load before user consent. The implementation below uses a consent-first approach.
+
+#### Consent-Aware GA4 Component
+
+```tsx
+// components/GoogleAnalytics.tsx
+'use client'
+import Script from 'next/script'
+import { useEffect, useState } from 'react'
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID
+
+export function GoogleAnalytics() {
+  const [hasConsent, setHasConsent] = useState(false)
+  
+  useEffect(() => {
+    // Check for existing consent
+    const consent = localStorage.getItem('cookie_consent')
+    if (consent === 'accepted') {
+      setHasConsent(true)
+    }
+    
+    // Listen for consent changes
+    const handleConsentChange = (e: CustomEvent) => {
+      if (e.detail.analytics) {
+        setHasConsent(true)
+      }
+    }
+    
+    window.addEventListener('cookie_consent_update', handleConsentChange as EventListener)
+    return () => window.removeEventListener('cookie_consent_update', handleConsentChange as EventListener)
+  }, [])
+  
+  // Only load GA4 after consent
+  if (!hasConsent || !GA_ID) return null
+  
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
+    </>
+  )
+}
+```
+
+#### Root Layout (Consent-Safe)
 
 ```tsx
 // app/layout.tsx
-import Script from 'next/script'
-
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
+import { CookieConsent } from '@/components/CookieConsent'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        {GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="gtag-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `}
-            </Script>
-          </>
-        )}
-      </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <GoogleAnalytics />
+        <CookieConsent />
+      </body>
     </html>
   )
 }
@@ -504,9 +544,18 @@ console.log(window.dataLayer)
 
 ---
 
-## 7. Privacy & Consent
+## 7. Consent Management
 
-### Cookie Consent Integration
+> **⚠️ CRITICAL:** Analytics scripts must NOT load before user consent in GDPR/CCPA jurisdictions. This section covers compliant implementation.
+
+### Requirements
+
+1. **Default-off for EU visitors** — No tracking scripts load until explicit consent
+2. **Granular consent** — Users should be able to accept/reject different categories
+3. **Persistent storage** — Remember consent choice across sessions
+4. **Easy withdrawal** — Users can change their mind anytime
+
+### Cookie Consent Implementation
 
 ```tsx
 // components/CookieConsent.tsx
@@ -514,42 +563,255 @@ console.log(window.dataLayer)
 import { useState, useEffect } from 'react'
 import posthog from 'posthog-js'
 
+type ConsentState = {
+  necessary: boolean    // Always true
+  analytics: boolean    // GA4, PostHog
+  marketing: boolean    // Ads, retargeting
+}
+
+const DEFAULT_CONSENT: ConsentState = {
+  necessary: true,
+  analytics: false,  // Default OFF for GDPR compliance
+  marketing: false,
+}
+
 export function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false)
+  const [consent, setConsent] = useState<ConsentState>(DEFAULT_CONSENT)
   
   useEffect(() => {
-    const consent = localStorage.getItem('cookie_consent')
-    if (!consent) {
+    const stored = localStorage.getItem('cookie_consent')
+    if (!stored) {
       setShowBanner(true)
-      // Disable tracking until consent
+      // Disable all tracking until consent
       posthog.opt_out_capturing()
-    } else if (consent === 'accepted') {
-      posthog.opt_in_capturing()
+    } else {
+      const parsed = JSON.parse(stored) as ConsentState
+      setConsent(parsed)
+      applyConsent(parsed)
     }
   }, [])
   
-  const handleAccept = () => {
-    localStorage.setItem('cookie_consent', 'accepted')
-    posthog.opt_in_capturing()
+  const applyConsent = (newConsent: ConsentState) => {
+    // PostHog
+    if (newConsent.analytics) {
+      posthog.opt_in_capturing()
+    } else {
+      posthog.opt_out_capturing()
+    }
+    
+    // Dispatch event for GA4 and other scripts
+    window.dispatchEvent(new CustomEvent('cookie_consent_update', { 
+      detail: newConsent 
+    }))
+    
+    // Update Google Consent Mode if using GTM
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('consent', 'update', {
+        analytics_storage: newConsent.analytics ? 'granted' : 'denied',
+        ad_storage: newConsent.marketing ? 'granted' : 'denied',
+      })
+    }
+  }
+  
+  const handleAcceptAll = () => {
+    const newConsent = { necessary: true, analytics: true, marketing: true }
+    localStorage.setItem('cookie_consent', JSON.stringify(newConsent))
+    setConsent(newConsent)
+    applyConsent(newConsent)
     setShowBanner(false)
   }
   
-  const handleDecline = () => {
-    localStorage.setItem('cookie_consent', 'declined')
-    posthog.opt_out_capturing()
+  const handleAcceptNecessary = () => {
+    const newConsent = { necessary: true, analytics: false, marketing: false }
+    localStorage.setItem('cookie_consent', JSON.stringify(newConsent))
+    setConsent(newConsent)
+    applyConsent(newConsent)
     setShowBanner(false)
+  }
+  
+  const handleCustomize = () => {
+    // Open preferences modal - implement based on your UI needs
+    console.log('Open consent preferences modal')
   }
   
   if (!showBanner) return null
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
-      <p>We use cookies to improve your experience.</p>
-      <button onClick={handleAccept}>Accept</button>
-      <button onClick={handleDecline}>Decline</button>
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-lg z-50">
+      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-4">
+        <p className="text-sm flex-1">
+          We use cookies to analyze site usage and improve your experience. 
+          <button onClick={handleCustomize} className="underline ml-1">
+            Customize
+          </button>
+        </p>
+        <div className="flex gap-2">
+          <button 
+            onClick={handleAcceptNecessary}
+            className="px-4 py-2 border rounded hover:bg-gray-50"
+          >
+            Necessary Only
+          </button>
+          <button 
+            onClick={handleAcceptAll}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Accept All
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
+```
+
+### Integrating with Third-Party Consent Tools
+
+For enterprise deployments, integrate with established consent management platforms:
+
+#### Cookiebot Integration
+
+```tsx
+// components/CookiebotConsent.tsx
+'use client'
+import Script from 'next/script'
+import { useEffect } from 'react'
+import posthog from 'posthog-js'
+
+export function CookiebotConsent() {
+  useEffect(() => {
+    // Listen for Cookiebot consent
+    window.addEventListener('CookiebotOnAccept', () => {
+      if (window.Cookiebot?.consent?.statistics) {
+        posthog.opt_in_capturing()
+        window.dispatchEvent(new CustomEvent('cookie_consent_update', {
+          detail: { analytics: true }
+        }))
+      }
+    })
+  }, [])
+  
+  return (
+    <Script
+      id="Cookiebot"
+      src="https://consent.cookiebot.com/uc.js"
+      data-cbid="YOUR-COOKIEBOT-ID"
+      data-blockingmode="auto"
+      strategy="beforeInteractive"
+    />
+  )
+}
+
+declare global {
+  interface Window {
+    Cookiebot?: {
+      consent?: {
+        necessary?: boolean
+        statistics?: boolean
+        marketing?: boolean
+      }
+    }
+  }
+}
+```
+
+#### OneTrust Integration
+
+```tsx
+// Listen for OneTrust consent
+window.OneTrust?.OnConsentChanged(() => {
+  const groups = window.OnetrustActiveGroups || ''
+  
+  // C0002 = Performance/Analytics in OneTrust
+  if (groups.includes('C0002')) {
+    posthog.opt_in_capturing()
+    window.dispatchEvent(new CustomEvent('cookie_consent_update', {
+      detail: { analytics: true }
+    }))
+  }
+})
+```
+
+### Consent-Aware Analytics Helper
+
+```tsx
+// lib/analytics.ts
+import posthog from 'posthog-js'
+
+export const hasAnalyticsConsent = (): boolean => {
+  if (typeof window === 'undefined') return false
+  
+  const stored = localStorage.getItem('cookie_consent')
+  if (!stored) return false
+  
+  try {
+    const consent = JSON.parse(stored)
+    return consent.analytics === true
+  } catch {
+    return false
+  }
+}
+
+export const analytics = {
+  track: (event: string, properties?: Record<string, any>) => {
+    if (!hasAnalyticsConsent()) return
+    
+    // PostHog
+    posthog.capture(event, properties)
+    
+    // GA4
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', event, properties)
+    }
+  },
+  
+  // ... other methods
+}
+```
+
+### Geo-Based Default Consent
+
+For automatic GDPR detection:
+
+```tsx
+// middleware.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+const EU_COUNTRIES = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 
+  'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 
+  'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB']
+
+export function middleware(request: NextRequest) {
+  const response = NextResponse.next()
+  const country = request.geo?.country || ''
+  
+  // Set header for client-side GDPR detection
+  response.headers.set('x-user-country', country)
+  response.headers.set('x-requires-consent', EU_COUNTRIES.includes(country) ? 'true' : 'false')
+  
+  return response
+}
+```
+
+### Testing Consent Flow
+
+```typescript
+// Manually test consent states
+localStorage.removeItem('cookie_consent')  // Reset to show banner
+localStorage.setItem('cookie_consent', JSON.stringify({ 
+  necessary: true, 
+  analytics: true, 
+  marketing: false 
+}))
+
+// Verify PostHog state
+console.log('PostHog opted in:', !posthog.has_opted_out_capturing())
+
+// Verify GA4 state
+console.log('dataLayer:', window.dataLayer)
+```
 ```
 
 ---

@@ -224,23 +224,20 @@ Key sections in the HTML:
 
 ## Save & Deliver
 
-Save the audit report to the autonomous-proposals repo:
+Save the audit report to the project directory:
 
 ```bash
-# Save report
-mkdir -p ~/clawd/autonomous-proposals/audits
-# Write to: ~/clawd/autonomous-proposals/audits/{client}-conversion-audit-{date}.html
-
-# Deploy to docs site
-cd ~/clawd/autonomous-proposals
-git add audits/
-git commit -m "Add {client} conversion audit"
-git pull --rebase origin main && git push origin main
+# Save report to project folder
+mkdir -p projects/{client}/audits
+# Write to: projects/{client}/audits/conversion-audit-{date}.html
 ```
 
-**Report URL:** `https://docs.autonomoustech.ca/audits/{client}-conversion-audit-{date}.html`
+**Delivery options:**
+- Use `canvas action=present` to display the report inline for immediate preview
+- Share the HTML file directly with the client
+- Deploy to client's preferred hosting if configured
 
-**Alternative:** Use `canvas action=present` to display the report inline if immediate preview is needed.
+**Alternative:** For quick sharing, the report can be converted to PDF or hosted on any static file server.
 
 ---
 
@@ -272,4 +269,4 @@ git pull --rebase origin main && git push origin main
 
 ## Assets
 
-- `assets/template-audit.html` — Base HTML template (from Zenith audit)
+- `assets/template-audit.html` — Base HTML template (example audit - replace placeholders with client info)

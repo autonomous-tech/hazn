@@ -94,8 +94,8 @@ For each selected audit type, load the corresponding skill:
 | Visual/UI Audit | ui-audit | `~/clawd/skills/ui-audit/SKILL.md` |
 | CRO Audit | shopify-cro-audit (or this skill's CRO section) | `~/clawd/skills/shopify-cro-audit/SKILL.md` |
 
-Also ALWAYS load:
-- **Brand Guide:** `~/clawd/skills/brand-guide/SKILL.md` — for report styling
+Also apply:
+- **Brand styling:** Use client's brand guidelines if provided, or professional default styling
 
 ### Screenshot Capture (All Audit Types)
 
@@ -119,7 +119,7 @@ Required pages (adjust based on site type):
 - Pricing / Cart page (if applicable)
 - Checkout / Signup flow (if accessible)
 
-Save to: `~/clawd/autonomous-proposals/audits/{site-name}-assets/`
+Save to: `projects/{client}/audits/{site-name}-assets/`
 
 ---
 
@@ -187,15 +187,15 @@ Output: Prioritized issue list with CVR impact estimates.
 
 ## Report Generation
 
-### Always Use Brand Guide
+### Apply Professional Styling
 
-Load `~/clawd/skills/brand-guide/SKILL.md` and apply:
-- Autonomous logo in header
-- Radial gradient cover with score ring
+Use client's brand guidelines if provided, or apply professional defaults:
+- Clean header with client/agency logo
+- Clear score visualization
 - Section numbers (01, 02, etc.)
-- Glassmorphic cards
-- Gradient text headings
-- Positioning: "Canadian Expertise. Pakistani Efficiency. World-class Quality."
+- Card-based layout for findings
+- High-contrast, readable typography
+- Consistent color scheme throughout
 
 ### Report Structure
 
@@ -251,21 +251,17 @@ Load `~/clawd/skills/brand-guide/SKILL.md` and apply:
 ### Save & Deploy
 
 ```bash
-# Save report
-~/clawd/autonomous-proposals/audits/{site-name}-audit-{date}.html
+# Save report to project folder
+projects/{client}/audits/{site-name}-audit-{date}.html
 
 # Save assets
-~/clawd/autonomous-proposals/audits/{site-name}-assets/
-
-# Deploy
-cd ~/clawd/autonomous-proposals
-git add audits/
-git commit -m "Add {site-name} audit report"
-git pull --rebase origin main && git push origin main
-
-# Report URL
-https://pages.autonomoustech.ca/audits/{site-name}-audit-{date}.html
+projects/{client}/audits/{site-name}-assets/
 ```
+
+**Delivery options:**
+- Use `canvas action=present` for immediate preview
+- Share HTML file directly with client
+- Deploy to client's preferred hosting if configured
 
 ---
 
@@ -318,5 +314,4 @@ https://pages.autonomoustech.ca/audits/{site-name}-audit-{date}.html
 - `seo-audit` — Technical SEO
 - `ui-audit` — UX/UI patterns
 - `shopify-cro-audit` — Shopify-specific CRO
-- `brand-guide` — Report styling
 - `conversion-audit` — Landing page focus

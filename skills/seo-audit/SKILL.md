@@ -409,4 +409,4 @@ When auditing B2B SaaS websites specifically:
 
 ## Branded Report (Optional)
 
-If generating a client-facing report, use the brand guide from `/home/rizki/clawd/skills/brand-guide/SKILL.md` to create a branded HTML report.
+If generating a client-facing report, apply the client's brand guidelines if provided, or use professional styling with clean typography, adequate whitespace, and a color scheme appropriate for the client's industry.

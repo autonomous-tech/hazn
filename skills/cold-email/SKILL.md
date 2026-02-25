@@ -1,7 +1,7 @@
 ---
 name: cold-email
 description: "Write B2B cold emails and outbound sequences that get replies from enterprise buyers. Use when the user wants to write cold outreach emails, prospecting emails, SDR sequences, or ABM campaigns. Covers subject lines, opening lines, body copy, CTAs, personalization, and multi-touch follow-up sequences. Optimized for longer B2B sales cycles and multiple stakeholders."
-allowed-tools: Read, Write
+allowed-tools: Read, Write, web_search
 ---
 
 # B2B Cold Email Writing
@@ -17,6 +17,112 @@ B2B cold email is uniquely challenging:
 - **Longer sales cycles** — You're starting a conversation, not closing a deal. Patience and value-first approach.
 - **Risk-averse buyers** — Enterprise decisions involve career risk. Your email must feel safe to engage with.
 - **Sophisticated audiences** — B2B buyers can smell templates instantly. Authenticity is mandatory.
+
+---
+
+## ⚠️ CHECKPOINT: Human Approval Required
+
+**Before launching any cold email campaign, you MUST obtain explicit human approval.**
+
+This checkpoint exists because:
+- Cold email has significant legal exposure (CAN-SPAM fines up to $50,120 per email)
+- GDPR violations can result in fines up to €20M or 4% of global revenue
+- Domain reputation damage is often irreversible
+- Blacklisting can cripple your entire email infrastructure
+
+### Required Before Sending
+1. **Legal review** — Confirm compliance with CAN-SPAM/GDPR requirements (see below)
+2. **List verification** — Confirm email list source is legitimate and consent-appropriate
+3. **Domain check** — Verify sending domain reputation and warm-up status
+4. **Human sign-off** — Get explicit "approved to send" from campaign owner
+
+**Never auto-send cold emails without human checkpoint.**
+
+---
+
+## Legal Compliance
+
+Cold email is heavily regulated. Non-compliance can result in massive fines, domain blacklisting, and reputational damage.
+
+### CAN-SPAM Requirements (United States)
+
+All commercial emails to US recipients must comply:
+
+| Requirement | What It Means |
+|-------------|---------------|
+| **No deceptive headers** | "From," "To," "Reply-To" must be accurate |
+| **No misleading subject lines** | Subject must relate to email content |
+| **Identify as advertisement** | Must be clear it's commercial (if applicable) |
+| **Physical address required** | Valid postal address in every email |
+| **Unsubscribe mechanism** | Clear, working opt-out in every email |
+| **Honor opt-outs within 10 days** | Process unsubscribes promptly |
+| **Monitor third parties** | You're liable even if someone else sends on your behalf |
+
+**Penalty:** Up to $50,120 per violation (per email sent)
+
+### GDPR Requirements (European Union)
+
+For EU recipients, stricter rules apply:
+
+| Requirement | What It Means |
+|-------------|---------------|
+| **Legitimate interest basis** | Document why you believe recipient would benefit |
+| **Easy right to object** | One-click unsubscribe, no barriers |
+| **Data minimization** | Only collect/store what's necessary |
+| **Transparency** | Be clear about who you are and how you got their data |
+| **Record keeping** | Document your legitimate interest assessment |
+| **Data subject rights** | Honor access, deletion, and portability requests |
+
+**Best practice:** For B2B cold email under GDPR, legitimate interest typically requires:
+- Recipient's role is relevant to your offer
+- Offer provides genuine potential value to their business
+- You can demonstrate a reasonable expectation of interest
+- Easy opt-out is prominently provided
+
+**Penalty:** Up to €20 million or 4% of global annual revenue
+
+### Best Practices for Compliance
+
+**Every cold email MUST include:**
+- [ ] Clear sender identification (real name, real company)
+- [ ] Valid physical mailing address
+- [ ] Working unsubscribe link or clear opt-out instructions
+- [ ] Honest subject line that reflects content
+
+**List hygiene:**
+- Verify email addresses before sending (reduce bounces)
+- Remove hard bounces immediately
+- Honor unsubscribes within 24-48 hours (not just within 10 days)
+- Never email purchased lists without verification
+- Maintain suppression lists across all campaigns
+
+**Domain reputation protection:**
+- Warm up new sending domains gradually (start with 20-50/day)
+- Monitor bounce rates (keep under 2%)
+- Monitor spam complaints (keep under 0.1%)
+- Use dedicated sending domains (protect your main domain)
+- Implement SPF, DKIM, and DMARC authentication
+
+### ⚠️ Domain Reputation Warnings
+
+**Domain reputation damage is often permanent.** Once blacklisted:
+- Your emails go straight to spam (even to existing customers)
+- Recovery takes months and isn't guaranteed
+- You may need to abandon the domain entirely
+
+**High-risk behaviors:**
+- Sending to unverified lists
+- High bounce rates (>5%)
+- Spam complaints (>0.1%)
+- Sending too much too fast on a new domain
+- Inconsistent sending patterns
+- No authentication (SPF/DKIM/DMARC)
+
+**Monitor these tools:**
+- Google Postmaster Tools
+- Microsoft SNDS
+- MXToolbox blacklist checker
+- Your ESP's reputation dashboard
 
 ---
 

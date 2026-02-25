@@ -383,6 +383,164 @@ Before delivering a sequence:
 
 ---
 
+## ⚠️ CHECKPOINT: Stakeholder Review Required
+
+**Before activating any email sequence, obtain stakeholder approval.**
+
+### Required Before Activation
+1. **Content review** — Stakeholder reviews all email copy and CTAs
+2. **Timing validation** — Confirm sequence timing aligns with sales process
+3. **Segment verification** — Confirm audience segments are correctly defined
+4. **Integration test** — Send test emails through actual ESP to verify:
+   - Links work correctly
+   - Personalization renders properly
+   - Unsubscribe works
+   - Emails display correctly on mobile
+5. **Legal check** — Verify CAN-SPAM/GDPR compliance (physical address, unsubscribe)
+6. **Explicit sign-off** — Get written approval before going live
+
+**Never activate sequences without stakeholder checkpoint.**
+
+---
+
+## Implementation
+
+Copy is only half the work. Here's how to actually deploy these sequences.
+
+### Recommended ESPs for B2B
+
+| ESP | Best For | Pricing | Key Strength |
+|-----|----------|---------|--------------|
+| **Customer.io** | Product-led growth, SaaS | From $100/mo | Behavior-triggered sequences, technical flexibility |
+| **HubSpot** | Full-funnel B2B | From $45/mo (Starter) | CRM integration, lead scoring, all-in-one |
+| **ActiveCampaign** | SMB to mid-market | From $29/mo | Automation builder, good deliverability |
+| **Mailchimp** | Simple sequences | From $13/mo | Easy setup, good for basics |
+| **Klaviyo** | E-commerce + B2B hybrid | From $45/mo | Strong segmentation, revenue attribution |
+| **Intercom** | In-app + email | From $74/mo | Product messaging, chat + email unified |
+
+### Basic Setup Steps
+
+**Customer.io:**
+1. Create workspace → Connect data source (Segment, API, or CSV)
+2. Define segments based on attributes/behaviors
+3. Create Campaign → Choose "Message workflow"
+4. Build sequence with delays and conditions
+5. Set entry/exit conditions
+6. Enable "Test mode" first
+
+**HubSpot:**
+1. Marketing → Email → Create automated email
+2. Build individual emails with smart content
+3. Automation → Workflows → Create workflow
+4. Choose enrollment trigger (form, list, property)
+5. Add emails with delays between
+6. Set goal criteria for auto-exit
+7. Test with internal contacts first
+
+**ActiveCampaign:**
+1. Automations → Create automation
+2. Choose trigger (tag, list, behavior)
+3. Add email actions with wait steps
+4. Set conditions for branching logic
+5. Configure goal tracking
+6. Test with seed list
+
+**Mailchimp:**
+1. Automations → Customer Journeys
+2. Choose starting point trigger
+3. Add email steps with time delays
+4. Set up basic conditional logic
+5. Preview and test each email
+6. Start journey
+
+### Trigger Configuration
+
+**Common triggers:**
+- Form submission (lead magnet, demo request)
+- List/segment membership
+- Tag added (from sales, integrations)
+- Product behavior (sign-up, feature use, inactivity)
+- Property change (lifecycle stage, score threshold)
+- Date-based (trial expiry, renewal date)
+
+**Exit conditions:**
+- Converted (meeting booked, purchase made)
+- Unsubscribed
+- Moved to different sequence
+- Manual removal by sales
+- Goal achieved (specific action taken)
+
+### Testing Checklist Before Launch
+
+- [ ] All links work (tracked and untracked)
+- [ ] Personalization renders for all segments
+- [ ] Fallback values work when data is missing
+- [ ] Images display correctly
+- [ ] Unsubscribe link works and updates preferences
+- [ ] Reply-to address is monitored
+- [ ] Mobile rendering is acceptable
+- [ ] Sequence timing fires correctly
+- [ ] Entry conditions capture intended audience only
+- [ ] Exit conditions prevent over-emailing
+
+---
+
+## Email Deliverability Basics
+
+Great copy means nothing if emails land in spam. Nail these fundamentals.
+
+### Authentication (Non-Negotiable)
+
+| Protocol | What It Does | Priority |
+|----------|--------------|----------|
+| **SPF** | Declares which servers can send for your domain | Required |
+| **DKIM** | Cryptographically signs emails to prove authenticity | Required |
+| **DMARC** | Tells receivers what to do with failed SPF/DKIM | Required |
+
+**Setup:** Usually configured in your DNS. Most ESPs provide the exact records to add.
+
+### Domain Warm-Up
+
+New sending domains need gradual volume increases:
+
+| Week | Daily Volume | Notes |
+|------|--------------|-------|
+| 1 | 20-50 | Send to most engaged contacts only |
+| 2 | 50-100 | Expand to engaged segment |
+| 3 | 100-250 | Include broader audience |
+| 4 | 250-500 | Monitor metrics closely |
+| 5+ | Increase 50-100%/week | Until target volume reached |
+
+**Warning signs to pause:**
+- Bounce rate >2%
+- Spam complaints >0.1%
+- Sudden open rate drops
+- Gmail/Microsoft blocking
+
+### List Hygiene
+
+- **Verify before importing** — Use tools like NeverBounce, ZeroBounce
+- **Remove hard bounces immediately** — Don't retry bad addresses
+- **Sunset unengaged contacts** — No opens in 90+ days? Stop emailing
+- **Honor unsubscribes instantly** — Not "within 10 days," but now
+- **Segment by engagement** — Send more to engaged, less to cold
+
+### Monitoring
+
+Track these continuously:
+- **Bounce rate** — Target <2% (hard bounces = immediate removal)
+- **Spam complaint rate** — Target <0.1% (danger zone >0.3%)
+- **Open rate trends** — Sudden drops indicate problems
+- **Inbox placement** — Use tools like GlockApps, Validity
+
+**Tools to monitor:**
+- Google Postmaster Tools (Gmail reputation)
+- Microsoft SNDS (Outlook reputation)
+- Your ESP's deliverability dashboard
+- Third-party inbox testing (Litmus, Email on Acid)
+
+---
+
 ## Related Skills
 
 - **cold-email**: For outbound prospecting (not lifecycle/nurture)

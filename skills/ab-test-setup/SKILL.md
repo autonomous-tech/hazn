@@ -211,15 +211,30 @@ export function HeroHeadline() {
 
 ```tsx
 // app/page.tsx
+import { cookies } from 'next/headers'
 import { PostHog } from 'posthog-node'
 
 export default async function HomePage() {
   const posthog = new PostHog(process.env.POSTHOG_API_KEY!)
   
-  // Get or create distinct ID from cookies
-  const distinctId = cookies().get('ph_distinct_id')?.value || crypto.randomUUID()
+  let distinctId: string
+  let variant: string | boolean | undefined
   
-  const variant = await posthog.getFeatureFlag('homepage-headline-test', distinctId)
+  try {
+    // Get or create distinct ID from cookies
+    const cookieStore = await cookies()
+    distinctId = cookieStore.get('ph_distinct_id')?.value || crypto.randomUUID()
+    
+    variant = await posthog.getFeatureFlag('homepage-headline-test', distinctId)
+  } catch (error) {
+    // Fallback if cookies fail (e.g., during static generation)
+    console.error('Failed to get feature flag:', error)
+    distinctId = crypto.randomUUID()
+    variant = 'control'
+  } finally {
+    // Always shutdown PostHog client to flush events
+    await posthog.shutdown()
+  }
   
   return <HeroSection variant={variant} />
 }
