@@ -19,11 +19,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/autonomous-tech/hazn"
+    "url": "git+https://github.com/autonomous-tech/hazn.git"
   },
   "homepage": "https://hazn.dev",
   "bin": {
-    "hazn": "./bin/cli.js"
+    "hazn": "bin/cli.js"
   },
   "main": "./src/index.js",
   "type": "module",
@@ -45,12 +45,19 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
     "inquirer": "^9.2.23",
     "ora": "^8.0.1",
-    "yaml": "^2.4.1",
-    "fs-extra": "^11.2.0"
+    "yaml": "^2.4.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "eslint": "^9.0.0"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "bugs": {
+    "url": "https://github.com/autonomous-tech/hazn/issues"
   }
 }

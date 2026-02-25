@@ -2,1004 +2,1086 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <!-- Primary Meta Tags -->
-  <title>Hazn — AI Marketing Framework for Claude Code & Cursor</title>
-  <meta name="description" content="Transform Claude Code into a team of 8 AI marketing experts. Build high-converting B2B websites with 22 specialized skills. 100% open source. Get started free.">
-  <meta name="keywords" content="AI marketing framework, Claude Code skills, AI website development, B2B website automation, AI SEO tools, marketing AI agent, AI coding assistant, website builder">
-  <meta name="author" content="Autonomous">
-  <meta name="robots" content="index, follow">
+  <title>Hazn: AI Marketing Agents for Technical Founders</title>
+  <meta name="description" content="10 AI marketing agents that work as a team. Strategy, copy, SEO, development. Works with Claude Code and Cursor. Join the waitlist for early access.">
+  <meta name="author" content="Abdullah and Rizwan, Autonomous">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="keywords" content="AI marketing agents, AI marketing framework, marketing automation for startups, AI marketing team, Claude Code marketing">
   
   <!-- Canonical -->
-  <link rel="canonical" href="https://hazn.dev/">
+  <link rel="canonical" href="https://rizqaiser.com/hazn">
   
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://hazn.dev/">
-  <meta property="og:title" content="Hazn — AI Marketing Framework for Claude Code & Cursor">
-  <meta property="og:description" content="Transform your AI coding assistant into a team of 8 marketing experts. Build strategy-informed, conversion-optimized B2B websites. Open source.">
-  <meta property="og:image" content="https://hazn.dev/og-image.png">
+  <meta property="og:url" content="https://rizqaiser.com/hazn">
+  <meta property="og:title" content="Hazn: AI Marketing Agents for Technical Founders">
+  <meta property="og:description" content="10 AI marketing agents that work as a coordinated team. From strategy to shipped landing pages. Built for founders who can build anything but struggle to market it.">
+  <meta property="og:image" content="https://rizqaiser.com/hazn/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="Hazn">
+  <meta property="og:image:alt" content="Hazn AI Marketing Framework: 10 agents, 22 skills, 6 workflows">
+  <meta property="og:site_name" content="Hazn by Autonomous">
+  <meta property="og:locale" content="en_US">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://hazn.dev/">
-  <meta name="twitter:title" content="Hazn — AI Marketing Framework for Claude Code & Cursor">
-  <meta name="twitter:description" content="8 AI expert agents. 22 domain skills. Build high-converting B2B websites with your AI coding assistant. 100% open source.">
-  <meta name="twitter:image" content="https://hazn.dev/og-image.png">
+  <meta name="twitter:site" content="@autonomous">
+  <meta name="twitter:creator" content="@autonomous">
+  <meta name="twitter:title" content="Hazn: AI Marketing Agents for Technical Founders">
+  <meta name="twitter:description" content="10 AI marketing agents that work as a team. Strategy, copy, SEO, development. Works with Claude Code and Cursor.">
+  <meta name="twitter:image" content="https://rizqaiser.com/hazn/og-image.png">
+  <meta name="twitter:image:alt" content="Hazn AI Marketing Framework">
   
-  <!-- Additional SEO -->
-  <meta name="theme-color" content="#0a0a0b">
-  <link rel="icon" type="image/png" href="/favicon.png">
+  <!-- Theme -->
+  <meta name="theme-color" content="#0A0A0B">
   
-  <!-- Mobile PWA -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Hazn">
-  
-  <!-- Preload critical resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://github.com">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   
   <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
+          colors: {
+            bg: '#0A0A0B',
+            surface: '#141416',
+            'surface-hover': '#1C1C1F',
+            border: '#27272A',
+            'border-hover': '#3F3F46',
+            'text-primary': '#FAFAFA',
+            'text-secondary': '#A1A1AA',
+            'text-muted': '#71717A',
+            accent: '#3B82F6',
+            'accent-hover': '#60A5FA',
+            success: '#22C55E',
+          },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
           },
-          colors: {
-            dark: {
-              900: '#0a0a0b',
-              800: '#111113',
-              700: '#18181b',
-              600: '#27272a',
-              500: '#3f3f46',
-            },
-            accent: {
-              blue: '#3b82f6',
-              purple: '#8b5cf6',
-              cyan: '#06b6d4',
-            }
-          }
-        }
-      }
+        },
+      },
     }
   </script>
   
-  <!-- JSON-LD Schema Markup -->
+  <!-- Schema Markup: SoftwareApplication -->
   <script type="application/ld+json">
-  [
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Hazn",
-      "alternateName": "Hazn AI Marketing Framework",
-      "description": "An AI-driven marketing website development framework that transforms Claude Code, Cursor, and Windsurf into a team of 8 specialized marketing experts with 22 production skills.",
-      "url": "https://hazn.dev",
-      "applicationCategory": "DeveloperApplication",
-      "applicationSubCategory": "AI Marketing Tools",
-      "operatingSystem": "Cross-platform",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "featureList": [
-        "8 Expert AI Agents",
-        "22 Domain Skills",
-        "6 Structured Workflows",
-        "B2B Marketing UX Strategy",
-        "Conversion Copywriting",
-        "SEO & AI Visibility Optimization",
-        "Next.js + Payload CMS Development",
-        "A/B Testing & CRO"
-      ],
-      "softwareRequirements": "Claude Code, Cursor, or Windsurf",
-      "author": {
-        "@type": "Organization",
-        "name": "Autonomous",
-        "url": "https://autonomous.so"
-      },
-      "license": "https://opensource.org/licenses/MIT",
-      "isAccessibleForFree": true,
-      "downloadUrl": "https://github.com/autonomous-tech/hazn"
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Hazn",
+    "applicationCategory": "BusinessApplication",
+    "applicationSubCategory": "Marketing Automation",
+    "description": "AI marketing framework with 10 specialized agents that work as a coordinated team. Includes strategist, copywriter, SEO specialist, developer, and more. Works with Claude Code, Cursor, and Windsurf.",
+    "operatingSystem": "Cross-platform",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/PreOrder",
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Waitlist open for early access"
     },
-    {
-      "@context": "https://schema.org",
+    "featureList": [
+      "10 specialized AI marketing agents",
+      "22 marketing skills",
+      "6 automated workflows",
+      "Claude Code integration",
+      "Cursor integration",
+      "Windsurf integration",
+      "Strategy to production pipeline",
+      "SEO optimization",
+      "Landing page generation",
+      "Content writing"
+    ],
+    "softwareVersion": "2.0",
+    "author": {
       "@type": "Organization",
       "name": "Autonomous",
-      "alternateName": "Autonomous Tech",
-      "url": "https://autonomous.so",
-      "logo": "https://autonomous.so/logo.png",
-      "description": "Building AI-powered tools for marketing and web development. Creator of Hazn, the AI marketing framework.",
-      "sameAs": ["https://github.com/autonomous-tech"]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is Hazn?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hazn is an AI-driven marketing website development framework that transforms AI coding assistants like Claude Code, Cursor, and Windsurf into a team of 8 specialized marketing experts with 22 domain skills and 6 structured workflows."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does Hazn work with Claude Code?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hazn installs as a set of skills and agent configurations in your project. When you use Claude Code, Cursor, or Windsurf, these AI assistants gain access to specialized marketing knowledge including strategy, UX architecture, copywriting, development, and SEO expertise."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What AI agents are included in Hazn?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hazn includes 8 expert AI agents: Strategist (market positioning), UX Architect (page blueprints), Copywriter (conversion copy), Wireframer (layouts), Developer (Next.js + Payload CMS), SEO Specialist (technical SEO), Content Writer (blog posts), and Auditor (comprehensive site audits)."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Hazn free to use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, Hazn is 100% open source and free to use under the MIT license. Available on GitHub."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What tech stack does Hazn use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hazn's Developer agent builds websites using Next.js 14, Payload CMS, and Tailwind CSS for production-ready B2B websites."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does Hazn support AI SEO?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, with GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization) skills for AI search visibility and citations."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Who created Hazn?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hazn was created by Autonomous (autonomous.so), a company building AI-powered tools for marketing and web development."
-          }
-        }
-      ]
+      "url": "https://autonomous.agency"
     }
-  ]
+  }
+  </script>
+  
+  <!-- Schema Markup: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Autonomous",
+    "url": "https://autonomous.agency",
+    "logo": "https://autonomous.agency/logo.png",
+    "description": "Product studio building AI-powered tools for technical founders and marketing teams. Created Hazn, the AI marketing framework.",
+    "foundingDate": "2020",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Abdullah",
+        "jobTitle": "Co-founder",
+        "description": "Technical founder with 15+ years building products and websites"
+      },
+      {
+        "@type": "Person",
+        "name": "Rizwan",
+        "jobTitle": "Co-founder",
+        "description": "Technical founder with 20+ years building products and websites"
+      }
+    ],
+    "knowsAbout": [
+      "AI Marketing",
+      "Marketing Automation",
+      "B2B Marketing",
+      "Product Development",
+      "AI Agents"
+    ],
+    "sameAs": [
+      "https://twitter.com/autonomous",
+      "https://github.com/autonomous"
+    ]
+  }
+  </script>
+  
+  <!-- Schema Markup: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Hazn?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hazn is an AI marketing framework that provides 10 specialized marketing agents working as a coordinated team. It includes a Strategist, Copywriter, SEO Specialist, UX Architect, Wireframer, Developer, Content Writer, and Auditors. Built for technical founders and marketing teams, Hazn integrates directly with Claude Code, Cursor, and Windsurf."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Hazn differ from ChatGPT or other AI writing tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unlike single-purpose AI tools, Hazn provides 10 specialized agents that work together like a real marketing team. Each agent has deep expertise in their domain. They hand work to each other automatically. ChatGPT is a smart intern. Hazn is a senior marketing team that has worked together for years. It ships production-ready outputs, not drafts that need heavy editing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What coding assistants does Hazn work with?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hazn works with Claude Code, Cursor, Windsurf, and Clawdbot. If you already use any of these coding assistants, you can start using Hazn immediately with zero learning curve. Just type commands like /website or /landing and your marketing team gets to work."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What can Hazn create?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hazn creates production-ready marketing assets including full landing pages with HTML/CSS, SEO-optimized blog content, marketing strategy documents, website copy, email sequences, and social media content. It handles the complete workflow from strategy to shipped production code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who built Hazn and why?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hazn was built by Abdullah and Rizwan at Autonomous, who have 35 years combined experience building over 100 websites and apps. Marketing was always their bottleneck. They built Hazn as the AI marketing team they wished existed, specifically for technical founders who can build anything but struggle with marketing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does Hazn cost compared to hiring marketers or agencies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hazn costs a fraction of traditional options. Hiring a single marketer costs $120K to $180K per year. Marketing agencies charge $15K to $50K per month. Hazn delivers agency-quality work without agency timelines, politics, or invoices. Early access members get founding member pricing locked in permanently."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the benefits of joining the Hazn waitlist?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Waitlist members get early access before public launch, founding member pricing locked in forever, direct access to founders via Slack, ability to shape the product roadmap, extended 60-day trial instead of 14 days, and private community access with other early users."
+        }
+      }
+    ]
+  }
   </script>
   
   <style>
+    /* Base styles */
     html {
       scroll-behavior: smooth;
     }
     
-    /* Tab functionality with CSS */
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    
-    /* Code block styling */
-    .code-block {
-      background: #18181b;
-      border: 1px solid #27272a;
-      border-radius: 8px;
-      overflow-x: auto;
+    body {
+      background-color: #0A0A0B;
+      color: #FAFAFA;
+      font-family: 'Inter', system-ui, sans-serif;
     }
     
-    /* Sticky header background transition */
-    .header-bg {
+    /* Background gradient mesh */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .bg-mesh::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+      animation: meshFloat 20s ease-in-out infinite;
+    }
+    
+    .bg-mesh::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+      animation: meshFloat 25s ease-in-out infinite reverse;
+    }
+    
+    @keyframes meshFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(5%, 5%); }
+    }
+    
+    /* Dot grid overlay */
+    .dot-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(circle, #27272A 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.5;
+    }
+    
+    /* Animation classes */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 600ms ease-out, transform 600ms ease-out;
+    }
+    
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transition: opacity 500ms ease-out;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+    }
+    
+    /* Stagger animation delays */
+    .stagger-1 { transition-delay: 50ms; }
+    .stagger-2 { transition-delay: 100ms; }
+    .stagger-3 { transition-delay: 150ms; }
+    .stagger-4 { transition-delay: 200ms; }
+    .stagger-5 { transition-delay: 250ms; }
+    .stagger-6 { transition-delay: 300ms; }
+    .stagger-7 { transition-delay: 350ms; }
+    .stagger-8 { transition-delay: 400ms; }
+    .stagger-9 { transition-delay: 450ms; }
+    .stagger-10 { transition-delay: 500ms; }
+    
+    /* Terminal styling */
+    .terminal {
+      background: #141416;
+      border: 1px solid #27272A;
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .terminal-header {
+      background: #1C1C1F;
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid #27272A;
+    }
+    
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .terminal-body {
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    
+    .terminal-line {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: terminalFadeIn 400ms ease-out forwards;
+    }
+    
+    @keyframes terminalFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Typing cursor */
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 18px;
+      background: #3B82F6;
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    /* Sticky header */
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
       background: rgba(10, 10, 11, 0.8);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #27272A;
+      transform: translateY(-100%);
+      transition: transform 300ms ease-out;
     }
     
-    /* Details/summary styling */
-    details summary {
-      cursor: pointer;
-      list-style: none;
-    }
-    details summary::-webkit-details-marker { display: none; }
-    details summary::before {
-      content: '+';
-      font-family: monospace;
-      font-weight: bold;
-      margin-right: 12px;
-      color: #3b82f6;
-    }
-    details[open] summary::before { content: '−'; }
-    
-    /* Gradient text */
-    .gradient-text {
-      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .sticky-header.visible {
+      transform: translateY(0);
     }
     
-    /* Subtle card hover */
+    /* Button glow effect */
+    .btn-primary {
+      position: relative;
+      background: #3B82F6;
+      transition: all 200ms ease-out;
+    }
+    
+    .btn-primary:hover {
+      background: #60A5FA;
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+    
+    /* Card hover effect */
+    .card-hover {
+      transition: all 200ms ease-out;
+    }
+    
     .card-hover:hover {
+      border-color: #3F3F46;
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
-
-<body class="bg-dark-900 text-gray-100 font-sans antialiased">
+<body class="antialiased">
+  <!-- Background effects -->
+  <div class="bg-mesh"></div>
+  <div class="dot-grid"></div>
   
-  <!-- Skip Navigation -->
-  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-accent-blue px-4 py-2 rounded-lg z-50">
-    Skip to main content
-  </a>
-
-  <!-- Header -->
-  <header class="fixed top-0 left-0 right-0 z-50 header-bg border-b border-dark-600/50">
-    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
-        <a href="#" class="flex items-center gap-2 font-semibold text-lg">
-          <span class="text-2xl">⚡</span>
-          <span>Hazn</span>
-        </a>
-        
-        <!-- Desktop Nav -->
-        <div class="hidden md:flex items-center gap-8">
-          <a href="#capabilities" class="text-gray-400 hover:text-white transition-colors">Capabilities</a>
-          <a href="#workflows" class="text-gray-400 hover:text-white transition-colors">Workflows</a>
-          <a href="#skills" class="text-gray-400 hover:text-white transition-colors">Skills</a>
-          <a href="#faq" class="text-gray-400 hover:text-white transition-colors">FAQ</a>
-        </div>
-        
-        <!-- CTAs -->
-        <div class="flex items-center gap-3">
-          <a href="https://github.com/autonomous-tech/hazn" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            <span>GitHub</span>
-          </a>
-          <a href="#quick-start" class="bg-accent-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-            Get Started
-          </a>
-        </div>
-      </div>
-    </nav>
+  <!-- Sticky Header -->
+  <header class="sticky-header" id="stickyHeader">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="text-xl font-semibold text-text-primary">Hazn</a>
+      <a href="#waitlist" class="btn-primary px-4 py-2 text-sm font-medium text-white rounded-lg">
+        Join Waitlist
+      </a>
+    </div>
   </header>
-
-  <main id="main">
-    
-    <!-- Hero Section -->
-    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-4xl mx-auto text-center">
-        <!-- Logo/Avatar -->
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-blue to-accent-purple mb-8">
-          <span class="text-4xl">⚡</span>
-        </div>
-        
-        <!-- Headline -->
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-          Turn Your AI Assistant Into a <span class="gradient-text">Marketing Team</span>
-        </h1>
-        
-        <!-- Subheadline -->
-        <p class="text-lg sm:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-          22 specialized skills transform Claude, Cursor, or any AI coding assistant into strategists, copywriters, and conversion experts.
-        </p>
-        
-        <!-- Stats -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mb-10">
-          <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold font-mono text-white">22</div>
-            <div class="text-sm text-gray-500 uppercase tracking-wider">Skills</div>
+  
+  <!-- Section 1: Hero -->
+  <section class="min-h-screen flex items-center pt-16 pb-24 px-6">
+    <div class="max-w-6xl mx-auto w-full">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Left: Content -->
+        <div class="space-y-8">
+          <p class="fade-up text-text-muted text-sm font-medium tracking-wide uppercase">
+            For technical founders and marketing leaders
+          </p>
+          
+          <h1 class="fade-up text-4xl sm:text-5xl lg:text-6xl font-semibold text-text-primary leading-tight tracking-tight" style="transition-delay: 100ms;">
+            Your Coding Assistant. Now a Marketing Team.
+          </h1>
+          
+          <p class="fade-up text-lg sm:text-xl text-text-secondary leading-relaxed max-w-xl" style="transition-delay: 200ms;">
+            An AI marketing framework for builders who can create anything but struggle to market it. 10 specialized agents, 22 skills, 6 workflows. Works inside Claude Code, Cursor, and Windsurf.
+          </p>
+          
+          <div class="fade-up space-y-4" style="transition-delay: 300ms;">
+            <a href="#waitlist" class="btn-primary inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white rounded-lg">
+              Join the Waitlist
+            </a>
+            <p class="text-text-muted text-sm">
+              No spam. Updates every 2 weeks.
+            </p>
           </div>
-          <div class="hidden sm:block w-px h-12 bg-dark-600"></div>
-          <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold font-mono text-white">6</div>
-            <div class="text-sm text-gray-500 uppercase tracking-wider">Workflows</div>
-          </div>
-          <div class="hidden sm:block w-px h-12 bg-dark-600"></div>
-          <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold font-mono text-white">8</div>
-            <div class="text-sm text-gray-500 uppercase tracking-wider">Agents</div>
+          
+          <div class="fade-up pt-4" style="transition-delay: 400ms;">
+            <p class="text-text-muted text-sm">
+              Built by the team at Autonomous. 35 years building products. 100s of websites and apps.
+            </p>
           </div>
         </div>
         
-        <!-- CTAs -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#quick-start" class="w-full sm:w-auto bg-accent-blue hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-medium transition-colors text-center">
-            Get Started Free
-          </a>
-          <a href="https://github.com/autonomous-tech/hazn" target="_blank" rel="noopener" class="w-full sm:w-auto border border-dark-500 hover:border-dark-400 text-white px-8 py-3 rounded-lg font-medium transition-colors text-center flex items-center justify-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            View Documentation
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- What is Hazn? -->
-    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 border-t border-dark-700" aria-label="About Hazn">
-      <div class="max-w-3xl mx-auto text-center">
-        <p class="text-lg sm:text-xl text-gray-300 leading-relaxed">
-          <strong class="text-white">Hazn</strong> is an open-source framework that gives AI coding assistants B2B marketing expertise. Instead of hiring specialists or learning complex tools, you describe what you need—and Hazn orchestrates the right combination of skills to deliver strategy documents, optimized copy, full websites, and conversion audits.
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-gray-500">
-          <span class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Claude Code</span>
-          <span class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Cursor</span>
-          <span class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Windsurf</span>
-          <span class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Clawdbot</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Quick Start -->
-    <section id="quick-start" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-800 border-t border-dark-700">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">Quick Start</h2>
-          <p class="text-gray-400">Install Hazn in under a minute. Choose your environment:</p>
-        </div>
-        
-        <!-- Tabs -->
-        <div class="mb-6">
-          <div class="flex flex-wrap gap-2 justify-center" role="tablist">
-            <button role="tab" aria-selected="true" aria-controls="tab-claude" id="btn-claude" class="tab-btn px-4 py-2 rounded-lg font-medium transition-colors bg-accent-blue text-white" onclick="switchTab('claude')">
-              Claude Code
-            </button>
-            <button role="tab" aria-selected="false" aria-controls="tab-cursor" id="btn-cursor" class="tab-btn px-4 py-2 rounded-lg font-medium transition-colors bg-dark-700 text-gray-400 hover:text-white" onclick="switchTab('cursor')">
-              Cursor
-            </button>
-            <button role="tab" aria-selected="false" aria-controls="tab-windsurf" id="btn-windsurf" class="tab-btn px-4 py-2 rounded-lg font-medium transition-colors bg-dark-700 text-gray-400 hover:text-white" onclick="switchTab('windsurf')">
-              Windsurf
-            </button>
-            <button role="tab" aria-selected="false" aria-controls="tab-clawdbot" id="btn-clawdbot" class="tab-btn px-4 py-2 rounded-lg font-medium transition-colors bg-dark-700 text-gray-400 hover:text-white" onclick="switchTab('clawdbot')">
-              Clawdbot
-            </button>
-            <button role="tab" aria-selected="false" aria-controls="tab-manual" id="btn-manual" class="tab-btn px-4 py-2 rounded-lg font-medium transition-colors bg-dark-700 text-gray-400 hover:text-white" onclick="switchTab('manual')">
-              Manual
-            </button>
-          </div>
-        </div>
-        
-        <!-- Tab Panels -->
-        <div class="code-block p-6">
-          <!-- Claude Code -->
-          <div id="tab-claude" role="tabpanel" class="tab-content active" aria-labelledby="btn-claude">
-            <div class="space-y-4">
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 1: Add Hazn to Claude Code</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">claude mcp add hazn -- npx -y @anthropic/hazn</code>
+        <!-- Right: Terminal -->
+        <div class="fade-up" style="transition-delay: 500ms;">
+          <div class="terminal">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-red-500"></div>
+              <div class="terminal-dot bg-yellow-500"></div>
+              <div class="terminal-dot bg-green-500"></div>
+            </div>
+            <div class="terminal-body text-text-secondary">
+              <div class="terminal-line" style="animation-delay: 800ms;">
+                <span class="text-text-muted">$</span> <span class="text-accent">/marketing</span>
               </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 2: Start building</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">/website</code>
+              <div class="terminal-line mt-4" style="animation-delay: 1200ms;">
+                <span class="text-text-muted">Running workflow: marketing-team</span>
+              </div>
+              <div class="terminal-line mt-2" style="animation-delay: 1600ms;">
+                <span class="text-success">&#10003;</span> Strategist analyzing positioning...
+              </div>
+              <div class="terminal-line mt-2" style="animation-delay: 2000ms;">
+                <span class="text-success">&#10003;</span> UX Architect planning flow...
+              </div>
+              <div class="terminal-line mt-2" style="animation-delay: 2400ms;">
+                <span class="text-success">&#10003;</span> Copywriter drafting headlines...
+              </div>
+              <div class="terminal-line mt-2" style="animation-delay: 2800ms;">
+                <span class="text-success">&#10003;</span> SEO Specialist optimizing...
+              </div>
+              <div class="terminal-line mt-2" style="animation-delay: 3200ms;">
+                <span class="text-success">&#10003;</span> Developer building pages...
+              </div>
+              <div class="terminal-line mt-4" style="animation-delay: 3600ms;">
+                <span class="text-accent">10 agents complete.</span> Ready to deploy.<span class="cursor"></span>
               </div>
             </div>
-          </div>
-          
-          <!-- Cursor -->
-          <div id="tab-cursor" role="tabpanel" class="tab-content" aria-labelledby="btn-cursor">
-            <div class="space-y-4">
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 1: Open Cursor Settings</p>
-                <code class="text-gray-300 font-mono text-sm sm:text-base block">Settings → MCP → Add Server</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 2: Add the MCP server</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">npx -y @anthropic/hazn</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 3: Restart Cursor</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Windsurf -->
-          <div id="tab-windsurf" role="tabpanel" class="tab-content" aria-labelledby="btn-windsurf">
-            <div class="space-y-4">
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 1: Open Command Palette</p>
-                <code class="text-gray-300 font-mono text-sm sm:text-base block">Cmd/Ctrl+Shift+P → "Add MCP Server"</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 2: Enter the server command</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">npx -y @anthropic/hazn</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 3: Reload window</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Clawdbot -->
-          <div id="tab-clawdbot" role="tabpanel" class="tab-content" aria-labelledby="btn-clawdbot">
-            <div class="space-y-4">
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Install with one command</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">clawdbot skill install hazn</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Skills load automatically for all agents</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Manual -->
-          <div id="tab-manual" role="tabpanel" class="tab-content" aria-labelledby="btn-manual">
-            <div class="space-y-4">
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 1: Clone the repository</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">git clone https://github.com/autonomous-tech/hazn</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 2: Copy skills to your project</p>
-                <code class="text-green-400 font-mono text-sm sm:text-base block">cp -r hazn/.hazn your-project/</code>
-              </div>
-              <div>
-                <p class="text-gray-400 text-sm mb-2"># Step 3: Restart your AI assistant</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <p class="text-center text-gray-500 mt-6">
-          Need help? <a href="https://github.com/autonomous-tech/hazn#readme" target="_blank" rel="noopener" class="text-accent-blue hover:underline">View full documentation →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- Key Capabilities -->
-    <section id="capabilities" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-dark-700">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">Key Capabilities</h2>
-          <p class="text-gray-400">Everything you need to build high-converting B2B websites</p>
-        </div>
-        
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- AI SEO -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <div class="text-3xl mb-4">🔍</div>
-            <h3 class="text-lg font-semibold mb-2">AI SEO</h3>
-            <p class="text-gray-400 text-sm">Generate keyword strategies, optimize existing content, and build entity knowledge graphs that search engines understand.</p>
-          </div>
-          
-          <!-- A/B Testing -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <div class="text-3xl mb-4">📊</div>
-            <h3 class="text-lg font-semibold mb-2">A/B Testing</h3>
-            <p class="text-gray-400 text-sm">Create test variants, set up tracking, and get statistically-sound recommendations without touching analytics dashboards.</p>
-          </div>
-          
-          <!-- Email Automation -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <div class="text-3xl mb-4">📧</div>
-            <h3 class="text-lg font-semibold mb-2">Email Automation</h3>
-            <p class="text-gray-400 text-sm">Build nurture campaigns, write subject lines, and structure drip sequences based on B2B engagement patterns.</p>
-          </div>
-          
-          <!-- Conversion Audits -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <div class="text-3xl mb-4">🔎</div>
-            <h3 class="text-lg font-semibold mb-2">Conversion Audits</h3>
-            <p class="text-gray-400 text-sm">Analyze landing pages against 47 conversion factors. Get prioritized fixes with implementation-ready recommendations.</p>
-          </div>
-          
-          <!-- B2B Copywriting -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <div class="text-3xl mb-4">✍️</div>
-            <h3 class="text-lg font-semibold mb-2">B2B Copywriting</h3>
-            <p class="text-gray-400 text-sm">Generate headlines, value propositions, and full page copy calibrated for B2B decision-makers and buying committees.</p>
-          </div>
-          
-          <!-- Analytics Setup -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <div class="text-3xl mb-4">📈</div>
-            <h3 class="text-lg font-semibold mb-2">Analytics Setup</h3>
-            <p class="text-gray-400 text-sm">Configure GA4, conversion events, and custom dashboards. No more guessing which metrics drive pipeline.</p>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Workflows -->
-    <section id="workflows" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-800 border-t border-dark-700">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">Structured Workflows</h2>
-          <p class="text-gray-400">One command to orchestrate the entire process</p>
+    </div>
+  </section>
+  
+  <!-- Section 2: Problem -->
+  <section class="py-24 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="fade-up text-accent text-sm font-medium tracking-wide uppercase mb-4">
+        Sound familiar?
+      </p>
+      
+      <h2 class="fade-up text-3xl sm:text-4xl lg:text-5xl font-semibold text-text-primary leading-tight mb-12">
+        You Can Build Anything. Marketing Is Still the Bottleneck.
+      </h2>
+      
+      <div class="space-y-8 text-left">
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">AI tools produce generic garbage.</h3>
+          <p class="text-text-secondary">
+            You've tried ChatGPT, Jasper, Copy.ai. The output needs so much editing it would have been faster to write from scratch. Good enough for brainstorming. Useless for production.
+          </p>
         </div>
         
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- /website -->
-          <div class="bg-dark-900 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <code class="inline-block bg-accent-blue/20 text-accent-blue px-3 py-1 rounded font-mono text-sm mb-4">/website</code>
-            <h3 class="text-lg font-semibold mb-2">Full Website Build</h3>
-            <p class="text-gray-400 text-sm mb-4">End-to-end marketing site from strategy to deployed code.</p>
-            <span class="text-xs text-gray-500 bg-dark-700 px-2 py-1 rounded">4-6 hours</span>
-          </div>
-          
-          <!-- /audit -->
-          <div class="bg-dark-900 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <code class="inline-block bg-accent-purple/20 text-accent-purple px-3 py-1 rounded font-mono text-sm mb-4">/audit</code>
-            <h3 class="text-lg font-semibold mb-2">Site Audit</h3>
-            <p class="text-gray-400 text-sm mb-4">Comprehensive conversion, SEO, and UX analysis with fix priorities.</p>
-            <span class="text-xs text-gray-500 bg-dark-700 px-2 py-1 rounded">30-45 min</span>
-          </div>
-          
-          <!-- /content -->
-          <div class="bg-dark-900 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <code class="inline-block bg-accent-cyan/20 text-accent-cyan px-3 py-1 rounded font-mono text-sm mb-4">/content</code>
-            <h3 class="text-lg font-semibold mb-2">Blog Pipeline</h3>
-            <p class="text-gray-400 text-sm mb-4">SEO-optimized blog posts with research, outline, and full draft.</p>
-            <span class="text-xs text-gray-500 bg-dark-700 px-2 py-1 rounded">45-60 min</span>
-          </div>
-          
-          <!-- /landing -->
-          <div class="bg-dark-900 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <code class="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded font-mono text-sm mb-4">/landing</code>
-            <h3 class="text-lg font-semibold mb-2">Landing Page</h3>
-            <p class="text-gray-400 text-sm mb-4">High-converting landing page with copy, wireframe, and code.</p>
-            <span class="text-xs text-gray-500 bg-dark-700 px-2 py-1 rounded">2-3 hours</span>
-          </div>
-          
-          <!-- /email -->
-          <div class="bg-dark-900 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <code class="inline-block bg-orange-500/20 text-orange-400 px-3 py-1 rounded font-mono text-sm mb-4">/email</code>
-            <h3 class="text-lg font-semibold mb-2">Email Campaign</h3>
-            <p class="text-gray-400 text-sm mb-4">Complete email sequence with triggers, copy, and send timing.</p>
-            <span class="text-xs text-gray-500 bg-dark-700 px-2 py-1 rounded">1-2 hours</span>
-          </div>
-          
-          <!-- /optimize -->
-          <div class="bg-dark-900 border border-dark-600 rounded-xl p-6 card-hover transition-all duration-300">
-            <code class="inline-block bg-pink-500/20 text-pink-400 px-3 py-1 rounded font-mono text-sm mb-4">/optimize</code>
-            <h3 class="text-lg font-semibold mb-2">Post-Launch Optimization</h3>
-            <p class="text-gray-400 text-sm mb-4">A/B test variants and conversion improvements for existing pages.</p>
-            <span class="text-xs text-gray-500 bg-dark-700 px-2 py-1 rounded">30-45 min</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section id="how-it-works" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-dark-700">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">How It Works</h2>
-          <p class="text-gray-400">Three steps from idea to production</p>
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Agencies cost $15K+/month and move at their pace.</h3>
+          <p class="text-text-secondary">
+            You're paying for account managers, strategy decks, and revision rounds. Half the budget goes to coordination, not execution. And they still don't understand your product.
+          </p>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8 relative">
-          <!-- Connection line (desktop only) -->
-          <div class="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-accent-blue via-accent-purple to-accent-cyan"></div>
-          
-          <!-- Step 1 -->
-          <div class="text-center relative">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-blue/20 border-2 border-accent-blue text-accent-blue text-xl font-bold mb-6 relative z-10 bg-dark-900">
-              1
-            </div>
-            <h3 class="text-xl font-semibold mb-3">Describe</h3>
-            <p class="text-gray-400 text-sm">Tell your AI assistant what you need. "Build a landing page for our developer tool" or "Audit our pricing page for conversions."</p>
-          </div>
-          
-          <!-- Step 2 -->
-          <div class="text-center relative">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-purple/20 border-2 border-accent-purple text-accent-purple text-xl font-bold mb-6 relative z-10 bg-dark-900">
-              2
-            </div>
-            <h3 class="text-xl font-semibold mb-3">Orchestrate</h3>
-            <p class="text-gray-400 text-sm">Hazn activates the right agents—Strategist defines positioning, Copywriter crafts messaging, Developer builds the implementation.</p>
-          </div>
-          
-          <!-- Step 3 -->
-          <div class="text-center relative">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-cyan/20 border-2 border-accent-cyan text-accent-cyan text-xl font-bold mb-6 relative z-10 bg-dark-900">
-              3
-            </div>
-            <h3 class="text-xl font-semibold mb-3">Deliver</h3>
-            <p class="text-gray-400 text-sm">Get production-ready outputs: deployed websites, documented strategies, optimized copy, and actionable audit reports.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Overview -->
-    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-800 border-t border-dark-700">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">22 Specialized Skills</h2>
-          <p class="text-gray-400">Deep domain expertise across every marketing discipline</p>
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Hiring takes forever. Good marketers are expensive.</h3>
+          <p class="text-text-secondary">
+            $120K+ for someone decent. Three months to ramp up. One person with limited skills. And they want equity.
+          </p>
         </div>
         
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Strategy -->
-          <div>
-            <h3 class="text-sm font-semibold text-accent-blue uppercase tracking-wider mb-4">Strategy (2)</h3>
-            <ul class="space-y-2">
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-blue rounded-full"></span>
-                b2b-marketing-ux
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-blue rounded-full"></span>
-                b2b-ux-reference
-              </li>
-            </ul>
-          </div>
-          
-          <!-- Content -->
-          <div>
-            <h3 class="text-sm font-semibold text-accent-purple uppercase tracking-wider mb-4">Content (4)</h3>
-            <ul class="space-y-2">
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-purple rounded-full"></span>
-                b2b-website-copywriter
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-purple rounded-full"></span>
-                landing-page-copywriter
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-purple rounded-full"></span>
-                seo-blog-writer
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-purple rounded-full"></span>
-                copy-editing
-              </li>
-            </ul>
-          </div>
-          
-          <!-- Design -->
-          <div>
-            <h3 class="text-sm font-semibold text-accent-cyan uppercase tracking-wider mb-4">Design (3)</h3>
-            <ul class="space-y-2">
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-cyan rounded-full"></span>
-                b2b-wireframe
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-cyan rounded-full"></span>
-                frontend-design
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-accent-cyan rounded-full"></span>
-                ui-audit
-              </li>
-            </ul>
-          </div>
-          
-          <!-- Development -->
-          <div>
-            <h3 class="text-sm font-semibold text-green-400 uppercase tracking-wider mb-4">Development (1)</h3>
-            <ul class="space-y-2">
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
-                payload-nextjs-stack
-              </li>
-            </ul>
-          </div>
-          
-          <!-- SEO -->
-          <div>
-            <h3 class="text-sm font-semibold text-orange-400 uppercase tracking-wider mb-4">SEO (6)</h3>
-            <ul class="space-y-2">
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                keyword-research
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                seo-audit
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                seo-optimizer
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                entity-knowledge-graph
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                ai-seo
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                programmatic-seo
-              </li>
-            </ul>
-          </div>
-          
-          <!-- Audits & Analytics -->
-          <div>
-            <h3 class="text-sm font-semibold text-pink-400 uppercase tracking-wider mb-4">Audits & Analytics (6)</h3>
-            <ul class="space-y-2">
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-                conversion-audit
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-                website-audit
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-                ab-test-setup
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-                analytics-tracking
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-                email-sequence
-              </li>
-              <li class="text-gray-300 font-mono text-sm flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-                cold-email
-              </li>
-            </ul>
-          </div>
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Your team is stretched too thin.</h3>
+          <p class="text-text-secondary">
+            Engineers ship features in days. Marketing ships a landing page in weeks. The backlog grows. Competitors launch. Pipeline suffers.
+          </p>
         </div>
       </div>
-    </section>
-
-    <!-- Agents -->
-    <section id="agents" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-dark-700">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">One Command. Eight Specialists.</h2>
-          <p class="text-gray-400 max-w-2xl mx-auto">Hazn coordinates specialized AI agents that work together like a marketing team. Each agent brings focused expertise—and they collaborate automatically.</p>
-        </div>
-        
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <!-- Strategist -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">🎯</div>
-            <h3 class="font-semibold mb-1">Strategist</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-strategy</p>
-          </div>
-          
-          <!-- UX Architect -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">🏗️</div>
-            <h3 class="font-semibold mb-1">UX Architect</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-ux</p>
-          </div>
-          
-          <!-- Copywriter -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">✍️</div>
-            <h3 class="font-semibold mb-1">Copywriter</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-copy</p>
-          </div>
-          
-          <!-- Wireframer -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">📐</div>
-            <h3 class="font-semibold mb-1">Wireframer</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-wireframe</p>
-          </div>
-          
-          <!-- Developer -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">💻</div>
-            <h3 class="font-semibold mb-1">Developer</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-dev</p>
-          </div>
-          
-          <!-- SEO Specialist -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">🔍</div>
-            <h3 class="font-semibold mb-1">SEO Specialist</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-seo</p>
-          </div>
-          
-          <!-- Content Writer -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">📝</div>
-            <h3 class="font-semibold mb-1">Content Writer</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-content</p>
-          </div>
-          
-          <!-- Auditor -->
-          <div class="bg-dark-800 border border-dark-600 rounded-xl p-4 text-center card-hover transition-all duration-300 group">
-            <div class="text-3xl mb-3">🔎</div>
-            <h3 class="font-semibold mb-1">Auditor</h3>
-            <p class="text-xs text-gray-500 font-mono group-hover:text-gray-400 transition-colors">/hazn-audit</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-800 border-t border-dark-700">
-      <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
-        </div>
-        
-        <div class="space-y-4">
-          <details class="bg-dark-900 border border-dark-600 rounded-xl" open>
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">What is Hazn?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Hazn is an AI-driven marketing website development framework. It transforms AI coding assistants like Claude Code, Cursor, and Windsurf into a team of 8 specialized marketing experts. With 22 domain skills and 6 structured workflows, Hazn enables developers to build high-converting B2B websites with expert-level strategy, copy, and SEO built in.</p>
-            </div>
-          </details>
-          
-          <details class="bg-dark-900 border border-dark-600 rounded-xl">
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">How is Hazn different from other AI website builders?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Traditional AI tools generate code. Hazn generates strategy-informed, conversion-optimized websites. Each phase builds on the last through artifact chaining: Strategy informs UX, UX informs copy, copy informs code. The result is websites designed to convert—not just websites that exist.</p>
-            </div>
-          </details>
-          
-          <details class="bg-dark-900 border border-dark-600 rounded-xl">
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">What AI agents are included in Hazn?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Hazn includes 8 expert AI agents:</p>
-              <ul class="list-disc list-inside mt-2 space-y-1">
-                <li><strong>Strategist</strong> — Market positioning, audience definition, competitive analysis</li>
-                <li><strong>UX Architect</strong> — Page blueprints, information architecture, user flows</li>
-                <li><strong>Copywriter</strong> — Headlines, value props, CTAs, conversion copy</li>
-                <li><strong>Wireframer</strong> — Mid-fidelity layouts for stakeholder validation</li>
-                <li><strong>Developer</strong> — Next.js + Payload CMS + Tailwind implementation</li>
-                <li><strong>SEO Specialist</strong> — Technical SEO, schema, content optimization</li>
-                <li><strong>Content Writer</strong> — SEO + AEO + GEO optimized blog posts</li>
-                <li><strong>Auditor</strong> — Conversion, copy, visual, and SEO audits</li>
-              </ul>
-            </div>
-          </details>
-          
-          <details class="bg-dark-900 border border-dark-600 rounded-xl">
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">Is Hazn free to use?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Yes, Hazn is 100% open source and free under the MIT license. It's available on GitHub at github.com/autonomous-tech/hazn. You only need an AI coding assistant subscription (Claude Code, Cursor, or Windsurf) to use it.</p>
-            </div>
-          </details>
-          
-          <details class="bg-dark-900 border border-dark-600 rounded-xl">
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">What coding assistants work with Hazn?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Hazn works with Claude Code, Cursor, Windsurf, and Clawdbot. Install once, use everywhere. The skills and agents are designed to work with any AI coding assistant that supports MCP (Model Context Protocol) or custom instructions.</p>
-            </div>
-          </details>
-          
-          <details class="bg-dark-900 border border-dark-600 rounded-xl">
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">Can Hazn help with AI search optimization?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Yes, Hazn includes dedicated AI SEO skills for GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization). The SEO Specialist and AI SEO Optimizer skills help your content get cited by ChatGPT, Claude, Perplexity, and other AI systems.</p>
-            </div>
-          </details>
-          
-          <details class="bg-dark-900 border border-dark-600 rounded-xl">
-            <summary class="px-6 py-4 font-medium cursor-pointer hover:text-accent-blue transition-colors">
-              <h3 class="inline">What tech stack does Hazn use?</h3>
-            </summary>
-            <div class="px-6 pb-4 text-gray-400 text-sm">
-              <p>Hazn's Developer agent builds websites using Next.js 14, Payload CMS, and Tailwind CSS. This modern stack follows best practices for performance, SEO, and maintainability. The framework produces production-ready code.</p>
-            </div>
-          </details>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-dark-700">
+    </div>
+  </section>
+  
+  <!-- Section 3: Solution -->
+  <section class="py-24 px-6 bg-surface/50">
     <div class="max-w-6xl mx-auto">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-        <!-- Brand -->
-        <div class="lg:col-span-1">
-          <a href="#" class="flex items-center gap-2 font-semibold text-lg mb-4">
-            <span class="text-2xl">⚡</span>
-            <span>Hazn</span>
-          </a>
-          <p class="text-sm text-gray-500">AI-driven marketing website development framework.</p>
+      <div class="text-center mb-16">
+        <p class="fade-up text-accent text-sm font-medium tracking-wide uppercase mb-4">
+          A different approach
+        </p>
+        
+        <h2 class="fade-up text-3xl sm:text-4xl lg:text-5xl font-semibold text-text-primary leading-tight mb-6">
+          Not Another AI Tool. A Coordinated Marketing Team.
+        </h2>
+        
+        <p class="fade-up text-lg text-text-secondary max-w-3xl mx-auto">
+          Hazn is 10 specialized AI agents that work together like a senior marketing team. Strategist, Copywriter, SEO Specialist, UX Architect, Developer. Each has deep expertise in their domain. They hand work to each other. The output is production-ready, not a rough draft.
+        </p>
+      </div>
+      
+      <!-- Agent Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <!-- Agent 1: Strategist -->
+        <div class="fade-up stagger-1 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Strategist</h3>
+          <p class="text-sm text-text-muted">Defines positioning and audience</p>
         </div>
         
-        <!-- Resources -->
-        <div>
-          <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider text-gray-400">Resources</h4>
-          <ul class="space-y-2">
-            <li><a href="https://github.com/autonomous-tech/hazn#readme" target="_blank" rel="noopener" class="text-gray-500 hover:text-white transition-colors text-sm">Documentation</a></li>
-            <li><a href="#skills" class="text-gray-500 hover:text-white transition-colors text-sm">Skills Reference</a></li>
-            <li><a href="#workflows" class="text-gray-500 hover:text-white transition-colors text-sm">Workflows Guide</a></li>
-          </ul>
+        <!-- Agent 2: UX Architect -->
+        <div class="fade-up stagger-2 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">UX Architect</h3>
+          <p class="text-sm text-text-muted">Plans user experience and flow</p>
         </div>
         
-        <!-- Community -->
-        <div>
-          <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider text-gray-400">Community</h4>
-          <ul class="space-y-2">
-            <li><a href="https://github.com/autonomous-tech/hazn" target="_blank" rel="noopener" class="text-gray-500 hover:text-white transition-colors text-sm">GitHub Repository</a></li>
-            <li><a href="https://github.com/autonomous-tech/hazn/discussions" target="_blank" rel="noopener" class="text-gray-500 hover:text-white transition-colors text-sm">Discussions</a></li>
-            <li><a href="https://github.com/autonomous-tech/hazn/issues" target="_blank" rel="noopener" class="text-gray-500 hover:text-white transition-colors text-sm">Report Issues</a></li>
-          </ul>
+        <!-- Agent 3: Copywriter -->
+        <div class="fade-up stagger-3 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Copywriter</h3>
+          <p class="text-sm text-text-muted">Writes converting headlines and body</p>
         </div>
         
-        <!-- Project -->
-        <div>
-          <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider text-gray-400">Project</h4>
-          <ul class="space-y-2">
-            <li><span class="text-gray-500 text-sm">MIT License</span></li>
-            <li><a href="https://github.com/autonomous-tech/hazn/releases" target="_blank" rel="noopener" class="text-gray-500 hover:text-white transition-colors text-sm">Changelog</a></li>
-            <li><a href="https://autonomous.so" target="_blank" rel="noopener" class="text-gray-500 hover:text-white transition-colors text-sm">By Autonomous</a></li>
-          </ul>
+        <!-- Agent 4: Wireframer -->
+        <div class="fade-up stagger-4 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Wireframer</h3>
+          <p class="text-sm text-text-muted">Creates page structure and layout</p>
+        </div>
+        
+        <!-- Agent 5: Developer -->
+        <div class="fade-up stagger-5 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Developer</h3>
+          <p class="text-sm text-text-muted">Builds production-ready pages</p>
+        </div>
+        
+        <!-- Agent 6: SEO Specialist -->
+        <div class="fade-up stagger-6 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">SEO Specialist</h3>
+          <p class="text-sm text-text-muted">Optimizes for search visibility</p>
+        </div>
+        
+        <!-- Agent 7: Content Writer -->
+        <div class="fade-up stagger-7 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Content Writer</h3>
+          <p class="text-sm text-text-muted">Produces long-form articles</p>
+        </div>
+        
+        <!-- Agent 8: Auditor -->
+        <div class="fade-up stagger-8 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Auditor</h3>
+          <p class="text-sm text-text-muted">Reviews and improves existing work</p>
+        </div>
+        
+        <!-- Agent 9: Designer -->
+        <div class="fade-up stagger-9 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Designer</h3>
+          <p class="text-sm text-text-muted">Handles visual direction</p>
+        </div>
+        
+        <!-- Agent 10: Analyst -->
+        <div class="fade-up stagger-10 card-hover bg-surface border border-border rounded-xl p-5">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-text-primary mb-1">Analyst</h3>
+          <p class="text-sm text-text-muted">Measures and iterates</p>
         </div>
       </div>
       
-      <div class="pt-8 border-t border-dark-700 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-sm text-gray-500">© 2025 Autonomous. MIT License.</p>
-        <a href="https://github.com/autonomous-tech/hazn" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          Star on GitHub
-        </a>
+      <p class="fade-up text-center text-text-secondary mt-12 text-lg">
+        ChatGPT is a smart intern. Hazn is a senior marketing team that has worked together for years.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Section 4: How It Works -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="fade-up text-accent text-sm font-medium tracking-wide uppercase mb-4">
+          The process
+        </p>
+        
+        <h2 class="fade-up text-3xl sm:text-4xl lg:text-5xl font-semibold text-text-primary leading-tight">
+          From Idea to Production in Three Steps
+        </h2>
+      </div>
+      
+      <div class="space-y-12">
+        <!-- Step 1 -->
+        <div class="fade-up flex gap-6 md:gap-8">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-surface border border-border rounded-full flex items-center justify-center font-mono text-accent font-semibold">
+              01
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-text-primary mb-2">Install</h3>
+            <p class="text-text-secondary">
+              Add Hazn to your coding assistant. Claude Code, Cursor, Windsurf. Takes 5 minutes. No new apps to learn.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="fade-up flex gap-6 md:gap-8">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-surface border border-border rounded-full flex items-center justify-center font-mono text-accent font-semibold">
+              02
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-text-primary mb-2">Describe</h3>
+            <p class="text-text-secondary">
+              Tell the agents what you're building. Your product, your audience, your goals. They already know how to do the marketing part.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="fade-up flex gap-6 md:gap-8">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 bg-surface border border-border rounded-full flex items-center justify-center font-mono text-accent font-semibold">
+              03
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-text-primary mb-2">Ship</h3>
+            <p class="text-text-secondary">
+              Watch 10 agents coordinate. Strategy, copy, SEO, code. Production-ready output you can deploy the same day.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Terminal Example -->
+      <div class="fade-up mt-16">
+        <div class="terminal max-w-lg mx-auto">
+          <div class="terminal-header">
+            <div class="terminal-dot bg-red-500"></div>
+            <div class="terminal-dot bg-yellow-500"></div>
+            <div class="terminal-dot bg-green-500"></div>
+          </div>
+          <div class="terminal-body text-sm">
+            <div><span class="text-text-muted">$</span> <span class="text-accent">/landing</span></div>
+            <div class="mt-2 text-text-muted">Running workflow: landing-page</div>
+            <div class="mt-1 text-text-secondary">&#8594; Strategist analyzing...</div>
+            <div class="text-text-secondary">&#8594; Copywriter drafting...</div>
+            <div class="text-text-secondary">&#8594; Developer building...</div>
+            <div class="mt-2 text-success">Done. Output: /pages/landing.html</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Section 5: Who It's For -->
+  <section class="py-24 px-6 bg-surface/50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="fade-up text-accent text-sm font-medium tracking-wide uppercase mb-4">
+          Built for builders
+        </p>
+        
+        <h2 class="fade-up text-3xl sm:text-4xl lg:text-5xl font-semibold text-text-primary leading-tight">
+          If You Ship Code, You Can Ship Marketing.
+        </h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Card 1: Technical Founders -->
+        <div class="fade-up stagger-1 card-hover bg-surface border border-border rounded-2xl p-6 md:p-8">
+          <h3 class="text-xl font-semibold text-text-primary mb-3">Technical Founders</h3>
+          <p class="text-text-secondary mb-4">
+            <strong class="text-text-primary">Pain:</strong> Can build anything but struggles to explain why anyone should care.
+          </p>
+          <p class="text-text-secondary">
+            <strong class="text-accent">Hazn:</strong> Marketing expertise built in. Just describe your product and ship.
+          </p>
+        </div>
+        
+        <!-- Card 2: Marketing Leaders -->
+        <div class="fade-up stagger-2 card-hover bg-surface border border-border rounded-2xl p-6 md:p-8">
+          <h3 class="text-xl font-semibold text-text-primary mb-3">Marketing Leaders at Startups</h3>
+          <p class="text-text-secondary mb-4">
+            <strong class="text-text-primary">Pain:</strong> Small team, big content demands. Agencies are slow and expensive.
+          </p>
+          <p class="text-text-secondary">
+            <strong class="text-accent">Hazn:</strong> Multiply your team's output by 10x without adding headcount.
+          </p>
+        </div>
+        
+        <!-- Card 3: Agencies -->
+        <div class="fade-up stagger-3 card-hover bg-surface border border-border rounded-2xl p-6 md:p-8">
+          <h3 class="text-xl font-semibold text-text-primary mb-3">Agency Principals</h3>
+          <p class="text-text-secondary mb-4">
+            <strong class="text-text-primary">Pain:</strong> Junior talent shortage. Client margins getting squeezed.
+          </p>
+          <p class="text-text-secondary">
+            <strong class="text-accent">Hazn:</strong> Senior-quality work at junior cost. Take on 3x the clients.
+          </p>
+        </div>
+        
+        <!-- Card 4: Growth Teams -->
+        <div class="fade-up stagger-4 card-hover bg-surface border border-border rounded-2xl p-6 md:p-8">
+          <h3 class="text-xl font-semibold text-text-primary mb-3">Growth Teams</h3>
+          <p class="text-text-secondary mb-4">
+            <strong class="text-text-primary">Pain:</strong> Always waiting on content and creative. Experiment velocity bottlenecked.
+          </p>
+          <p class="text-text-secondary">
+            <strong class="text-accent">Hazn:</strong> Ship 10 experiments this week instead of 2 this month.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Section 6: Founder Story -->
+  <section class="py-24 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="fade-up text-accent text-sm font-medium tracking-wide uppercase mb-4">
+        Why we built this
+      </p>
+      
+      <h2 class="fade-up text-3xl sm:text-4xl lg:text-5xl font-semibold text-text-primary leading-tight mb-8">
+        35 Years of Building. Marketing Was Always the Hard Part.
+      </h2>
+      
+      <div class="fade-up text-lg text-text-secondary space-y-4 text-left md:text-center">
+        <p>
+          We're Abdullah and Rizwan from Autonomous. We've built 100s of websites and apps over the past 35 years. Marketing was always the bottleneck.
+        </p>
+        <p>
+          We tried agencies, freelancers, doing it ourselves. Nothing worked well.
+        </p>
+        <p>
+          Then AI agents came along and we thought: why not just build the marketing team we always wished we had?
+        </p>
+        <p>
+          So we did. <strong class="text-text-primary">Hazn is that team.</strong>
+        </p>
+      </div>
+      
+      <div class="fade-up flex flex-wrap justify-center gap-3 mt-10">
+        <span class="px-4 py-2 text-sm text-text-muted border border-border rounded-full">
+          35 years experience
+        </span>
+        <span class="px-4 py-2 text-sm text-text-muted border border-border rounded-full">
+          100s of products
+        </span>
+        <span class="px-4 py-2 text-sm text-text-muted border border-border rounded-full">
+          Built at Autonomous
+        </span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Section 7: Early Access / Waitlist -->
+  <section id="waitlist" class="py-24 px-6 bg-surface/50">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="fade-up text-accent text-sm font-medium tracking-wide uppercase mb-4">
+        Limited early access
+      </p>
+      
+      <h2 class="fade-up text-3xl sm:text-4xl lg:text-5xl font-semibold text-text-primary leading-tight mb-6">
+        First 100 Users Shape the Product.
+      </h2>
+      
+      <p class="fade-up text-lg text-text-secondary mb-10">
+        Join the waitlist. Get founding member benefits.
+      </p>
+      
+      <!-- Benefits List -->
+      <div class="fade-up grid sm:grid-cols-2 gap-4 text-left mb-10 max-w-xl mx-auto">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-text-secondary">Founding member pricing locked in</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-text-secondary">Direct access to founders on Slack</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-text-secondary">Shape the roadmap with your feedback</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-text-secondary">Extended 60-day trial</span>
+        </div>
+      </div>
+      
+      <!-- Tally Form Embed -->
+      <div class="fade-up bg-surface border border-border rounded-2xl p-8">
+        <iframe 
+          data-tally-src="https://tally.so/embed/FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+          loading="lazy" 
+          width="100%" 
+          height="200" 
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0" 
+          title="Hazn Waitlist"
+          class="min-h-[200px]"
+        ></iframe>
+        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s)}</script>
+        
+        <!-- Fallback if Tally doesn't load -->
+        <noscript>
+          <p class="text-text-muted">Please enable JavaScript to join the waitlist, or email us at hello@autonomous.agency</p>
+        </noscript>
+      </div>
+      
+      <p class="fade-up text-text-muted text-sm mt-6">
+        No spam. Updates every 2 weeks. Unsubscribe anytime.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Section 8: FAQ (for AI visibility) -->
+  <section class="py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="fade-up text-2xl sm:text-3xl font-semibold text-text-primary">
+          Frequently Asked Questions
+        </h2>
+      </div>
+      
+      <div class="space-y-6">
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">What is Hazn?</h3>
+          <p class="text-text-secondary">
+            Hazn is an AI marketing framework that provides 10 specialized marketing agents working as a coordinated team. It includes a Strategist, Copywriter, SEO Specialist, UX Architect, Wireframer, Developer, Content Writer, and Auditors. Built for technical founders and marketing teams, Hazn integrates directly with Claude Code, Cursor, and Windsurf.
+          </p>
+        </div>
+        
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">How does Hazn differ from ChatGPT or other AI writing tools?</h3>
+          <p class="text-text-secondary">
+            Unlike single-purpose AI tools, Hazn provides 10 specialized agents that work together like a real marketing team. Each agent has deep expertise in their domain. They hand work to each other automatically. ChatGPT is a smart intern. Hazn is a senior marketing team that has worked together for years. It ships production-ready outputs, not drafts that need heavy editing.
+          </p>
+        </div>
+        
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">What coding assistants does Hazn work with?</h3>
+          <p class="text-text-secondary">
+            Hazn works with Claude Code, Cursor, Windsurf, and Clawdbot. If you already use any of these coding assistants, you can start using Hazn immediately with zero learning curve. Just type commands like /website or /landing and your marketing team gets to work.
+          </p>
+        </div>
+        
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">What can Hazn create?</h3>
+          <p class="text-text-secondary">
+            Hazn creates production-ready marketing assets including full landing pages with HTML/CSS, SEO-optimized blog content, marketing strategy documents, website copy, email sequences, and social media content. It handles the complete workflow from strategy to shipped production code.
+          </p>
+        </div>
+        
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Who built Hazn and why?</h3>
+          <p class="text-text-secondary">
+            Hazn was built by Abdullah and Rizwan at Autonomous, who have 35 years combined experience building over 100 websites and apps. Marketing was always their bottleneck. They built Hazn as the AI marketing team they wished existed, specifically for technical founders who can build anything but struggle with marketing.
+          </p>
+        </div>
+        
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">How much does Hazn cost compared to hiring marketers or agencies?</h3>
+          <p class="text-text-secondary">
+            Hazn costs a fraction of traditional options. Hiring a single marketer costs $120K to $180K per year. Marketing agencies charge $15K to $50K per month. Hazn delivers agency-quality work without agency timelines, politics, or invoices. Early access members get founding member pricing locked in permanently.
+          </p>
+        </div>
+        
+        <div class="fade-up">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">What are the benefits of joining the Hazn waitlist?</h3>
+          <p class="text-text-secondary">
+            Waitlist members get early access before public launch, founding member pricing locked in forever, direct access to founders via Slack, ability to shape the product roadmap, extended 60-day trial instead of 14 days, and private community access with other early users.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="py-12 px-6 border-t border-border">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <p class="text-xl font-semibold text-text-primary mb-1">Hazn</p>
+          <p class="text-text-muted text-sm">The marketing team that runs on /slash.</p>
+        </div>
+        
+        <div class="flex items-center gap-6 text-sm">
+          <a href="#" class="text-text-muted hover:text-text-primary transition-colors">Twitter</a>
+          <a href="#" class="text-text-muted hover:text-text-primary transition-colors">Contact</a>
+          <a href="#" class="text-text-muted hover:text-text-primary transition-colors">Privacy</a>
+        </div>
+        
+        <p class="text-text-muted text-sm">
+          &copy; 2025 Autonomous. Shipping soon.
+        </p>
       </div>
     </div>
   </footer>
-
-  <!-- Minimal JS for tab switching -->
+  
+  <!-- JavaScript: Scroll Animations & Sticky Header -->
   <script>
-    function switchTab(tabId) {
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.remove('active');
+    // IntersectionObserver for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
       });
-      
-      // Reset all tab buttons
-      document.querySelectorAll('.tab-btn').forEach(el => {
-        el.classList.remove('bg-accent-blue', 'text-white');
-        el.classList.add('bg-dark-700', 'text-gray-400');
-        el.setAttribute('aria-selected', 'false');
+    }, observerOptions);
+    
+    // Observe all fade-up and fade-in elements
+    document.querySelectorAll('.fade-up, .fade-in').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Trigger hero animations on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('section:first-of-type .fade-up').forEach(el => {
+        el.classList.add('visible');
       });
-      
-      // Show selected tab content
-      document.getElementById('tab-' + tabId).classList.add('active');
-      
-      // Highlight selected tab button
-      const btn = document.getElementById('btn-' + tabId);
-      btn.classList.remove('bg-dark-700', 'text-gray-400');
-      btn.classList.add('bg-accent-blue', 'text-white');
-      btn.setAttribute('aria-selected', 'true');
-    }
+    });
+    
+    // Sticky header visibility
+    const stickyHeader = document.getElementById('stickyHeader');
+    const heroSection = document.querySelector('section:first-of-type');
+    
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          stickyHeader.classList.add('visible');
+        } else {
+          stickyHeader.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0 });
+    
+    headerObserver.observe(heroSection);
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
   </script>
-
 </body>
 </html>
