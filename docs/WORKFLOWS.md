@@ -1,6 +1,6 @@
 # Hazn Workflows Reference
 
-Hazn includes 4 structured workflows for common marketing website tasks.
+Hazn includes 6 structured workflows for common marketing website tasks.
 
 ## Workflow Index
 
@@ -10,6 +10,8 @@ Hazn includes 4 structured workflows for common marketing website tasks.
 | **Audit** | `/hazn-audit` | Comprehensive site analysis | 2-4 hours |
 | **Blog** | `/hazn-content` | SEO blog content pipeline | 2-3 hours setup, 1-2 hours per article |
 | **Landing** | `/hazn-landing` | Quick single landing page | 4-8 hours |
+| **Email** | `/hazn-email` | Email campaign design | 2-6 hours |
+| **Optimize** | `/hazn-optimize` | Post-launch optimization | Ongoing 2-4 week cycles |
 
 ---
 
@@ -29,14 +31,16 @@ The complete path from strategy to deployed website.
 | 3. Copy | Copywriter | `/hazn-copy` | Optional |
 | 4. Wireframes | Wireframer | `/hazn-wireframe` | Optional |
 | 5. Development | Developer | `/hazn-dev` | ✓ |
-| 6. SEO | SEO Specialist | `/hazn-seo` | ✓ |
-| 7. Content | Content Writer | `/hazn-content` | Optional |
+| 6. Analytics Setup | Developer | `/hazn-analytics` | ✓ |
+| 7. SEO + AI SEO | SEO Specialist | `/hazn-seo` | ✓ |
+| 8. Content | Content Writer | `/hazn-content` | Optional |
 
 ### Checkpoints
 
 - **After Strategy:** Review `strategy.md` before proceeding
 - **After Wireframes:** Get stakeholder approval before development
 - **After Development:** Review in browser before SEO optimization
+- **After Analytics:** Verify tracking is capturing key events
 
 ### Duration Estimates
 
@@ -59,7 +63,7 @@ Comprehensive website analysis with actionable recommendations.
 
 1. **Scope Definition**
    - Confirm URL to audit
-   - Select audit types (conversion, copy, visual, SEO)
+   - Select audit types (conversion, copy, visual, SEO, AI visibility)
    - Gather analytics access if available
 
 2. **Analysis**
@@ -67,23 +71,28 @@ Comprehensive website analysis with actionable recommendations.
    - Copy audit
    - Visual/UX audit
    - SEO audit
+   - AI Visibility audit (GEO/AEO readiness)
 
 3. **Synthesis**
    - Aggregate scores
    - Prioritize by impact/effort
    - Identify quick wins
+   - Generate test recommendations for A/B testing
 
 4. **Report Generation**
    - Branded HTML report
    - Summary markdown
+   - Test hypothesis document
 
 ### Deliverables
 
 - `audit-report.html` — Full branded report
 - `audit-summary.md` — Quick reference
+- `test-recommendations.md` — A/B test hypotheses
 - Prioritized fix list
 - Before/after recommendations
 - Implementation roadmap
+- AI visibility scorecard
 
 ### Duration
 
@@ -170,6 +179,89 @@ Fast path for single landing pages.
 ### Duration
 
 4-8 hours total.
+
+---
+
+## Email Campaign Workflow
+
+**File:** `workflows/email.yaml`  
+**Trigger:** `/hazn-email`
+
+Design and plan email sequences for lead nurturing and conversion.
+
+### Phases
+
+| Phase | Duration | Actions |
+|-------|----------|---------|
+| Brief | 15-30 min | Define goals, audience segments, existing assets |
+| Strategy | 1-2 hours | Sequence type, email count, timing, triggers |
+| Copy | 2-4 hours | Subject lines, body copy, CTAs for each email |
+| Optimization Plan | 30 min | A/B test variants, success metrics, iteration plan |
+
+### Sequence Types
+
+- **Welcome Series** — Onboard new subscribers, introduce brand
+- **Lead Nurture** — Move prospects through funnel with value content
+- **Cold Outbound** — Prospecting sequences for sales teams
+
+### Checkpoints
+
+- **After Strategy:** Confirm sequence structure before writing
+- **After Copy:** Review all emails before marking ready for activation
+
+### Deliverables
+
+- `email-sequence.md` — Full sequence with all emails
+- Subject line variants for A/B testing
+- Send timing recommendations
+- Performance tracking plan
+
+### Duration
+
+2-6 hours depending on sequence length.
+
+---
+
+## Post-Launch Optimization Workflow
+
+**File:** `workflows/optimize.yaml`  
+**Trigger:** `/hazn-optimize`
+
+Continuous improvement through data-driven A/B testing.
+
+### Phases
+
+| Phase | Duration | Actions |
+|-------|----------|---------|
+| Baseline Review | 1-2 hours | Analyze current metrics, identify weak points |
+| Hypothesis | 1 hour | Form testable hypotheses based on data |
+| A/B Test Setup | 1-2 hours | Design variants, define success criteria |
+| Implementation | 2-4 hours | Build test variants, configure testing tool |
+| Analysis | 1-2 hours | Evaluate results, document learnings |
+
+### Test Elements
+
+- **Headlines** — Value props, emotional triggers, specificity
+- **CTAs** — Copy, color, placement, urgency
+- **Forms** — Field count, layout, progressive disclosure
+- **Social Proof** — Testimonial placement, logos, stats
+- **Layouts** — Section order, visual hierarchy, content density
+
+### Checkpoints
+
+- **After Hypothesis:** Confirm test priorities align with business goals
+- **Before Implementation:** Approve test designs and success metrics
+
+### Deliverables
+
+- `optimization-log.md` — Running record of all tests
+- Test variant designs
+- Statistical analysis reports
+- Winner implementation notes
+
+### Duration
+
+Ongoing 2-4 week cycles. Each cycle includes one or more tests.
 
 ---
 
