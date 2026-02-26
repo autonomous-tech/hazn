@@ -1,0 +1,38 @@
+name: analytics-audit
+description: Full MarTech & Attribution audit with GA4/GSC data collection, site inspection, report writing, adversarial review, and HTML client report
+trigger: /hazn-analytics-audit
+
+phases:
+  - id: setup
+    name: Setup & Prerequisites
+    actions:
+      - Parse site URL, GA4 property ID, optional GSC site URL
+      - Verify Python venv and dependencies installed
+      - Create .hazn/outputs/analytics-audit/ directory
+
+  - id: data-collection
+    name: Data Collection
+    depends_on: [setup]
+    parallel_tracks: [ga4_data, gsc_data, site_inspection]
+    agent: analytics-inspector
+
+  - id: analysis
+    name: Analysis & Report Writing
+    agent: analytics-report-writer
+    depends_on: [data-collection]
+    skills: [analytics-audit, analytics-audit-martech]
+    outputs: [.hazn/outputs/analytics-audit/<domain>-audit.md]
+
+  - id: review
+    name: Adversarial Review
+    agent: analytics-adversary
+    depends_on: [analysis]
+
+  - id: delivery
+    name: Client Report Generation
+    agent: analytics-client-reporter
+    depends_on: [review]
+    skills: [analytics-audit-client-report]
+    outputs: [.hazn/outputs/analytics-audit/client-report/index.html]
+
+estimated_duration: "3-6 hours"

@@ -36,7 +36,8 @@
     "agents",
     "workflows",
     "templates",
-    "skills"
+    "skills",
+    "scripts"
   ],
   "scripts": {
     "test": "node --test",

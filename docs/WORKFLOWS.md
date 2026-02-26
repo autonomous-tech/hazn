@@ -1,6 +1,6 @@
 # Hazn Workflows Reference
 
-Hazn includes 6 structured workflows for common marketing website tasks.
+Hazn includes 7 structured workflows for common marketing website tasks.
 
 ## Workflow Index
 
@@ -12,6 +12,7 @@ Hazn includes 6 structured workflows for common marketing website tasks.
 | **Landing** | `/hazn-landing` | Quick single landing page | 4-8 hours |
 | **Email** | `/hazn-email` | Email campaign design | 2-6 hours |
 | **Optimize** | `/hazn-optimize` | Post-launch optimization | Ongoing 2-4 week cycles |
+| **Analytics Audit** | `/hazn-analytics-audit` | GA4/GSC MarTech & Attribution audit | 3-6 hours |
 
 ---
 
@@ -262,6 +263,39 @@ Continuous improvement through data-driven A/B testing.
 ### Duration
 
 Ongoing 2-4 week cycles. Each cycle includes one or more tests.
+
+---
+
+## Analytics Audit Workflow
+
+**File:** `workflows/analytics-audit.yaml`
+**Trigger:** `/hazn-analytics-audit`
+
+Full MarTech & Attribution audit pipeline for sites with GA4 and optional GSC access.
+
+### Prerequisites
+- Python 3.10+ with venv
+- `pip install google-analytics-data google-auth-oauthlib google-api-python-client`
+- GA4 property ID with Data API access
+- Optional: Google Search Console site URL
+
+### Phases
+
+| Phase | Agent | Duration | Actions |
+|-------|-------|----------|---------|
+| 1. Setup | — | 5 min | Parse inputs, verify Python deps, create output directory |
+| 2. Data Collection | Analytics Inspector | 30-60 min | Run GA4 collector, GSC collector, site HTML inspection (parallel) |
+| 3. Analysis | Analytics Report Writer | 2-3 hours | Write sections A-Q using collected data + skills |
+| 4. Adversarial Review | Analytics Adversary | 30-60 min | Red-team review of claims, math, data accuracy |
+| 5. Client Report | Analytics Client Reporter | 30-60 min | Generate branded HTML report from markdown |
+
+### Deliverables
+- `.hazn/outputs/analytics-audit/<domain>-audit.md` — Full markdown audit
+- `.hazn/outputs/analytics-audit/client-report/index.html` — Branded HTML report
+- `.hazn/outputs/analytics-audit/` — Raw GA4/GSC JSON data files
+
+### Duration
+3-6 hours depending on site complexity and data volume.
 
 ---
 
