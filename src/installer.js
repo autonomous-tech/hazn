@@ -18,7 +18,7 @@ export async function install(options) {
   let config = {
     tools: options.tools.split(','),
     workflows: options.workflows === 'all' 
-      ? ['website', 'audit', 'blog', 'landing'] 
+      ? ['website', 'audit', 'blog', 'landing', 'analytics-audit'] 
       : options.workflows.split(','),
     includeSkills: true,
     includeTemplates: true,

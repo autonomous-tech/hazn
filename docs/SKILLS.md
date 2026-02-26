@@ -1,6 +1,6 @@
 # Hazn Skills Reference
 
-Hazn includes 22 specialized skills covering the full marketing website lifecycle. Skills are domain expertise encoded as detailed instructions that agents follow.
+Hazn includes 25 specialized skills covering the full marketing website lifecycle. Skills are domain expertise encoded as detailed instructions that agents follow.
 
 ---
 
@@ -30,6 +30,9 @@ Hazn includes 22 specialized skills covering the full marketing website lifecycl
 | | `analytics-tracking` | GA4 + PostHog measurement setup for Next.js |
 | **Audits** | `conversion-audit` | CRO/conversion audit with branded reports |
 | | `website-audit` | Comprehensive multi-dimensional site audits |
+| | `analytics-audit` | GA4 property audit, site tracking inspection, attribution analysis |
+| | `analytics-audit-martech` | MarTech stack assessment, attribution architecture, roadmap |
+| | `analytics-audit-client-report` | Branded HTML client report from audit findings |
 
 ---
 
@@ -479,6 +482,70 @@ Hazn includes 22 specialized skills covering the full marketing website lifecycl
 
 ---
 
+### analytics-audit
+
+**Purpose:** GA4 property audit covering tracking implementation, data quality, attribution, and site-level tag inspection.
+
+**When to use:**
+- Auditing GA4 setup on existing Shopify/ecommerce sites
+- Assessing tracking quality and data gaps
+- Analyzing traffic sources, conversion paths, and attribution
+- Pre-engagement data discovery for clients
+
+**Key outputs:**
+- GA4 data collection via Python scripts (events, conversions, sources, pages)
+- GSC query/page performance data
+- Site HTML inspection for tracking tags
+- Markdown audit report (sections A-J, Q)
+
+**Prerequisites:** Python 3.10+, `google-analytics-data`, `google-auth-oauthlib`, GA4 property access
+
+**Pairs with:** `analytics-audit-martech` (downstream), `analytics-audit-client-report` (downstream), `analytics-tracking` (complementary — tracking setup vs audit)
+
+---
+
+### analytics-audit-martech
+
+**Purpose:** MarTech stack assessment, attribution architecture analysis, and optimization roadmap.
+
+**When to use:**
+- Evaluating full marketing technology stack
+- Attribution model analysis and recommendations
+- MarTech consolidation planning
+- Post-GA4-audit strategic recommendations
+
+**Key outputs:**
+- MarTech stack inventory (sections K-P)
+- Attribution architecture assessment
+- Tag management evaluation
+- Privacy/consent compliance review
+- Optimization roadmap with priorities
+
+**Pairs with:** `analytics-audit` (upstream data), `analytics-audit-client-report` (downstream)
+
+---
+
+### analytics-audit-client-report
+
+**Purpose:** Generate branded HTML client reports from analytics audit findings.
+
+**When to use:**
+- Converting markdown audit into client-ready deliverable
+- Sales call preparation
+- Client presentation material
+- Stakeholder-friendly audit summary
+
+**Key outputs:**
+- Standalone HTML report with embedded CSS
+- Executive summary with key metrics
+- Visual data cards and finding highlights
+- Prioritized recommendations with effort/impact
+- Opportunity sizing estimates
+
+**Pairs with:** `analytics-audit` (upstream), `analytics-audit-martech` (upstream)
+
+---
+
 ## Skill Workflow
 
 Skills are designed to chain together:
@@ -514,7 +581,10 @@ Analysis & Optimization
 ├── ab-test-setup (experiments)
 ├── website-audit (full audit)
 ├── seo-audit (technical SEO)
-└── ui-audit (UX review)
+├── ui-audit (UX review)
+├── analytics-audit (GA4/GSC data audit)
+├── analytics-audit-martech (MarTech assessment)
+└── analytics-audit-client-report (HTML client report)
 ```
 
 ---
