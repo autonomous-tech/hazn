@@ -1,11 +1,27 @@
 # Full Website Build Workflow
 # Triggered by: /hazn-website
+# For NGO/association/political/institutional sites, use /hazn-ngo instead.
 
 name: website
-description: Complete marketing website from strategy to deployment
+description: Complete B2B/commercial marketing website from strategy to deployment
 trigger: /hazn-website
 
+# IMPORTANT: Ask the user what type of organisation this is before proceeding.
+# - B2B / commercial / agency → this workflow (b2b-marketing-ux skill)
+# - NGO / association / political org / international institution → /hazn-ngo (ngo-web-design skill)
+# - E-commerce → ecommerce skills
+# Never default to B2B framing for an NGO. The goals, IA, tone, and compliance requirements are fundamentally different.
+
 phases:
+  - id: type-check
+    name: Organisation Type
+    agent: strategist
+    required: true
+    note: |
+      Ask: "What type of organisation is this website for?"
+      B2B/commercial → continue this workflow.
+      NGO/association/political/institutional → redirect to /hazn-ngo.
+
   - id: strategy
     name: Strategy & Positioning
     agent: strategist

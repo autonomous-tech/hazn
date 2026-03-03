@@ -1,27 +1,44 @@
 # 🎯 Hazn
 
-AI-driven marketing website development framework.
+AI-driven website development framework for B2B, NGO, and institutional websites.
+
+## ⚡ Start Here — What type of website?
+
+| Organisation type | Use this command |
+|------------------|-----------------|
+| B2B / commercial / agency | `/hazn-website` |
+| NGO / association / political org / international institution | `/hazn-ngo` |
+| Site audit (any type) | `/hazn-audit` |
+| Blog content pipeline | `/hazn-content` |
+
+> **Never use `/hazn-website` for an NGO.** The goals, IA, compliance requirements, and tone are fundamentally different. Use `/hazn-ngo`.
 
 ## Quick Commands
 
 | Command | Description |
 |---------|-------------|
 | `/hazn-help` | Contextual guidance on what to do next |
-| `/hazn-website` | Full website build workflow |
+| `/hazn-website` | Full B2B/commercial website build |
+| `/hazn-ngo` | NGO / association / institutional website build |
 | `/hazn-audit` | Comprehensive site audit |
 | `/hazn-strategy` | Define positioning and goals |
 | `/hazn-ux` | Create page blueprints |
-| `/hazn-copy` | Write conversion-focused content |
+| `/hazn-copy` | Write content |
 | `/hazn-wireframe` | Visual layout validation |
-| `/hazn-dev` | Build with Next.js + Payload CMS |
+| `/hazn-dev` | Build (Next.js + Payload CMS, or WordPress + GeneratePress) |
 | `/hazn-seo` | Technical SEO optimization |
 | `/hazn-content` | Blog content pipeline |
 
 ## Workflows
 
-### Full Website Build
+### B2B / Commercial Website
 ```
 /hazn-strategy → /hazn-ux → /hazn-copy → /hazn-wireframe → /hazn-dev → /hazn-seo
+```
+
+### NGO / Association / Institutional Website
+```
+/hazn-ngo → (strategy + compliance) → /hazn-ux → /hazn-wireframe → /hazn-dev → accessibility audit → /hazn-seo
 ```
 
 ### Quick Landing Page
@@ -36,13 +53,13 @@ AI-driven marketing website development framework.
 
 ## Agents
 
-- **Strategist** — Market positioning & competitive analysis
-- **UX Architect** — Page blueprints & user journey design
-- **Copywriter** — Conversion-focused messaging
+- **Strategist** — Positioning for B2B or mission/mobilization for NGOs
+- **UX Architect** — Page blueprints and user journey design
+- **Copywriter** — Conversion copy (B2B) or mission-driven copy (NGO)
 - **Wireframer** — Mid-fidelity layout validation
-- **Developer** — Next.js + Payload CMS implementation
-- **SEO Specialist** — Technical SEO & content optimization
-- **Auditor** — Multi-dimensional site analysis
+- **Developer** — Next.js + Payload CMS (B2B) or WordPress + GeneratePress (NGO/WP)
+- **SEO Specialist** — Technical SEO, schema, AI visibility
+- **Auditor** — Multi-dimensional site analysis (conversion, UX, copy, SEO, accessibility)
 
 ## Project Structure
 
