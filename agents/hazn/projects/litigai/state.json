@@ -1,0 +1,34 @@
+{
+  "client": "LitigAI / JuristAI",
+  "domains": ["litigai.org", "juristai.org"],
+  "phase": "analytics-audit",
+  "product": {
+    "name": "LitigAI",
+    "parent": "JuristAI",
+    "description": "Legal AI software — demand letter drafting, new lawsuit drafting, automated deadlines, file management, strategic guidance",
+    "focus": "Civil litigation (demand letters + civil suits). JuristAI is the umbrella brand covering criminal, family law, startup law etc.",
+    "status": "live",
+    "target_users": ["lawyers", "paralegals", "general public / pro se litigants"],
+    "conversion_goals": ["signup", "checkout"],
+    "icp_journeys": {
+      "attorney_b2b": "200+ case management — disorganized templates, manual spreadsheet deadlines not linked to calendar, can't find docs. LitigAI solves: organized templates, automated deadlines, calendar integration, file mgmt across cases.",
+      "pro_se_b2c": "Normal person unsure if they can sue → platform guides them → buys demand letter → automated 2-week follow-up email → if unresolved, platform walks through full case setup step by step."
+    },
+    "monetization": "Stripe (paid plans active)"
+  },
+  "ga4_property_id": "482329534",
+  "gsc_property": "sc-domain:litigai.org",
+  "traffic": {
+    "real_monthly_organic_us": "~2000",
+    "bot_sessions_90d": 288911,
+    "bot_source": "Chinese search engine crawler (Baidu/Sogou)",
+    "top_referral": "juristai.org (sister product, 77.2% engagement)"
+  },
+  "audit_outputs": {
+    "ga4_data": "~/.hazn/outputs/analytics-audit/litigai.org/ga4_data.json",
+    "gsc_data": "~/.hazn/outputs/analytics-audit/litigai.org/gsc_data.json",
+    "client_report": "~/.hazn/outputs/analytics-audit/litigai.org/client-report/index.html",
+    "audit_summary": "~/.hazn/outputs/analytics-audit/litigai.org/audit-summary.md",
+    "red_team_report": "~/.hazn/outputs/analytics-audit/litigai.org/red-team-report.md"
+  }
+}

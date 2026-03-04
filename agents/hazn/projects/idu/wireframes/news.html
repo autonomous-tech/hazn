@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News & Statements — International Democracy Union</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;color:#1A1A2E;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,0.08);}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:#003087;text-decoration:none;}
+.nav-logo span{color:#C9A84C;}
+.nav-link{color:#1A1A2E;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;}
+.nav-link:hover{color:#C9A84C;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-login{border:1px solid #003087;color:#003087;padding:8px 18px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;text-transform:uppercase;}
+.hero-dark{background:#0A1628;padding:120px 80px 80px;margin-top:72px;}
+.filter-pill{padding:8px 20px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:0.04em;cursor:pointer;border:1px solid #E2E8F0;color:#64748B;background:#fff;transition:all 0.2s;}
+.filter-pill.active,.filter-pill:hover{background:#003087;color:#fff;border-color:#003087;}
+/* News list rows */
+.news-row{display:grid;grid-template-columns:80px 1fr;gap:32px;padding:32px 0;border-bottom:1px solid #E8ECF0;align-items:start;}
+.news-row:last-child{border-bottom:none;}
+.date-col-day{font-family:'Bebas Neue',sans-serif;font-size:42px;color:#003087;line-height:1;}
+.date-col-month{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#94A3B8;}
+.cat-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:10px;}
+.tag-statement{background:#EEF3FA;color:#003087;}
+.tag-resolution{background:#FEF3C7;color:#92400E;}
+.tag-release{background:#D1FAE5;color:#065F46;}
+.tag-award{background:#F3E8FF;color:#6B21A8;}
+.tag-report{background:#FCE7F3;color:#9D174D;}
+@media(max-width:768px){nav{padding:0 20px;}.hero-dark{padding:100px 24px 48px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">IDU<span>·</span></a>
+  <div class="nav-links">
+    <a href="about.html" class="nav-link">About</a>
+    <a href="members.html" class="nav-link">Members</a>
+    <a href="news.html" class="nav-link" style="color:#003087;font-weight:700;">News</a>
+    <a href="events.html" class="nav-link">Events</a>
+    <a href="leadership.html" class="nav-link">Leadership</a>
+    <a href="media-centre.html" class="nav-link">Media Centre</a>
+    <a href="#" class="nav-login">Member Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-dark">
+  <p style="font-size:11px;font-weight:700;letter-spacing:0.3em;color:#C9A84C;text-transform:uppercase;margin-bottom:16px;">IDU</p>
+  <h1 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:700;color:#fff;line-height:1.1;max-width:560px;">News &amp; Statements</h1>
+</section>
+
+<!-- FILTERS -->
+<section style="background:#fff;border-bottom:1px solid #E8ECF0;padding:20px 80px;">
+  <div style="max-width:1000px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="filter-pill active">All</button>
+      <button class="filter-pill">Statement</button>
+      <button class="filter-pill">Resolution</button>
+      <button class="filter-pill">Event Report</button>
+      <button class="filter-pill">Award</button>
+      <button class="filter-pill">Press Release</button>
+    </div>
+    <a href="#" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#64748B;text-decoration:none;letter-spacing:0.04em;" title="Subscribe via RSS">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#F4911B" xmlns="http://www.w3.org/2000/svg"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+      Subscribe via RSS
+    </a>
+  </div>
+</section>
+
+<!-- NEWS LIST -->
+<section style="background:#fff;padding:48px 80px 96px;">
+  <div style="max-width:1000px;margin:0 auto;">
+
+    <div class="news-row">
+      <div><div class="date-col-day">15</div><div class="date-col-month">Jan 2025</div></div>
+      <div>
+        <span class="cat-tag tag-statement">Statement</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Calls for Unified Democratic Response to Authoritarian Backsliding in Eastern Europe</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The International Democracy Union today issued a formal statement expressing deep concern about growing authoritarian pressures across the Eastern European neighbourhood, and calling on member parties and allied democratic governments to coordinate a stronger collective response to threats against democratic institutions, free media, and civil society.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Full Statement →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">8</div><div class="date-col-month">Jan 2025</div></div>
+      <div>
+        <span class="cat-tag tag-resolution">Resolution</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Resolution on the Defence of Free and Fair Elections Worldwide</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">Adopted by the IDU Executive Committee at its quarterly meeting in Brussels, this resolution reaffirms the IDU's commitment to defending electoral integrity and calls on member parties to refuse any cooperation with parties or governments that manipulate electoral processes.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Full Resolution →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">3</div><div class="date-col-month">Jan 2025</div></div>
+      <div>
+        <span class="cat-tag tag-release">Press Release</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Welcomes New Associate Member: Alliance for Reform and Democracy, Kazakhstan</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The International Democracy Union is pleased to announce that the Alliance for Reform and Democracy of Kazakhstan has been accepted as an Associate Member of the IDU, bringing the total number of IDU member and observer parties to over 80 across six continents.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Full Press Release →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">18</div><div class="date-col-month">Dec 2024</div></div>
+      <div>
+        <span class="cat-tag tag-award">Award</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">Sviatlana Tsikhanouskaya Awarded the 2024 Bush-Thatcher Award for Freedom</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The International Democracy Union has awarded the 2024 Bush-Thatcher Award for Freedom to Sviatlana Tsikhanouskaya, leader of the Belarusian democratic opposition in exile, in recognition of her extraordinary courage and leadership in the face of Lukashenko's authoritarian regime.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Announcement →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">5</div><div class="date-col-month">Dec 2024</div></div>
+      <div>
+        <span class="cat-tag tag-report">Event Report</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Asia-Pacific Conference 2024: Tokyo Communiqué on Regional Security and Democratic Resilience</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">Delegates from 18 Asia-Pacific member parties gathered in Tokyo for the IDU's annual regional conference. The conference adopted the Tokyo Communiqué, addressing the rise of authoritarianism in the region, threats to freedom of navigation, and the importance of free-trade agreements between democracies.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Report →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">22</div><div class="date-col-month">Nov 2024</div></div>
+      <div>
+        <span class="cat-tag tag-statement">Statement</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Statement on the Election Outcome in Romania: Concerns Over Democratic Norms</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The IDU issued a statement urging Romanian authorities to uphold constitutional norms and the rule of law in the aftermath of disputed first-round presidential election results, calling for full transparency in the judicial review process.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Statement →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">14</div><div class="date-col-month">Oct 2024</div></div>
+      <div>
+        <span class="cat-tag tag-release">Press Release</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Secretary General Congratulates Friedrich Merz and CDU/CSU on Election Victory</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The IDU Secretary General extended congratulations to IDU member party CDU/CSU and its Chancellor candidate Friedrich Merz on their decisive victory in the German federal election, noting the result as a strong mandate for centre-right governance in Europe's largest democracy.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Statement →</a>
+      </div>
+    </div>
+
+    <div class="news-row">
+      <div><div class="date-col-day">2</div><div class="date-col-month">Sep 2024</div></div>
+      <div>
+        <span class="cat-tag tag-resolution">Resolution</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;line-height:1.3;margin-bottom:10px;"><a href="#" style="color:inherit;text-decoration:none;">IDU Resolution on Support for Ukraine and the Restoration of International Law</a></h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The IDU Executive Committee adopted a resolution reaffirming unwavering support for Ukraine's sovereignty and territorial integrity, calling on all member parties to advocate for continued military, economic, and humanitarian assistance to Ukraine within their respective governments and legislatures.</p>
+        <a href="#" style="font-size:13px;color:#003087;font-weight:600;text-decoration:none;display:inline-block;margin-top:12px;">Read Resolution →</a>
+      </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:48px;padding-top:32px;border-top:1px solid #E8ECF0;">
+      <button style="width:36px;height:36px;background:#003087;color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;">1</button>
+      <button style="width:36px;height:36px;background:#fff;color:#1A1A2E;border:1px solid #E2E8F0;font-size:13px;cursor:pointer;">2</button>
+      <button style="width:36px;height:36px;background:#fff;color:#1A1A2E;border:1px solid #E2E8F0;font-size:13px;cursor:pointer;">3</button>
+      <span style="color:#94A3B8;">···</span>
+      <button style="width:36px;height:36px;background:#fff;color:#1A1A2E;border:1px solid #E2E8F0;font-size:13px;cursor:pointer;">12</button>
+      <button style="padding:0 16px;height:36px;background:#fff;color:#003087;border:1px solid #003087;font-size:13px;font-weight:600;cursor:pointer;">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#0A1628;border-top:1px solid rgba(255,255,255,0.08);padding:64px 48px 32px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">IDU<span style="color:#C9A84C;">·</span></div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:20px;">The International Democracy Union — uniting centre-right democratic parties across the world since 1983.</p>
+        <div style="display:flex;gap:12px;">
+          <a href="#" style="color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;">Twitter</a>
+          <a href="#" style="color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;">LinkedIn</a>
+          <a href="#" style="color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;">Facebook</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:16px;">Quick Links</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="about.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">About IDU</a>
+          <a href="members.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Member Parties</a>
+          <a href="news.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">News &amp; Statements</a>
+          <a href="events.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Events</a>
+          <a href="leadership.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Leadership</a>
+          <a href="bush-thatcher-award.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Bush-Thatcher Award</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:16px;">Sub-Organisations</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">IYDU</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">IWDU</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">CDU Affiliate</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">DUA</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">UPLA</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">APDU</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:16px;">Transparency</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="privacy.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Privacy Policy</a>
+          <a href="accessibility.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Accessibility Statement</a>
+          <a href="transparency.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Annual Reports</a>
+          <a href="contact.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Contact</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Member Login</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Newsletter</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;">
+      <p style="font-size:12px;color:rgba(255,255,255,0.3);">© 2026 International Democracy Union. All rights reserved. | <a href="privacy.html" style="color:rgba(255,255,255,0.3);text-decoration:none;">Privacy Policy</a> | <a href="accessibility.html" style="color:rgba(255,255,255,0.3);text-decoration:none;">Accessibility</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- SHARE Button Component -->
+<div id="share-button-container"></div>
+<script>
+(function() {
+  'use strict';
+  function isAuthenticated() { return document.cookie.split(';').some(c => c.trim().startsWith('CF_Authorization=')); }
+  if (!isAuthenticated()) return;
+  const container = document.getElementById('share-button-container');
+  if (!container) return;
+  container.innerHTML = `<style>#share-btn{position:fixed;top:20px;right:20px;padding:10px 20px;background:linear-gradient(135deg,#00d5ff 0%,#b42aff 100%);color:white;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(180,42,255,0.3);transition:all 0.2s;z-index:9999;font-family:'Inter',sans-serif;}#share-btn:hover{box-shadow:0 4px 12px rgba(180,42,255,0.5);transform:translateY(-1px);}#share-btn:disabled{background:#94a3b8;cursor:not-allowed;}.share-toast{position:fixed;top:80px;right:20px;padding:12px 20px;background:#10b981;color:white;border-radius:6px;font-size:14px;z-index:10000;animation:slideIn 0.3s ease-out;}.share-error{background:#ef4444;}@keyframes slideIn{from{transform:translateX(400px);opacity:0;}to{transform:translateX(0);opacity:1;}}</style><button id="share-btn">📤 SHARE</button>`;
+  const btn = document.getElementById('share-btn');
+  btn.addEventListener('click', async function() {
+    btn.disabled = true; btn.textContent = '⏳ Generating...';
+    try {
+      const cfToken = document.cookie.split(';').find(c=>c.trim().startsWith('CF_Authorization='))?.split('=')[1];
+      if (!cfToken) throw new Error('Not authenticated');
+      const r = await fetch('https://share.autonomoustech.ca/api/share',{method:'POST',headers:{'Content-Type':'application/json','X-CF-Authorization':cfToken},body:JSON.stringify({path:window.location.pathname})});
+      if (!r.ok) throw new Error('Failed');
+      const d = await r.json(); await navigator.clipboard.writeText(d.url);
+      showToast('✅ Link copied to clipboard!');
+    } catch(e){ showToast('❌ Failed to generate link',true); }
+    finally { btn.disabled=false; btn.textContent='📤 SHARE'; }
+  });
+  function showToast(msg,isError=false){const t=document.createElement('div');t.className='share-toast'+(isError?' share-error':'');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+})();
+</script>
+</body>
+</html>

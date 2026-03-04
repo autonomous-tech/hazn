@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — International Democracy Union</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;color:#1A1A2E;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,0.08);}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:#003087;}
+.nav-logo span{color:#C9A84C;}
+.nav-link{color:#1A1A2E;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:0.04em;}
+.nav-link:hover{color:#C9A84C;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-login{border:1px solid #003087;color:#003087;padding:8px 18px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;text-transform:uppercase;}
+.hero{min-height:70vh;background:linear-gradient(rgba(10,22,40,0.65),rgba(10,22,40,0.65)),url('images/hero-about.png') center/cover no-repeat;display:flex;align-items:flex-end;padding:0 80px 80px;}
+.btn-gold{background:#C9A84C;color:#0A1628;padding:12px 28px;font-weight:700;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;border:2px solid #C9A84C;text-decoration:none;display:inline-block;transition:all 0.2s;}
+.btn-gold:hover{background:transparent;color:#C9A84C;}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.3em;color:#C9A84C;text-transform:uppercase;margin-bottom:16px;}
+/* Timeline */
+.timeline-item{display:grid;grid-template-columns:1fr 80px 1fr;gap:0;align-items:start;margin-bottom:0;}
+.timeline-year{font-family:'Bebas Neue',sans-serif;font-size:48px;color:#C9A84C;text-align:center;position:relative;}
+.timeline-year::before{content:'';position:absolute;left:50%;top:0;bottom:-100%;width:1px;background:#E2E8F0;}
+.timeline-content{padding:0 40px 64px;}
+.timeline-content-right{padding:0 0 64px 40px;}
+/* Values */
+.value-card{border-top:3px solid #C9A84C;padding-top:24px;}
+.value-icon{width:40px;height:40px;background:#EEF3FA;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:18px;}
+@media(max-width:768px){nav{padding:0 20px;}.hero{padding:0 24px 48px;}.timeline-item{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">IDU<span>·</span></a>
+  <div class="nav-links">
+    <a href="about.html" class="nav-link" style="color:#003087;font-weight:700;">About</a>
+    <a href="members.html" class="nav-link">Members</a>
+    <a href="news.html" class="nav-link">News</a>
+    <a href="events.html" class="nav-link">Events</a>
+    <a href="leadership.html" class="nav-link">Leadership</a>
+    <a href="media-centre.html" class="nav-link">Media Centre</a>
+    <a href="#" class="nav-login">Member Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="margin-top:72px;">
+  <div>
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.3em;color:#C9A84C;text-transform:uppercase;margin-bottom:16px;">International Democracy Union</p>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:700;color:#fff;line-height:1.1;max-width:600px;margin-bottom:16px;">About the IDU</h1>
+    <p style="font-size:16px;color:rgba(255,255,255,0.75);max-width:480px;">Forty years of uniting democrats across every continent in the common cause of freedom.</p>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section style="background:#fff;padding:96px 48px;">
+  <div style="max-width:800px;margin:0 auto;text-align:center;">
+    <p class="section-eyebrow">Our Mission</p>
+    <blockquote style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,34px);font-weight:400;font-style:italic;color:#0A1628;line-height:1.5;">"To promote democracy, freedom, and the rule of law, and to advance the principles of centre-right governance as the foundation of peaceful, prosperous, and just societies."</blockquote>
+    <div style="width:60px;height:2px;background:#C9A84C;margin:32px auto;"></div>
+    <p style="font-size:16px;color:#64748B;line-height:1.8;">The IDU exists as a forum in which political parties holding similar beliefs can come together and assist each other in a variety of political activities. The IDU facilitates the exchange of views on matters of common interest, helps with election campaigns, and promotes the development of democratic parties and institutions in new and emerging democracies.</p>
+  </div>
+</section>
+
+<!-- HISTORY TIMELINE -->
+<section style="background:#F4F6F8;padding:96px 48px;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:64px;">
+      <p class="section-eyebrow">History</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:700;color:#0A1628;">Four Decades of Democratic Leadership</h2>
+    </div>
+    <!-- Timeline items -->
+    <div style="position:relative;">
+      <!-- 1983 -->
+      <div style="display:grid;grid-template-columns:1fr 100px 1fr;margin-bottom:0;">
+        <div style="padding:0 48px 64px 0;text-align:right;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:8px;">Founding in London</h3>
+          <p style="font-size:14px;color:#64748B;line-height:1.7;">Margaret Thatcher, Ronald Reagan, Helmut Kohl, and leaders from 18 democratic parties gather in London to sign the founding declaration of the International Democracy Union. The IDU is born as the premier alliance of centre-right parties.</p>
+        </div>
+        <div style="text-align:center;position:relative;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:#C9A84C;line-height:1;">1983</div>
+          <div style="width:1px;background:#D1D9E6;position:absolute;left:50%;top:56px;bottom:0;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#C9A84C;position:absolute;left:50%;top:52px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="padding:0 0 64px 48px;padding-top:8px;">
+          <p style="font-size:13px;font-weight:600;color:#003087;text-transform:uppercase;letter-spacing:0.08em;">London, United Kingdom</p>
+        </div>
+      </div>
+      <!-- 1990s -->
+      <div style="display:grid;grid-template-columns:1fr 100px 1fr;margin-bottom:0;">
+        <div style="padding:0 48px 64px 0;text-align:right;padding-top:8px;">
+          <p style="font-size:13px;font-weight:600;color:#003087;text-transform:uppercase;letter-spacing:0.08em;">Post-Cold War Expansion</p>
+        </div>
+        <div style="text-align:center;position:relative;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:#C9A84C;line-height:1;">1990s</div>
+          <div style="width:1px;background:#D1D9E6;position:absolute;left:50%;top:56px;bottom:0;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#C9A84C;position:absolute;left:50%;top:52px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="padding:0 0 64px 48px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:8px;">Democracy Across Continents</h3>
+          <p style="font-size:14px;color:#64748B;line-height:1.7;">Following the fall of communism, the IDU expands rapidly across Central and Eastern Europe. New member parties from Poland, Czech Republic, Hungary, and the Baltic states join the alliance. The IDU begins providing election observation and party-building support.</p>
+        </div>
+      </div>
+      <!-- 2000s -->
+      <div style="display:grid;grid-template-columns:1fr 100px 1fr;margin-bottom:0;">
+        <div style="padding:0 48px 64px 0;text-align:right;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:8px;">Global Reach Established</h3>
+          <p style="font-size:14px;color:#64748B;line-height:1.7;">The IDU establishes regional affiliates: APDU for Asia-Pacific, UPLA for Latin America, and DUA for Africa. Membership surpasses 60 parties. The Bush-Thatcher Award for Freedom is inaugurated to recognise outstanding contributions to democracy.</p>
+        </div>
+        <div style="text-align:center;position:relative;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:#C9A84C;line-height:1;">2000s</div>
+          <div style="width:1px;background:#D1D9E6;position:absolute;left:50%;top:56px;bottom:0;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#C9A84C;position:absolute;left:50%;top:52px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="padding:0 0 64px 48px;padding-top:8px;">
+          <p style="font-size:13px;font-weight:600;color:#003087;text-transform:uppercase;letter-spacing:0.08em;">Worldwide</p>
+        </div>
+      </div>
+      <!-- Today -->
+      <div style="display:grid;grid-template-columns:1fr 100px 1fr;margin-bottom:0;">
+        <div style="padding:0 48px 0 0;text-align:right;padding-top:8px;">
+          <p style="font-size:13px;font-weight:600;color:#003087;text-transform:uppercase;letter-spacing:0.08em;">Present Day</p>
+        </div>
+        <div style="text-align:center;position:relative;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:#C9A84C;line-height:1;">2024</div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#003087;border:3px solid #C9A84C;position:absolute;left:50%;top:52px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="padding:0 0 0 48px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:8px;">80+ Parties, 6 Continents</h3>
+          <p style="font-size:14px;color:#64748B;line-height:1.7;">The IDU today represents over 80 member parties across six continents, including parties of government in the United States, United Kingdom, Germany, Australia, Canada, Israel, and Japan. The IDU continues to be the world's most influential centre-right international.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section style="background:#fff;padding:96px 48px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <p class="section-eyebrow">Governance</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:700;color:#0A1628;">How the IDU is Governed</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+      <div style="border:1px solid #E2E8F0;padding:36px;border-top:4px solid #003087;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:#003087;margin-bottom:12px;">01</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:12px;">Leaders Meeting</h3>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The supreme governing body, convened every two years, bringing together heads of member parties to set the IDU's strategic direction.</p>
+      </div>
+      <div style="border:1px solid #E2E8F0;padding:36px;border-top:4px solid #003087;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:#003087;margin-bottom:12px;">02</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:12px;">Executive Committee</h3>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">The governing council between Leaders Meetings, responsible for day-to-day oversight. Meets quarterly. Includes representatives from all regional affiliates.</p>
+      </div>
+      <div style="border:1px solid #E2E8F0;padding:36px;border-top:4px solid #003087;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:#003087;margin-bottom:12px;">03</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#0A1628;margin-bottom:12px;">Secretariat</h3>
+        <p style="font-size:14px;color:#64748B;line-height:1.7;">Based in Geneva, the professional Secretariat manages day-to-day operations, coordinates member relations, and delivers IDU programmes and publications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE DOCUMENTS -->
+<section style="background:#F4F6F8;padding:64px 48px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-eyebrow" style="text-align:center;">Governance Documents</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,2.5vw,32px);font-weight:700;color:#0A1628;text-align:center;margin-bottom:40px;">Founding Documents &amp; Rules</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-top:3px solid #C9A84C;padding:32px;">
+        <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#0A1628;margin-bottom:10px;">IDU Charter</h3>
+        <p style="font-size:13px;color:#64748B;line-height:1.7;margin-bottom:24px;">The founding document of the International Democracy Union, establishing its purposes, principles, and organisational structure.</p>
+        <a href="#" style="display:inline-block;border:2px solid #C9A84C;color:#C9A84C;padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">↓ Download PDF</a>
+      </div>
+      <div style="background:#fff;border:1px solid #E2E8F0;border-top:3px solid #C9A84C;padding:32px;">
+        <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#0A1628;margin-bottom:10px;">Membership Rules &amp; Criteria</h3>
+        <p style="font-size:13px;color:#64748B;line-height:1.7;margin-bottom:24px;">The rules governing IDU membership, including eligibility criteria, application procedures, and membership obligations for member parties.</p>
+        <a href="#" style="display:inline-block;border:2px solid #C9A84C;color:#C9A84C;padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">↓ Download PDF</a>
+      </div>
+      <div style="background:#fff;border:1px solid #E2E8F0;border-top:3px solid #C9A84C;padding:32px;">
+        <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#0A1628;margin-bottom:10px;">Executive Committee Terms of Reference</h3>
+        <p style="font-size:13px;color:#64748B;line-height:1.7;margin-bottom:24px;">The terms of reference governing the composition, powers, and procedures of the IDU Executive Committee.</p>
+        <a href="#" style="display:inline-block;border:2px solid #C9A84C;color:#C9A84C;padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">↓ Download PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section style="background:#0A1628;padding:96px 48px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <p class="section-eyebrow">Our Values</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:700;color:#fff;">The Principles That Unite Us</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;">
+      <div style="border-top:3px solid #C9A84C;padding-top:24px;">
+        <div style="font-size:28px;margin-bottom:16px;">🗳️</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Democracy</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;">Free and fair elections, representative government, and the peaceful transfer of power are the cornerstones of our political philosophy.</p>
+      </div>
+      <div style="border-top:3px solid #C9A84C;padding-top:24px;">
+        <div style="font-size:28px;margin-bottom:16px;">🕊️</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Freedom</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;">Individual liberty — of speech, press, conscience, and economic activity — is the bedrock on which free societies and free markets are built.</p>
+      </div>
+      <div style="border-top:3px solid #C9A84C;padding-top:24px;">
+        <div style="font-size:28px;margin-bottom:16px;">⚖️</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Rule of Law</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;">No one is above the law. The independence of the judiciary and respect for constitutionally established norms is non-negotiable.</p>
+      </div>
+      <div style="border-top:3px solid #C9A84C;padding-top:24px;">
+        <div style="font-size:28px;margin-bottom:16px;">🌍</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Human Rights</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;">Universal human rights are not a gift of government but an inherent dignity of every person. The IDU defends these rights unconditionally.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUB-ORGS -->
+<section style="background:#fff;padding:80px 48px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-eyebrow" style="text-align:center;">The IDU Family</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,38px);font-weight:700;color:#0A1628;text-align:center;margin-bottom:48px;">Our Sister Organisations</h2>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:20px;">
+      <div style="text-align:center;padding:24px 8px;border:1px solid #E2E8F0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#003087;margin-bottom:6px;">IYDU</div><p style="font-size:11px;font-weight:600;color:#0A1628;">International Young Democrat Union</p><p style="font-size:10px;color:#94A3B8;margin-top:4px;">Global</p></div>
+      <div style="text-align:center;padding:24px 8px;border:1px solid #E2E8F0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#003087;margin-bottom:6px;">IWDU</div><p style="font-size:11px;font-weight:600;color:#0A1628;">International Women's Democratic Union</p><p style="font-size:10px;color:#94A3B8;margin-top:4px;">Global</p></div>
+      <div style="text-align:center;padding:24px 8px;border:1px solid #E2E8F0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#003087;margin-bottom:6px;">CDU</div><p style="font-size:11px;font-weight:600;color:#0A1628;">CDU/EPP Affiliate Network</p><p style="font-size:10px;color:#94A3B8;margin-top:4px;">Europe</p></div>
+      <div style="text-align:center;padding:24px 8px;border:1px solid #E2E8F0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#003087;margin-bottom:6px;">DUA</div><p style="font-size:11px;font-weight:600;color:#0A1628;">Democrat Union of Africa</p><p style="font-size:10px;color:#94A3B8;margin-top:4px;">Africa</p></div>
+      <div style="text-align:center;padding:24px 8px;border:1px solid #E2E8F0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#003087;margin-bottom:6px;">UPLA</div><p style="font-size:11px;font-weight:600;color:#0A1628;">Unión de Partidos Latinoamericanos</p><p style="font-size:10px;color:#94A3B8;margin-top:4px;">Latin America</p></div>
+      <div style="text-align:center;padding:24px 8px;border:1px solid #E2E8F0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#003087;margin-bottom:6px;">APDU</div><p style="font-size:11px;font-weight:600;color:#0A1628;">Asia Pacific Democrat Union</p><p style="font-size:10px;color:#94A3B8;margin-top:4px;">Asia-Pacific</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVISORY BOARD TEASER -->
+<section style="background:#F4F6F8;padding:80px 48px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;">
+      <div>
+        <p class="section-eyebrow">Advisory Board</p>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);font-weight:700;color:#0A1628;">Distinguished Democratic Leaders</h2>
+      </div>
+      <a href="leadership.html" style="color:#003087;font-weight:600;font-size:14px;text-decoration:none;">View Full Leadership →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">
+      <div style="text-align:center;"><div style="width:80px;height:80px;border-radius:50%;background:#D1D9E6;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#94A3B8;">PHOTO</div><p style="font-size:13px;font-weight:600;color:#0A1628;">Dr. Lars Løkke Rasmussen</p><p style="font-size:11px;color:#64748B;">Denmark</p></div>
+      <div style="text-align:center;"><div style="width:80px;height:80px;border-radius:50%;background:#D1D9E6;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#94A3B8;">PHOTO</div><p style="font-size:13px;font-weight:600;color:#0A1628;">Rt. Hon. Stephen Harper</p><p style="font-size:11px;color:#64748B;">Canada</p></div>
+      <div style="text-align:center;"><div style="width:80px;height:80px;border-radius:50%;background:#D1D9E6;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#94A3B8;">PHOTO</div><p style="font-size:13px;font-weight:600;color:#0A1628;">Mariano Rajoy</p><p style="font-size:11px;color:#64748B;">Spain</p></div>
+      <div style="text-align:center;"><div style="width:80px;height:80px;border-radius:50%;background:#D1D9E6;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#94A3B8;">PHOTO</div><p style="font-size:13px;font-weight:600;color:#0A1628;">Angela Merkel</p><p style="font-size:11px;color:#64748B;">Germany</p></div>
+      <div style="text-align:center;"><div style="width:80px;height:80px;border-radius:50%;background:#D1D9E6;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#94A3B8;">PHOTO</div><p style="font-size:13px;font-weight:600;color:#0A1628;">John Howard</p><p style="font-size:11px;color:#64748B;">Australia</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#0A1628;border-top:1px solid rgba(255,255,255,0.08);padding:64px 48px 32px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">IDU<span style="color:#C9A84C;">·</span></div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:20px;">The International Democracy Union — uniting centre-right democratic parties across the world since 1983.</p>
+        <div style="display:flex;gap:12px;">
+          <a href="#" style="color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;">Twitter</a>
+          <a href="#" style="color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;">LinkedIn</a>
+          <a href="#" style="color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;">Facebook</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:16px;">Quick Links</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="about.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">About IDU</a>
+          <a href="members.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Member Parties</a>
+          <a href="news.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">News &amp; Statements</a>
+          <a href="events.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Events</a>
+          <a href="leadership.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Leadership</a>
+          <a href="bush-thatcher-award.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Bush-Thatcher Award</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:16px;">Sub-Organisations</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">IYDU</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">IWDU</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">CDU Affiliate</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">DUA</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">UPLA</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">APDU</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:16px;">Transparency</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="privacy.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Privacy Policy</a>
+          <a href="accessibility.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Accessibility Statement</a>
+          <a href="transparency.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Annual Reports</a>
+          <a href="contact.html" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Contact</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Member Login</a>
+          <a href="#" style="color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;">Newsletter</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;">
+      <p style="font-size:12px;color:rgba(255,255,255,0.3);">© 2026 International Democracy Union. All rights reserved. | <a href="privacy.html" style="color:rgba(255,255,255,0.3);text-decoration:none;">Privacy Policy</a> | <a href="accessibility.html" style="color:rgba(255,255,255,0.3);text-decoration:none;">Accessibility</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- SHARE Button Component -->
+<div id="share-button-container"></div>
+<script>
+(function() {
+  'use strict';
+  function isAuthenticated() { return document.cookie.split(';').some(c => c.trim().startsWith('CF_Authorization=')); }
+  if (!isAuthenticated()) return;
+  const container = document.getElementById('share-button-container');
+  if (!container) return;
+  container.innerHTML = `<style>#share-btn{position:fixed;top:20px;right:20px;padding:10px 20px;background:linear-gradient(135deg,#00d5ff 0%,#b42aff 100%);color:white;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(180,42,255,0.3);transition:all 0.2s;z-index:9999;font-family:'Inter',sans-serif;}#share-btn:hover{box-shadow:0 4px 12px rgba(180,42,255,0.5);transform:translateY(-1px);}#share-btn:disabled{background:#94a3b8;cursor:not-allowed;transform:none;}.share-toast{position:fixed;top:80px;right:20px;padding:12px 20px;background:#10b981;color:white;border-radius:6px;font-size:14px;font-weight:500;z-index:10000;animation:slideIn 0.3s ease-out;}.share-error{background:#ef4444;}@keyframes slideIn{from{transform:translateX(400px);opacity:0;}to{transform:translateX(0);opacity:1;}}</style><button id="share-btn">📤 SHARE</button>`;
+  const btn = document.getElementById('share-btn');
+  btn.addEventListener('click', async function() {
+    btn.disabled = true; btn.textContent = '⏳ Generating...';
+    try {
+      const cfToken = document.cookie.split(';').find(c=>c.trim().startsWith('CF_Authorization='))?.split('=')[1];
+      if (!cfToken) throw new Error('Not authenticated');
+      const response = await fetch('https://share.autonomoustech.ca/api/share',{method:'POST',headers:{'Content-Type':'application/json','X-CF-Authorization':cfToken},body:JSON.stringify({path:window.location.pathname})});
+      if (!response.ok) throw new Error('Failed');
+      const data = await response.json();
+      await navigator.clipboard.writeText(data.url);
+      showToast('✅ Link copied to clipboard!');
+    } catch(e){ showToast('❌ Failed to generate link',true); }
+    finally { btn.disabled=false; btn.textContent='📤 SHARE'; }
+  });
+  function showToast(msg,isError=false){const t=document.createElement('div');t.className='share-toast'+(isError?' share-error':'');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+})();
+</script>
+</body>
+</html>

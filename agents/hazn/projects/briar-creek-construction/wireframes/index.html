@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Briar Creek Construction — Wireframe Index</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: '#2D4A2D',
+            amber: '#D4870A',
+            slate: '#4A5568',
+            cream: '#F7F5F0',
+            dark: '#1A1A1A',
+          },
+          fontFamily: {
+            heading: ['Oswald', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F7F5F0; }
+    h1,h2,h3,h4,h5 { font-family: 'Oswald', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-cream text-dark">
+
+  <!-- Header -->
+  <header class="bg-forest py-8 px-4 text-center">
+    <div class="inline-block bg-amber text-white font-heading text-xs px-4 py-1 rounded-full tracking-widest uppercase mb-4">Wireframe Preview Kit</div>
+    <h1 class="font-heading text-white text-4xl md:text-5xl tracking-wide mb-2">Briar Creek Construction</h1>
+    <p class="text-green-200 text-base max-w-xl mx-auto">Mid-fidelity wireframes using brand colors, real copy, and responsive layouts. Click any page below to preview.</p>
+  </header>
+
+  <!-- Brand Bar -->
+  <section class="bg-dark py-5 px-4">
+    <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-6 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded" style="background:#2D4A2D"></div>
+        <span class="text-gray-300">Forest <code class="text-gray-400">#2D4A2D</code></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded" style="background:#D4870A"></div>
+        <span class="text-gray-300">Amber <code class="text-gray-400">#D4870A</code></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded" style="background:#4A5568"></div>
+        <span class="text-gray-300">Slate <code class="text-gray-400">#4A5568</code></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded border border-gray-600" style="background:#F7F5F0"></div>
+        <span class="text-gray-300">Cream <code class="text-gray-400">#F7F5F0</code></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded" style="background:#1A1A1A"></div>
+        <span class="text-gray-300">Dark <code class="text-gray-400">#1A1A1A</code></span>
+      </div>
+      <div class="text-gray-400">|</div>
+      <span class="text-gray-300">Oswald (headings) · Inter (body)</span>
+    </div>
+  </section>
+
+  <!-- Page Cards -->
+  <section class="py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-heading text-3xl text-forest text-center mb-10 tracking-wide">Wireframe Pages</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Homepage -->
+        <a href="homepage.html" class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden border border-gray-100">
+          <div class="bg-forest p-6">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-heading text-white text-2xl tracking-wide">Homepage</span>
+              <span class="bg-amber/20 text-amber text-xs font-heading px-3 py-1 rounded-full tracking-wide">8 Sections</span>
+            </div>
+            <span class="text-green-300 text-xs font-mono">homepage.html</span>
+          </div>
+          <div class="p-6">
+            <ul class="space-y-1.5 text-sm text-slate">
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Hero with dual CTAs</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Trust bar (4 proof points)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Services overview (3 cards)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Featured gallery (3 projects)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Why Choose Us (4 icons)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Testimonials (3 cards)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> CTA banner + callback form</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Service areas + county list</li>
+            </ul>
+            <div class="mt-5 flex items-center gap-2 text-amber font-heading text-sm tracking-wide group-hover:gap-3 transition-all">
+              View Wireframe <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Services -->
+        <a href="services.html" class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden border border-gray-100">
+          <div class="bg-forest p-6">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-heading text-white text-2xl tracking-wide">Services</span>
+              <span class="bg-amber/20 text-amber text-xs font-heading px-3 py-1 rounded-full tracking-wide">5 Sections</span>
+            </div>
+            <span class="text-green-300 text-xs font-mono">services.html</span>
+          </div>
+          <div class="p-6">
+            <ul class="space-y-1.5 text-sm text-slate">
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Page hero + breadcrumb</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> New Construction (alternating layout)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Remodeling detail section</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Additions detail section</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> 4-step process overview</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> CTA banner</li>
+            </ul>
+            <div class="mt-5 flex items-center gap-2 text-amber font-heading text-sm tracking-wide group-hover:gap-3 transition-all">
+              View Wireframe <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Gallery -->
+        <a href="gallery.html" class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden border border-gray-100">
+          <div class="bg-forest p-6">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-heading text-white text-2xl tracking-wide">Our Work</span>
+              <span class="bg-amber/20 text-amber text-xs font-heading px-3 py-1 rounded-full tracking-wide">Gallery</span>
+            </div>
+            <span class="text-green-300 text-xs font-mono">gallery.html</span>
+          </div>
+          <div class="p-6">
+            <ul class="space-y-1.5 text-sm text-slate">
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Page hero</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Filter bar (6 categories)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Before/after slider mockup</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Masonry grid (9 projects)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Load more button</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> CTA banner</li>
+            </ul>
+            <div class="mt-5 flex items-center gap-2 text-amber font-heading text-sm tracking-wide group-hover:gap-3 transition-all">
+              View Wireframe <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Contact -->
+        <a href="contact.html" class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden border border-gray-100">
+          <div class="bg-forest p-6">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-heading text-white text-2xl tracking-wide">Contact</span>
+              <span class="bg-amber/20 text-amber text-xs font-heading px-3 py-1 rounded-full tracking-wide">Free Estimate</span>
+            </div>
+            <span class="text-green-300 text-xs font-mono">contact.html</span>
+          </div>
+          <div class="p-6">
+            <ul class="space-y-1.5 text-sm text-slate">
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Page hero (no-pressure message)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Two-column layout</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Contact info + trust badges</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> Full estimate request form (8 fields)</li>
+              <li class="flex items-center gap-2"><span class="text-amber">✓</span> FAQ accordion (6 questions)</li>
+            </ul>
+            <div class="mt-5 flex items-center gap-2 text-amber font-heading text-sm tracking-wide group-hover:gap-3 transition-all">
+              View Wireframe <span>→</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- UX Decisions Summary -->
+  <section class="py-12 px-4 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-heading text-2xl text-forest mb-6 tracking-wide text-center">UX Decisions Baked In</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-cream rounded-lg p-4 border border-gray-200">
+          <div class="font-semibold text-dark mb-1">📱 Mobile CTA Bar</div>
+          <div class="text-slate">Fixed amber bar on all pages. Two CTAs: Call Now + Request Callback.</div>
+        </div>
+        <div class="bg-cream rounded-lg p-4 border border-gray-200">
+          <div class="font-semibold text-dark mb-1">📌 Sticky Header</div>
+          <div class="text-slate">Desktop: Logo · Nav · CTA · Phone. Mobile: Logo · CALL button · Hamburger.</div>
+        </div>
+        <div class="bg-cream rounded-lg p-4 border border-gray-200">
+          <div class="font-semibold text-dark mb-1">🏅 Trust Bar</div>
+          <div class="text-slate">Immediately post-hero. License, insured, years, Google stars.</div>
+        </div>
+        <div class="bg-cream rounded-lg p-4 border border-gray-200">
+          <div class="font-semibold text-dark mb-1">🖼️ Gallery Filters</div>
+          <div class="text-slate">Sticky filter bar + masonry grid + before/after slider.</div>
+        </div>
+        <div class="bg-cream rounded-lg p-4 border border-gray-200">
+          <div class="font-semibold text-dark mb-1">📋 Contact Form</div>
+          <div class="text-slate">2-column layout. 8-field form + FAQ accordion.</div>
+        </div>
+        <div class="bg-cream rounded-lg p-4 border border-gray-200">
+          <div class="font-semibold text-dark mb-1">🗺️ Service Areas</div>
+          <div class="text-slate">Map placeholder + 8 Ohio counties listed on homepage.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-gray-500 py-8 text-center text-xs">
+    <div class="font-heading text-gray-400 mb-1 tracking-widest uppercase">Briar Creek Construction Wireframes</div>
+    <div>Created by Hazn · Mid-fidelity client preview · Not final design</div>
+  </footer>
+
+</body>
+</html>

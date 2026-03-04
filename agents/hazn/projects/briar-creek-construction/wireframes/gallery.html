@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Briar Creek Construction — Our Work</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: '#2D4A2D',
+            amber: '#D4870A',
+            slate: '#4A5568',
+            cream: '#F7F5F0',
+            dark: '#1A1A1A',
+          },
+          fontFamily: {
+            heading: ['Oswald', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F7F5F0; }
+    h1,h2,h3,h4,h5 { font-family: 'Oswald', sans-serif; }
+    .img-placeholder {
+      background: #D1D5DB;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #6B7280;
+      font-size: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      border: 2px dashed #9CA3AF;
+      padding: 1rem;
+    }
+    .filter-btn { transition: all 0.2s; }
+    .filter-btn.active { background-color: #2D4A2D; color: white; }
+  </style>
+</head>
+<body class="text-dark pb-20 md:pb-0">
+
+  <!-- STICKY HEADER -->
+  <header class="sticky top-0 z-50 bg-forest shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="img-placeholder w-10 h-10 rounded">🏗️</div>
+        <div>
+          <div class="font-heading text-white text-lg leading-tight tracking-wide">BRIAR CREEK</div>
+          <div class="text-xs text-green-300 tracking-widest uppercase">Construction</div>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-green-100 font-medium">
+        <a href="homepage.html" class="hover:text-white transition">Home</a>
+        <a href="services.html" class="hover:text-white transition">Services</a>
+        <a href="gallery.html" class="text-white font-semibold">Our Work</a>
+        <a href="contact.html" class="hover:text-white transition">Contact</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="contact.html" class="bg-amber text-white font-heading text-sm px-4 py-2 rounded hover:bg-yellow-600 transition tracking-wide">Get a Free Estimate</a>
+        <a href="tel:5550000000" class="text-white font-medium text-sm flex items-center gap-1">📞 (555) 000-0000</a>
+      </div>
+      <div class="flex md:hidden items-center gap-2">
+        <a href="tel:5550000000" class="bg-amber text-white font-heading text-sm px-4 py-2 rounded tracking-wide">CALL NOW</a>
+        <button class="text-white text-2xl">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <section class="relative">
+    <div class="img-placeholder w-full h-64 md:h-80">
+      <span class="text-2xl mb-1">📸</span>
+      <span class="font-semibold">GALLERY HERO IMAGE</span>
+      <span>Collage or featured completed project</span>
+      <span>1920×480px</span>
+    </div>
+    <div class="absolute inset-0 bg-dark/65 flex items-center">
+      <div class="max-w-7xl mx-auto px-6 w-full">
+        <div class="text-amber font-heading text-sm tracking-widest uppercase mb-2">Portfolio</div>
+        <h1 class="font-heading text-white text-5xl md:text-6xl leading-none tracking-wide mb-3">Our Work</h1>
+        <p class="text-gray-200 text-lg">Real projects. Real Ohio families. Browse our completed builds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-3 text-sm text-slate">
+      <a href="homepage.html" class="hover:text-forest">Home</a> <span class="mx-2">›</span> <span class="text-forest font-medium">Our Work</span>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <section class="py-8 bg-white border-b border-gray-200 sticky top-16 z-40">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-wrap gap-3 items-center justify-center md:justify-start">
+        <span class="text-slate text-sm font-medium mr-2 hidden md:inline">Filter by:</span>
+        <button class="filter-btn active font-heading text-sm px-5 py-2 rounded-full border border-forest text-forest">All Projects</button>
+        <button class="filter-btn font-heading text-sm px-5 py-2 rounded-full border border-gray-300 text-slate hover:border-forest hover:text-forest">New Construction</button>
+        <button class="filter-btn font-heading text-sm px-5 py-2 rounded-full border border-gray-300 text-slate hover:border-forest hover:text-forest">Remodeling</button>
+        <button class="filter-btn font-heading text-sm px-5 py-2 rounded-full border border-gray-300 text-slate hover:border-forest hover:text-forest">Additions</button>
+        <button class="filter-btn font-heading text-sm px-5 py-2 rounded-full border border-gray-300 text-slate hover:border-forest hover:text-forest">Kitchens</button>
+        <button class="filter-btn font-heading text-sm px-5 py-2 rounded-full border border-gray-300 text-slate hover:border-forest hover:text-forest">Bathrooms</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE/AFTER SLIDER FEATURE -->
+  <section class="py-14 bg-cream">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <div class="text-amber font-heading text-sm tracking-widest uppercase mb-2">Featured</div>
+        <h2 class="font-heading text-3xl md:text-4xl text-forest tracking-wide">Before & After</h2>
+        <p class="text-slate mt-2">Drag the slider to compare the transformation.</p>
+      </div>
+      <!-- Slider UI mockup -->
+      <div class="relative max-w-3xl mx-auto rounded-xl overflow-hidden shadow-xl">
+        <div class="flex">
+          <div class="img-placeholder flex-1 h-72 md:h-96">
+            <span class="text-3xl mb-1">⬅️</span>
+            <span class="font-semibold text-base">BEFORE PHOTO</span>
+            <span>Original kitchen — dated finishes</span>
+            <span>960×640px</span>
+          </div>
+          <div class="img-placeholder flex-1 h-72 md:h-96">
+            <span class="text-3xl mb-1">➡️</span>
+            <span class="font-semibold text-base">AFTER PHOTO</span>
+            <span>Renovated kitchen — modern finishes</span>
+            <span>960×640px</span>
+          </div>
+        </div>
+        <!-- Slider handle mockup -->
+        <div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-1 bg-white z-10 flex items-center justify-center">
+          <div class="bg-white border-2 border-forest rounded-full w-10 h-10 flex items-center justify-center shadow-lg text-forest font-bold text-xs">◀▶</div>
+        </div>
+        <!-- Labels -->
+        <div class="absolute bottom-4 left-4 bg-dark/70 text-white text-xs font-heading px-3 py-1 rounded tracking-wide">BEFORE</div>
+        <div class="absolute bottom-4 right-4 bg-amber/90 text-white text-xs font-heading px-3 py-1 rounded tracking-wide">AFTER</div>
+      </div>
+      <p class="text-center text-slate text-sm mt-4 italic">Kitchen Remodel — Dublin, OH · Completed 2024</p>
+    </div>
+  </section>
+
+  <!-- MASONRY GALLERY GRID -->
+  <section class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="font-heading text-3xl text-forest mb-8 tracking-wide text-center">All Projects</h2>
+
+      <!-- Masonry-style grid (simulated with columns) -->
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
+
+        <!-- Item 1 — tall -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-80 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 1</span>
+            <span>Custom New Build</span>
+            <span>600×640px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Custom New Build</div>
+            <div class="text-green-300 text-xs">Columbus, OH · 2024</div>
+          </div>
+        </div>
+
+        <!-- Item 2 — short -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-52 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 2</span>
+            <span>Kitchen Remodel</span>
+            <span>600×420px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Kitchen Remodel</div>
+            <div class="text-green-300 text-xs">Dublin, OH · 2024</div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-64 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 3</span>
+            <span>Master Bath Renovation</span>
+            <span>600×512px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Master Bath Renovation</div>
+            <div class="text-green-300 text-xs">Westerville, OH · 2023</div>
+          </div>
+        </div>
+
+        <!-- Item 4 — tall -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-80 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 4</span>
+            <span>Home Addition — 2nd Story</span>
+            <span>600×640px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Second-Story Addition</div>
+            <div class="text-green-300 text-xs">Powell, OH · 2024</div>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-56 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 5</span>
+            <span>Basement Finishing</span>
+            <span>600×448px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Basement Finishing</div>
+            <div class="text-green-300 text-xs">Gahanna, OH · 2023</div>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-64 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 6</span>
+            <span>Whole-Home Renovation</span>
+            <span>600×512px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Whole-Home Renovation</div>
+            <div class="text-green-300 text-xs">New Albany, OH · 2023</div>
+          </div>
+        </div>
+
+        <!-- Item 7 -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-52 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 7</span>
+            <span>Garage Addition</span>
+            <span>600×416px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Garage Addition</div>
+            <div class="text-green-300 text-xs">Hilliard, OH · 2023</div>
+          </div>
+        </div>
+
+        <!-- Item 8 — tall -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-72 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 8</span>
+            <span>Sunroom Addition</span>
+            <span>600×576px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Sunroom Addition</div>
+            <div class="text-green-300 text-xs">Pickerington, OH · 2022</div>
+          </div>
+        </div>
+
+        <!-- Item 9 -->
+        <div class="break-inside-avoid rounded-xl overflow-hidden shadow group cursor-pointer">
+          <div class="img-placeholder w-full h-60 group-hover:opacity-90 transition">
+            <span class="text-3xl mb-1">📸</span>
+            <span class="font-semibold">PROJECT 9</span>
+            <span>Custom New Build — Ranch</span>
+            <span>600×480px</span>
+          </div>
+          <div class="bg-forest text-white p-3">
+            <div class="font-heading tracking-wide text-sm">Custom Ranch Home</div>
+            <div class="text-green-300 text-xs">Grove City, OH · 2022</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center mt-12">
+        <button class="bg-forest text-white font-heading px-10 py-4 rounded tracking-wide hover:bg-green-900 transition text-lg">Load More Projects</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="bg-amber py-14 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="font-heading text-4xl md:text-5xl text-white mb-3 tracking-wide">Ready to Get Started?</h2>
+      <p class="text-yellow-100 text-lg mb-6">Call us today for a free estimate — no pressure, no obligation.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="tel:5550000000" class="bg-white text-amber font-heading text-xl px-10 py-4 rounded shadow-lg hover:bg-gray-50 transition tracking-wide">📞 (555) 000-0000</a>
+        <a href="contact.html" class="bg-forest text-white font-heading text-xl px-10 py-4 rounded shadow-lg hover:bg-green-900 transition tracking-wide">Request a Callback</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-dark text-gray-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div>
+        <div class="font-heading text-white text-xl tracking-wide mb-1">BRIAR CREEK</div>
+        <div class="text-green-400 text-xs tracking-widest uppercase mb-3">Construction</div>
+        <p class="text-sm leading-relaxed text-gray-400">Ohio's trusted residential contractor. Built right, every time.</p>
+        <div class="mt-4 text-xs text-gray-500">
+          <div>OH GC License #: [LICENSE-NUMBER]</div>
+          <div class="mt-1">🏛️ Ohio Contractor Badge</div>
+        </div>
+      </div>
+      <div>
+        <div class="font-heading text-white text-sm tracking-widest uppercase mb-4">Pages</div>
+        <ul class="space-y-2 text-sm">
+          <li><a href="homepage.html" class="hover:text-white transition">Home</a></li>
+          <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+          <li><a href="gallery.html" class="hover:text-white transition">Our Work</a></li>
+          <li><a href="contact.html" class="hover:text-white transition">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-heading text-white text-sm tracking-widest uppercase mb-4">Services</div>
+        <ul class="space-y-2 text-sm">
+          <li><a href="services.html" class="hover:text-white transition">New Home Construction</a></li>
+          <li><a href="services.html" class="hover:text-white transition">Remodeling</a></li>
+          <li><a href="services.html" class="hover:text-white transition">Additions</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-heading text-white text-sm tracking-widest uppercase mb-4">Contact</div>
+        <ul class="space-y-2 text-sm">
+          <li>📞 <a href="tel:5550000000" class="hover:text-white transition">(555) 000-0000</a></li>
+          <li>📧 <a href="mailto:info@briarcreekconstruction.com" class="hover:text-white transition">info@briarcreekconstruction.com</a></li>
+          <li>📍 Columbus, Ohio</li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 pt-8 mt-8 border-t border-gray-700 text-xs text-gray-500 text-center">
+      © 2025 Briar Creek Construction LLC · All Rights Reserved · Ohio GC License #[NUMBER]
+    </div>
+  </footer>
+
+  <!-- FLOATING MOBILE CTA -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-amber flex shadow-2xl">
+    <a href="tel:5550000000" class="flex-1 flex items-center justify-center gap-2 py-4 text-white font-heading text-base tracking-wide border-r border-yellow-600">
+      📞 Call Now
+    </a>
+    <a href="contact.html" class="flex-1 flex items-center justify-center gap-2 py-4 text-white font-heading text-base tracking-wide">
+      📋 Request Callback
+    </a>
+  </div>
+
+</body>
+</html>
