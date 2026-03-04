@@ -11,6 +11,7 @@ Hazn includes 12 specialized agent personas. Each agent has a specific role, act
 | **Copywriter** | Headlines, value props, CTAs, full page copy | `/hazn-copy` |
 | **Wireframer** | Mid-fidelity layouts for validation | `/hazn-wireframe` |
 | **Developer** | Next.js + Payload CMS + Tailwind implementation | `/hazn-dev` |
+| **QA Tester** | Visual QA, responsiveness, blueprint compliance — required gate before SEO | `/hazn-qa` |
 | **SEO Specialist** | Technical SEO, schema, content optimization | `/hazn-seo` |
 | **Content Writer** | Blog posts, keyword-optimized articles | `/hazn-content` |
 | **Auditor** | Multi-dimensional website analysis | `/hazn-audit` |
@@ -250,7 +251,44 @@ Hazn includes 12 specialized agent personas. Each agent has a specific role, act
 
 ### Sequential Workflow
 ```
-Strategist → UX Architect → Copywriter → Wireframer → Developer → SEO Specialist
+Strategist → UX Architect → Copywriter → Wireframer → Developer → QA Tester → SEO Specialist
+```
+
+### Handoff Contracts
+
+Each agent produces explicit outputs consumed by the next. Never skip steps.
+
+```
+Strategist
+  → outputs: .hazn/outputs/strategy.md
+    (ICP, positioning, competitors, tone, conversion goal)
+
+UX Architect
+  → consumes: strategy.md
+  → outputs: .hazn/outputs/ux-blueprint.md
+    (site map, page blueprints, section briefs, CTA hierarchy)
+
+Copywriter
+  → consumes: strategy.md + ux-blueprint.md
+  → outputs: .hazn/outputs/copy/{page}.md
+
+Wireframer (optional)
+  → consumes: ux-blueprint.md + copy/
+  → outputs: .hazn/outputs/wireframes/{page}.html
+
+Developer
+  → consumes: ux-blueprint.md + copy/ + wireframes/
+  → outputs: built site URL + dev-progress.md
+
+QA Tester ← REQUIRED GATE
+  → consumes: site URL + ux-blueprint.md + dev-progress.md
+  → outputs: .hazn/outputs/qa-report.md
+  → PASS → advance to Analytics + SEO
+  → FAIL → return to Developer (max 3 cycles)
+
+SEO Specialist
+  → consumes: live URL (QA PASS required)
+  → outputs: seo-checklist.md + applied optimizations
 ```
 
 ### Parallel Work

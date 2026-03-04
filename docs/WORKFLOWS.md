@@ -32,16 +32,26 @@ The complete path from strategy to deployed website.
 | 3. Copy | Copywriter | `/hazn-copy` | Optional |
 | 4. Wireframes | Wireframer | `/hazn-wireframe` | Optional |
 | 5. Development | Developer | `/hazn-dev` | ✓ |
-| 6. Analytics Setup | Developer | `/hazn-analytics` | ✓ |
-| 7. SEO + AI SEO | SEO Specialist | `/hazn-seo` | ✓ |
-| 8. Content | Content Writer | `/hazn-content` | Optional |
+| 6. **QA Testing** | **QA Tester** | `/hazn-qa` | **✓ Required gate** |
+| 7. Analytics Setup | Developer | `/hazn-analytics` | ✓ |
+| 8. SEO + AI SEO | SEO Specialist | `/hazn-seo` | ✓ |
+| 9. Content | Content Writer | `/hazn-content` | Optional |
 
 ### Checkpoints
 
 - **After Strategy:** Review `strategy.md` before proceeding
 - **After Wireframes:** Get stakeholder approval before development
-- **After Development:** Review in browser before SEO optimization
+- **After Development:** QA Tester runs — PASS required before advancing
+- **After QA:** Review in browser, then proceed to Analytics + SEO
 - **After Analytics:** Verify tracking is capturing key events
+
+### QA Quality Loop
+
+If QA returns FAIL:
+1. QA report sent back to Developer with specific issues
+2. Developer fixes and resubmits
+3. Max 3 cycles — escalate to user if still failing after 3 attempts
+4. ⚠️ Never skip QA to advance faster
 
 ### Duration Estimates
 
