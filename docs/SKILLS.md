@@ -33,6 +33,7 @@ Hazn includes 25 specialized skills covering the full marketing website lifecycl
 | | `analytics-audit` | GA4 property audit, site tracking inspection, attribution analysis |
 | | `analytics-audit-martech` | MarTech stack assessment, attribution architecture, roadmap |
 | | `analytics-audit-client-report` | Branded HTML client report from audit findings |
+| | `analytics-teaser-report` | Zero-access prospect teaser report (HTML) with scoring and gates |
 
 ---
 
@@ -546,6 +547,27 @@ Hazn includes 25 specialized skills covering the full marketing website lifecycl
 
 ---
 
+### analytics-teaser-report
+
+**Purpose:** Generate zero-access prospect teaser report — a sales asset covering performance, MarTech, SEO, copy, UX, and CRO with 3 service upsell gates.
+
+**When to use:**
+- Generating prospect reports without GA4/GSC access
+- Sales call preparation with data-backed findings
+- Lead magnet for marketing agency outreach
+
+**Key outputs:**
+- Single-file HTML report (self-contained, email-ready)
+- 11-section analysis + 3 service gates + CTA
+- Overall site grade (A-F weighted composite)
+- Specific Copy/UX/CRO findings from Playwright snapshots
+
+**Scoring:** Performance 15%, SEO 10%, CWV 10%, MarTech 15%, Privacy 10%, Security 5%, Copy 15%, UX 10%, CRO 10%
+
+**Pairs with:** `analytics-audit` (full audit after prospect converts)
+
+---
+
 ## Skill Workflow
 
 Skills are designed to chain together:
@@ -584,7 +606,8 @@ Analysis & Optimization
 ├── ui-audit (UX review)
 ├── analytics-audit (GA4/GSC data audit)
 ├── analytics-audit-martech (MarTech assessment)
-└── analytics-audit-client-report (HTML client report)
+├── analytics-audit-client-report (HTML client report)
+└── analytics-teaser-report (prospect teaser report)
 ```
 
 ---

@@ -149,3 +149,54 @@ The existing `analytics-tracking` skill covers **implementation** of tracking on
 
 - `analytics-tracking` → Set up measurement on new sites
 - `analytics-audit` → Audit measurement on existing sites
+
+---
+
+## Teaser Reports (Zero-Access)
+
+For prospects where you don't have GA4/GSC access, use the teaser pipeline:
+
+```
+/hazn-analytics-teaser autonomoustech.ca
+```
+
+This generates a comprehensive prospect report using only publicly available data:
+- Performance & Core Web Vitals (PageSpeed Insights API)
+- MarTech stack inventory (HTML source inspection)
+- SEO & structured data analysis
+- Copy/UX/CRO audit (Playwright screenshots + accessibility snapshots)
+- Security headers & SSL assessment
+- 3 service upsell gates with contextual data hooks
+
+### Teaser Agents
+
+| Agent | Role |
+|-------|------|
+| **Analytics Teaser Collector** | Playwright page crawler — screenshots + snapshots |
+| **Analytics Teaser Writer** | Generates the HTML teaser report |
+
+### Teaser Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `analytics-teaser-report` | Design system, scoring formulas, gate copy, quality checklist |
+
+### Teaser Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `pagespeed_collector.py` | PageSpeed Insights + CWV + Lighthouse (stdlib only) |
+| `teaser_collector.py` | robots.txt, sitemap, SSL, security headers, tech stack (stdlib only) |
+
+### Teaser Output
+
+All output goes to `.hazn/outputs/analytics-teaser/<domain>/`:
+
+| File | Description |
+|------|-------------|
+| `site_inspection.json` | MarTech stack from HTML inspection |
+| `pagespeed.json` | Lighthouse scores + Core Web Vitals |
+| `teaser_data.json` | robots.txt, sitemap, security, SSL, technology |
+| `playwright_data.json` | Accessibility snapshots + page inventory |
+| `screenshots/*.png` | Desktop + mobile screenshots |
+| `index.html` | Final HTML teaser report |

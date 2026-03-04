@@ -18,7 +18,7 @@ export async function install(options) {
   let config = {
     tools: options.tools.split(','),
     workflows: options.workflows === 'all' 
-      ? ['website', 'audit', 'blog', 'landing', 'analytics-audit'] 
+      ? ['website', 'audit', 'blog', 'landing', 'analytics-audit', 'analytics-teaser']
       : options.workflows.split(','),
     includeSkills: true,
     includeTemplates: true,
@@ -46,6 +46,8 @@ export async function install(options) {
           { name: 'Site Audit', value: 'audit', checked: true },
           { name: 'Blog Content Pipeline', value: 'blog', checked: true },
           { name: 'Landing Page (fast)', value: 'landing', checked: true },
+          { name: 'Analytics Audit (full GA4/GSC)', value: 'analytics-audit', checked: true },
+          { name: 'Analytics Teaser (prospect)', value: 'analytics-teaser', checked: true },
         ],
       },
       {
@@ -89,6 +91,12 @@ export async function install(options) {
       );
     }
 
+    spinner.text = 'Copying scripts...';
+    await fs.copy(
+      path.join(PACKAGE_ROOT, 'scripts'),
+      path.join(haznDir, 'scripts')
+    );
+
     spinner.text = 'Writing configuration...';
     await fs.writeJson(path.join(haznDir, 'config.json'), {
       version: '0.1.0',
@@ -124,6 +132,7 @@ export async function install(options) {
     console.log('      ├── agents/          — Agent personas');
     console.log('      ├── workflows/       — Workflow definitions');
     console.log('      ├── skills/          — Domain skills');
+    console.log('      ├── scripts/        — Data collection scripts (Python)');
     console.log('      └── outputs/         — Generated artifacts\n');
 
     console.log(chalk.cyan('🚀 Next steps:\n'));
@@ -195,6 +204,30 @@ Guide the user through the complete process: Strategy → UX → Copy → Wirefr
     'hazn-landing': `Read .hazn/workflows/landing.yaml to understand the landing page workflow.
 
 Guide the user through the fast path for a single landing page.`,
+
+    'hazn-analytics-audit': `Read .hazn/workflows/analytics-audit.yaml and follow its workflow.
+
+You are now running the analytics-audit workflow. Perform a full MarTech & Attribution audit.
+
+Arguments: <site-url> <ga4-property-id> [<gsc-site-url>]
+
+Before starting, ask the user for:
+1. The site URL to audit
+2. Their GA4 property ID (format: 123456789)
+3. Optionally, their GSC site URL (format: sc-domain:example.com or https://www.example.com/)
+
+Do NOT proceed until you have at minimum the site URL and GA4 property ID.`,
+
+    'hazn-analytics-teaser': `Read .hazn/workflows/analytics-teaser.yaml and follow its workflow.
+
+You are now running the analytics-teaser workflow. Generate a zero-access prospect teaser report.
+
+Arguments: <site-url> [<company-name>] [<calendly-url>]
+
+Before starting, ask the user for:
+1. The site URL to analyze (required)
+2. Company name for branding (optional — will extract from site if not provided)
+3. Calendly URL for CTA buttons (optional)`,
   };
 
   // Write each command file
@@ -258,6 +291,8 @@ Hazn registers these commands in \`.claude/commands/\`:
 - \`/hazn-audit\` — Run Auditor agent
 - \`/hazn-website\` — Full website workflow
 - \`/hazn-landing\` — Landing page workflow
+- \`/hazn-analytics-audit\` — Full MarTech & Attribution audit (needs GA4/GSC access)
+- \`/hazn-analytics-teaser\` — Zero-access prospect teaser report
 
 ### Key Directories
 

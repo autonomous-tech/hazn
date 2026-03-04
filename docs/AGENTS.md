@@ -19,6 +19,8 @@ Hazn includes 12 specialized agent personas. Each agent has a specific role, act
 | **Analytics Report Writer** | MarTech audit report from collected data | `/hazn-analytics-audit` |
 | **Analytics Adversary** | Red-team review of audit claims and data | `/hazn-analytics-audit` |
 | **Analytics Client Reporter** | Branded HTML client report generation | `/hazn-analytics-audit` |
+| **Analytics Teaser Collector** | Playwright page crawler for teaser screenshots/snapshots | `/hazn-analytics-teaser` |
+| **Analytics Teaser Writer** | Generate HTML teaser prospect report | `/hazn-analytics-teaser` |
 
 ---
 
@@ -244,6 +246,43 @@ Hazn includes 12 specialized agent personas. Each agent has a specific role, act
 4. Verify against quality checklist
 
 **Output:** `.hazn/outputs/analytics-audit/client-report/index.html`
+
+---
+
+### Analytics Teaser Collector
+
+**File:** `agents/analytics-teaser-collector.md`
+
+**Role:** Playwright-based page crawler that captures desktop + mobile screenshots and accessibility snapshots for the teaser report. Visits homepage + up to 4 auto-detected secondary pages.
+
+**Process:**
+1. Set up output directories
+2. Homepage desktop (1440x900) + mobile (375x812) screenshots and snapshots
+3. Auto-detect secondary pages from navigation (about, pricing, services, contact)
+4. Visit each secondary page — desktop + mobile screenshots and snapshots
+5. Record console errors, save combined data
+
+**Output:** `.hazn/outputs/analytics-teaser/<domain>/playwright_data.json` + screenshots
+
+---
+
+### Analytics Teaser Writer
+
+**File:** `agents/analytics-teaser-writer.md`
+
+**Role:** Generate polished single-file HTML teaser prospect report from all collected data.
+
+**Prerequisites:** All Phase 1 data collection complete (site inspection, PageSpeed, public data, Playwright).
+
+**Process:**
+1. Read all JSON data files
+2. Load teaser-report skill for design system and scoring
+3. Calculate all scores (Performance, SEO, CWV, MarTech, Security, Copy/UX/CRO)
+4. Perform Copy/UX/CRO analysis from Playwright snapshots
+5. Embed screenshots as Base64
+6. Generate single-file HTML report
+
+**Output:** `.hazn/outputs/analytics-teaser/<domain>/index.html`
 
 ---
 

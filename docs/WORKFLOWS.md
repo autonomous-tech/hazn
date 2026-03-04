@@ -13,6 +13,7 @@ Hazn includes 7 structured workflows for common marketing website tasks.
 | **Email** | `/hazn-email` | Email campaign design | 2-6 hours |
 | **Optimize** | `/hazn-optimize` | Post-launch optimization | Ongoing 2-4 week cycles |
 | **Analytics Audit** | `/hazn-analytics-audit` | GA4/GSC MarTech & Attribution audit | 3-6 hours |
+| **Analytics Teaser** | `/hazn-analytics-teaser` | Zero-access prospect teaser report | 30-60 minutes |
 
 ---
 
@@ -306,6 +307,35 @@ Full MarTech & Attribution audit pipeline for sites with GA4 and optional GSC ac
 
 ### Duration
 3-6 hours depending on site complexity and data volume.
+
+---
+
+## Analytics Teaser Workflow
+
+**File:** `workflows/analytics-teaser.yaml`
+**Trigger:** `/hazn-analytics-teaser`
+
+Zero-access prospect teaser report for any website — uses only publicly available data.
+
+### Prerequisites
+- Python 3.10+ (stdlib only — no pip install needed for teaser scripts)
+- Playwright MCP server (for screenshots and accessibility snapshots)
+
+### Phases
+
+| Phase | Agent | Duration | Actions |
+|-------|-------|----------|---------|
+| 1. Setup | — | 2 min | Parse inputs, create output directory |
+| 2. Data Collection | Analytics Inspector + Analytics Teaser Collector | 10-20 min | Site inspection, PageSpeed API, public data collection, Playwright crawl (parallel) |
+| 3. Report Generation | Analytics Teaser Writer | 15-30 min | Score calculation, Copy/UX/CRO analysis, HTML report generation |
+| 4. Verification | — | 5 min | Visual verification at 3 viewports, content check |
+
+### Deliverables
+- `.hazn/outputs/analytics-teaser/<domain>/index.html` — Single-file HTML teaser report
+- `.hazn/outputs/analytics-teaser/<domain>/` — Raw JSON data files + screenshots
+
+### Duration
+30-60 minutes depending on site complexity.
 
 ---
 

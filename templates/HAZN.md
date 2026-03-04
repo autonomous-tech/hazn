@@ -28,6 +28,8 @@ AI-driven website development framework for B2B, NGO, and institutional websites
 | `/hazn-dev` | Build (Next.js + Payload CMS, or WordPress + GeneratePress) |
 | `/hazn-seo` | Technical SEO optimization |
 | `/hazn-content` | Blog content pipeline |
+| `/hazn-analytics-audit` | Full MarTech & Attribution audit (needs GA4/GSC) |
+| `/hazn-analytics-teaser` | Zero-access prospect teaser report |
 
 ## Workflows
 
@@ -49,6 +51,16 @@ AI-driven website development framework for B2B, NGO, and institutional websites
 ### Site Audit
 ```
 /hazn-audit
+```
+
+### Analytics Audit
+```
+/hazn-analytics-audit <site-url> <ga4-property-id> [gsc-site-url]
+```
+
+### Analytics Teaser (Prospect)
+```
+/hazn-analytics-teaser <site-url> [company-name] [calendly-url]
 ```
 
 ## Agents

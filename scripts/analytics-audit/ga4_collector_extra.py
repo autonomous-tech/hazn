@@ -45,41 +45,42 @@ def collect_extra(property_id, days=90):
 
     result = {}
 
-    # 1. Overall engagement (30d)
-    print("Collecting engagement metrics...")
+    # 1. Overall engagement (30d) — split into two requests (GA4 limit: 10 metrics)
+    print("Collecting engagement metrics (batch 1)...")
+    batch1_metrics = [
+        "sessions", "totalUsers", "newUsers", "activeUsers",
+        "engagedSessions", "engagementRate", "bounceRate",
+        "averageSessionDuration", "screenPageViewsPerSession", "conversions",
+    ]
     request = RunReportRequest(
         property=f"properties/{property_id}",
-        metrics=[
-            Metric(name="sessions"),
-            Metric(name="totalUsers"),
-            Metric(name="newUsers"),
-            Metric(name="activeUsers"),
-            Metric(name="engagedSessions"),
-            Metric(name="engagementRate"),
-            Metric(name="bounceRate"),
-            Metric(name="averageSessionDuration"),
-            Metric(name="screenPageViewsPerSession"),
-            Metric(name="conversions"),
-            Metric(name="eventCount"),
-            Metric(name="sessionsPerUser"),
-            Metric(name="userEngagementDuration"),
-        ],
+        metrics=[Metric(name=m) for m in batch1_metrics],
+        date_ranges=[date_range_30d],
+    )
+    response = client.run_report(request)
+    engagement = {}
+    if response.rows:
+        row = response.rows[0]
+        engagement.update({
+            name: row.metric_values[i].value
+            for i, name in enumerate(batch1_metrics)
+        })
+
+    print("Collecting engagement metrics (batch 2)...")
+    batch2_metrics = ["eventCount", "sessionsPerUser", "userEngagementDuration"]
+    request = RunReportRequest(
+        property=f"properties/{property_id}",
+        metrics=[Metric(name=m) for m in batch2_metrics],
         date_ranges=[date_range_30d],
     )
     response = client.run_report(request)
     if response.rows:
         row = response.rows[0]
-        metrics_names = [
-            "sessions", "totalUsers", "newUsers", "activeUsers",
-            "engagedSessions", "engagementRate", "bounceRate",
-            "averageSessionDuration", "screenPageViewsPerSession",
-            "conversions", "eventCount", "sessionsPerUser",
-            "userEngagementDuration",
-        ]
-        result["engagement"] = {
+        engagement.update({
             name: row.metric_values[i].value
-            for i, name in enumerate(metrics_names)
-        }
+            for i, name in enumerate(batch2_metrics)
+        })
+    result["engagement"] = engagement
 
     # 2. Weekly trends (90d)
     print("Collecting weekly trends...")
