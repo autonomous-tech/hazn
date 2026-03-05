@@ -29,7 +29,7 @@ Collect metadata:
 - Domain name
 - Company name (from argument or extracted from site)
 - Audit date
-- Calendly URL for CTAs: **always use `https://calendly.com/hazn/audit-call`**
+- Calendly URL for CTAs: **always use `https://calendly.com/rizwan-20/30min`**
 
 ---
 
@@ -534,7 +534,7 @@ Before finalizing, verify:
 - [ ] **Single file** — no external dependencies except Google Fonts
 - [ ] **File size** under 300KB (screenshots may push this; aim for <500KB max with screenshots)
 - [ ] **Print-friendly** — hide ToC and banner for print
-- [ ] **Calendly links** — all CTAs use `https://calendly.com/hazn/audit-call` (not autonomoustech/30min or any other URL)
+- [ ] **Calendly links** — all CTAs use `https://calendly.com/rizwan-20/30min` (not autonomoustech/30min or any other URL)
 - [ ] **Dark/light section alternation** maintained
 - [ ] **Company name** personalized throughout (not just "this site")
 - [ ] **Finding box text** — `.finding` always has `color: var(--stone-800)` explicitly set to prevent white text bleeding from dark parent sections (amber-100, red-100, green-100 backgrounds must never render white text)
