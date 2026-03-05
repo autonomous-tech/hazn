@@ -379,20 +379,89 @@ Risks accepted: [list]
 
 **Question:** What does each workflow actually cost to run? This is a prerequisite for pricing — do not set prices without this data.
 
-**Tasks:**
-1. Instrument every workflow run with:
-   - LLM tokens in/out per agent per turn
-   - Wall clock time per agent + total workflow time
-   - Tool calls made (MCP calls, external API calls)
-   - Estimated Anthropic cost per run (use published token pricing)
-2. Run at minimum: 3 analytics teasers, 2 full audits, 2 landing pages, 1 full website build
-3. Record cost per workflow type in a structured log
-4. Identify which workflows are expensive vs cheap — any outliers?
-5. Flag any runaway agent patterns (agents that loop, over-call tools, inflate token counts)
+**Context:** Autonomous currently runs ~10 agencies (mix of paid/unpaid). These are the test environment. Metering runs against real workflows with real clients — not synthetic data.
 
-**Output:** Cost-per-workflow table by type. Pricing decisions happen after this, not before.
+**Pricing direction (decided, pending cost data):**
+- Model: credits per workflow run + feature gating by tier (inspired by Instantly)
+- Credits are workflow-type specific — an audit costs more credits than a blog post because it actually costs more to run
+- Agencies buy credit packs and mark them up to their own clients
+- Tiers gate agent access, not just volume:
+  - **Starter:** teaser, audit, content workflows
+  - **Growth:** + SEO, copywriter, developer (staging only)
+  - **Agency:** + all agents + L3 end-client workspaces + priority queue
+  - **Developer agent:** consulting-led only, never in self-serve
+- Actual credit pricing TBD after 10+ runs logged
 
-**Time box:** Ongoing during testing phase — not time-boxed. Block pricing decisions until 10+ runs logged.
+**Two-layer metering architecture:**
+
+```
+Langfuse (already deployed)         Postgres workflow_runs table
+─────────────────────────           ─────────────────────────────
+What happened inside the run        That the run happened
+Token traces per agent turn         One row per workflow
+Debugging + visibility              Billing source of truth
+Mutable, dev-facing                 Append-only, immutable
+```
+
+Never bill from Langfuse. It is not a financial record.
+
+**`workflow_runs` Postgres schema:**
+```sql
+workflow_runs {
+  id                  uuid primary key
+  workflow_type       text        -- analytics-teaser, audit, website, etc.
+  l2_client_id        uuid        -- which agency
+  l3_client_id        uuid        -- which end-client
+  started_at          timestamptz
+  completed_at        timestamptz
+  status              text        -- completed / failed / interrupted
+  total_tokens_in     integer
+  total_tokens_out    integer
+  total_cost_usd      numeric
+  credits_consumed    integer     -- null until credit pricing is set
+}
+
+workflow_agents {
+  id                  uuid primary key
+  workflow_run_id     uuid references workflow_runs
+  agent_type          text
+  turns               integer
+  tokens_in           integer
+  tokens_out          integer
+  cost_usd            numeric
+}
+
+workflow_tool_calls {
+  id                  uuid primary key
+  workflow_run_id     uuid references workflow_runs
+  tool_name           text        -- mcp-ga4, mcp-vercel, mcp-ahrefs, etc.
+  call_count          integer
+  cost_usd            numeric     -- for tools with API costs (Ahrefs, etc.)
+}
+```
+
+**Implementation tasks:**
+1. Add Langfuse SDK to agent calls (2 lines per agent, tag with l2/l3 client IDs)
+2. Create `workflow_runs`, `workflow_agents`, `workflow_tool_calls` tables in Postgres
+3. Orchestrator writes run record at workflow start, updates per agent completion, closes at workflow end
+4. On crash/interrupt: write partial record with `status = interrupted` — do not discard
+5. Build `/admin/runs` view (SQL query or simple endpoint): cost per run, by workflow type, by L2 client
+
+**Run at minimum before setting prices:**
+- 3 analytics teasers
+- 2 full audits
+- 2 landing pages
+- 1 full website build
+- Mix of L2 clients — at least 3 different agencies
+
+**What to flag:**
+- Runaway agents: >50 turns on a single task
+- Expensive outliers: any single run >$5 USD
+- Tool cost surprises: Ahrefs/Semrush API calls adding up unexpectedly
+
+**Output:** Filled cost-per-workflow table. Credits pricing set after this data exists.
+
+**Time box:** Ongoing during testing phase. Block all pricing decisions until 10+ runs logged across at least 3 workflow types.
 
 ---
 
