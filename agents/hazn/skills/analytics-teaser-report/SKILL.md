@@ -538,5 +538,14 @@ Before finalizing, verify:
 - [ ] **Dark/light section alternation** maintained
 - [ ] **Company name** personalized throughout (not just "this site")
 - [ ] **Finding box text** — `.finding` always has `color: var(--stone-800)` explicitly set to prevent white text bleeding from dark parent sections (amber-100, red-100, green-100 backgrounds must never render white text)
-- [ ] **CTA button** — primary CTA button has `white-space: nowrap` to prevent text wrapping mid-label (e.g. "Call" orphaned on line 2)
+- [ ] **CTA button** — use `display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center` — do NOT use `<br>` hacks or `white-space: nowrap`. Let it wrap naturally. Add `box-shadow: 0 6px 24px rgba(245,158,11,0.35)` for visual weight.
 - [ ] **Deployment** — ALWAYS deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca` (auth-gated, shareable via expiring link). NEVER deploy prospect reports to `landing-pages` → `pages.autonomoustech.ca` (public). See TOOLS.md decision rule.
+- [ ] **Hover states** — all interactive cards (`.audit-card`, `.tool-card`, `.score-card`, `.status-row`) must have smooth `0.2s` transitions with subtle `translateY(-1px)` or `translateY(-2px)` lift + shadow
+- [ ] **Scroll reveal** — add `IntersectionObserver` fade-in-up (`.reveal` class, `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`) on scorecard grid, CWV display, tool grid, stat strip, gates
+- [ ] **Gate lock animation** — `.teaser-gate__lock` must have a `@keyframes lockPulse` amber glow ring animation (every 2.4s) to draw attention
+- [ ] **Gate border/background** — use amber-400 dashed border + amber-100 gradient background on gates, not stone-300 — more attention-grabbing
+- [ ] **Section padding** — use `6rem` top/bottom on regular sections, `8rem` on final CTA section. Scorecard cards: `2rem 1.25rem` padding, `1.25rem` gap.
+- [ ] **ToC** — frosted glass panel: `background: rgba(255,255,255,0.7); backdrop-filter: blur(8px)` with border + box-shadow
+- [ ] **No inline styles** — extract all repeated inline styles to CSS classes. Use utility classes (`mt-sm`, `mt-md`, `mt-lg`) for margin-top variations
+- [ ] **Mobile scorecard grid** — collapses to 2-col at 600px, 1-col at 400px
+- [ ] **Share button** — must be injected from `briar-creek-construction/index.html` before `</body>` in every report
