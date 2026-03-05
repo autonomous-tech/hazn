@@ -1,253 +1,360 @@
 # Hazn Platform PRD
-**Status:** Research & Architecture Phase  
-**Owner:** Rizwan Qaiser  
-**Date:** 2026-03-04  
+
+**Status:** Research & Architecture Phase
+**Owner:** Rizwan Qaiser
+**Date:** 2026-03-04 (updated after red team review)
+**Audience:** Coding agent (Claude Code + GSD). Read fully before starting any spike. Do not invent decisions not stated here — ask first.
+
+---
+
+## 0. Critical Open Questions (Answer These Before Building Anything)
+
+These are unresolved. No architecture should be locked until they're answered.
+
+| # | Question | Why it blocks |
+|---|---|---|
+| A | How does the moat actually work? Data export is trivial — what makes Hazn knowledge non-portable? | Affects data model design and what we choose to store |
+| B | L2/L3 conflict resolution: when agency style conflicts with end-client brand voice, which wins and how does the agent know? | Affects context injection design |
+| C | Who owns client data when an agency churns? | Affects multi-tenancy and data architecture |
+| D | What is a "session" in Hazn? One workflow? One task? One day? | Affects Letta memory sync trigger |
+| E | What's the pricing model? Per workflow / per seat / per data stored? | Affects data layer — metering, auth, usage tracking |
+| F | What does "production-ready" mean per agent type? (Dev agent: staging? QA passed? Prod deployed?) | Affects HITL checkpoint definitions |
 
 ---
 
 ## 1. Vision
 
-Hazn is a coordinated AI marketing team that delivers production-ready work for technical founders and B2B companies. It is not a chatbot, a prompt toolkit, or a single agent. It is 15+ specialized agents — Strategist, Copywriter, SEO Specialist, Developer, Analytics, and more — that work together the way a senior marketing team does.
+Hazn is a coordinated AI marketing team — 15+ specialized agents that work together like a senior marketing team. It is not a chatbot or prompt toolkit. It delivers production-ready marketing work: websites, audits, content, campaigns, analytics.
 
-The platform delivers work in two modes:
-- **Consulting-led:** Autonomous delivers engagements using Hazn; clients get deliverables
-- **Self-serve:** Clients access a workspace to trigger workflows, inspect agent memory, and run audits themselves
-
-The long-term moat is **institutional knowledge** — every engagement makes the agents smarter, and that accumulated knowledge (org-specific, client-specific, domain-specific) is hard to migrate away from.
+Used by Autonomous internally to deliver client engagements. Being built into a platform that agencies and technical founders can access directly.
 
 ---
 
-## 2. The Core Problem We're Solving
+## 2. The Three-Layer Client Model
 
-Today, Hazn agents are stateless. Every engagement starts from zero. Agents have no memory of:
-- Past decisions made for a client
-- Brand voice and approved copy
-- Keyword history and what worked
-- Competitor intelligence gathered over time
-- Preferences learned through iteration
+This is the most important context in the document. Read it before anything else.
 
-This means agents can't get better over time. The work is good but not compounding. There's no lock-in. There's no platform — just a framework.
+```
+Layer 1: AUTONOMOUS
+  └── Uses Hazn internally to deliver work for its clients
 
-**What we need to build:** A runtime where agents have persistent memory, org-specific knowledge, dedicated tool access, and a delivery surface for clients.
+Layer 2: AUTONOMOUS'S CLIENTS (e.g. a marketing agency, a B2B SaaS)
+  └── Gets deliverables from Autonomous, or uses Hazn for their own marketing
+  └── Has their own: house style, methodology, approved templates, tool preferences
+
+Layer 3: CLIENT'S CLIENTS (e.g. the agency's end customers)
+  └── Each has their own: brand, campaigns, keywords, history, competitors
+  └── The L2 client uses Hazn to serve these end customers
+```
+
+**Example:** Autonomous onboards a marketing agency (L2). That agency runs campaigns for 12 of their own clients (L3). Each L3 client has a different brand voice, different keyword targets. The agency applies its own house methodology across all of them.
+
+**Implication for agents:** Before any agent runs, the orchestrator must load two scopes of context:
+- **L2 context:** agency house style, methodology, approved templates
+- **L3 context:** end-client brand voice, keyword history, campaign decisions, past audits
+
+**Known unresolved problem:** When L2 and L3 context conflict (agency says "always formal" / end-client brand is casual), the agent needs a resolution rule. This is not designed yet. Flag as Open Question B.
 
 ---
 
-## 3. What We're Building
+## 3. The Core Problem
 
-### 3.1 The Memory Layer
+Hazn agents are stateless today. Every engagement starts from zero. No memory of past decisions, brand voice, keyword history, competitor intel, or preferences. Agents produce good work but it doesn't compound.
 
-Two complementary systems — not one or the other:
+**What must be built:** A runtime where agents have persistent memory scoped correctly (L2 + L3), dedicated tool access per agent type, and a delivery surface.
 
-**Letta (MemGPT) — Agent-scoped memory**
-- Each Hazn agent (SEO Specialist, Copywriter, etc.) gets a Letta deployment
-- Memory blocks per agent: `identity`, `craft_knowledge`, `client_context`, `preferences`, `task_board`
-- Archival memory: past audits, approved copy, keyword databases, campaign history
-- Auto-sync: after each session, Claude categorizes learnings and writes back to the right block
-- Agent gets smarter with every engagement, across all clients
+---
 
-**Knowledge Graph — Org-scoped relational knowledge**
-- Entities: Client, Brand, Campaign, Page, Keyword, Decision, Competitor, Audit, Content
-- Relationships: Client → Campaigns → Keywords → Decisions → Approved Copy
-- Temporal: tracks what changed, when, and why
-- Powers: "what keywords have we targeted for this client before?", "what brand decisions are locked?", "what did the last audit find?"
-- Candidate: Graphiti (Zep) or Neo4j — **this is a research spike (see Section 6)**
+## 4. Decisions Already Made
 
-### 3.2 Agent Spaces
+Do not re-research these.
 
-Each agent type needs a dedicated execution environment with its own tooling:
-
-| Agent | Tools Needed | Storage Needed |
+| Decision | Choice | Rationale |
 |---|---|---|
-| **SEO Specialist** | Ahrefs/Semrush API, Google Search Console, PageSpeed | Keyword DB, audit history, ranking snapshots |
-| **Developer** | GitHub API, Vercel API, staging environments, domain management | Generated code, deploy history, preview URLs |
-| **Blog Writer** | CMS write access (Payload, WordPress), image gen | Draft storage, published content index, content calendar |
-| **Analytics** | GA4 OAuth per client, GSC, Tag Manager | Benchmark snapshots, audit outputs, report history |
-| **Copywriter** | None (LLM-native) | Approved copy library, brand voice store, A/B variants |
-| **Strategist** | Web research, competitor scraping | Strategy docs, positioning decisions, audience intel |
-| **Auditor** | Playwright (screenshots), PageSpeed, crawler | Audit reports, before/after comparisons |
-| **Email Specialist** | ESP API (Klaviyo, Mailchimp, etc.) | Sequence library, performance history |
+| Org data storage | **Postgres + pgvector** | Handles structured data + semantic search. Graph database not needed until query complexity demands it (see Section 5.1). |
+| Agent working memory | **Letta (MemGPT)** | Purpose-built for agent brain state — preferences, craft knowledge, active context. NOT for bulk structured data. |
+| Product type | Platform, not just a framework | Autonomous uses it internally AND clients will access it |
+| Delivery mode order | Consulting-led → MCP-connected → Self-serve | Build internal first, validate memory layer works, then expand |
 
-### 3.3 The MCP Layer
+---
 
-MCP servers are how agents access their tools. We need to build:
+## 5. Architecture
 
-**Priority 1 — Foundation MCPs:**
+### 5.1 Data Layer: What Goes Where
+
+This is the corrected model. The previous version incorrectly placed structured data inside Letta.
+
+| Data type | Where it lives | Why |
+|---|---|---|
+| Keywords, rankings, audit results, campaign history | **Postgres** (relational tables) | Structured, queryable, large volume |
+| Brand voice summaries, semantic search over copy | **Postgres + pgvector** (vector columns) | Semantic retrieval without a separate service |
+| Decisions, relationships (Campaign → Keyword → Decision) | **Postgres** (foreign keys + joins) | Sufficient until multi-hop traversal becomes a real problem |
+| Agent preferences, craft knowledge, lessons learned | **Letta archival** | Fuzzy semantic retrieval, agent-specific |
+| Active client context (injected at session start) | **Letta core blocks** | Lives in agent's working memory for the session duration |
+
+**On graph databases:** Postgres + pgvector covers ~80% of what a graph would do here. Multi-hop traversal (e.g. "all decisions that influenced campaigns that used keywords that ranked") becomes ugly SQL at scale, but that scale is 12–18 months away at minimum. Start with Postgres. Add a graph layer if and when you're writing 4+ join queries to answer basic questions.
+
+### 5.2 Memory Architecture
+
+```
+Session start:
+  Orchestrator queries Postgres for L2 + L3 context
+  → Injects into agent's active_client_context Letta block
+  Agent runs with full context
+
+Session end:
+  New structured findings → written to Postgres (audit results, keyword data, decisions)
+  New craft learnings → written to agent's Letta archival (what worked, what didn't)
+```
+
+**Letta memory blocks per agent:**
+- `craft_knowledge` — how to do the work well (accumulates across all clients)
+- `active_client_context` — current L2 + L3 context (overwritten each session)
+- `preferences` — agent-specific working preferences
+- `task_board` — current task state
+
+**What Letta does NOT store:** keyword databases, audit reports, campaign history, rankings. Those are Postgres.
+
+**Known risk:** Letta memory sync relies on Claude to categorize session learnings. LLM-based extraction is noisy — it will misattribute learnings and write garbage over time without curation. No memory quality control mechanism is designed yet. This must be addressed before memory is used in production at scale.
+
+### 5.3 Agent Spaces: Tooling Per Agent
+
+| Agent | Tools Required | Postgres Storage |
+|---|---|---|
+| **SEO Specialist** | Ahrefs/Semrush API, GSC, PageSpeed | Keywords, rankings, audit history (per L3) |
+| **Developer** | GitHub API, Vercel API, staging envs | Generated code, deploy history, preview URLs (per L3) |
+| **Blog Writer** | CMS write access (Payload/WordPress), image gen | Content calendar, published index, drafts (per L3) |
+| **Analytics** | GA4 OAuth per client, GSC, Tag Manager | Benchmark snapshots, audit outputs (per L3) |
+| **Copywriter** | None (LLM-native) | Approved copy library, brand voice (L2 + L3) |
+| **Strategist** | Web research, competitor scraping | Strategy docs, positioning decisions (per L3) |
+| **Auditor** | Playwright, PageSpeed, crawler | Audit reports, before/after comparisons (per L3) |
+| **Email Specialist** | ESP API (Klaviyo, Mailchimp) | Sequence library, send history (per L3) |
+
+### 5.4 MCP Layer
+
+MCP servers connect agents to tools at runtime. Credentials are scoped per client (see Spike 4).
+
+**Priority 1 — Build or configure first:**
+- `mcp-hazn-memory` — read/write to Letta blocks + Postgres (the critical one — bridges agents to persistent memory)
 - `mcp-vercel` — deploy, preview, domain management
 - `mcp-github` — repo management, PR creation, CI status
 - `mcp-ga4` — GA4 data pull, GSC queries, benchmarks
 - `mcp-pagespeed` — Core Web Vitals, performance scoring
 
-**Priority 2 — SEO & Content MCPs:**
+**Priority 2:**
 - `mcp-ahrefs` or `mcp-semrush` — keyword data, backlinks, competitor analysis
 - `mcp-cms` — write to Payload CMS or WordPress
 - `mcp-image-gen` — generate images for content
 
-**Priority 3 — Client Delivery MCPs:**
-- `mcp-hazn-memory` — read/write to Letta + knowledge graph (bridges agents to persistent memory)
-- `mcp-client-workspace` — trigger workflows, share deliverables, manage approvals
+**Priority 3:**
+- `mcp-client-workspace` — trigger workflows, manage approvals, share deliverables
 
-### 3.4 The Client Workspace
+### 5.5 Product Delivery Modes
 
-What clients (or the Autonomous team running engagements) actually interact with:
+**Mode 1: Consulting-Led (now → 3 months)**
+Autonomous team runs Hazn for clients. Clients get deliverables. Memory accumulates per client. No client-facing UI.
 
-- **Dashboard** — active projects, running workflows, recent deliverables
-- **Memory Inspector** — view what the agents know about your org (brand voice, decisions, keyword history)
-- **Workflow Trigger** — run `/analytics-teaser`, `/audit`, `/content` etc. from UI
-- **Deliverables** — view, approve, share outputs (audit reports, pages, content)
-- **Agent Activity** — what's running, what completed, what needs human review
-- **HITL Queue** — approvals required before agents proceed
+**Mode 2: MCP-Connected (3–6 months)**
+Technical clients plug Hazn into Claude Code / Cursor via MCP. Agents run in their environment, pull from shared Postgres + Letta. No UI needed.
 
-### 3.5 Institutional Knowledge = The Moat
+**Mode 3: Self-Serve (6+ months)**
+Client workspace — dashboard, memory inspector, workflow trigger, HITL queue, deliverables. Requires: auth, multi-tenancy, billing, onboarding. **Do not design this until pricing model is decided (Open Question E).**
 
-What accumulates over time and creates lock-in:
-
-- **Brand knowledge:** approved tone, copy patterns, visual language, what's been rejected and why
-- **Keyword intelligence:** what's been targeted, what ranked, what failed, competitive gaps
-- **Decision log:** every strategic choice made, with rationale
-- **Audience intelligence:** ICP refinements, messaging that resonated
-- **Technical preferences:** stack decisions, component patterns, deploy configurations
-- **Audit baselines:** before/after data across all site changes
-
-This data, structured in a knowledge graph and linked to agent memory, is what makes Hazn more valuable at month 6 than month 1 — and painful to leave.
-
----
-
-## 4. Product Modes
-
-### Mode 1: Consulting-Led (now)
-Autonomous team uses Hazn to deliver client work. Clients get deliverables. Agents accumulate knowledge per client. This is the current model — extend it with memory and tooling.
-
-### Mode 2: Self-Serve (future)
-Clients get a workspace. They trigger workflows, inspect memory, approve outputs. Requires: auth, multi-tenancy, billing, onboarding flow.
-
-### Mode 3: MCP-Connected (future)
-Hazn exposes an MCP server. Technical founders plug it into their own Claude Code / Cursor workflow. Agents run in their environment, pull from shared knowledge graph. No UI needed.
-
-**The build order:** Mode 1 → Mode 3 → Mode 2. Start with internal use, then enable technical power users via MCP, then build self-serve UI.
-
----
-
-## 5. Architecture Overview
+### 5.6 Architecture Diagram
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                   CLIENT WORKSPACE                   │
-│         Dashboard | Memory | Workflows | HITL        │
-└─────────────────────────┬───────────────────────────┘
-                          │
-┌─────────────────────────▼───────────────────────────┐
-│                  HAZN ORCHESTRATOR                   │
-│         Spawns agents, manages workflows,            │
-│         handles checkpoints, routes outputs          │
-└──────┬──────────────────┬────────────────┬──────────┘
-       │                  │                │
-┌──────▼──────┐  ┌────────▼──────┐  ┌──────▼──────┐
-│   AGENT     │  │    AGENT      │  │   AGENT     │
-│  SEO Spec.  │  │  Developer    │  │  Copywriter │
-│             │  │               │  │             │
-│ Letta mem.  │  │  Letta mem.   │  │  Letta mem. │
-│ + MCP tools │  │  + MCP tools  │  │  + MCP tools│
-└──────┬──────┘  └───────┬───────┘  └──────┬──────┘
-       │                 │                  │
-       └─────────────────┼──────────────────┘
-                         │
-┌────────────────────────▼────────────────────────────┐
-│              KNOWLEDGE GRAPH (org-scoped)            │
-│   Client → Brand → Campaigns → Keywords → Decisions  │
-│                  Graphiti / Neo4j                    │
-└─────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                  HAZN ORCHESTRATOR                    │
+│  Knows: L2 client + L3 end-client                    │
+│  Loads: correct Postgres context before session start │
+└───────────────────────┬──────────────────────────────┘
+                        │
+         ┌──────────────┼──────────────┐
+         │              │              │
+  ┌──────▼──────┐ ┌─────▼──────┐ ┌────▼───────┐
+  │ SEO Agent   │ │ Dev Agent  │ │ Copy Agent │
+  │ Letta:      │ │ Letta:     │ │ Letta:     │
+  │ craft +     │ │ craft +    │ │ craft +    │
+  │ active ctx  │ │ active ctx │ │ active ctx │
+  │ + MCP tools │ │ + MCP tools│ │ + MCP tools│
+  └──────┬──────┘ └─────┬──────┘ └────┬───────┘
+         │              │              │
+         └──────────────┼──────────────┘
+                        │ reads + writes
+  ┌─────────────────────▼──────────────────────────┐
+  │           POSTGRES + PGVECTOR                   │
+  │                                                 │
+  │  agencies (L2)          end_clients (L3)        │
+  │  ├── house_style        ├── brand_voice         │
+  │  ├── methodology        ├── keywords[]          │
+  │  └── templates[]        ├── campaigns[]         │
+  │                         ├── decisions[]         │
+  │                         ├── competitors[]       │
+  │                         └── audits[]            │
+  └─────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 6. Research Spikes (What GSD Needs to Figure Out)
+## 6. Research Spikes
 
-These are open questions that must be answered before architecture gets locked. Each is a time-boxed research task.
+Complete all spikes before locking architecture. Each spike has explicit tasks, decision criteria, and a required output format. Time-box strictly — if a spike runs over, make the best decision with available info and move on.
 
-### Spike 1: Letta vs Knowledge Graph — Complementary or Pick One?
-**Question:** Letta handles agent-scoped memory well (preferences, craft knowledge). A graph handles org-scoped relational knowledge (client → campaigns → decisions). Do we need both? Does Letta's archival memory (with semantic search) cover the graph use case well enough?  
-**Research tasks:**
-- Build a toy Letta deployment. Store 3 months of fake SEO audit history. Query it. Does it surface the right things?
-- Build the same in Graphiti. Model Client → Campaign → Keyword → Decision. Query "what keywords have worked for this client in the SaaS vertical?"
-- Compare: query quality, maintenance burden, complexity, cost
-**Decision criteria:** Use both if graph queries are significantly better for relational/temporal org knowledge. Use Letta only if archival memory covers it adequately.  
+**Required output format for every spike:** A filled decision record:
+```
+Spike N: [name]
+Decision: [one sentence]
+Rationale: [2-3 sentences]
+Rejected alternatives: [list]
+Risks accepted: [list]
+```
+
+---
+
+### Spike 1: Does the Two-System Model Work End-to-End?
+
+**Question:** Can Letta active context blocks + Postgres deliver correct L2 and L3 scoped context to an agent at session start, without bleeding data between clients?
+
+**Tasks:**
+1. Run agent-os locally (`docker compose up` — app + Letta + Postgres)
+2. Deploy SEO Specialist into agent-os
+3. Create: 1 fake agency (L2) with house style + 2 fake end-clients (L3) with different keyword histories
+4. At session start: query Postgres for L2 + L3 context, inject into agent's `active_client_context` block
+5. Run a workflow for L3 client A. End session. Write findings back to Postgres.
+6. Run a workflow for L3 client B. Does the agent have clean context? Does L3-A data bleed into L3-B?
+7. Test the conflict case: L2 says "formal tone", L3-A says "casual brand". What does the agent do?
+
+**Decision criteria:**
+- Context injection works cleanly, no bleed → proceed with two-system model
+- Bleed occurs or injection is too complex → simplify; consider single Postgres query replacing Letta active context
+
 **Time box:** 2 days
 
 ---
 
-### Spike 2: Graphiti vs Neo4j vs Postgres+pgvector
-**Question:** If we need a knowledge graph, which technology?  
-**Research tasks:**
-- Graphiti (Zep): Python-native, built for agent memory, temporal by design. Evaluate: schema flexibility, query language, self-hosting complexity, Claude integration
-- Neo4j: mature, Cypher query language, excellent tooling. Evaluate: overkill for our use case? Licensing?
-- Postgres + pgvector + jsonb: single service, we control schema, no graph query language. Evaluate: is relational + vector search enough without true graph traversal?
-**Decision criteria:** Simplest option that handles temporal relational queries well and can be self-hosted.  
+### Spike 2: Postgres Schema Design
+
+**Question:** Can one Postgres schema handle all L2 and L3 data with clean query patterns?
+
+**Tasks:**
+1. Design schema: `agencies`, `end_clients`, `keywords`, `rankings`, `campaigns`, `decisions`, `audits`, `approved_copy`, `brand_voice`
+2. Define relationships and foreign keys
+3. Add pgvector columns where semantic search is needed (brand voice, copy, decisions)
+4. Write 5 representative queries:
+   - "All keywords targeted for end-client X in the last 6 months"
+   - "Brand voice summary for end-client Y (semantic)"
+   - "All decisions made for end-client X with rationale"
+   - "Last audit findings for end-client X"
+   - "All approved copy for agency Z house style"
+5. Evaluate: are any queries requiring more than 3 joins? If so, flag for graph consideration.
+
+**Output:** Schema file (`schema.sql`) + query examples + assessment of graph necessity.
+
 **Time box:** 1 day
 
 ---
 
-### Spike 3: MCP Server Inventory — What Already Exists?
-**Question:** Before building MCP servers, what's already available in the MCP ecosystem?  
-**Research tasks:**
-- Audit existing MCP servers: Vercel, GitHub, Google (GA4/GSC), Ahrefs, Semrush, CMS platforms
-- For each Hazn agent tool need (see Section 3.2), find: existing MCP server, quality/maturity, self-hostable?
-- Identify what must be built from scratch vs. what can be configured
-**Output:** Tool inventory matrix — agent → tool → existing MCP (yes/no/partial) → build effort  
+### Spike 3: MCP Server Inventory
+
+**Question:** What MCP servers already exist and are production-ready for Hazn's tool needs?
+
+**Tasks:**
+1. Search for existing MCP servers: Vercel, GitHub, GA4/GSC, Ahrefs, Semrush, Payload CMS, WordPress, Klaviyo, Mailchimp, Playwright, PageSpeed
+2. For each: exists? maintained? covers our use case? self-hostable?
+3. Fill this matrix:
+
+| Agent | Tool | Existing MCP | Quality | Build effort if none |
+|---|---|---|---|---|
+| SEO | Ahrefs | ? | ? | ? |
+| SEO | GSC | ? | ? | ? |
+| Developer | Vercel | ? | ? | ? |
+| Developer | GitHub | ? | ? | ? |
+| Analytics | GA4 | ? | ? | ? |
+| Blog Writer | Payload CMS | ? | ? | ? |
+| Auditor | Playwright | ? | ? | ? |
+
+**Output:** Filled matrix. Determines what gets built vs configured.
+
 **Time box:** 1 day
 
 ---
 
-### Spike 4: Credential Architecture — How Do We Vault Per-Client Credentials?
-**Question:** Each client has different GA4 properties, Ahrefs seats, CMS logins, Vercel tokens. How do agents get the right credentials at runtime without storing them insecurely?  
-**Research tasks:**
-- Option A: Environment vars per client deployment (simple, doesn't scale)
-- Option B: Letta memory block with encrypted credential refs + secret manager (1Password CLI, HashiCorp Vault, AWS Secrets Manager)
-- Option C: Client workspace stores OAuth tokens, agents request via API at runtime
-**Decision criteria:** Must work for consulting-led (Autonomous manages credentials) and eventually self-serve (clients auth their own tools).  
+### Spike 4: Credential Architecture
+
+**Question:** How do agents get per-client credentials (GA4 property IDs, Ahrefs API keys, CMS tokens) at runtime, securely, at both L2 and L3 scope?
+
+**Tasks:**
+1. Map all credential types by agent (from Section 5.3)
+2. Prototype Option B (most likely): credentials stored in Postgres per L2/L3 client, retrieved at session start, passed as MCP env vars. Does this actually work with MCP tool calls?
+3. Design the auth flow for when a client eventually connects their own tools (self-serve Mode 3)
+4. Flag any compliance implications (GA4 data = Google's ToS; write access to client CMS = high risk)
+
+**Decision criteria:** Must work for consulting-led (Autonomous manages credentials) and scale to self-serve (clients auth their own tools via OAuth).
+
+**Output:** Credential flow diagram + chosen option + security risks flagged.
+
 **Time box:** 1 day
 
 ---
 
-### Spike 5: Agent-os — Use It, Fork It, or Reference It?
-**Question:** autonomous-agent-os has Letta integration, MCP server, agent builder, workspace UI. How much of this is reusable?  
-**Research tasks:**
-- Run agent-os locally with Docker Compose
-- Deploy a Hazn agent (e.g. SEO Specialist) into agent-os
-- Load a SKILL.md into archival memory
-- Connect via MCP to a Claude Code session
-- Evaluate: does the memory actually persist and improve agent behavior?
-**Decision criteria:** If Letta integration works well end-to-end, agent-os becomes the memory + MCP backbone. If it's too rigid or the product experience is wrong, extract only the Letta integration patterns and build our own.  
+### Spike 5: Agent-os — Backbone, Reference, or Ignore?
+
+**Question:** How much of `autonomous-tech/autonomous-agent-os` is reusable for Hazn's memory + MCP layer?
+
+**Tasks:**
+1. Run locally: `docker compose up`
+2. Deploy SEO Specialist from `hazn/sub-agents/seo-specialist.md`
+3. Load `hazn/skills/seo-audit/SKILL.md` into Letta archival at deploy time
+4. Connect Claude Code session via `npx agent-os-mcp --url http://localhost:3000`
+5. Run a fake SEO workflow. End session. Start new session. Does memory actually persist and change agent behavior?
+6. Assess workspace UI honestly: is it extensible enough to become the L2 client dashboard, or is it too generic?
+
+**Decision criteria:**
+- Memory works end-to-end AND UI is extensible → use as backbone, extend it
+- Memory works, UI is wrong → extract Letta integration code only, build own UI
+- Neither works → build directly against Letta SDK, skip agent-os entirely
+
 **Time box:** 2 days
 
 ---
 
-## 7. What Is NOT In Scope (Yet)
+## 7. What Is NOT In Scope
 
-- Billing / subscription management
-- Multi-tenant auth for self-serve
-- White-label product
-- Mobile experience
+- Billing / subscription management (blocked on Open Question E)
+- Multi-tenant auth for self-serve (Mode 3 only)
+- White-label / reseller
+- Mobile
 - Real-time collaboration
+- Memory quality control / curation system (known gap, deferred)
+- L2/L3 conflict resolution rules (known gap, deferred — see Open Question B)
 
 ---
 
 ## 8. Success Criteria for Research Phase
 
-At the end of the research spikes, we should be able to answer:
+Fill this table. When complete, produce an ADR + sprint plan.
 
-1. **Memory architecture:** Letta only, graph only, or both? Which graph if so?
-2. **MCP layer:** what do we build vs. what do we configure?
-3. **Credential model:** how do per-client credentials work at runtime?
-4. **Agent-os:** backbone, reference, or ignore?
-5. **Build order:** what's the smallest thing we can build that makes Hazn compoundingly better per client?
+| Question | Answer |
+|---|---|
+| Data layer: Postgres only or Postgres + graph? | |
+| Postgres schema: does it handle all query patterns cleanly? | |
+| MCP: what do we build vs configure? (from Spike 3 matrix) | |
+| Credential model: which option? | |
+| Agent-os: backbone / reference / ignore? | |
+| L2/L3 context injection: works without bleed? | |
+| Session definition: what triggers a session end in Hazn? | |
 
-These answers produce a technical architecture doc and a sprint plan. The research phase should take no more than **1 week**.
+Research phase time box: **1 week maximum.**
 
 ---
 
-## 9. Open Questions for the Team
+## 9. Repo Reference
 
-1. Is the graph database the right mental model for org knowledge, or is structured document storage (with good embeddings) enough?
-2. Should each Hazn agent be a separate Letta deployment, or can one Letta agent hold multi-domain memory with good block structure?
-3. What's the minimum client-facing surface needed for consulting-led engagements? (Just a shared link to deliverables? A simple dashboard? Full workspace?)
-4. Do we self-host Letta + graph, or use managed services initially?
+| What | Where |
+|---|---|
+| Hazn agents | `hazn/sub-agents/*.md` |
+| Hazn workflows | `hazn/workflows/*.yaml` |
+| Hazn skills | `hazn/skills/*/SKILL.md` |
+| Agent-os source | `autonomous-tech/autonomous-agent-os` (GitHub) |
+| Existing Hazn docs | `hazn/docs/` |
+| Hazn orchestrator context | `hazn/SOUL.md` |
