@@ -9,9 +9,10 @@
 
 Hazn is a coordinated AI marketing team that delivers production-ready work for technical founders and B2B companies. It is not a chatbot, a prompt toolkit, or a single agent. It is 15+ specialized agents — Strategist, Copywriter, SEO Specialist, Developer, Analytics, and more — that work together the way a senior marketing team does.
 
-The platform delivers work in two modes:
+The platform delivers work in three modes:
 - **Consulting-led:** Autonomous delivers engagements using Hazn; clients get deliverables
 - **Self-serve:** Clients access a workspace to trigger workflows, inspect agent memory, and run audits themselves
+- **CLient's Clients:** Clients serve their own clients via hazn where they have a style that they work through themselves, but also something specific to their client.
 
 The long-term moat is **institutional knowledge** — every engagement makes the agents smarter, and that accumulated knowledge (org-specific, client-specific, domain-specific) is hard to migrate away from.
 
