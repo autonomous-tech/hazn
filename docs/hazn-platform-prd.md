@@ -7,18 +7,75 @@
 
 ---
 
-## 0. Critical Open Questions (Answer These Before Building Anything)
+## 0. Decisions Resolved (Previously Open Questions)
 
-These are unresolved. No architecture should be locked until they're answered.
+All 6 critical questions have been answered and red-teamed. Decisions are locked unless explicitly revisited.
 
-| # | Question | Why it blocks |
-|---|---|---|
-| A | How does the moat actually work? Data export is trivial — what makes Hazn knowledge non-portable? | Affects data model design and what we choose to store |
-| B | L2/L3 conflict resolution: when agency style conflicts with end-client brand voice, which wins and how does the agent know? | Affects context injection design |
-| C | Who owns client data when an agency churns? | Affects multi-tenancy and data architecture |
-| D | What is a "session" in Hazn? One workflow? One task? One day? | Affects Letta memory sync trigger |
-| E | What's the pricing model? Per workflow / per seat / per data stored? | Affects data layer — metering, auth, usage tracking |
-| F | What does "production-ready" mean per agent type? (Dev agent: staging? QA passed? Prod deployed?) | Affects HITL checkpoint definitions |
+### A — The Moat
+**Decision:** The moat is switching cost, not technical lock-in. Two components:
+1. **Behavioral moat** — agents learn how the L2 client approves work, what gets rejected, their working patterns. This lives in Letta and took months to build. Rebuilding it elsewhere means starting over.
+2. **Operational moat** — all end-client (L3) history, campaigns, audits, and context lives in Hazn. Migrating 12 end-clients to a new platform is painful enough that most won't bother.
+
+**Red team note:** Letta memory is technically exportable via API. The moat is not cryptographic — it's the cost and effort of rebuilding. Don't design Letta as a lock-in mechanism; design the *workflow integration depth* to be the lock-in.
+
+---
+
+### B — L2/L3 Conflict Resolution
+**Decision:** End-client (L3) brand voice wins by default. Agent flags the conflict in the HITL queue: *"L2 house style says X, L3 brand says Y — I went with Y, confirm or override."*
+
+**Red team additions:**
+- Escalation timeout: if HITL conflict goes unresolved for 24 hours, agent proceeds with L3 default and logs the decision
+- L2 override capability: agencies can lock specific rules that cannot be overridden by L3 (e.g. legal/compliance constraints in regulated industries)
+
+---
+
+### C — Data Ownership on Churn
+**Decision:** Data retained for maximum 90 days post-churn. Client notified at churn and again at 30 days before deletion. Client can request earlier deletion (GDPR compliance — must execute within 30 days of request).
+
+**Red team additions:**
+- L3 end-client deletion is independent of L2 agency churn. An end-client can request their data deleted even while the agency is still active.
+- 90 days is a maximum, not a default. On-request deletion supersedes the retention period.
+
+---
+
+### D — Session Definition
+**Decision:** One workflow run = one session. Session end triggers Letta memory sync.
+
+**Red team additions:**
+- **Checkpoint sync:** every 10 turns during a workflow, regardless of completion state. A crash at turn 40 still saves 40 turns of learnings.
+- **Parallel agents:** each agent owns its own session and memory. If a workflow spawns copywriter + wireframer + developer in parallel, that's 3 sessions with 3 memory syncs. The orchestrator owns the workflow, not the memory.
+- **Failure-state sync:** on crash or timeout, sync whatever was learned before the failure. Never discard partial learnings.
+- **Inactivity fallback:** 4-hour inactivity triggers session end + sync regardless of workflow completion state.
+
+---
+
+### E — Pricing
+**Decision:** Pricing explicitly deferred. Do not design billing infrastructure yet.
+
+**Rationale:** Free engagements during testing phase (1-2 audits per prospect). Spike 6 (metering/observability) runs during testing to capture real cost-per-workflow data. Pricing model gets set after 10+ real workflow runs with actual numbers. Building pricing before having cost data produces wrong numbers.
+
+**What is decided:**
+- Developer agent = internal/consulting-only in v1. Not in self-serve product until retainer model is validated separately.
+- Metering must be built during testing phase (see Spike 6). This is a prerequisite for pricing, not a v2 feature.
+
+---
+
+### F — "Production-Ready" Definition Per Agent
+**Decision:** Done state is task-type dependent, not agent-type dependent.
+
+| Task type | Done when |
+|---|---|
+| Analytics teaser / audit | Report generated + verified at 3 viewports |
+| Landing page | Deployed to Vercel preview + client approved |
+| Full site build | All pages on staging + QA passed + client signed off |
+| Blog post | Published to CMS + SEO checklist passed |
+| Email sequence | Draft complete + client approved |
+| Bug fix | Deployed to prod + verified |
+
+**Red team additions:**
+- Every approval gate has a 48-hour timeout + default action (proceed with last known good state, log decision)
+- Staging = Vercel preview URLs in v1. No managed staging infrastructure until scale demands it.
+- Developer agent tasks that have no clear end state (maintenance, ongoing iteration) are consulting-led only — not self-serve workflow runs.
 
 ---
 
@@ -158,7 +215,7 @@ Autonomous team runs Hazn for clients. Clients get deliverables. Memory accumula
 Technical clients plug Hazn into Claude Code / Cursor via MCP. Agents run in their environment, pull from shared Postgres + Letta. No UI needed.
 
 **Mode 3: Self-Serve (6+ months)**
-Client workspace — dashboard, memory inspector, workflow trigger, HITL queue, deliverables. Requires: auth, multi-tenancy, billing, onboarding. **Do not design this until pricing model is decided (Open Question E).**
+Client workspace — dashboard, memory inspector, workflow trigger, HITL queue, deliverables. Requires: auth, multi-tenancy, billing, onboarding. **Do not design this until pricing model is decided (blocked on Spike 6 cost data).**
 
 ### 5.6 Architecture Diagram
 
@@ -318,15 +375,36 @@ Risks accepted: [list]
 
 ---
 
+### Spike 6: Observability & Metering
+
+**Question:** What does each workflow actually cost to run? This is a prerequisite for pricing — do not set prices without this data.
+
+**Tasks:**
+1. Instrument every workflow run with:
+   - LLM tokens in/out per agent per turn
+   - Wall clock time per agent + total workflow time
+   - Tool calls made (MCP calls, external API calls)
+   - Estimated Anthropic cost per run (use published token pricing)
+2. Run at minimum: 3 analytics teasers, 2 full audits, 2 landing pages, 1 full website build
+3. Record cost per workflow type in a structured log
+4. Identify which workflows are expensive vs cheap — any outliers?
+5. Flag any runaway agent patterns (agents that loop, over-call tools, inflate token counts)
+
+**Output:** Cost-per-workflow table by type. Pricing decisions happen after this, not before.
+
+**Time box:** Ongoing during testing phase — not time-boxed. Block pricing decisions until 10+ runs logged.
+
+---
+
 ## 7. What Is NOT In Scope
 
-- Billing / subscription management (blocked on Open Question E)
+- Billing / subscription management (blocked until Spike 6 cost data available)
+- Pricing model (blocked on Spike 6)
 - Multi-tenant auth for self-serve (Mode 3 only)
 - White-label / reseller
 - Mobile
 - Real-time collaboration
 - Memory quality control / curation system (known gap, deferred)
-- L2/L3 conflict resolution rules (known gap, deferred — see Open Question B)
 
 ---
 
@@ -342,9 +420,11 @@ Fill this table. When complete, produce an ADR + sprint plan.
 | Credential model: which option? | |
 | Agent-os: backbone / reference / ignore? | |
 | L2/L3 context injection: works without bleed? | |
-| Session definition: what triggers a session end in Hazn? | |
+| Checkpoint sync: every 10 turns confirmed working? | |
+| Parallel agent sessions: each agent owns its own memory confirmed? | |
+| Cost per workflow type (from Spike 6): at least 10 runs logged? | |
 
-Research phase time box: **1 week maximum.**
+Research phase time box: **1 week for Spikes 1–5. Spike 6 runs concurrently during all testing.**
 
 ---
 
