@@ -2,66 +2,47 @@
 
 **Status:** Research & Architecture Phase
 **Owner:** Rizwan Qaiser
-**Date:** 2026-03-04 (updated after red team review)
 **Audience:** Coding agent (Claude Code + GSD). Read fully before starting any spike. Do not invent decisions not stated here — ask first.
 
 ---
 
-## 0. Decisions Resolved (Previously Open Questions)
+## Changelog
 
-All 6 critical questions have been answered and red-teamed. Decisions are locked unless explicitly revisited.
+| Version | Changes |
+|---|---|
+| v1 | Initial draft — vision, memory layer, agent spaces, MCP layer |
+| v2 | Added three-layer client model (L2/L3), corrected data model (Postgres+pgvector not graph) |
+| v3 | Red team fixes — open questions surfaced, Spike 6 added |
+| v4 | All 6 open questions resolved and red-teamed |
+| v5 | Metering architecture added — Langfuse + Postgres schema, credits model |
+| v6 | Strategic fixes — primary product bet named, Letta self-hosting, Vault for credentials, mcp-hazn-memory spec, memory correction, QA agent, architecture diagram updated, stale text removed |
+
+---
+
+## 0. Decisions Resolved
+
+All critical questions answered and red-teamed. Locked unless explicitly revisited.
 
 ### A — The Moat
-**Decision:** The moat is switching cost, not technical lock-in. Two components:
-1. **Behavioral moat** — agents learn how the L2 client approves work, what gets rejected, their working patterns. This lives in Letta and took months to build. Rebuilding it elsewhere means starting over.
-2. **Operational moat** — all end-client (L3) history, campaigns, audits, and context lives in Hazn. Migrating 12 end-clients to a new platform is painful enough that most won't bother.
+**Decision:** Switching cost, not technical lock-in. Two components:
+1. **Behavioral moat** — agents learn how the L2 client approves work, what gets rejected, their patterns. Lives in Letta. Took months to build. Rebuilding elsewhere means starting over.
+2. **Operational moat** — all L3 end-client history, campaigns, audits, context lives in Hazn. Migrating 12 end-clients is painful enough that most won't bother.
 
-**Red team note:** Letta memory is technically exportable via API. The moat is not cryptographic — it's the cost and effort of rebuilding. Don't design Letta as a lock-in mechanism; design the *workflow integration depth* to be the lock-in.
-
----
+Note: Letta memory is technically exportable. The moat is cost + effort of rebuilding, not cryptographic lock-in. Design workflow integration depth to be the lock-in.
 
 ### B — L2/L3 Conflict Resolution
-**Decision:** End-client (L3) brand voice wins by default. Agent flags the conflict in the HITL queue: *"L2 house style says X, L3 brand says Y — I went with Y, confirm or override."*
-
-**Red team additions:**
-- Escalation timeout: if HITL conflict goes unresolved for 24 hours, agent proceeds with L3 default and logs the decision
-- L2 override capability: agencies can lock specific rules that cannot be overridden by L3 (e.g. legal/compliance constraints in regulated industries)
-
----
+**Decision:** L3 (end-client) brand voice wins by default. Agent flags conflict in HITL queue. 24-hour timeout — if unresolved, agent proceeds with L3 default and logs. L2 agencies can lock specific rules that override L3 (legal/compliance use cases).
 
 ### C — Data Ownership on Churn
-**Decision:** Data retained for maximum 90 days post-churn. Client notified at churn and again at 30 days before deletion. Client can request earlier deletion (GDPR compliance — must execute within 30 days of request).
-
-**Red team additions:**
-- L3 end-client deletion is independent of L2 agency churn. An end-client can request their data deleted even while the agency is still active.
-- 90 days is a maximum, not a default. On-request deletion supersedes the retention period.
-
----
+**Decision:** Maximum 90-day retention post-churn. Client notified at churn + 30 days before deletion. GDPR on-request deletion within 30 days. L3 deletion is independent of L2 churn.
 
 ### D — Session Definition
-**Decision:** One workflow run = one session. Session end triggers Letta memory sync.
-
-**Red team additions:**
-- **Checkpoint sync:** every 10 turns during a workflow, regardless of completion state. A crash at turn 40 still saves 40 turns of learnings.
-- **Parallel agents:** each agent owns its own session and memory. If a workflow spawns copywriter + wireframer + developer in parallel, that's 3 sessions with 3 memory syncs. The orchestrator owns the workflow, not the memory.
-- **Failure-state sync:** on crash or timeout, sync whatever was learned before the failure. Never discard partial learnings.
-- **Inactivity fallback:** 4-hour inactivity triggers session end + sync regardless of workflow completion state.
-
----
+**Decision:** One workflow run = one session. Checkpoint sync every 10 turns regardless of state. Parallel agents each own their own session. Failure-state sync on crash — never discard partial learnings. 4-hour inactivity fallback.
 
 ### E — Pricing
-**Decision:** Pricing explicitly deferred. Do not design billing infrastructure yet.
+**Decision:** Deferred until Spike 6 cost data. Free engagements during testing. Credits + feature gating model (Instantly-style) — tiers and credit prices set after 10+ real runs logged. Developer agent = internal/consulting only in v1.
 
-**Rationale:** Free engagements during testing phase (1-2 audits per prospect). Spike 6 (metering/observability) runs during testing to capture real cost-per-workflow data. Pricing model gets set after 10+ real workflow runs with actual numbers. Building pricing before having cost data produces wrong numbers.
-
-**What is decided:**
-- Developer agent = internal/consulting-only in v1. Not in self-serve product until retainer model is validated separately.
-- Metering must be built during testing phase (see Spike 6). This is a prerequisite for pricing, not a v2 feature.
-
----
-
-### F — "Production-Ready" Definition Per Agent
-**Decision:** Done state is task-type dependent, not agent-type dependent.
+### F — "Production-Ready" Per Task Type
 
 | Task type | Done when |
 |---|---|
@@ -72,45 +53,43 @@ All 6 critical questions have been answered and red-teamed. Decisions are locked
 | Email sequence | Draft complete + client approved |
 | Bug fix | Deployed to prod + verified |
 
-**Red team additions:**
-- Every approval gate has a 48-hour timeout + default action (proceed with last known good state, log decision)
-- Staging = Vercel preview URLs in v1. No managed staging infrastructure until scale demands it.
-- Developer agent tasks that have no clear end state (maintenance, ongoing iteration) are consulting-led only — not self-serve workflow runs.
+Every approval gate has a 48-hour timeout + default action. Staging = Vercel preview URLs in v1.
 
 ---
 
 ## 1. Vision
 
-Hazn is a coordinated AI marketing team — 15+ specialized agents that work together like a senior marketing team. It is not a chatbot or prompt toolkit. It delivers production-ready marketing work: websites, audits, content, campaigns, analytics.
+Hazn is a coordinated AI marketing team — 15+ specialized agents that work together like a senior marketing team. It delivers production-ready marketing work: websites, audits, content, campaigns, analytics.
 
-Used by Autonomous internally to deliver client engagements. Being built into a platform that agencies and technical founders can access directly.
+**Primary product bets (co-equal):**
+- **Mode 1:** Autonomous uses Hazn internally to deliver work for clients. Agents + orchestrator, no client-facing UI.
+- **Mode 3:** Agencies access Hazn directly via a self-serve workspace. They run workflows for their own end-clients, inspect agent memory, manage deliverables.
+
+**Mode 2** (MCP-connected, technical founders plug in via Claude Code) is a useful distribution channel but not a primary bet. Build it if it's low-lift after Mode 1 is stable.
 
 ---
 
 ## 2. The Three-Layer Client Model
 
-This is the most important context in the document. Read it before anything else.
-
 ```
 Layer 1: AUTONOMOUS
-  └── Uses Hazn internally to deliver work for its clients
+  └── Uses Hazn internally to deliver work
 
-Layer 2: AUTONOMOUS'S CLIENTS (e.g. a marketing agency, a B2B SaaS)
-  └── Gets deliverables from Autonomous, or uses Hazn for their own marketing
+Layer 2: AUTONOMOUS'S CLIENTS (e.g. a marketing agency)
   └── Has their own: house style, methodology, approved templates, tool preferences
+  └── In Mode 3: logs into Hazn workspace directly
 
-Layer 3: CLIENT'S CLIENTS (e.g. the agency's end customers)
-  └── Each has their own: brand, campaigns, keywords, history, competitors
-  └── The L2 client uses Hazn to serve these end customers
+Layer 3: CLIENT'S CLIENTS (the agency's end customers)
+  └── Each has: brand, campaigns, keywords, history, competitors
+  └── L3 clients do NOT get their own Hazn login in v1 — agency controls everything
+  └── L3 data is managed by the L2 agency on their behalf
 ```
 
-**Example:** Autonomous onboards a marketing agency (L2). That agency runs campaigns for 12 of their own clients (L3). Each L3 client has a different brand voice, different keyword targets. The agency applies its own house methodology across all of them.
+**Conflict resolution (decided):** L3 brand voice wins by default. L2 can lock overrides. Agent flags conflicts in HITL queue. See Section 0-B.
 
-**Implication for agents:** Before any agent runs, the orchestrator must load two scopes of context:
-- **L2 context:** agency house style, methodology, approved templates
-- **L3 context:** end-client brand voice, keyword history, campaign decisions, past audits
+**Onboarding (Mode 1):** Autonomous creates the agency profile and end-client records manually. No self-serve onboarding in v1.
 
-**Known unresolved problem:** When L2 and L3 context conflict (agency says "always formal" / end-client brand is casual), the agent needs a resolution rule. This is not designed yet. Flag as Open Question B.
+**Onboarding (Mode 3):** Agency creates account, configures house style, adds end-clients, connects tools. This is the org creation flow — designed when Mode 3 UI is built.
 
 ---
 
@@ -118,20 +97,20 @@ Layer 3: CLIENT'S CLIENTS (e.g. the agency's end customers)
 
 Hazn agents are stateless today. Every engagement starts from zero. No memory of past decisions, brand voice, keyword history, competitor intel, or preferences. Agents produce good work but it doesn't compound.
 
-**What must be built:** A runtime where agents have persistent memory scoped correctly (L2 + L3), dedicated tool access per agent type, and a delivery surface.
+**What must be built:** Persistent memory scoped to L2 + L3, dedicated tool access per agent type, delivery surface for Mode 3.
 
 ---
 
 ## 4. Decisions Already Made
 
-Do not re-research these.
-
 | Decision | Choice | Rationale |
 |---|---|---|
-| Org data storage | **Postgres + pgvector** | Handles structured data + semantic search. Graph database not needed until query complexity demands it (see Section 5.1). |
-| Agent working memory | **Letta (MemGPT)** | Purpose-built for agent brain state — preferences, craft knowledge, active context. NOT for bulk structured data. |
-| Product type | Platform, not just a framework | Autonomous uses it internally AND clients will access it |
-| Delivery mode order | Consulting-led → MCP-connected → Self-serve | Build internal first, validate memory layer works, then expand |
+| Org data storage | Postgres + pgvector | Structured + semantic search in one service. Graph deferred. |
+| Agent working memory | Letta (self-hosted) | Purpose-built for agent brain state. Self-hosted = version control, no SaaS dependency. |
+| Credential storage | HashiCorp Vault | Secrets never touch Postgres. Postgres stores credential IDs only. |
+| Primary product | Mode 1 + Mode 3 | See Section 1. Mode 2 is secondary. |
+| Delivery mode order | Mode 1 → Mode 3 → Mode 2 | Internal validation first, then self-serve. |
+| Memory layer abstraction | Required | Letta accessed via `HaznMemory` interface only — swap-safe if Letta is replaced. |
 
 ---
 
@@ -139,40 +118,64 @@ Do not re-research these.
 
 ### 5.1 Data Layer: What Goes Where
 
-This is the corrected model. The previous version incorrectly placed structured data inside Letta.
-
-| Data type | Where it lives | Why |
+| Data type | Where | Why |
 |---|---|---|
-| Keywords, rankings, audit results, campaign history | **Postgres** (relational tables) | Structured, queryable, large volume |
-| Brand voice summaries, semantic search over copy | **Postgres + pgvector** (vector columns) | Semantic retrieval without a separate service |
-| Decisions, relationships (Campaign → Keyword → Decision) | **Postgres** (foreign keys + joins) | Sufficient until multi-hop traversal becomes a real problem |
-| Agent preferences, craft knowledge, lessons learned | **Letta archival** | Fuzzy semantic retrieval, agent-specific |
-| Active client context (injected at session start) | **Letta core blocks** | Lives in agent's working memory for the session duration |
+| Keywords, rankings, audit results, campaign history | Postgres (relational tables) | Structured, queryable, large volume |
+| Brand voice, semantic search over copy/decisions | Postgres + pgvector | Semantic retrieval, no separate service |
+| Agent preferences, craft knowledge, lessons learned | Letta archival | Fuzzy retrieval, agent-specific |
+| Active client context (per session) | Letta core blocks | Injected at session start, wiped at end |
+| Secrets (API keys, OAuth tokens, CMS passwords) | HashiCorp Vault | Secrets manager — never in Postgres |
+| Credential references | Postgres (vault_secret_id only) | Postgres stores the ID; Vault holds the value |
+| Workflow run records | Postgres (workflow_runs table) | Billing source of truth — append-only |
 
-**On graph databases:** Postgres + pgvector covers ~80% of what a graph would do here. Multi-hop traversal (e.g. "all decisions that influenced campaigns that used keywords that ranked") becomes ugly SQL at scale, but that scale is 12–18 months away at minimum. Start with Postgres. Add a graph layer if and when you're writing 4+ join queries to answer basic questions.
+**On graph databases:** Postgres + pgvector covers ~80% of graph use cases here. Add graph layer only if writing 4+ join queries to answer basic questions — that's 12–18 months away minimum.
 
 ### 5.2 Memory Architecture
 
 ```
 Session start:
   Orchestrator queries Postgres for L2 + L3 context
-  → Injects into agent's active_client_context Letta block
+  → Injects into agent's active_client_context Letta block via HaznMemory interface
   Agent runs with full context
 
-Session end:
-  New structured findings → written to Postgres (audit results, keyword data, decisions)
-  New craft learnings → written to agent's Letta archival (what worked, what didn't)
+Every 10 turns (checkpoint):
+  Orchestrator triggers HaznMemory.checkpoint_sync()
+  New learnings written to Letta archival
+
+Session end (or 4hr inactivity):
+  New structured findings → Postgres (audit results, keywords, decisions)
+  New craft learnings → Letta archival via HaznMemory
+  active_client_context block wiped (rebuilt fresh next session)
+
+On crash:
+  HaznMemory.failure_sync() — write whatever was learned, never discard
 ```
 
 **Letta memory blocks per agent:**
-- `craft_knowledge` — how to do the work well (accumulates across all clients)
-- `active_client_context` — current L2 + L3 context (overwritten each session)
-- `preferences` — agent-specific working preferences
+- `craft_knowledge` — how to do the work well (cross-client, accumulates)
+- `active_client_context` — current L2 + L3 context (session-scoped, wiped after)
+- `preferences` — agent working preferences
 - `task_board` — current task state
 
-**What Letta does NOT store:** keyword databases, audit reports, campaign history, rankings. Those are Postgres.
+**Memory abstraction layer — required:**
+All Letta access goes through a `HaznMemory` interface. No agent or orchestrator code calls Letta directly. This makes Letta swap-safe. If Letta changes API or is replaced, only `HaznMemory` needs updating.
 
-**Known risk:** Letta memory sync relies on Claude to categorize session learnings. LLM-based extraction is noisy — it will misattribute learnings and write garbage over time without curation. No memory quality control mechanism is designed yet. This must be addressed before memory is used in production at scale.
+```python
+class HaznMemory:
+    def load_client_context(l2_id, l3_id) -> dict
+    def inject_context(agent_id, context: dict)
+    def checkpoint_sync(agent_id, session_id)
+    def failure_sync(agent_id, session_id)
+    def end_session(agent_id, session_id)
+    def write_finding(l3_id, finding_type, data)
+    def correct_memory(agent_id, block, old_value, new_value)  # memory correction
+    def search_archival(agent_id, query) -> list
+```
+
+**Known risk:** LLM-based memory extraction is noisy. Claude will misattribute learnings. Memory quality degrades without curation. Mitigation: memory correction UI (see Section 5.5) + eventual memory quality review workflow. This is not solved yet — it is a known operational risk for production scale.
+
+**Memory correction (planned, not in v1 research spikes):**
+Clients must be able to say "this is wrong, forget it." The `correct_memory()` method handles this programmatically. The Mode 3 workspace will expose a Memory Inspector where L2 clients can view and edit agent memory blocks for their account. This is a Mode 3 feature, not a research spike.
 
 ### 5.3 Agent Spaces: Tooling Per Agent
 
@@ -186,13 +189,14 @@ Session end:
 | **Strategist** | Web research, competitor scraping | Strategy docs, positioning decisions (per L3) |
 | **Auditor** | Playwright, PageSpeed, crawler | Audit reports, before/after comparisons (per L3) |
 | **Email Specialist** | ESP API (Klaviyo, Mailchimp) | Sequence library, send history (per L3) |
+| **QA Tester** | Playwright, accessibility checker | QA reports, test results (per L3) |
+
+**QA Tester agent** is part of the platform. Every workflow that produces a deliverable (site, landing page, report) passes through QA Tester before being marked done. QA Tester defines what "done well" looks like — not just "done."
 
 ### 5.4 MCP Layer
 
-MCP servers connect agents to tools at runtime. Credentials are scoped per client (see Spike 4).
-
-**Priority 1 — Build or configure first:**
-- `mcp-hazn-memory` — read/write to Letta blocks + Postgres (the critical one — bridges agents to persistent memory)
+**Priority 1:**
+- `mcp-hazn-memory` — the critical bridge. Spec below.
 - `mcp-vercel` — deploy, preview, domain management
 - `mcp-github` — repo management, PR creation, CI status
 - `mcp-ga4` — GA4 data pull, GSC queries, benchmarks
@@ -206,58 +210,111 @@ MCP servers connect agents to tools at runtime. Credentials are scoped per clien
 **Priority 3:**
 - `mcp-client-workspace` — trigger workflows, manage approvals, share deliverables
 
-### 5.5 Product Delivery Modes
+**`mcp-hazn-memory` — full tool spec:**
 
-**Mode 1: Consulting-Led (now → 3 months)**
-Autonomous team runs Hazn for clients. Clients get deliverables. Memory accumulates per client. No client-facing UI.
+This MCP server is the only way agents interact with persistent memory and client context. It wraps `HaznMemory`.
 
-**Mode 2: MCP-Connected (3–6 months)**
-Technical clients plug Hazn into Claude Code / Cursor via MCP. Agents run in their environment, pull from shared Postgres + Letta. No UI needed.
+```
+Tools exposed:
 
-**Mode 3: Self-Serve (6+ months)**
-Client workspace — dashboard, memory inspector, workflow trigger, HITL queue, deliverables. Requires: auth, multi-tenancy, billing, onboarding. **Do not design this until pricing model is decided (blocked on Spike 6 cost data).**
+load_context(l2_client_id, l3_client_id)
+  → Returns: agency house style, methodology, end-client brand voice,
+    recent decisions, last audit summary, active campaigns
+  → Called by orchestrator at session start
+
+write_finding(l3_client_id, finding_type, data)
+  → finding_type: keyword | decision | audit_result | approved_copy | competitor
+  → Writes structured data to Postgres
+  → Called by agents when they produce a finding worth persisting
+
+search_memory(agent_type, query)
+  → Semantic search over agent's Letta archival
+  → Returns: relevant past learnings, patterns, preferences
+  → Called by agents when they need to recall past craft knowledge
+
+checkpoint_sync(agent_id, session_id, learnings[])
+  → Writes learnings to Letta archival via HaznMemory
+  → Called every 10 turns by orchestrator
+
+correct_memory(agent_id, block, correction)
+  → Updates a Letta memory block with a correction
+  → Called when a human overrides agent memory via workspace UI
+
+get_credentials(l2_client_id, l3_client_id, credential_type)
+  → Retrieves secret from Vault using stored vault_secret_id
+  → credential_type: ga4 | gsc | ahrefs | cms | vercel | esp
+  → Never returns raw secrets to agent context — passes directly to MCP tool call
+```
+
+### 5.5 Mode 3 Client Workspace (future)
+
+When built, L2 agencies see:
+- **Dashboard** — active projects, running workflows, deliverables
+- **Memory Inspector** — view + edit what agents know about their org and end-clients. This is where memory correction happens.
+- **End-Client Manager** — create/manage L3 client profiles, brand docs, tool connections
+- **Workflow Trigger** — run workflows from UI
+- **HITL Queue** — approve before agents proceed, resolve L2/L3 conflicts
+- **Deliverables** — view, approve, share outputs
+
+L3 end-clients do NOT get logins in v1. Agency controls everything on their behalf.
 
 ### 5.6 Architecture Diagram
 
 ```
-┌──────────────────────────────────────────────────────┐
-│                  HAZN ORCHESTRATOR                    │
-│  Knows: L2 client + L3 end-client                    │
-│  Loads: correct Postgres context before session start │
-└───────────────────────┬──────────────────────────────┘
-                        │
-         ┌──────────────┼──────────────┐
-         │              │              │
-  ┌──────▼──────┐ ┌─────▼──────┐ ┌────▼───────┐
-  │ SEO Agent   │ │ Dev Agent  │ │ Copy Agent │
-  │ Letta:      │ │ Letta:     │ │ Letta:     │
-  │ craft +     │ │ craft +    │ │ craft +    │
-  │ active ctx  │ │ active ctx │ │ active ctx │
-  │ + MCP tools │ │ + MCP tools│ │ + MCP tools│
-  └──────┬──────┘ └─────┬──────┘ └────┬───────┘
-         │              │              │
-         └──────────────┼──────────────┘
-                        │ reads + writes
-  ┌─────────────────────▼──────────────────────────┐
-  │           POSTGRES + PGVECTOR                   │
-  │                                                 │
-  │  agencies (L2)          end_clients (L3)        │
-  │  ├── house_style        ├── brand_voice         │
-  │  ├── methodology        ├── keywords[]          │
-  │  └── templates[]        ├── campaigns[]         │
-  │                         ├── decisions[]         │
-  │                         ├── competitors[]       │
-  │                         └── audits[]            │
-  └─────────────────────────────────────────────────┘
+                    ┌─────────────────────────────┐
+MODE 3 ONLY →       │     AGENCY WORKSPACE (UI)    │
+                    │  Dashboard|Memory|HITL|Runs  │
+                    └──────────────┬──────────────┘
+                                   │
+                    ┌──────────────▼──────────────────────────────┐
+                    │            HAZN ORCHESTRATOR                  │
+                    │  - Loads L2+L3 context from Postgres          │
+                    │  - Injects context via mcp-hazn-memory        │
+                    │  - Writes workflow_runs to Postgres (metering)│
+                    │  - Manages HITL queue + conflict flags        │
+                    │  - Triggers checkpoint syncs every 10 turns   │
+                    └────┬──────────────┬──────────────┬──────────┘
+                         │              │              │
+                  ┌──────▼──────┐┌──────▼──────┐┌─────▼──────┐
+                  │  SEO Agent  ││  Dev Agent  ││ Copy Agent │  ...
+                  │             ││             ││            │
+                  │ HaznMemory  ││ HaznMemory  ││ HaznMemory │
+                  │ + MCP tools ││ + MCP tools ││ + MCP tools│
+                  └──────┬──────┘└──────┬──────┘└─────┬──────┘
+                         │  Langfuse SDK traces every LLM call
+                         │              │              │
+                         └──────────────┼──────────────┘
+                                        │
+          ┌─────────────────────────────▼──────────────────────────┐
+          │                    POSTGRES + PGVECTOR                   │
+          │                                                          │
+          │  agencies (L2)              end_clients (L3)            │
+          │  workflow_runs (metering)   keywords / audits / copy    │
+          │  vault_secret_ids           decisions / campaigns        │
+          └──────────────────────────────────────────────────────────┘
+                         │                        │
+          ┌──────────────▼──────┐   ┌─────────────▼────────┐
+          │   LETTA (self-hosted)│   │  HASHICORP VAULT      │
+          │   agent memory only  │   │  all secrets          │
+          │   HaznMemory wrapper │   │  GA4, Ahrefs, CMS etc │
+          └──────────────────────┘   └──────────────────────┘
+                         │
+          ┌──────────────▼──────┐
+          │   LANGFUSE           │
+          │   (self-hosted)      │
+          │   LLM traces only    │
+          │   debug + visibility │
+          │   NOT billing source │
+          └──────────────────────┘
 ```
 
 ---
 
 ## 6. Research Spikes
 
-Complete all spikes before locking architecture. Each spike has explicit tasks, decision criteria, and a required output format. Time-box strictly — if a spike runs over, make the best decision with available info and move on.
+Run in this order: **Spike 5 first** (does agent-os work?), then Spike 1 (which depends on Spike 5's answer), then 2–4 in parallel, Spike 6 ongoing.
 
-**Required output format for every spike:** A filled decision record:
+**Required output format:**
 ```
 Spike N: [name]
 Decision: [one sentence]
@@ -268,22 +325,47 @@ Risks accepted: [list]
 
 ---
 
-### Spike 1: Does the Two-System Model Work End-to-End?
+### Spike 5 (RUN FIRST): Agent-os — Backbone, Reference, or Ignore?
 
-**Question:** Can Letta active context blocks + Postgres deliver correct L2 and L3 scoped context to an agent at session start, without bleeding data between clients?
+**Why first:** Spike 1 assumes agent-os as the integration point. If Spike 5 says "ignore," Spike 1 instructions change. Run this before anything else.
+
+**Question:** How much of `autonomous-tech/autonomous-agent-os` is reusable?
 
 **Tasks:**
-1. Run agent-os locally (`docker compose up` — app + Letta + Postgres)
-2. Deploy SEO Specialist into agent-os
-3. Create: 1 fake agency (L2) with house style + 2 fake end-clients (L3) with different keyword histories
-4. At session start: query Postgres for L2 + L3 context, inject into agent's `active_client_context` block
-5. Run a workflow for L3 client A. End session. Write findings back to Postgres.
-6. Run a workflow for L3 client B. Does the agent have clean context? Does L3-A data bleed into L3-B?
-7. Test the conflict case: L2 says "formal tone", L3-A says "casual brand". What does the agent do?
+1. `docker compose up` — run app + Letta + Postgres locally
+2. Deploy SEO Specialist from `hazn/sub-agents/seo-specialist.md`
+3. Load `hazn/skills/seo-audit/SKILL.md` into Letta archival at deploy time
+4. Connect Claude Code via `npx agent-os-mcp --url http://localhost:3000`
+5. Run a fake SEO workflow. End session. Start new session. Does memory persist and change agent behavior?
+6. Test `HaznMemory`-equivalent: can you inject external context into a Letta block at session start?
+7. Assess workspace UI: extensible enough for Mode 3 agency dashboard or too generic?
 
 **Decision criteria:**
-- Context injection works cleanly, no bleed → proceed with two-system model
-- Bleed occurs or injection is too complex → simplify; consider single Postgres query replacing Letta active context
+- Memory + context injection works, UI extensible → use as backbone
+- Memory works, UI wrong → extract Letta integration patterns only, build own UI
+- Neither works → build directly against Letta SDK, skip agent-os
+
+**Time box:** 2 days
+
+---
+
+### Spike 1: Does the Two-System Model Work End-to-End?
+
+**Depends on:** Spike 5 result. If agent-os is ignored, replace agent-os steps with direct Letta SDK.
+
+**Question:** Does Postgres context injection → Letta active block → agent session work cleanly for L2 + L3 scope without bleed?
+
+**Tasks:**
+1. Create: 1 fake agency (L2) + 2 fake end-clients (L3) with different keyword histories
+2. Session start: query Postgres for L2+L3 context, inject via `mcp-hazn-memory.load_context()`
+3. Run SEO workflow for L3-A. End session. Write findings back via `mcp-hazn-memory.write_finding()`
+4. Run SEO workflow for L3-B. Confirm clean context — no L3-A bleed
+5. Test conflict: L2 says "formal", L3-A says "casual". Does agent flag it correctly?
+6. Test failure: kill the workflow mid-run. Does checkpoint sync preserve learnings?
+
+**Decision criteria:**
+- Clean injection, no bleed, failure sync works → proceed
+- Bleed occurs → rethink active_client_context scope (consider per-session Letta agent instances)
 
 **Time box:** 2 days
 
@@ -291,21 +373,15 @@ Risks accepted: [list]
 
 ### Spike 2: Postgres Schema Design
 
-**Question:** Can one Postgres schema handle all L2 and L3 data with clean query patterns?
+**Question:** Can one schema handle all L2/L3 data with clean query patterns?
 
 **Tasks:**
-1. Design schema: `agencies`, `end_clients`, `keywords`, `rankings`, `campaigns`, `decisions`, `audits`, `approved_copy`, `brand_voice`
-2. Define relationships and foreign keys
-3. Add pgvector columns where semantic search is needed (brand voice, copy, decisions)
-4. Write 5 representative queries:
-   - "All keywords targeted for end-client X in the last 6 months"
-   - "Brand voice summary for end-client Y (semantic)"
-   - "All decisions made for end-client X with rationale"
-   - "Last audit findings for end-client X"
-   - "All approved copy for agency Z house style"
-5. Evaluate: are any queries requiring more than 3 joins? If so, flag for graph consideration.
+1. Design: `agencies`, `end_clients`, `keywords`, `rankings`, `campaigns`, `decisions`, `audits`, `approved_copy`, `brand_voice`, `vault_credentials`
+2. Foreign keys + pgvector columns for semantic fields
+3. Write 5 representative queries (see Section 5.1 for examples)
+4. Flag any query requiring 4+ joins
 
-**Output:** Schema file (`schema.sql`) + query examples + assessment of graph necessity.
+**Output:** `schema.sql` + query examples + graph necessity assessment
 
 **Time box:** 1 day
 
@@ -313,14 +389,11 @@ Risks accepted: [list]
 
 ### Spike 3: MCP Server Inventory
 
-**Question:** What MCP servers already exist and are production-ready for Hazn's tool needs?
+**Question:** What already exists vs what we build?
 
-**Tasks:**
-1. Search for existing MCP servers: Vercel, GitHub, GA4/GSC, Ahrefs, Semrush, Payload CMS, WordPress, Klaviyo, Mailchimp, Playwright, PageSpeed
-2. For each: exists? maintained? covers our use case? self-hostable?
-3. Fill this matrix:
+**Tasks:** Fill this matrix:
 
-| Agent | Tool | Existing MCP | Quality | Build effort if none |
+| Agent | Tool | Existing MCP | Quality | Build effort |
 |---|---|---|---|---|
 | SEO | Ahrefs | ? | ? | ? |
 | SEO | GSC | ? | ? | ? |
@@ -330,170 +403,131 @@ Risks accepted: [list]
 | Blog Writer | Payload CMS | ? | ? | ? |
 | Auditor | Playwright | ? | ? | ? |
 
-**Output:** Filled matrix. Determines what gets built vs configured.
+**Time box:** 1 day
+
+---
+
+### Spike 4: Credential Architecture with Vault
+
+**Question:** How do agents get per-client credentials at runtime via HashiCorp Vault?
+
+**Tasks:**
+1. Stand up HashiCorp Vault (Docker, dev mode for spike)
+2. Store 3 fake client credentials (GA4, Ahrefs, CMS token)
+3. Postgres stores `vault_secret_id` per credential per L2/L3 client
+4. Orchestrator at session start: reads `vault_secret_id` from Postgres, fetches secret from Vault, passes to `mcp-hazn-memory.get_credentials()`
+5. Verify: agent can make an authenticated GA4 call without the raw secret ever appearing in agent context
+6. Design OAuth flow for Mode 3 (client connects their own GA4 — how does token land in Vault?)
+
+**Decision criteria:** Raw secrets never in agent context or Postgres. Vault fetch works end-to-end.
+
+**Output:** Credential flow diagram + Vault config + OAuth flow design for Mode 3
 
 **Time box:** 1 day
 
 ---
 
-### Spike 4: Credential Architecture
+### Spike 6: Observability & Metering (runs concurrently with all testing)
 
-**Question:** How do agents get per-client credentials (GA4 property IDs, Ahrefs API keys, CMS tokens) at runtime, securely, at both L2 and L3 scope?
+**Context:** ~10 live agencies. Metering runs against real workflows with real clients.
 
-**Tasks:**
-1. Map all credential types by agent (from Section 5.3)
-2. Prototype Option B (most likely): credentials stored in Postgres per L2/L3 client, retrieved at session start, passed as MCP env vars. Does this actually work with MCP tool calls?
-3. Design the auth flow for when a client eventually connects their own tools (self-serve Mode 3)
-4. Flag any compliance implications (GA4 data = Google's ToS; write access to client CMS = high risk)
+**Two-layer architecture:**
+- **Langfuse** (self-hosted, already deployed) — LLM traces, tokens, debugging. Not billing source of truth.
+- **Postgres `workflow_runs`** — billing source of truth. Append-only.
 
-**Decision criteria:** Must work for consulting-led (Autonomous manages credentials) and scale to self-serve (clients auth their own tools via OAuth).
-
-**Output:** Credential flow diagram + chosen option + security risks flagged.
-
-**Time box:** 1 day
-
----
-
-### Spike 5: Agent-os — Backbone, Reference, or Ignore?
-
-**Question:** How much of `autonomous-tech/autonomous-agent-os` is reusable for Hazn's memory + MCP layer?
-
-**Tasks:**
-1. Run locally: `docker compose up`
-2. Deploy SEO Specialist from `hazn/sub-agents/seo-specialist.md`
-3. Load `hazn/skills/seo-audit/SKILL.md` into Letta archival at deploy time
-4. Connect Claude Code session via `npx agent-os-mcp --url http://localhost:3000`
-5. Run a fake SEO workflow. End session. Start new session. Does memory actually persist and change agent behavior?
-6. Assess workspace UI honestly: is it extensible enough to become the L2 client dashboard, or is it too generic?
-
-**Decision criteria:**
-- Memory works end-to-end AND UI is extensible → use as backbone, extend it
-- Memory works, UI is wrong → extract Letta integration code only, build own UI
-- Neither works → build directly against Letta SDK, skip agent-os entirely
-
-**Time box:** 2 days
-
----
-
-### Spike 6: Observability & Metering
-
-**Question:** What does each workflow actually cost to run? This is a prerequisite for pricing — do not set prices without this data.
-
-**Context:** Autonomous currently runs ~10 agencies (mix of paid/unpaid). These are the test environment. Metering runs against real workflows with real clients — not synthetic data.
-
-**Pricing direction (decided, pending cost data):**
-- Model: credits per workflow run + feature gating by tier (inspired by Instantly)
-- Credits are workflow-type specific — an audit costs more credits than a blog post because it actually costs more to run
-- Agencies buy credit packs and mark them up to their own clients
-- Tiers gate agent access, not just volume:
-  - **Starter:** teaser, audit, content workflows
-  - **Growth:** + SEO, copywriter, developer (staging only)
-  - **Agency:** + all agents + L3 end-client workspaces + priority queue
-  - **Developer agent:** consulting-led only, never in self-serve
-- Actual credit pricing TBD after 10+ runs logged
-
-**Two-layer metering architecture:**
-
-```
-Langfuse (already deployed)         Postgres workflow_runs table
-─────────────────────────           ─────────────────────────────
-What happened inside the run        That the run happened
-Token traces per agent turn         One row per workflow
-Debugging + visibility              Billing source of truth
-Mutable, dev-facing                 Append-only, immutable
-```
-
-Never bill from Langfuse. It is not a financial record.
-
-**`workflow_runs` Postgres schema:**
+**Schema:**
 ```sql
-workflow_runs {
-  id                  uuid primary key
-  workflow_type       text        -- analytics-teaser, audit, website, etc.
-  l2_client_id        uuid        -- which agency
-  l3_client_id        uuid        -- which end-client
-  started_at          timestamptz
-  completed_at        timestamptz
-  status              text        -- completed / failed / interrupted
-  total_tokens_in     integer
-  total_tokens_out    integer
-  total_cost_usd      numeric
-  credits_consumed    integer     -- null until credit pricing is set
-}
+CREATE TYPE workflow_status AS ENUM ('running', 'completed', 'failed', 'interrupted');
+CREATE TYPE workflow_type AS ENUM ('analytics-teaser', 'analytics-audit', 'audit',
+  'website', 'landing-page', 'blog-post', 'email-sequence');
 
-workflow_agents {
-  id                  uuid primary key
-  workflow_run_id     uuid references workflow_runs
-  agent_type          text
-  turns               integer
-  tokens_in           integer
-  tokens_out          integer
-  cost_usd            numeric
-}
+CREATE TABLE workflow_runs (
+  id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  workflow_type     workflow_type NOT NULL,
+  l2_client_id      uuid REFERENCES agencies(id),
+  l3_client_id      uuid REFERENCES end_clients(id),
+  started_at        timestamptz NOT NULL DEFAULT now(),
+  completed_at      timestamptz,
+  status            workflow_status NOT NULL DEFAULT 'running',
+  total_tokens_in   integer DEFAULT 0,
+  total_tokens_out  integer DEFAULT 0,
+  total_cost_usd    numeric(10,6),
+  credits_consumed  integer  -- NULL until credit pricing is set
+);
 
-workflow_tool_calls {
-  id                  uuid primary key
-  workflow_run_id     uuid references workflow_runs
-  tool_name           text        -- mcp-ga4, mcp-vercel, mcp-ahrefs, etc.
-  call_count          integer
-  cost_usd            numeric     -- for tools with API costs (Ahrefs, etc.)
-}
+CREATE TABLE workflow_agents (
+  id               uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  workflow_run_id  uuid REFERENCES workflow_runs(id),
+  agent_type       text NOT NULL,
+  turns            integer DEFAULT 0,
+  tokens_in        integer DEFAULT 0,
+  tokens_out       integer DEFAULT 0,
+  cost_usd         numeric(10,6)
+);
+
+CREATE TABLE workflow_tool_calls (
+  id               uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  workflow_run_id  uuid REFERENCES workflow_runs(id),
+  tool_name        text NOT NULL,
+  call_count       integer DEFAULT 0,
+  cost_usd         numeric(10,6)
+);
 ```
 
-**Implementation tasks:**
-1. Add Langfuse SDK to agent calls (2 lines per agent, tag with l2/l3 client IDs)
-2. Create `workflow_runs`, `workflow_agents`, `workflow_tool_calls` tables in Postgres
-3. Orchestrator writes run record at workflow start, updates per agent completion, closes at workflow end
-4. On crash/interrupt: write partial record with `status = interrupted` — do not discard
-5. Build `/admin/runs` view (SQL query or simple endpoint): cost per run, by workflow type, by L2 client
+**Implementation:**
+1. Add Langfuse SDK to agent calls (tag with l2/l3 client IDs, workflow run ID)
+2. Orchestrator writes `workflow_runs` row at start, updates per agent, closes at end
+3. On crash: set `status = 'interrupted'`, write partial data — never discard
+4. `/admin/runs` query: cost by workflow type, by L2 client, flagged outliers
 
-**Run at minimum before setting prices:**
-- 3 analytics teasers
-- 2 full audits
-- 2 landing pages
-- 1 full website build
-- Mix of L2 clients — at least 3 different agencies
+**Minimum runs before setting prices:**
+- 3 analytics teasers, 2 audits, 2 landing pages, 1 full website — across 3+ agencies
 
-**What to flag:**
-- Runaway agents: >50 turns on a single task
-- Expensive outliers: any single run >$5 USD
-- Tool cost surprises: Ahrefs/Semrush API calls adding up unexpectedly
+**Flag:** runaway agents (>50 turns), outliers (>$5/run), unexpected tool API costs
 
-**Output:** Filled cost-per-workflow table. Credits pricing set after this data exists.
+**Pricing direction (pending data):** credits per workflow type + feature-gated tiers. Tiers are directional until cost data confirms viability.
 
-**Time box:** Ongoing during testing phase. Block all pricing decisions until 10+ runs logged across at least 3 workflow types.
+**Time box:** Ongoing. Block pricing decisions until 10+ runs logged.
 
 ---
 
 ## 7. What Is NOT In Scope
 
-- Billing / subscription management (blocked until Spike 6 cost data available)
+- Billing / subscription infrastructure (blocked on Spike 6 data)
 - Pricing model (blocked on Spike 6)
-- Multi-tenant auth for self-serve (Mode 3 only)
+- Multi-tenant auth for Mode 3 (needed for self-serve, not research phase)
 - White-label / reseller
 - Mobile
 - Real-time collaboration
-- Memory quality control / curation system (known gap, deferred)
+- Memory quality control system (known gap — planned post-research)
+- L3 client logins (agencies control everything in v1)
+- Data migration for existing 10 agencies (Spike 6 captures forward — no backfill in v1)
+- Orchestrator refactor (known complexity — handled as part of Mode 1 build, not a research spike)
 
 ---
 
-## 8. Success Criteria for Research Phase
+## 8. Success Criteria
 
-Fill this table. When complete, produce an ADR + sprint plan.
+**Research phase complete when this table is filled:**
 
 | Question | Answer |
 |---|---|
-| Data layer: Postgres only or Postgres + graph? | |
-| Postgres schema: does it handle all query patterns cleanly? | |
-| MCP: what do we build vs configure? (from Spike 3 matrix) | |
-| Credential model: which option? | |
 | Agent-os: backbone / reference / ignore? | |
 | L2/L3 context injection: works without bleed? | |
-| Checkpoint sync: every 10 turns confirmed working? | |
-| Parallel agent sessions: each agent owns its own memory confirmed? | |
-| Cost per workflow type (from Spike 6): at least 10 runs logged? | |
+| Checkpoint + failure sync: confirmed working? | |
+| Postgres schema: handles all query patterns cleanly? | |
+| Graph database needed? | |
+| MCP: what to build vs configure? (Spike 3 matrix) | |
+| Vault: credentials flow works end-to-end? | |
+| Cost per workflow type: 10+ runs logged? | |
 
-Research phase time box: **1 week for Spikes 1–5. Spike 6 runs concurrently during all testing.**
+**Product ready to charge when:**
+- Memory layer works across 3+ real client engagements without manual correction
+- At least one agency has used it for 4+ consecutive weeks
+- Cost per workflow is known with <20% variance across runs
+- QA Tester agent passing rate >90% on completed workflows
+
+**Time box:** Spikes 5, 1, 2, 3, 4 — 1 week. Spike 6 ongoing.
 
 ---
 
@@ -506,4 +540,4 @@ Research phase time box: **1 week for Spikes 1–5. Spike 6 runs concurrently du
 | Hazn skills | `hazn/skills/*/SKILL.md` |
 | Agent-os source | `autonomous-tech/autonomous-agent-os` (GitHub) |
 | Existing Hazn docs | `hazn/docs/` |
-| Hazn orchestrator context | `hazn/SOUL.md` |
+| Orchestrator context | `hazn/SOUL.md` |
