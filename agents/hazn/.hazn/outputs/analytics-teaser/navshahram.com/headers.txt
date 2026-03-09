@@ -1,0 +1,11 @@
+HTTP/2 200 
+content-type: text/html; charset=UTF-8
+link: <https://navshahram.com/wp-json/>; rel="https://api.w.org/"
+link: <https://navshahram.com/wp-json/wp/v2/pages/6053>; rel="alternate"; title="JSON"; type="application/json"
+link: <https://navshahram.com/>; rel=shortlink
+etag: "776-1772538454;;;"
+x-litespeed-cache: hit
+date: Thu, 05 Mar 2026 17:33:18 GMT
+server: LiteSpeed
+alt-svc: h3=":443"; ma=2592000, h3-29=":443"; ma=2592000, h3-Q050=":443"; ma=2592000, h3-Q046=":443"; ma=2592000, h3-Q043=":443"; ma=2592000, quic=":443"; ma=2592000; v="43,46"
+

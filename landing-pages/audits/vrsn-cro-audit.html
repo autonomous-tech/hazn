@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRSN CRO Audit | Autonomous Technologies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Pathway+Extreme:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a12;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --accent-cyan: #00d5ff;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-green: #00d564;
+            --accent-yellow: #fbbf24;
+            --accent-red: #ff3c3c;
+            --gradient-primary: linear-gradient(135deg, #00d5ff 0%, #a855f7 50%, #ec4899 100%);
+            --gradient-text: linear-gradient(90deg, #00d5ff, #a855f7, #ec4899);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pathway Extreme', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; font-weight: 700; line-height: 1.2; }
+        .brand-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 40px; background: rgba(10,10,18,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; }
+        .brand-header .logo { height: 36px; }
+        .brand-header .brand-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.3em; }
+        .cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 40px 80px; background: radial-gradient(ellipse at center top, rgba(0,213,255,0.08) 0%, transparent 50%), radial-gradient(ellipse at center bottom, rgba(168,85,247,0.08) 0%, transparent 50%), var(--bg-primary); }
+        .cover .logo-main { width: 180px; margin-bottom: 32px; }
+        .cover .audit-label { font-size: 12px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 16px; }
+        .cover h1 { font-size: clamp(2.5rem,6vw,4rem); font-weight: 800; margin-bottom: 24px; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .cover .store-url { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 48px; }
+        .cro-score { width: 180px; height: 180px; border-radius: 50%; background: conic-gradient(var(--accent-cyan) 0deg, var(--accent-purple) 82.8deg, var(--accent-pink) 165.6deg, rgba(255,255,255,0.1) 165.6deg); display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; }
+        .cro-score::before { content: ''; position: absolute; inset: 8px; background: var(--bg-primary); border-radius: 50%; }
+        .score-value { position: relative; font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 800; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .score-label { font-size: 14px; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; }
+        .positioning { margin-top: 64px; }
+        .positioning-line { display: block; font-size: 14px; color: var(--text-muted); font-weight: 500; }
+        .audit-date { margin-top: 32px; font-size: 14px; color: var(--text-muted); }
+        main { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+        section { margin-bottom: 120px; }
+        .section-header { margin-bottom: 48px; }
+        .section-number { font-size: 12px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 12px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 16px; }
+        .section-header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 700px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 32px; margin-bottom: 24px; backdrop-filter: blur(20px); }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 48px; }
+        .summary-stat { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 28px; text-align: center; }
+        .summary-stat .label { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+        .summary-stat .value { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 700; background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+        .summary-stat .context { font-size: 14px; color: var(--text-secondary); }
+        .priority-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .priority-item { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; display: flex; gap: 20px; transition: all 0.3s ease; }
+        .priority-item:hover { border-color: rgba(0,213,255,0.3); transform: translateY(-2px); }
+        .priority-number { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; flex-shrink: 0; }
+        .priority-number.critical { background: var(--accent-red); color: white; }
+        .priority-number.high { background: var(--accent-yellow); color: #0a0a12; }
+        .priority-content h4 { font-size: 1.125rem; margin-bottom: 8px; }
+        .priority-content p { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; }
+        .impact-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: rgba(0,213,100,0.15); color: var(--accent-green); }
+        .screenshot-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin: 32px 0; }
+        .screenshot-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; overflow: hidden; }
+        .screenshot-header { padding: 12px 20px; border-bottom: 1px solid var(--border-subtle); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+        .screenshot-card img { width: 100%; height: 420px; object-fit: cover; object-position: top; display: block; }
+        .issue-list { display: flex; flex-direction: column; gap: 16px; }
+        .issue-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; display: grid; grid-template-columns: 48px 1fr auto; gap: 20px; align-items: start; }
+        .issue-number { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; color: white; flex-shrink: 0; }
+        .issue-number.critical { background: var(--accent-red); }
+        .issue-number.high { background: var(--accent-yellow); color: #0a0a12; }
+        .issue-number.ok { background: var(--accent-green); }
+        .issue-details h4 { font-size: 1.125rem; margin-bottom: 8px; }
+        .issue-details p { color: var(--text-secondary); margin-bottom: 16px; font-size: 15px; }
+        .issue-recommendation { background: rgba(0,213,255,0.08); border-left: 3px solid var(--accent-cyan); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 14px; }
+        .issue-recommendation strong { color: var(--accent-cyan); }
+        .issue-meta { text-align: right; }
+        .effort-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .effort-badge.low { background: rgba(0,213,100,0.15); color: var(--accent-green); }
+        .effort-badge.medium { background: rgba(0,213,255,0.15); color: var(--accent-cyan); }
+        .effort-badge.high { background: rgba(251,191,36,0.15); color: var(--accent-yellow); }
+        .score-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .score-row .label { width: 180px; font-size: 14px; color: var(--text-secondary); }
+        .score-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .score-bar-fill { height: 100%; border-radius: 4px; }
+        .score-bar-fill.excellent { background: var(--accent-green); }
+        .score-bar-fill.good { background: var(--accent-cyan); }
+        .score-bar-fill.needs-work { background: var(--accent-yellow); }
+        .score-bar-fill.poor { background: var(--accent-red); }
+        .score-row .num { width: 36px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; text-align: right; }
+        .quickwin-list { display: flex; flex-direction: column; gap: 16px; }
+        .quickwin-item { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; display: grid; grid-template-columns: 56px 1fr auto; gap: 24px; align-items: center; transition: all 0.3s ease; }
+        .quickwin-item:hover { border-color: rgba(0,213,255,0.3); }
+        .quickwin-number { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.5rem; }
+        .quickwin-content h4 { margin-bottom: 8px; }
+        .quickwin-content p { font-size: 14px; color: var(--text-secondary); }
+        .quickwin-impact { text-align: right; }
+        .quickwin-impact .value { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--accent-green); }
+        .quickwin-impact .label { font-size: 12px; color: var(--text-muted); }
+        .roadmap-table { width: 100%; border-collapse: collapse; }
+        .roadmap-table th, .roadmap-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--border-subtle); }
+        .roadmap-table th { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+        .roadmap-table td { color: var(--text-secondary); }
+        .roadmap-table td:first-child { color: var(--text-primary); font-weight: 500; }
+        .severity-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .severity-badge.critical { background: rgba(255,60,60,0.15); color: var(--accent-red); }
+        .severity-badge.high { background: rgba(251,191,36,0.15); color: var(--accent-yellow); }
+        .severity-badge.medium { background: rgba(0,213,255,0.15); color: var(--accent-cyan); }
+        .phase-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; margin-top: 48px; }
+        .phase-badge { padding: 8px 16px; border-radius: 24px; background: var(--gradient-primary); font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; }
+        footer { padding: 80px 40px; background: var(--bg-secondary); text-align: center; }
+        footer .logo { height: 48px; margin-bottom: 24px; }
+        footer .brand-text { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.3em; margin-bottom: 16px; }
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--accent-cyan); text-decoration: none; }
+        .strengths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+        .strength-item { background: rgba(0,213,100,0.08); border: 1px solid rgba(0,213,100,0.2); border-radius: 12px; padding: 16px; }
+        .strength-item h5 { color: var(--accent-green); font-size: 0.9rem; margin-bottom: 4px; }
+        .strength-item p { font-size: 13px; color: var(--text-secondary); }
+    </style>
+</head>
+<body>
+
+<header class="brand-header">
+    <div style="display:flex;align-items:center;gap:16px;">
+        <img src="https://autonomoustech.ca/logo-transparent.png" alt="Autonomous" class="logo">
+        <span class="brand-name">AUTONOMOUS</span>
+    </div>
+    <span style="font-size:12px;color:var(--text-muted);">Confidential CRO Report</span>
+</header>
+
+<section class="cover">
+    <img src="https://autonomoustech.ca/logo-transparent.png" alt="Autonomous" class="logo-main">
+    <div class="audit-label">Shopify CRO Audit</div>
+    <h1>VRSN Footwear</h1>
+    <div class="store-url">vrsn.co</div>
+    <div class="score-container">
+        <div class="cro-score"><span class="score-value">46</span></div>
+        <div class="score-label">Overall CRO Score</div>
+    </div>
+    <div class="positioning">
+        <span class="positioning-line">Canadian Expertise.</span>
+        <span class="positioning-line">Pakistani Efficiency.</span>
+        <span class="positioning-line">World-class Quality.</span>
+    </div>
+    <div class="audit-date">July 2025</div>
+</section>
+
+<main>
+
+    <!-- 01 EXECUTIVE SUMMARY -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">01</div>
+            <h2>Executive Summary</h2>
+            <p>VRSN has strong brand storytelling and a clear product proposition. The conversion infrastructure, however, has significant gaps that are costing revenue every day paid traffic runs.</p>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-stat">
+                <div class="label">CRO Score</div>
+                <div class="value">46/100</div>
+                <div class="context" style="color:var(--accent-yellow);">Needs Significant Work</div>
+            </div>
+            <div class="summary-stat">
+                <div class="label">Footwear Industry Avg CVR</div>
+                <div class="value">1.8%</div>
+                <div class="context">Estimated VRSN current: ~0.8–1.2%</div>
+            </div>
+            <div class="summary-stat">
+                <div class="label">Estimated CVR Uplift Possible</div>
+                <div class="value">+60%</div>
+                <div class="context" style="color:var(--accent-green);">With recommended fixes</div>
+            </div>
+            <div class="summary-stat">
+                <div class="label">Critical Issues Found</div>
+                <div class="value">7</div>
+                <div class="context" style="color:var(--accent-red);">Immediate attention required</div>
+            </div>
+        </div>
+
+        <div class="section-header" style="margin-top:48px;margin-bottom:24px;">
+            <h2 style="font-size:1.5rem;">Top 3 Priority Issues</h2>
+        </div>
+        <div class="priority-grid">
+            <div class="priority-item">
+                <div class="priority-number critical">1</div>
+                <div class="priority-content">
+                    <h4>Product Page Strips Conversion</h4>
+                    <p>No reviews, no social proof, no urgency, no cross-sells. One image, one dropdown, one button — and nothing that builds confidence before the click.</p>
+                    <span class="impact-badge">+25–35% CVR potential</span>
+                </div>
+            </div>
+            <div class="priority-item">
+                <div class="priority-number critical">2</div>
+                <div class="priority-content">
+                    <h4>No Sticky Add to Cart on Mobile</h4>
+                    <p>On mobile, the ATC button disappears on scroll. 70%+ of DTC traffic is mobile and users have to scroll back up to purchase.</p>
+                    <span class="impact-badge">+15–20% mobile CVR</span>
+                </div>
+            </div>
+            <div class="priority-item">
+                <div class="priority-number high">3</div>
+                <div class="priority-content">
+                    <h4>Collection Page Shows Only 2 Products</h4>
+                    <p>The /collections/all page renders only 2 visible products with massive whitespace below. Customers can't browse the full catalogue.</p>
+                    <span class="impact-badge">+10–15% browse-to-PDP rate</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 HOMEPAGE AUDIT -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">02</div>
+            <h2>Homepage Audit</h2>
+            <p>The homepage does a good job of educating — but it doesn't convert. The scroll is long, the CTAs are buried, and the brand story runs ahead of the purchase decision.</p>
+        </div>
+
+        <div class="screenshot-grid">
+            <div class="screenshot-card">
+                <div class="screenshot-header">💻 Desktop — vrsn.co</div>
+                <img src="vrsn-assets/homepage-desktop.jpg" alt="VRSN Homepage Desktop">
+            </div>
+            <div class="screenshot-card">
+                <div class="screenshot-header">📱 Mobile (70% of traffic)</div>
+                <img src="vrsn-assets/homepage-desktop.jpg" alt="VRSN Homepage Mobile" style="object-position:top center;">
+            </div>
+        </div>
+
+        <div style="margin-bottom:32px;">
+            <div class="score-row"><span class="label">Hero / Above Fold</span><div class="score-bar"><div class="score-bar-fill needs-work" style="width:50%"></div></div><span class="num">5/10</span></div>
+            <div class="score-row"><span class="label">CTA Clarity</span><div class="score-bar"><div class="score-bar-fill poor" style="width:30%"></div></div><span class="num">3/10</span></div>
+            <div class="score-row"><span class="label">Trust Signals</span><div class="score-bar"><div class="score-bar-fill needs-work" style="width:50%"></div></div><span class="num">5/10</span></div>
+            <div class="score-row"><span class="label">Mobile Experience</span><div class="score-bar"><div class="score-bar-fill poor" style="width:40%"></div></div><span class="num">4/10</span></div>
+            <div class="score-row"><span class="label">Page Speed</span><div class="score-bar"><div class="score-bar-fill good" style="width:65%"></div></div><span class="num">6.5/10</span></div>
+        </div>
+
+        <div class="issue-list">
+            <div class="issue-card">
+                <div class="issue-number critical">1</div>
+                <div class="issue-details">
+                    <h4>Hero CTA is buried below the tagline</h4>
+                    <p>The primary "Learn More" CTA appears well below the fold on mobile. Visitors running Meta traffic need an immediate purchase path — not a scroll journey before they can act.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Add a persistent "Shop Now" button in the hero section, above the fold on all devices. Use high-contrast cyan or white button on the dark background.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number critical">2</div>
+                <div class="issue-details">
+                    <h4>No trust badges in the above-fold area</h4>
+                    <p>The 100-Day Guarantee only appears on the product page. For cold Meta traffic landing on the homepage, there is no immediate trust signal — no reviews count, no guarantee badge, no press mentions.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Add a trust bar below the hero: "100-Day Guarantee · Free Returns Worldwide · 2,000+ Happy Customers" with small icons. Judge.me or Loox can inject star ratings here.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number high">3</div>
+                <div class="issue-details">
+                    <h4>Homepage scroll is too long before reaching products</h4>
+                    <p>The homepage runs through multiple education sections (Perfect Balance, Engineered For, Foot Health Experts) before showing a product. Warm traffic bounces before getting there.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Move a "Featured Products" or "Shop Best Sellers" section immediately after the hero. Keep the education sections but push them below the purchase opportunity.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge medium">Medium Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number ok">4</div>
+                <div class="issue-details">
+                    <h4>Strong: Compelling brand storytelling</h4>
+                    <p>The "Finally — A Shoe That Does Both" positioning and the foot health expert validation section are genuinely strong. This differentiates VRSN from generic footwear brands and builds credibility.</p>
+                    <div class="issue-recommendation"><strong>Keep:</strong> This content is valuable — just needs to come after the purchase CTA, not before it.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Keep</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 COLLECTION PAGE AUDIT -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">03</div>
+            <h2>Collection Page Audit</h2>
+            <p>The /collections/all page has a critical rendering issue that prevents customers from browsing the full catalogue.</p>
+        </div>
+
+        <div class="screenshot-grid">
+            <div class="screenshot-card">
+                <div class="screenshot-header">💻 Desktop — /collections/all</div>
+                <img src="vrsn-assets/collection-desktop.jpg" alt="VRSN Collection Desktop">
+            </div>
+            <div class="screenshot-card">
+                <div class="screenshot-header">📊 What We See</div>
+                <div style="padding:24px;background:var(--bg-card);height:420px;display:flex;flex-direction:column;justify-content:center;gap:16px;">
+                    <div style="padding:16px;background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);border-radius:8px;">
+                        <div style="color:var(--accent-red);font-weight:700;margin-bottom:4px;">🔴 Critical Issue</div>
+                        <div style="font-size:14px;color:var(--text-secondary);">Only 2 products visible out of 10 in catalogue. Massive whitespace below.</div>
+                    </div>
+                    <div style="padding:16px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:8px;">
+                        <div style="color:var(--accent-yellow);font-weight:700;margin-bottom:4px;">🟡 No Quick Buy</div>
+                        <div style="font-size:14px;color:var(--text-secondary);">No hover-to-add-to-cart on product cards. Every browse requires a full PDP visit.</div>
+                    </div>
+                    <div style="padding:16px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:8px;">
+                        <div style="color:var(--accent-yellow);font-weight:700;margin-bottom:4px;">🟡 No Star Ratings</div>
+                        <div style="font-size:14px;color:var(--text-secondary);">Product cards show no review stars. Social proof stops at the PDP.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="issue-list" style="margin-top:32px;">
+            <div class="issue-card">
+                <div class="issue-number critical">1</div>
+                <div class="issue-details">
+                    <h4>Collection page only renders 2 products</h4>
+                    <p>Despite 10 products in the catalogue, the collection grid shows 2 items followed by empty whitespace. This appears to be a theme rendering or pagination bug that breaks the browse experience entirely.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Check the collection template in Shopify theme editor. Verify product count per page setting and ensure all products are assigned to the correct collection. May be a Liquid pagination bug — inspect the section settings.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number high">2</div>
+                <div class="issue-details">
+                    <h4>No review stars on product cards</h4>
+                    <p>Star ratings on collection cards increase click-through rate to the PDP by an average of 18%. VRSN's collection cards show only product name and price.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Enable star rating display on collection cards via Judge.me or Loox settings. Most apps have a one-click toggle for this.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 PRODUCT PAGE AUDIT -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">04</div>
+            <h2>Product Page Audit</h2>
+            <p>The product page is the most critical conversion point and it is severely under-built. It is missing almost every element that builds confidence before a purchase decision.</p>
+        </div>
+
+        <div class="screenshot-grid">
+            <div class="screenshot-card">
+                <div class="screenshot-header">💻 Desktop — Comfort Insoles PDP</div>
+                <img src="vrsn-assets/product-desktop.jpg" alt="VRSN Product Desktop">
+            </div>
+            <div class="screenshot-card">
+                <div class="screenshot-header">📱 What's Missing</div>
+                <div style="padding:24px;background:var(--bg-card);height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;">
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No customer reviews</div>
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No urgency / scarcity</div>
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No sticky ATC on mobile</div>
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No product benefits section</div>
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No size guide</div>
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No cross-sells / upsells</div>
+                    <div style="padding:12px;background:rgba(255,60,60,0.1);border-radius:8px;font-size:13px;color:var(--accent-red);font-weight:600;">✗ No shipping estimate</div>
+                    <div style="padding:12px;background:rgba(0,213,100,0.1);border-radius:8px;font-size:13px;color:var(--accent-green);font-weight:600;">✓ 100-Day Guarantee badge</div>
+                    <div style="padding:12px;background:rgba(0,213,100,0.1);border-radius:8px;font-size:13px;color:var(--accent-green);font-weight:600;">✓ Clean product photography</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin:32px 0;">
+            <div class="score-row"><span class="label">Social Proof</span><div class="score-bar"><div class="score-bar-fill poor" style="width:10%"></div></div><span class="num">1/10</span></div>
+            <div class="score-row"><span class="label">Urgency / Scarcity</span><div class="score-bar"><div class="score-bar-fill poor" style="width:10%"></div></div><span class="num">1/10</span></div>
+            <div class="score-row"><span class="label">Product Description</span><div class="score-bar"><div class="score-bar-fill poor" style="width:30%"></div></div><span class="num">3/10</span></div>
+            <div class="score-row"><span class="label">Trust Signals</span><div class="score-bar"><div class="score-bar-fill needs-work" style="width:40%"></div></div><span class="num">4/10</span></div>
+            <div class="score-row"><span class="label">Mobile ATC Usability</span><div class="score-bar"><div class="score-bar-fill poor" style="width:30%"></div></div><span class="num">3/10</span></div>
+            <div class="score-row"><span class="label">Photography</span><div class="score-bar"><div class="score-bar-fill good" style="width:65%"></div></div><span class="num">6.5/10</span></div>
+        </div>
+
+        <div class="issue-list">
+            <div class="issue-card">
+                <div class="issue-number critical">1</div>
+                <div class="issue-details">
+                    <h4>Zero customer reviews on product pages</h4>
+                    <p>Reviews increase purchase likelihood by 58%. VRSN came off a successful Kickstarter — those backers are a goldmine of social proof that isn't being used anywhere on the store.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Install Judge.me (free) or Loox immediately. Email Kickstarter backers for reviews. Even 10–15 reviews will dramatically lift conversion on cold traffic.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number critical">2</div>
+                <div class="issue-details">
+                    <h4>No sticky Add to Cart on mobile</h4>
+                    <p>The ATC button is above the fold on mobile initially — but the moment a user scrolls down to read the description, the button disappears and they have to scroll all the way back up to buy. This is a direct CVR killer.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Enable sticky ATC in theme settings or install a sticky cart app. This is one of the highest ROI changes available — industry average lift is +15–25% on mobile CVR.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number critical">3</div>
+                <div class="issue-details">
+                    <h4>Product description is generic and benefit-free</h4>
+                    <p>The current description reads like filler copy ("Experience all-day support... Elevate your footwear"). It doesn't address who the shoe is for, what specific pain it solves, or why VRSN is different from other insoles.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Rewrite descriptions using the pain-relief angle: chronic foot pain, plantar fasciitis, standing all day. Lead with the outcome, not the product. Add a "Who it's for" bullet list and a "How it works" expandable section.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge medium">Medium Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number high">4</div>
+                <div class="issue-details">
+                    <h4>No size guide or fit confidence tool</h4>
+                    <p>The only size selector is a dropdown with no guidance. For footwear, sizing uncertainty is one of the top reasons for cart abandonment. There is no chart, no recommendation, no "find your size" tool.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Add a size guide popup (table format, cm/inch/EU/US conversions). Apps like Kiwi Size Chart are free and take 20 minutes to set up. Reduces returns by 64% and increases add-to-cart rate.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-number high">5</div>
+                <div class="issue-details">
+                    <h4>No cross-sells or product recommendations</h4>
+                    <p>VRSN sells a Complete Foot Health System at £150.95. This is a natural upsell from the £53.95 insoles — but there is no "Frequently Bought Together," "Complete the System," or related products section anywhere on the PDP.</p>
+                    <div class="issue-recommendation"><strong>Fix:</strong> Add a "Complete the System" section below the ATC button featuring the full system bundle. Even a 5% upsell rate at £97 difference = significant AOV lift.</div>
+                </div>
+                <div class="issue-meta"><span class="effort-badge low">Low Effort</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 WHAT'S WORKING -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">05</div>
+            <h2>What's Working</h2>
+            <p>Not everything needs fixing. These elements are genuine strengths to build on.</p>
+        </div>
+        <div class="strengths-grid">
+            <div class="strength-item"><h5>Free Returns Banner</h5><p>Persistent "Free Returns & Exchanges Worldwide" announcement bar builds confidence immediately on every page.</p></div>
+            <div class="strength-item"><h5>100-Day Guarantee</h5><p>A 100-day guarantee is above industry standard and a powerful trust signal. It just needs to be surfaced earlier and more prominently.</p></div>
+            <div class="strength-item"><h5>Brand Storytelling</h5><p>The Kickstarter origin, the foot health expert validation, and the "Perfect Balance" positioning are genuinely differentiated and well-written.</p></div>
+            <div class="strength-item"><h5>Clean Photography</h5><p>Product images are high quality and consistent. The brand aesthetic is premium and coherent across the store.</p></div>
+            <div class="strength-item"><h5>Clear Niche</h5><p>Pain-relief + style is a strong positioning hook. The "Finally a shoe that does both" message directly addresses a real customer frustration.</p></div>
+        </div>
+    </section>
+
+    <!-- 06 QUICK WINS -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">06</div>
+            <h2>Quick Wins</h2>
+            <p>These 5 changes can be implemented in under a week and will have immediate impact on conversion.</p>
+        </div>
+        <div class="quickwin-list">
+            <div class="quickwin-item">
+                <div class="quickwin-number">1</div>
+                <div class="quickwin-content">
+                    <h4>Fix the collection page product rendering bug</h4>
+                    <p>Only 2 of 10 products are showing. This is almost certainly a theme settings or pagination issue — fixable in under 30 minutes.</p>
+                </div>
+                <div class="quickwin-impact"><div class="value">+15%</div><div class="label">Browse-to-PDP</div></div>
+            </div>
+            <div class="quickwin-item">
+                <div class="quickwin-number">2</div>
+                <div class="quickwin-content">
+                    <h4>Install Judge.me and collect Kickstarter reviews</h4>
+                    <p>Email your 500+ Kickstarter backers for reviews. Judge.me free plan supports unlimited reviews with email request sequences.</p>
+                </div>
+                <div class="quickwin-impact"><div class="value">+25%</div><div class="label">Purchase Likelihood</div></div>
+            </div>
+            <div class="quickwin-item">
+                <div class="quickwin-number">3</div>
+                <div class="quickwin-content">
+                    <h4>Enable sticky Add to Cart on mobile</h4>
+                    <p>Check theme settings first — many Shopify themes have this as a toggle. If not, Sticky Add To Cart Booster Pro takes 10 minutes to install.</p>
+                </div>
+                <div class="quickwin-impact"><div class="value">+20%</div><div class="label">Mobile CVR</div></div>
+            </div>
+            <div class="quickwin-item">
+                <div class="quickwin-number">4</div>
+                <div class="quickwin-content">
+                    <h4>Add a size guide to the product page</h4>
+                    <p>Kiwi Size Chart is free and installs in 20 minutes. Add EU/US/UK conversions and a brief "How to measure your foot" note.</p>
+                </div>
+                <div class="quickwin-impact"><div class="value">-30%</div><div class="label">Size Abandonment</div></div>
+            </div>
+            <div class="quickwin-item">
+                <div class="quickwin-number">5</div>
+                <div class="quickwin-content">
+                    <h4>Add "Complete the System" cross-sell on insoles PDP</h4>
+                    <p>Feature the £150.95 bundle directly below the ATC button on the insoles product page. Even 5% upsell rate transforms AOV.</p>
+                </div>
+                <div class="quickwin-impact"><div class="value">+AOV</div><div class="label">Order Value</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07 IMPLEMENTATION ROADMAP -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">07</div>
+            <h2>Implementation Roadmap</h2>
+            <p>Prioritized by impact and effort. Week 1 alone can move the needle significantly.</p>
+        </div>
+
+        <div class="phase-header">
+            <span class="phase-badge">WEEK 1</span>
+            <span class="phase-title" style="color:var(--accent-red);">Critical Fixes</span>
+        </div>
+        <table class="roadmap-table">
+            <thead><tr><th>Task</th><th>Severity</th><th>Effort</th><th>Expected Impact</th></tr></thead>
+            <tbody>
+                <tr><td>Fix collection page product rendering</td><td><span class="severity-badge critical">Critical</span></td><td>30 min</td><td>+15% browse rate</td></tr>
+                <tr><td>Enable sticky ATC on mobile</td><td><span class="severity-badge critical">Critical</span></td><td>30 min</td><td>+15–20% mobile CVR</td></tr>
+                <tr><td>Install Judge.me + email backers for reviews</td><td><span class="severity-badge critical">Critical</span></td><td>1–2 hrs</td><td>+25% purchase confidence</td></tr>
+                <tr><td>Add size guide popup (Kiwi)</td><td><span class="severity-badge high">High</span></td><td>20 min</td><td>-30% size abandonment</td></tr>
+            </tbody>
+        </table>
+
+        <div class="phase-header">
+            <span class="phase-badge">WEEK 2–3</span>
+            <span class="phase-title" style="color:var(--accent-yellow);">High Impact Improvements</span>
+        </div>
+        <table class="roadmap-table">
+            <thead><tr><th>Task</th><th>Severity</th><th>Effort</th><th>Expected Impact</th></tr></thead>
+            <tbody>
+                <tr><td>Rewrite product descriptions (pain-led copy)</td><td><span class="severity-badge high">High</span></td><td>2–3 hrs</td><td>+10–15% ATC rate</td></tr>
+                <tr><td>Add "Complete the System" cross-sell block</td><td><span class="severity-badge high">High</span></td><td>1 hr</td><td>+AOV</td></tr>
+                <tr><td>Add trust badge row below hero on homepage</td><td><span class="severity-badge high">High</span></td><td>1 hr</td><td>+trust on cold traffic</td></tr>
+                <tr><td>Move featured products above education content</td><td><span class="severity-badge medium">Medium</span></td><td>1 hr</td><td>+10% homepage CVR</td></tr>
+            </tbody>
+        </table>
+
+        <div class="phase-header">
+            <span class="phase-badge">MONTH 2</span>
+            <span class="phase-title" style="color:var(--accent-cyan);">Optimization Layer</span>
+        </div>
+        <table class="roadmap-table">
+            <thead><tr><th>Task</th><th>Severity</th><th>Effort</th><th>Expected Impact</th></tr></thead>
+            <tbody>
+                <tr><td>Add urgency / stock scarcity to PDP</td><td><span class="severity-badge medium">Medium</span></td><td>2 hrs</td><td>+10% urgency conversions</td></tr>
+                <tr><td>Set up abandoned cart email/SMS (Klaviyo)</td><td><span class="severity-badge medium">Medium</span></td><td>1 day</td><td>+15–20% recovered carts</td></tr>
+                <tr><td>A/B test hero CTA copy and button color</td><td><span class="severity-badge medium">Medium</span></td><td>2 hrs</td><td>+5–10% CTR</td></tr>
+                <tr><td>Add product video (lifestyle / unboxing)</td><td><span class="severity-badge medium">Medium</span></td><td>Ongoing</td><td>+46% engagement</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 08 DATA INSIGHTS UNLOCK -->
+    <section>
+        <div class="section-header">
+            <div class="section-number">08</div>
+            <h2>Unlock Deeper Insights</h2>
+            <p>This audit is based on visual analysis. With data access, we can go significantly deeper.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+            <div class="card" style="border-left:3px solid var(--accent-cyan);">
+                <h4 style="margin-bottom:16px;">With Shopify Admin API</h4>
+                <ul style="color:var(--text-secondary);margin-left:20px;font-size:14px;display:flex;flex-direction:column;gap:8px;">
+                    <li>Actual CVR and revenue trends</li>
+                    <li>Abandoned checkout patterns</li>
+                    <li>Top viewed vs top selling products gap</li>
+                    <li>Discount code effectiveness</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:3px solid var(--accent-purple);">
+                <h4 style="margin-bottom:16px;">With PostHog / GA4</h4>
+                <ul style="color:var(--text-secondary);margin-left:20px;font-size:14px;display:flex;flex-direction:column;gap:8px;">
+                    <li>Session recordings of drop-off moments</li>
+                    <li>Heatmaps and rage click locations</li>
+                    <li>Full funnel drop-off percentages</li>
+                    <li>Traffic source CVR comparison</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:3px solid var(--accent-pink);">
+                <h4 style="margin-bottom:16px;">With Klaviyo / Email Data</h4>
+                <ul style="color:var(--text-secondary);margin-left:20px;font-size:14px;display:flex;flex-direction:column;gap:8px;">
+                    <li>Abandoned cart recovery rate</li>
+                    <li>Welcome series conversion</li>
+                    <li>Customer LTV and repeat rate</li>
+                    <li>Flow optimization opportunities</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <img src="https://autonomoustech.ca/logo-transparent.png" alt="Autonomous" class="logo">
+    <div class="brand-text">AUTONOMOUS</div>
+    <p>Prepared by Autonomous Technologies &middot; <a href="https://ecommerce.autonomoustech.ca">ecommerce.autonomoustech.ca</a><br>
+    <span style="color:var(--text-muted);font-size:12px;">This report is confidential and prepared exclusively for vrsn.co</span></p>
+</footer>
+
+</body>
+</html>

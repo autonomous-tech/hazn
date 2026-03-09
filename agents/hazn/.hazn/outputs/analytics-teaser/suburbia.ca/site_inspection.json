@@ -1,0 +1,48 @@
+{
+  "domain": "suburbia.ca",
+  "company": "Suburbia Real Estate Group",
+  "cms": "WordPress 6.9.1",
+  "theme": "Salient (Nectar) theme",
+  "hosting": "LiteSpeed server",
+  "php": "7.4.33",
+  "http2": true,
+  "analytics": {
+    "gtm": false,
+    "ga4": true,
+    "ga4_id": "GT-WVJG3MHP",
+    "installed_via": "Google Site Kit plugin",
+    "meta_pixel": false,
+    "google_ads": false,
+    "hotjar": false,
+    "clarity": false,
+    "tiktok_pixel": false
+  },
+  "consent": {
+    "cmp_present": false,
+    "cookiebot": false,
+    "cookieyes": false,
+    "onetrust": false,
+    "cookie_banner": false,
+    "consent_mode": false
+  },
+  "structured_data": {
+    "count": 0,
+    "types": []
+  },
+  "social_media": ["Facebook", "Instagram", "YouTube", "LinkedIn"],
+  "security_headers": {
+    "strict_transport_security": false,
+    "content_security_policy": false,
+    "x_frame_options": false,
+    "x_content_type_options": false,
+    "referrer_policy": false,
+    "permissions_policy": false
+  },
+  "sitemap_pages": 2,
+  "robots_txt": "standard WordPress, blocks /wp-admin/",
+  "ssl": true,
+  "page_title": "Suburbia Real Estate Group | Award Winning Real Estate Advisors - Coquitlam Realtor",
+  "meta_description": "present",
+  "h1_present": true,
+  "navigation_items": ["Home", "About", "Buyers", "Contact Us", "Sellers"]
+}

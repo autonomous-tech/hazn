@@ -1,0 +1,55 @@
+{
+  "domain": "lt.agency",
+  "ssl": true,
+  "robots_txt": {
+    "url": "https://www.lt.agency/robots.txt",
+    "content": "User-agent: *\nDisallow: /sample-*\nDisallow: /blog/sample-*\nDisallow:/bios2*\nDisallow:/bios*\nDisallow:/hubfs*\nDisallow: /_hcms/preview/\nDisallow: /hs/manage-preferences/\nDisallow: /hs/preferences-center/\nDisallow: /*?*hs_preview=*\nDisallow: /*?*hsCacheBuster=*",
+    "disallow_rules": [
+      "/sample-*",
+      "/blog/sample-*",
+      "/bios2*",
+      "/bios*",
+      "/hubfs*",
+      "/_hcms/preview/",
+      "/hs/manage-preferences/",
+      "/hs/preferences-center/",
+      "/*?*hs_preview=*",
+      "/*?*hsCacheBuster=*"
+    ],
+    "sitemap_declared": false,
+    "note": "No Sitemap: directive in robots.txt. Sitemap found separately at /sitemap.xml"
+  },
+  "sitemap": {
+    "url": "https://www.lt.agency/sitemap.xml",
+    "page_count": 568,
+    "format": "XML sitemap with image extensions",
+    "note": "568 URL entries. Many image sitemaps for hubspot media. Some entries still reference laneterralever.com images."
+  },
+  "technology_stack": {
+    "cms": "HubSpot CMS (generator meta tag confirmed)",
+    "frontend_framework": "Custom HTML/CSS modules + HubSpot template system",
+    "javascript": "jQuery 1.7.1 (2011, legacy - synchronous load)",
+    "css": "Custom CSS + 10+ HubSpot module stylesheets",
+    "fonts": "Roboto (Google Fonts), Font Awesome 6.5.1 (CDN)",
+    "hosting": "HubSpot hosted (hubspotusercontent-na1.net CDN)",
+    "old_domain_assets": "Assets still served from laneterralever.com via HubSpot CDN"
+  },
+  "security": {
+    "ssl": true,
+    "security_meta_tags": [],
+    "note": "SSL confirmed (HTTPS). No CSP meta tag found in HTML. No X-Frame-Options or other security meta tags. Server-level headers not inspected (requires server access).",
+    "estimated_security_score": 55,
+    "issues": [
+      "No Content-Security-Policy meta tag",
+      "No X-Frame-Options meta tag",
+      "jQuery 1.7.1 has known vulnerabilities (CVE-2011-4969, etc.)",
+      "External scripts loaded from multiple CDN domains without SRI"
+    ]
+  },
+  "findings": {
+    "no_sitemap_in_robots": "Missing Sitemap: directive in robots.txt — crawlers need to discover sitemap separately",
+    "old_jquery": "jQuery 1.7.1 is 13+ years old and has known XSS vulnerabilities",
+    "cross_domain_assets": "Production assets still loading from old domain laneterralever.com",
+    "hubfs_blocked": "robots.txt blocks /hubfs* — this blocks indexing of HubSpot-hosted media"
+  }
+}

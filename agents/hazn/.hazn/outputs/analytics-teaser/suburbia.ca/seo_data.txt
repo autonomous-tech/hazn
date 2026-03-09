@@ -1,0 +1,55 @@
+=== REDIRECT CHAIN ===
+hops=0
+final=https://suburbia.ca/
+status=200
+=== CANONICAL ===
+<link rel="canonical" href="https://suburbia.ca/" />
+=== ROBOTS META ===
+=== X-ROBOTS HEADER ===
+=== TITLE ===
+Suburbia Real Estate Group | Award Winning Real Estate Advisors &#8211; Coquitlam Realtor &#8211; Top Coquitlam Realtors  &#8211; Port Coquitlam, Port Moody, Maple Ridge Real Estate
+=== META DESCRIPTION ===
+=== H1 ===
+grep: lookbehind assertion is not fixed length
+=== H2 COUNT ===
+2
+=== H3 COUNT ===
+8
+=== WORD COUNT ===
+7207
+=== IMAGES WITHOUT ALT ===
+total=34 missing_alt=0
+=== OG TAGS ===
+0
+=== TWITTER CARD ===
+=== SCHEMA TYPES ===
+=== SCHEMA COUNT ===
+0
+=== ROBOTS TXT ===
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+Sitemap: https://suburbia.ca/wp-sitemap.xml
+=== SITEMAP LOCATIONS ===
+path=/sitemap.xml status=301 count=0 lastmod=
+path=/sitemap_index.xml status=404 count=0 lastmod=
+path=/sitemap/sitemap.xml status=404 count=0 lastmod=
+path=/wp-sitemap.xml status=200 count=1 lastmod=
+path=/news-sitemap.xml status=404 count=0 lastmod=
+=== LLMS TXT ===
+status=404
+=== AI CRAWLERS IN ROBOTS ===
+bot=GPTBot rule=not_mentioned
+bot=ClaudeBot rule=not_mentioned
+bot=PerplexityBot rule=not_mentioned
+bot=anthropic-ai rule=not_mentioned
+bot=cohere-ai rule=not_mentioned
+bot=CCBot rule=not_mentioned
+bot=Bytespider rule=not_mentioned
+bot=YouBot rule=not_mentioned
+=== MOBILE PARITY ===
+desktop=7207 mobile=7207
+=== HTTPS CHECK ===
+http_status=301
+=== SECURITY HEADERS ===

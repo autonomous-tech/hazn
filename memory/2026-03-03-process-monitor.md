@@ -1,0 +1,55 @@
+# Session: 2026-03-03 15:53:12 UTC
+
+- **Session Key**: agent:main:main
+- **Session ID**: cedbe471-0a6f-4b0d-acae-271cb23098b6
+- **Source**: gateway:sessions.reset
+
+## Conversation Summary
+
+user: [Queued messages while agent was busy]
+
+---
+Queued #1
+htop
+assistant: attio-mcp is piling up again — already 12+ processes since the 7am gateway restart. 5.5GB used, 516MB free.
+
+Killing them now:
+assistant: Cleaned. Back to 1.6GB used, 4.4GB free.
+
+This is going to keep happening until we fix the attio-mcp process leak properly. Want me to tackle that now? The HTTP mode solution I mentioned earlier would permanently fix it.
+assistant: attio-mcp is piling up again — already 12+ processes since the 7am gateway restart. 5.5GB used, 516MB free.
+
+Killing them now:
+assistant: Cleaned. Back to 1.6GB used, 4.4GB free.
+
+This is going to keep happening until we fix the attio-mcp process leak properly. Want me to tackle that now? The HTTP mode solution I mentioned earlier would permanently fix it.
+user: [Queued messages while agent was busy]
+
+---
+Queued #1
+htop
+assistant: Memory looks healthy — 1.7GB used, 5.9GB free. No attio-mcp leak this time.
+
+One thing sticking out: **NocoDB is pegging 96% CPU** right now (`nocodb` process). That's unusual — might be doing a migration or heavy query. Worth keeping an eye on. Everything else looks normal.
+assistant: Memory looks healthy — 1.7GB used, 5.9GB free. No attio-mcp leak this time.
+
+One thing sticking out: **NocoDB is pegging 96% CPU** right now (`nocodb` process). That's unusual — might be doing a migration or heavy query. Worth keeping an eye on. Everything else looks normal.
+user: System: [2026-03-03 11:32:42 UTC] WhatsApp gateway disconnected (status 499)
+System: [2026-03-03 11:32:46 UTC] WhatsApp gateway connected.
+
+htop
+assistant: All good — 1.8GB used, 5.8GB free, zero attio-mcp processes.
+
+Interesting thing happening right now: **Hazn is generating an image** — an award trophy for `autonomous-proposals/idu/`. Looks like it's actively working on something for a client called IDU.
+user: whats the cpu
+assistant: CPU is calm — ~8.5% from the Hazn image generation (nano-banana-pro generating a 1983 political founding ceremony photo for the IDU proposal), 1.8% openclaw-gateway, everything else near zero. Nothing to worry about.
+user: System: [2026-03-03 13:15:46 UTC] WhatsApp gateway disconnected (status 499)
+System: [2026-03-03 13:15:50 UTC] WhatsApp gateway connected.
+System: [2026-03-03 15:00:50 UTC] WhatsApp gateway disconnected (status 499)
+System: [2026-03-03 15:00:54 UTC] WhatsApp gateway connected.
+
+[Tue 2026-03-03 15:49 UTC] hi u no work
+user: [Tue 2026-03-03 15:50 UTC] think
+user: System: [2026-03-03 15:51:47 UTC] WhatsApp gateway connected.
+
+[Tue 2026-03-03 15:51 UTC] yo

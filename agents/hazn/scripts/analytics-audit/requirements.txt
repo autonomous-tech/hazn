@@ -1,0 +1,4 @@
+google-analytics-data>=0.18.0
+google-auth-oauthlib>=1.0.0
+google-api-python-client>=2.0.0
+# pagespeed_collector.py and teaser_collector.py use stdlib only — no pip install needed

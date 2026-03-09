@@ -1,0 +1,5 @@
+=== Cleanup started: Wed Feb 25 03:00:04 AM UTC 2026 ===
+Found 4 MCP processes, killing orphans...
+Killed MCP processes
+Memory: 1.9Gi / 7.6Gi
+=== Cleanup finished: Wed Feb 25 03:00:04 AM UTC 2026 ===

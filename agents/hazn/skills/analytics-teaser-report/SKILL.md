@@ -4,12 +4,32 @@ description: >
   Use when generating the /hazn-analytics-teaser prospect report. Defines the design system,
   section mapping, scoring formulas, and Copy/UX/CRO evaluation criteria for
   the zero-access prospect teaser report.
-version: 1.0.0
+version: 2.0.0
 ---
 
 # Teaser Report — Prospect Teaser HTML Generator
 
 Generate a single-file HTML teaser report from publicly collected website data. This is a sales asset — a zero-access prospect report that delivers genuine value across analytics, UX, copy, and CRO, while funneling prospects toward deeper paid engagements.
+
+---
+
+## Step 0: Intake — ALWAYS Ask First
+
+Before collecting any data or generating the report, ask:
+
+> **"Which sections do you want included in this teaser report?"**
+>
+> Select all that apply:
+> 1. ✅ **Core** — Site Health Scorecard, Core Web Vitals, Performance & Script Bloat, Security (always included)
+> 2. 📊 **MarTech & Privacy** — MarTech stack inventory, tracking setup, consent compliance
+> 3. 🔍 **SEO Audit** — Technical SEO, On-Page SEO, Structured Data, AI Search Readiness *(4 sub-sections)*
+> 4. ✍️ **Copy Audit** — Headlines, CTAs, value proposition, social proof, messaging
+> 5. 🎨 **UX Audit** — Visual hierarchy, navigation, mobile experience, accessibility
+> 6. 📈 **CRO Audit** — Conversion path, trust signals, form friction, CTA placement
+>
+> Default if no answer: **all sections**.
+
+Only collect data and build sections the user has confirmed. Skip unlisted sections entirely — do not include them as placeholders.
 
 ---
 
@@ -31,27 +51,134 @@ Collect metadata:
 - Audit date
 - Calendly URL for CTAs: **always use `https://calendly.com/rizwan-20/30min`**
 
+Also read `seo_data.json` if SEO sections are selected:
+
+| File | Contents |
+|------|----------|
+| `.hazn/outputs/analytics-teaser/<domain>/seo_data.json` | Technical SEO signals, on-page data, structured data, AI crawler rules |
+
 ---
 
-## Step 2: Report Structure — 11 Sections + 3 Gates + CTA
+## Step 1b: SEO Data Collection Script
 
-| # | Section ID | Section | Source | Component Type |
-|---|-----------|---------|--------|----------------|
-| 1 | `hero` | **Hero** | Screenshot + domain | Full-bleed hero with desktop screenshot, site grade, personalized headline |
-| 2 | `scorecard` | **Site Health Scorecard** | All data sources | `.grade-badge` grid (5 grades: Performance, SEO, MarTech, Copy/UX, Security) |
-| 3 | `cwv` | **Core Web Vitals** | PageSpeed API | `.cwv-display` three-column gauge (LCP, INP/FID, CLS) with pass/fail |
-| 4 | `martech` | **MarTech Stack Inventory** | site_inspection.json | `.tool-grid` with health dots, missing tools flagged |
-| 5 | `privacy` | **Tracking & Privacy** | site_inspection.json | Consent mode status, cookie analysis, compliance flags |
-| 6 | `seo` | **SEO & Structured Data** | site_inspection + teaser_data | Meta tags, schemas, sitemap health, AI crawler status |
-| 7 | `performance` | **Performance & Script Bloat** | PageSpeed third-party | Third-party inventory with blocking time, page weight breakdown |
-| 8 | `security` | **Security & Infrastructure** | teaser_data.json | SSL status, security headers grade, tech stack display |
-| — | `gate-1` | **Gate 1: Organic Search** | — | `.teaser-gate` locked section with GSC upsell |
-| 9 | `copy-audit` | **Copy Audit** | Playwright snapshots + screenshots | Headline, CTA, value prop, social proof analysis |
-| 10 | `ux-audit` | **UX Audit** | Playwright snapshots + screenshots | Visual hierarchy, navigation, mobile, accessibility |
-| 11 | `cro-audit` | **CRO Audit** | Playwright snapshots + screenshots | Conversion path, forms, trust signals, CTA placement |
-| — | `gate-2` | **Gate 2: Analytics Deep-Dive** | — | `.teaser-gate` locked section with GA4 upsell |
-| — | `gate-3` | **Gate 3: Paid SEO** | — | `.teaser-gate` locked section with SEO engagement upsell |
-| — | `cta` | **Final CTA** | — | Full-width CTA section with Calendly booking |
+Run this bash module when SEO sections are selected. Save output to `seo_data.json`.
+
+```bash
+collect_seo_signals() {
+  local URL=$1
+  local BASE="${URL%/}"
+  local DOMAIN=$(echo "$URL" | sed -E 's|https?://(www\.)?||' | cut -d'/' -f1)
+
+  echo "=== REDIRECT CHAIN ==="
+  curl -sI -L --max-redirs 10 -o /dev/null \
+    -w "hops=%{num_redirects}\nfinal=%{url_effective}\nstatus=%{http_code}" "$URL"
+
+  echo "=== CANONICAL ==="
+  curl -s "$URL" | grep -i 'rel="canonical"' | head -1
+
+  echo "=== ROBOTS META ==="
+  curl -s "$URL" | grep -iE 'name="robots"|name="googlebot"' | head -3
+
+  echo "=== X-ROBOTS HEADER ==="
+  curl -sI "$URL" | grep -i "x-robots-tag"
+
+  echo "=== TITLE ==="
+  curl -s "$URL" | grep -oP '(?<=<title>)[^<]*'
+
+  echo "=== META DESCRIPTION ==="
+  curl -s "$URL" | grep -i 'name="description"' | grep -oP 'content="[^"]*"' | head -1
+
+  echo "=== H1 ==="
+  curl -s "$URL" | grep -oP '(?<=<h1[^>]*>)[^<]*' | head -3
+
+  echo "=== H2 COUNT ===" && curl -s "$URL" | grep -c '<h2'
+  echo "=== H3 COUNT ===" && curl -s "$URL" | grep -c '<h3'
+  echo "=== WORD COUNT ===" && curl -s "$URL" | sed 's/<[^>]*>//g' | wc -w
+
+  echo "=== IMAGES WITHOUT ALT ==="
+  TOTAL_IMGS=$(curl -s "$URL" | grep -c '<img')
+  NO_ALT=$(curl -s "$URL" | grep -oP '<img[^>]*>' | grep -cv 'alt="[^"]*"')
+  echo "total=$TOTAL_IMGS missing_alt=$NO_ALT"
+
+  echo "=== OG TAGS ===" && curl -s "$URL" | grep -i 'property="og:' | wc -l
+  echo "=== TWITTER CARD ===" && curl -s "$URL" | grep -i 'name="twitter:card"' | head -1
+
+  echo "=== SCHEMA TYPES ==="
+  curl -s "$URL" | grep -oP '"@type"\s*:\s*"[^"]*"' | sort | uniq
+  echo "=== SCHEMA COUNT ===" && curl -s "$URL" | grep -c 'application/ld+json'
+
+  echo "=== ROBOTS TXT ===" && curl -s "$BASE/robots.txt" | head -80
+
+  echo "=== SITEMAP LOCATIONS ==="
+  for path in /sitemap.xml /sitemap_index.xml /sitemap/sitemap.xml /wp-sitemap.xml /news-sitemap.xml; do
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BASE$path")
+    COUNT=0; LASTMOD=""
+    if [ "$STATUS" = "200" ]; then
+      COUNT=$(curl -s "$BASE$path" | grep -c '<loc>')
+      LASTMOD=$(curl -s "$BASE$path" | grep '<lastmod>' | head -1 | grep -oP '\d{4}-\d{2}-\d{2}')
+    fi
+    echo "path=$path status=$STATUS count=$COUNT lastmod=$LASTMOD"
+  done
+
+  echo "=== LLMS TXT ==="
+  curl -s -o /dev/null -w "%{http_code}" "$BASE/llms.txt"
+  curl -s "$BASE/llms.txt" | head -20
+
+  echo "=== AI CRAWLERS IN ROBOTS ==="
+  ROBOTS=$(curl -s "$BASE/robots.txt")
+  for BOT in GPTBot ClaudeBot PerplexityBot anthropic-ai cohere-ai CCBot Bytespider YouBot; do
+    RULE=$(echo "$ROBOTS" | grep -A2 -i "User-agent: $BOT" | head -3)
+    echo "bot=$BOT rule=$RULE"
+  done
+
+  echo "=== MOBILE PARITY ==="
+  DESKTOP_WORDS=$(curl -s "$URL" | sed 's/<[^>]*>//g' | wc -w)
+  MOBILE_WORDS=$(curl -s -A "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15" \
+    "$URL" | sed 's/<[^>]*>//g' | wc -w)
+  echo "desktop=$DESKTOP_WORDS mobile=$MOBILE_WORDS"
+
+  echo "=== HTTPS CHECK ==="
+  HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "http://${DOMAIN}")
+  HTTP_FINAL=$(curl -sI -L "http://${DOMAIN}" | grep "Location:" | tail -1)
+  echo "http_status=$HTTP_STATUS redirect_to=$HTTP_FINAL"
+
+  echo "=== WWW CHECK ==="
+  WWW_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://www.${DOMAIN}")
+  WWW_FINAL=$(curl -sI -L "https://www.${DOMAIN}" 2>/dev/null | grep "Location:" | tail -1)
+  echo "www_status=$WWW_STATUS redirect_to=$WWW_FINAL"
+}
+```
+
+Also extract from the existing PageSpeed API response: `is-crawlable`, `robots-txt`, `canonical`, `hreflang`, `structured-data`, `link-text`, `document-title`, `meta-description`, `image-alt`, `heading-order`, `font-size`, `tap-targets`
+
+---
+
+## Step 2: Report Structure — 15 Sections + 3 Gates + CTA
+
+Sections marked *(optional)* are only included if selected in Step 0. Core sections are always included.
+
+| # | Section ID | Section | Source | Component Type | Required? |
+|---|-----------|---------|--------|----------------|-----------|
+| 1 | `hero` | **Hero** | Screenshot + domain | Full-bleed hero with desktop screenshot, site grade, personalized headline | ✅ Core |
+| 2 | `scorecard` | **Site Health Scorecard** | All data sources | `.grade-badge` grid (6 grades: Performance, SEO Health, MarTech, Copy/UX, Security + CRO) | ✅ Core |
+| 3 | `cwv` | **Core Web Vitals** | PageSpeed API | `.cwv-display` three-column gauge (LCP, INP/FID, CLS) with pass/fail | ✅ Core |
+| 4 | `martech` | **MarTech Stack Inventory** | site_inspection.json | `.tool-grid` with health dots, missing tools flagged | Optional |
+| 5 | `privacy` | **Tracking & Privacy** | site_inspection.json | Consent mode status, cookie analysis, compliance flags | Optional |
+| 6a | `seo-technical` | **Technical SEO** | curl/headers/robots/sitemap | Crawlability, redirects, canonical, noindex, sitemap health | Optional |
+| 6b | `seo-onpage` | **On-Page SEO** | HTML parse + PSI audits | Title tag, meta desc, H1–H3, alt text, word count, OG tags | Optional |
+| 6c | `seo-structured-data` | **Structured Data & Rich Results** | JSON-LD extraction | Schema inventory, rich result eligibility map, missing types | Optional |
+| 6d | `seo-ai-search` | **AI Search Readiness** | robots.txt + llms.txt | AI crawler access grid, llms.txt, entity signals | Optional |
+| 7 | `performance` | **Performance & Script Bloat** | PageSpeed third-party | Third-party inventory with blocking time, page weight breakdown | ✅ Core |
+| 8 | `security` | **Security & Infrastructure** | teaser_data.json | SSL status, security headers grade, tech stack display | ✅ Core |
+| — | `gate-1` | **Gate 1: Organic Search** | — | `.teaser-gate` locked section with GSC upsell | ✅ Core |
+| 9 | `copy-audit` | **Copy Audit** | Playwright snapshots + screenshots | Headline, CTA, value prop, social proof analysis | Optional |
+| 10 | `ux-audit` | **UX Audit** | Playwright snapshots + screenshots | Visual hierarchy, navigation, mobile, accessibility | Optional |
+| 11 | `cro-audit` | **CRO Audit** | Playwright snapshots + screenshots | Conversion path, forms, trust signals, CTA placement | Optional |
+| — | `gate-2` | **Gate 2: Analytics Deep-Dive** | — | `.teaser-gate` locked section with GA4 upsell | ✅ Core |
+| — | `gate-3` | **Gate 3: Paid SEO** | — | `.teaser-gate` — shown when SEO section included, otherwise skip | Optional (show if SEO included) |
+| — | `cta` | **Final CTA** | — | Full-width CTA section with Calendly booking | ✅ Core |
+
+> **Scorecard note:** The scorecard always shows 6 grade badges. For any section not selected, show the badge as "—" (not scored) rather than hiding it — this signals there's more analysis available.
 
 ---
 
@@ -59,21 +186,94 @@ Collect metadata:
 
 ### Overall Site Grade (A–F)
 
-Weighted composite displayed in hero and scorecard:
+Weighted composite displayed in hero and scorecard. When a section is skipped (not selected in Step 0), redistribute its weight proportionally across the included dimensions.
 
 | Dimension | Weight | Source | Score Range |
 |-----------|--------|--------|-------------|
-| Performance | 15% | Lighthouse performance score (0–100) | Map to 0–100 |
-| SEO Basics | 10% | Lighthouse SEO score + meta tag completeness + structured data count | Map to 0–100 |
+| Performance | 20% | Lighthouse performance score (0–100) | Map to 0–100 |
+| SEO Health | 20% | Composite SEO score (see SEO scoring below) | 0–100 |
 | Core Web Vitals | 10% | CWV pass rate (3 metrics: LCP, INP/FID, CLS) | 0, 33, 67, or 100 |
 | MarTech Maturity | 15% | Composite formula (see below) | 0–100 |
-| Privacy Compliance | 10% | Consent mode + CMP presence | 0–100 |
-| Security | 5% | Security headers score (0–9) mapped to 0–100 | 0–100 |
+| Security | 15% | Security headers score (0–9) mapped to 0–100 | 0–100 |
 | Copy Quality | 15% | Copy audit grade (see rubric below) | Map A=95, B=80, C=65, D=45, F=25 |
-| UX Quality | 10% | UX audit grade (see rubric below) | Map A=95, B=80, C=65, D=45, F=25 |
-| CRO Effectiveness | 10% | CRO audit grade (see rubric below) | Map A=95, B=80, C=65, D=45, F=25 |
+| UX Quality | 5% | UX audit grade (see rubric below) | Map A=95, B=80, C=65, D=45, F=25 |
 
 **Grade thresholds:** A ≥ 85, B ≥ 70, C ≥ 55, D ≥ 40, F < 40
+
+---
+
+### SEO Health Score (Composite, 0–100)
+
+Used as the "SEO Health" dimension in the overall grade. Made up of 4 sub-scores:
+
+```
+SEO Score = (
+  Technical SEO Sub-Score  × 0.35 +
+  On-Page Sub-Score        × 0.30 +
+  Structured Data Score    × 0.20 +
+  AI Search Score          × 0.15
+)
+```
+
+If only some SEO sub-sections are collected, redistribute weights proportionally.
+
+#### Technical SEO Sub-Score (0–100)
+
+| Signal | Points |
+|--------|--------|
+| HTTPS enforced | +10 |
+| Redirect chain ≤ 1 hop | +10 (2 hops: +5, 3+: 0) |
+| robots.txt found, Googlebot not blocked | +10 |
+| Canonical tag present + self-referencing | +15 |
+| No noindex on production pages | +20 (**CRITICAL** — 0 if failing) |
+| Sitemap found + >5 URLs | +10 |
+| www/non-www consistency | +5 |
+| Mobile content parity (<20% word count delta) | +10 |
+| No crawl-delay directive | +5 |
+| No X-Robots noindex header | +5 |
+
+#### On-Page Sub-Score (0–100)
+
+| Signal | Points |
+|--------|--------|
+| Title tag exists | +10 |
+| Title tag 50–60 chars | +10 (40–49 or 61–70: +5) |
+| Meta description exists | +10 |
+| Meta description 140–160 chars | +10 (outside range: +5) |
+| Single H1 present | +15 |
+| H2s present (>2) | +10 |
+| Heading order logical (PSI) | +10 |
+| Image alt coverage ≥80% | +15 (50–79%: +8, <50%: 0) |
+| Word count ≥300 | +10 |
+| OG tags present | +5 |
+| Link text quality pass (PSI) | +5 |
+
+#### Structured Data Sub-Score (0–100)
+
+| Signal | Points |
+|--------|--------|
+| Any schema present | +15 |
+| Organization schema | +10 |
+| WebSite schema | +5 |
+| FAQPage or HowTo | +15 |
+| BreadcrumbList | +10 |
+| Article/Product (if relevant) | +10 |
+| No malformed JSON-LD | +15 |
+| Multiple schema types (≥3) | +10 |
+| Schema nesting depth (≥2 levels) | +10 |
+
+#### AI Search Sub-Score (0–100)
+
+| Signal | Points |
+|--------|--------|
+| Googlebot allowed (prerequisite — 0 halves all other scores) | +20 |
+| GPTBot allowed | +15 |
+| PerplexityBot allowed | +15 |
+| ClaudeBot allowed | +10 |
+| CCBot allowed | +10 |
+| llms.txt present | +15 |
+| FAQPage schema present | +10 |
+| Organization entity schema | +5 |
 
 ### MarTech Maturity Score (0–100)
 
@@ -505,14 +705,38 @@ This ensures the report is a single self-contained HTML file with no external de
 - **What the full analysis delivers:** GA4 implementation score, attribution architecture, ad platform signal loss
 - **CTA:** "Book your audit walkthrough →" → Calendly link
 
-### Gate 3: Paid SEO Strategy
+### Gate 3: Paid SEO — Full Site Crawl + GSC Integration
+
+Only show this gate when the SEO section is included. It appears after the AI Search Readiness sub-section.
 
 - **Lock icon:** 🔒
-- **Title:** "Validated Content Strategy & Execution"
-- **Hook:** Reference sitemap + SEO findings: "Are you ranking for the RIGHT keywords?"
-- **Preview items:** Reference real SEO findings from the free section
-- **Social proof:** "For one client, we identified 4,800–8,500 clicks/month in unrealized organic traffic"
-- **CTA:** "Book your strategy call →" → Calendly link
+- **Title:** "We crawled your homepage. Googlebot doesn't stop at one page."
+- **Hook:** Use real sitemap count: "Your sitemap lists {N} pages. We can see the surface — technical issues, missing schema, on-page gaps. With a full crawl and GSC access, we'd tell you which {N÷4} of those pages are cannibalizing each other for your money keywords — and the exact fix order."
+- **Preview items (show as blurred cards):**
+  - Orphaned pages (no internal links pointing to them)
+  - Redirect chains longer than 2 hops (kills PageRank)
+  - Pages blocked by robots.txt that Google has already indexed
+  - Crawl budget allocation across all {N} URLs
+  - Keyword cannibalization report
+- **What unlocks it:** SEO Audit — full Screaming Frog crawl + GSC integration + keyword cannibalization + schema validation + redirect chain audit + AI citation competitor gap + 90-day priority fix roadmap
+- **Social proof:** "For one client, we identified 4,800–8,500 clicks/month in unrealized organic traffic — all from existing pages, no new content needed."
+- **CTA:** "Unlock the full SEO Audit →" → Calendly link
+
+#### Inline Micro-Upsell Cards (inside SEO sub-sections, not gated)
+
+Each SEO sub-section ends with a small `.callout` card naming exactly what deeper access would reveal:
+
+**Technical SEO micro-upsell:**
+> 🔍 *Full Crawl + GSC Integration* — maps every orphaned page, redirect chain >2 hops, and pages already indexed that your robots.txt is trying to block. Part of the **SEO Audit**.
+
+**On-Page micro-upsell:**
+> 📝 *Content Depth & Keyword Alignment Audit* — checks every indexable page for thin content, duplicate titles, missing H1s, and keyword-to-page alignment. Part of the **SEO Content Audit**.
+
+**Structured Data micro-upsell:**
+> 🏷️ *Schema Validation & Implementation* — validates every schema block against Google's testing tool, fixes errors, and implements the missing types (FAQPage, BreadcrumbList, HowTo). Part of the **SEO Audit**.
+
+**AI Search micro-upsell:**
+> 🤖 *AI Citation Gap Analysis* — identifies which queries in your niche AI engines are answering, whether competitors are being cited instead of you, and how to reformat existing content for LLM extraction. Part of the **AI SEO Add-on** or **Full SEO Audit**.
 
 ---
 
@@ -520,9 +744,11 @@ This ensures the report is a single self-contained HTML file with no external de
 
 Before finalizing, verify:
 
+- [ ] **Step 0 intake completed** — sections to include were confirmed before any data collection
+- [ ] **Only selected sections are included** — no placeholder or empty sections for skipped modules
 - [ ] **All scores calculated from real data** — no placeholder text ("XX%", "N/A", "[TBD]")
 - [ ] **Overall grade displayed** in hero section with large `.grade-badge--lg`
-- [ ] **5 scorecard grades** all present and color-coded
+- [ ] **6 scorecard grades** all present — unscored sections show "—" not a fake grade
 - [ ] **Core Web Vitals** show actual values with pass/fail indicators
 - [ ] **MarTech grid** lists real tools detected (or explicitly flags "Not detected")
 - [ ] **Copy/UX/CRO audit cards** contain specific, actionable findings — NOT generic advice
@@ -550,3 +776,18 @@ Before finalizing, verify:
 - [ ] **Tool card HTML** — every `.tool-card__name` div must have a proper closing `>` before the text content: `<div class="tool-card__name">Tool Name</div>`. Missing `>` causes the entire MarTech grid to collapse. Always validate HTML structure after any automated edits.
 - [ ] **Mobile scorecard grid** — collapses to 2-col at 600px, 1-col at 400px
 - [ ] **Share button** — must be injected from `briar-creek-construction/index.html` before `</body>` in every report
+
+### SEO Section Checks (when SEO is included)
+
+- [ ] **seo_data.json collected** — bash collection script was run before generating the report
+- [ ] **4 SEO sub-sections present** — Technical SEO, On-Page, Structured Data, AI Search Readiness
+- [ ] **Technical SEO signal grid** — shows real values: redirect hops, canonical status, noindex check, sitemap URL count, HTTPS/www consistency
+- [ ] **noindex on production = red critical alert** — never downgrade this to a warning
+- [ ] **On-Page section** — shows actual title tag text + char count, actual meta description text + char count, actual H1 text
+- [ ] **Structured Data section** — shows real schema types found (or "None detected"), maps to rich result eligibility table
+- [ ] **AI crawler grid** — shows GPTBot/ClaudeBot/PerplexityBot/CCBot as ✅ allowed or ❌ blocked based on actual robots.txt
+- [ ] **llms.txt badge** — shows Found or Not Found based on actual check
+- [ ] **Gate 3 hook uses real number** — sitemap page count or indexed page count from actual data
+- [ ] **4 inline micro-upsell callouts** — one at the end of each SEO sub-section, naming the exact package
+- [ ] **SEO Health grade badge** — appears in scorecard with composite SEO score
+- [ ] **SEO scoring weights applied correctly** — Technical 35%, On-Page 30%, Structured Data 20%, AI Search 15%

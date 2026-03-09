@@ -389,6 +389,159 @@ Content with proper schema shows 30-40% higher AI visibility.
 
 ---
 
+## GEO Composite Score
+
+Use this framework to score any site's AI search readiness in ~30 minutes. Each category has sub-criteria with defined point values. Total = 0-100.
+
+```
+GEO COMPOSITE SCORE (0-100)
+============================
+Category                    | Weight | Max Points
+AI Citability & Visibility  |  25%   |  25
+Brand Authority Signals     |  20%   |  20
+Content Quality & E-E-A-T   |  20%   |  20
+Technical Foundations       |  15%   |  15
+Structured Data             |  10%   |  10
+Platform Optimization       |  10%   |  10
+TOTAL                       | 100%   | 100
+```
+
+### Scoring Bands
+
+| Score | Band | Meaning |
+|-------|------|---------|
+| 80-100 | **GEO Leader** | Regularly cited by AI engines across multiple platforms |
+| 60-79 | **GEO Competitive** | Cited for some queries, gaps exist in coverage or authority |
+| 40-59 | **GEO Developing** | Occasional citations, significant structural and content work needed |
+| 20-39 | **GEO Weak** | Rarely cited, foundational issues blocking AI discoverability |
+| 0-19 | **GEO Invisible** | Not appearing in AI-generated answers |
+
+---
+
+### Category 1: AI Citability & Visibility (25 pts)
+
+Check: Are answers self-contained and extractable? Do AI engines actually cite this site?
+
+| Sub-criterion | Max Pts | How to Score |
+|---------------|---------|--------------|
+| Definition blocks present (first paragraph defines product/service clearly) | 6 | 6=excellent, 3=partial, 0=missing |
+| Answer-first structure (key claim in first 40-60 words of each section) | 6 | 6=all key pages, 3=some pages, 0=none |
+| Comparison tables for "[X] vs [Y]" queries | 5 | 5=structured tables, 2=prose comparison, 0=absent |
+| FAQ section with natural-language questions + direct answers | 4 | 4=with schema, 2=without schema, 0=absent |
+| AI platforms tested: cited in ChatGPT/Perplexity/Google AIO for core queries | 4 | 1pt per platform where cited (test 5 queries each) |
+
+**Scoring tip:** Fetch 3 key pages. Check if first paragraph works standalone as a citation. Run 5 core queries in each AI engine.
+
+---
+
+### Category 2: Brand Authority Signals (20 pts)
+
+Check: Does the site have the third-party presence that AI engines trust?
+
+| Sub-criterion | Max Pts | How to Score |
+|---------------|---------|--------------|
+| Wikipedia article or significant Wikipedia mention exists | 6 | 6=own article, 3=mentioned in related article, 0=none |
+| G2 / Capterra / Trustpilot / review platform presence (SaaS/services) | 5 | 5=active with reviews, 3=profile exists minimal, 0=none |
+| Cited in industry publications or trade press (non-owned) | 5 | 5=3+ mentions, 3=1-2 mentions, 0=none |
+| LinkedIn company page complete and active | 2 | 2=complete+active, 1=exists, 0=none |
+| YouTube presence (brand appears in search results or has channel) | 2 | 2=channel with relevant content, 1=mentioned in others' videos, 0=none |
+
+**Scoring tip:** `web_search "site:reddit.com [brand]"`, `web_search "[brand] review"`, check Wikipedia directly.
+
+---
+
+### Category 3: Content Quality & E-E-A-T (20 pts)
+
+Check: Does content demonstrate real expertise and meet AI citation quality thresholds?
+
+| Sub-criterion | Max Pts | How to Score |
+|---------------|---------|--------------|
+| Named authors with credentials on key content | 5 | 5=bio+credentials+links, 3=name only, 0=anonymous |
+| Statistics and data points with cited sources | 5 | 5=multiple cited stats, 3=some unattributed stats, 0=no data |
+| Expert quotes with name and title | 4 | 4=multiple, 2=one, 0=none |
+| "Last updated" dates visible on content | 3 | 3=all key pages, 1=some, 0=none |
+| Original research, data, or unique methodology present | 3 | 3=proprietary data/study, 1=synthesized data, 0=none |
+
+**Scoring tip:** Check 5 blog posts and 3 product pages. Look for bylines, sources, and timestamps.
+
+---
+
+### Category 4: Technical Foundations (15 pts)
+
+Check: Can AI crawlers access and parse the site?
+
+| Sub-criterion | Max Pts | How to Score |
+|---------------|---------|--------------|
+| Major AI crawlers allowed in robots.txt (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) | 6 | 6=all allowed, 4=most allowed, 0=blocked |
+| llms.txt present and well-structured | 4 | 4=complete+accurate, 2=exists but thin, 0=absent |
+| Page load speed acceptable (Core Web Vitals pass) | 3 | 3=all pass, 1=some pass, 0=fail |
+| HTTPS enforced, no mixed content | 2 | 2=yes, 0=no |
+
+**Scoring tip:** `curl -sL domain/robots.txt | grep -iE "gptbot|claudebot|perplexity|google-extended"`. Check `domain/llms.txt`.
+
+---
+
+### Category 5: Structured Data (10 pts)
+
+Check: Does schema markup help AI engines understand entities and content?
+
+| Sub-criterion | Max Pts | How to Score |
+|---------------|---------|--------------|
+| Organization schema with sameAs links | 3 | 3=complete with sameAs, 1=basic, 0=absent |
+| FAQPage schema implemented on FAQ content | 3 | 3=valid+present, 1=present but errors, 0=absent |
+| Article/BlogPosting schema with author | 2 | 2=yes, 0=no |
+| HowTo schema on process/tutorial content | 2 | 2=yes (where applicable), 1=partial, 0=absent |
+
+**Scoring tip:** `curl -sL domain | grep -i "application/ld+json"`. Validate at schema.org/validator.
+
+---
+
+### Category 6: Platform Optimization (10 pts)
+
+Check: Is the brand optimized where AI engines look for third-party validation?
+
+| Sub-criterion | Max Pts | How to Score |
+|---------------|---------|--------------|
+| Google Business Profile complete (if B2B/local) | 3 | 3=complete+reviews, 1=exists, 0=absent/N/A |
+| Wikidata entry exists for the organization | 3 | 3=yes with properties, 1=stub, 0=none |
+| Crunchbase or equivalent directory profile | 2 | 2=complete, 1=exists, 0=absent |
+| Active presence on platforms AI cites for the vertical | 2 | 2=active on 2+ relevant platforms, 1=one platform, 0=none |
+
+**Scoring tip:** Search Wikidata.org for brand name. Check Crunchbase. Test query "What is [brand]?" in ChatGPT and see what sources it references.
+
+---
+
+### GEO Score Output Format
+
+```markdown
+## GEO Composite Score: [Company]
+
+**Total Score: XX/100 — [Band Name]**
+
+| Category | Score | Max | % |
+|----------|-------|-----|---|
+| AI Citability & Visibility | XX | 25 | XX% |
+| Brand Authority Signals | XX | 20 | XX% |
+| Content Quality & E-E-A-T | XX | 20 | XX% |
+| Technical Foundations | XX | 15 | XX% |
+| Structured Data | XX | 10 | XX% |
+| Platform Optimization | XX | 10 | XX% |
+| **TOTAL** | **XX** | **100** | |
+
+### Biggest Gaps (Quick Wins First)
+1. [Highest-impact item with lowest effort]
+2. [Next highest-impact]
+3. [...]
+
+### 30-Day Priority Roadmap
+- Week 1: [Technical fixes — robots.txt, llms.txt, schema]
+- Week 2: [Content fixes — definitions, FAQs, author bios]
+- Week 3: [Authority building — Wikidata, directories, outreach]
+- Week 4: [Re-test AI citations, measure improvement]
+```
+
+---
+
 ## Related Skills
 
 - **seo-audit**: For traditional technical and on-page SEO audits

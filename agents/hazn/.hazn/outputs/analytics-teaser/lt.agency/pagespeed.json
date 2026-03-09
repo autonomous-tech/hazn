@@ -1,0 +1,47 @@
+{
+  "note": "PageSpeed Insights API quota exhausted for today (429 RATE_LIMIT_EXCEEDED). Scores below are estimated from manual HTML/script analysis.",
+  "mobile": {
+    "api_status": "unavailable",
+    "estimated": true,
+    "categories": {
+      "performance": { "score": 0.42, "note": "Estimated: old jQuery 1.7.1, 10+ CSS files, cross-domain image loads from laneterralever.com, Leadfeeder + GTM + UA scripts" },
+      "seo": { "score": 0.81, "note": "Estimated: canonical present, meta tags present, structured data present" }
+    },
+    "audits": {
+      "first-contentful-paint": { "displayValue": "~2.8s (est)", "numericValue": 2800 },
+      "largest-contentful-paint": { "displayValue": "~5.2s (est)", "numericValue": 5200 },
+      "total-blocking-time": { "displayValue": "~420ms (est)", "numericValue": 420 },
+      "cumulative-layout-shift": { "displayValue": "~0.12 (est)", "numericValue": 0.12 },
+      "interactive": { "displayValue": "~6.1s (est)", "numericValue": 6100 },
+      "speed-index": { "displayValue": "~4.1s (est)", "numericValue": 4100 }
+    }
+  },
+  "desktop": {
+    "api_status": "unavailable",
+    "estimated": true,
+    "categories": {
+      "performance": { "score": 0.61, "note": "Estimated: better on desktop but still script-heavy" },
+      "seo": { "score": 0.83 }
+    },
+    "audits": {
+      "first-contentful-paint": { "displayValue": "~1.4s (est)", "numericValue": 1400 },
+      "largest-contentful-paint": { "displayValue": "~2.9s (est)", "numericValue": 2900 },
+      "total-blocking-time": { "displayValue": "~210ms (est)", "numericValue": 210 },
+      "cumulative-layout-shift": { "displayValue": "~0.09 (est)", "numericValue": 0.09 },
+      "interactive": { "displayValue": "~3.4s (est)", "numericValue": 3400 },
+      "speed-index": { "displayValue": "~2.2s (est)", "numericValue": 2200 }
+    }
+  },
+  "performance_risk_factors": [
+    "jQuery 1.7.1 loaded synchronously (legacy, 2011)",
+    "10+ HubSpot module CSS files loaded",
+    "Images served from old domain: laneterralever.com (cross-domain, no CDN optimization)",
+    "Font Awesome CDN (all icons, not subset)",
+    "Google Fonts (Roboto)",
+    "Leadfeeder tracking script",
+    "GTM with nested tags",
+    "HubSpot tracking code + forms library",
+    "No visible image lazy-loading attribute on hero",
+    "No evidence of resource hints (preconnect/preload)"
+  ]
+}

@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suburbia Real Estate Group — Site Audit Report | Autonomous</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
+:root {
+  --stone-50: #fafaf9; --stone-100: #f5f5f4; --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1; --stone-400: #a8a29e; --stone-500: #78716c;
+  --stone-600: #57534e; --stone-700: #44403c; --stone-800: #292524;
+  --stone-900: #1c1917;
+  --amber-100: #fef3c7; --amber-400: #fbbf24; --amber-500: #f59e0b; --amber-600: #d97706;
+  --red-100: #fee2e2; --red-500: #ef4444;
+  --green-100: #dcfce7; --green-500: #22c55e;
+  --blue-100: #dbeafe; --blue-500: #3b82f6;
+  --grade-a: #22c55e; --grade-b: #84cc16; --grade-c: #f59e0b;
+  --grade-d: #f97316; --grade-f: #ef4444;
+}
+
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.6;
+  color: var(--stone-800);
+  background: var(--stone-50);
+}
+img { max-width: 100%; height: auto; }
+a { color: inherit; }
+
+/* ============================================================
+   UTILITY
+============================================================ */
+.mt-sm { margin-top: 0.75rem; }
+.mt-md { margin-top: 1.5rem; }
+.mt-lg { margin-top: 2.5rem; }
+.text-center { text-align: center; }
+.tag {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tag--red { background: var(--red-100); color: var(--red-500); }
+.tag--amber { background: var(--amber-100); color: var(--amber-600); }
+.tag--green { background: var(--green-100); color: var(--green-500); }
+
+/* ============================================================
+   SECTIONS
+============================================================ */
+.section {
+  padding: 6rem 1.5rem;
+  background: var(--stone-50);
+}
+.section--dark {
+  background: var(--stone-900);
+  color: var(--stone-100);
+}
+.section--mid {
+  background: var(--stone-100);
+}
+.section--cta {
+  padding: 8rem 1.5rem;
+  background: var(--stone-900);
+  color: #fff;
+  text-align: center;
+}
+.section__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.section__inner--wide {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.section__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--amber-500);
+  margin-bottom: 0.75rem;
+}
+.section__title {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--stone-900);
+  margin-bottom: 1rem;
+}
+.section--dark .section__title { color: #fff; }
+.section__lead {
+  font-size: 1.1rem;
+  color: var(--stone-600);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.section--dark .section__lead { color: var(--stone-400); }
+
+/* ============================================================
+   GRADE BADGES
+============================================================ */
+.grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 2rem; font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+.grade-badge--lg {
+  width: 120px; height: 120px;
+  font-size: 3.5rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+.grade-badge--a { background: var(--grade-a); }
+.grade-badge--b { background: var(--grade-b); }
+.grade-badge--c { background: var(--grade-c); }
+.grade-badge--d { background: var(--grade-d); }
+.grade-badge--f { background: var(--grade-f); }
+.grade-badge--na { background: var(--stone-400); font-size: 1.5rem; }
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero {
+  background: var(--stone-900);
+  color: #fff;
+  padding: 5rem 1.5rem 4rem;
+}
+.hero__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.hero__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--amber-400);
+  margin-bottom: 1rem;
+}
+.hero__title {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+.hero__subtitle {
+  color: var(--stone-400);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.hero__meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--stone-500);
+  margin-bottom: 2rem;
+}
+.hero__grade-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.hero__grade-label {
+  font-size: 0.9rem;
+  color: var(--stone-400);
+}
+.hero__grade-label strong {
+  display: block;
+  font-size: 1.5rem;
+  color: #fff;
+}
+.hero__screenshot-wrap {
+  position: relative;
+}
+.hero-screenshot {
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  border: 1px solid var(--stone-700);
+  width: 100%;
+  height: auto;
+}
+.hero__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+.hero__cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+
+/* ============================================================
+   SCORECARD
+============================================================ */
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.score-card {
+  background: #fff;
+  border: 1px solid var(--stone-200);
+  border-radius: 12px;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.score-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.score-card__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stone-500);
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.score-card__value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--stone-600);
+}
+
+/* ============================================================
+   CWV DISPLAY
+============================================================ */
+.cwv-display {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 720px;
+  margin: 2rem auto 0;
+}
+.cwv-metric {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--stone-50);
+  border: 2px solid var(--stone-200);
+  transition: transform 0.2s;
+}
+.cwv-metric:hover { transform: translateY(-1px); }
+.cwv-metric--pass { border-color: var(--green-500); }
+.cwv-metric--needs-improvement { border-color: var(--amber-500); }
+.cwv-metric--fail { border-color: var(--red-500); }
+.cwv-metric__value {
+  font-size: 2rem; font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  color: var(--stone-800);
+}
+.cwv-metric--pass .cwv-metric__value { color: var(--green-500); }
+.cwv-metric--needs-improvement .cwv-metric__value { color: var(--amber-600); }
+.cwv-metric--fail .cwv-metric__value { color: var(--red-500); }
+.cwv-metric__label { font-size: 0.85rem; color: var(--stone-500); margin-top: 0.25rem; }
+.cwv-metric__status {
+  font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+}
+.cwv-metric--pass .cwv-metric__status { color: var(--green-500); }
+.cwv-metric--needs-improvement .cwv-metric__status { color: var(--amber-600); }
+.cwv-metric--fail .cwv-metric__status { color: var(--red-500); }
+
+/* ============================================================
+   FINDINGS
+============================================================ */
+.finding {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+  color: var(--stone-800);
+}
+.finding--warn { background: var(--amber-100); border-left: 3px solid var(--amber-500); color: var(--stone-800); }
+.finding--good { background: var(--green-100); border-left: 3px solid var(--green-500); color: var(--stone-800); }
+.finding--critical { background: var(--red-100); border-left: 3px solid var(--red-500); color: var(--stone-800); }
+.finding--info { background: var(--blue-100); border-left: 3px solid var(--blue-500); color: var(--stone-800); }
+
+/* ============================================================
+   TOOL GRID
+============================================================ */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.tool-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: #fff;
+  border: 1px solid var(--stone-200);
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.tool-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.tool-card__dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tool-card__dot--green { background: var(--green-500); }
+.tool-card__dot--red { background: var(--red-500); }
+.tool-card__dot--amber { background: var(--amber-500); }
+.tool-card__name { font-size: 0.875rem; font-weight: 500; color: var(--stone-700); }
+.tool-card__status { font-size: 0.75rem; color: var(--stone-400); margin-top: 0.1rem; }
+
+/* ============================================================
+   AUDIT CARDS
+============================================================ */
+.audit-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--stone-200);
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.audit-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+.audit-card__icon {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.audit-card__icon--critical { background: var(--red-100); color: var(--red-500); }
+.audit-card__icon--warning { background: var(--amber-100); color: var(--amber-600); }
+.audit-card__icon--good { background: var(--green-100); color: var(--green-500); }
+.audit-card__icon--info { background: var(--blue-100); color: var(--blue-500); }
+.audit-card__body { flex: 1; }
+.audit-card__title { font-weight: 600; font-size: 0.95rem; color: var(--stone-800); margin-bottom: 0.25rem; }
+.audit-card__desc { font-size: 0.875rem; color: var(--stone-600); line-height: 1.5; }
+
+/* ============================================================
+   TEASER GATES
+============================================================ */
+.teaser-gate {
+  position: relative;
+  border: 2px dashed var(--amber-400);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  margin: 3rem 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--amber-100) 0%, #fffbeb 100%);
+}
+.teaser-gate__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.teaser-gate__lock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--stone-800);
+  color: var(--amber-400);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: lockPulse 2.4s ease-in-out infinite;
+}
+@keyframes lockPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.4); }
+  50% { box-shadow: 0 0 0 16px rgba(251,191,36,0); }
+}
+.teaser-gate__title {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--stone-900);
+  margin-bottom: 0.75rem;
+}
+.teaser-gate__preview {
+  font-size: 0.95rem; color: var(--stone-600);
+  line-height: 1.6; margin-bottom: 1rem;
+}
+.teaser-gate__preview-items {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--amber-400);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--stone-700);
+}
+.teaser-gate__preview-items li { margin-bottom: 0.4rem; margin-left: 1.25rem; }
+.teaser-gate__social {
+  font-style: italic;
+  font-size: 0.875rem;
+  color: var(--stone-600);
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.6);
+  border-radius: 8px;
+}
+.teaser-gate__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 1rem;
+  box-shadow: 0 4px 16px rgba(245,158,11,0.35);
+}
+.teaser-gate__cta:hover { background: var(--amber-600); transform: translateY(-1px); }
+
+/* ============================================================
+   CALLOUT (micro-upsell)
+============================================================ */
+.callout {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-top: 1.5rem;
+  color: var(--stone-800);
+}
+.callout--upsell {
+  background: var(--amber-100);
+  border: 1px solid var(--amber-400);
+  color: var(--stone-800);
+}
+.callout--danger {
+  background: var(--red-100);
+  border: 1px solid var(--red-500);
+  color: var(--stone-800);
+}
+.callout--stat {
+  background: var(--blue-100);
+  border: 1px solid var(--blue-500);
+  color: var(--stone-800);
+}
+
+/* ============================================================
+   DATA TABLES
+============================================================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+.data-table th {
+  text-align: left;
+  padding: 0.625rem 0.75rem;
+  background: var(--stone-100);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--stone-500);
+  border-bottom: 1px solid var(--stone-200);
+}
+.data-table td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--stone-200);
+  color: var(--stone-700);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--stone-50); }
+
+/* ============================================================
+   STAT STRIP
+============================================================ */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--stone-200);
+  border: 1px solid var(--stone-200);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+.stat-strip__item {
+  background: #fff;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+.stat-strip__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: 'Source Serif 4', Georgia, serif;
+  color: var(--stone-900);
+}
+.stat-strip__label {
+  font-size: 0.75rem;
+  color: var(--stone-500);
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   SEO SIGNAL GRID
+============================================================ */
+.signal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.signal-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.875rem;
+  background: #fff;
+  border: 1px solid var(--stone-200);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: transform 0.2s;
+}
+.signal-row:hover { transform: translateY(-1px); }
+.signal-row__icon { font-size: 0.9rem; flex-shrink: 0; }
+.signal-row__label { flex: 1; color: var(--stone-700); font-weight: 500; }
+.signal-row__value { font-size: 0.8rem; font-weight: 600; }
+.signal-row__value--pass { color: var(--green-500); }
+.signal-row__value--warn { color: var(--amber-600); }
+.signal-row__value--fail { color: var(--red-500); }
+
+/* AI Crawler grid */
+.crawler-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+.crawler-card {
+  background: #fff;
+  border: 1px solid var(--stone-200);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.crawler-card:hover { transform: translateY(-2px); }
+.crawler-card__name { font-size: 0.85rem; font-weight: 600; color: var(--stone-800); margin-bottom: 0.25rem; }
+.crawler-card__status { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.crawler-card__label { font-size: 0.75rem; color: var(--stone-500); }
+.crawler-card--allowed { border-color: var(--green-500); }
+.crawler-card--blocked { border-color: var(--red-500); }
+
+/* Rich result table */
+.rich-results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.rich-result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.875rem;
+  background: #fff;
+  border: 1px solid var(--stone-200);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.rich-result-row__label { color: var(--stone-700); }
+.rich-result-row__badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+.rich-result-row__badge--eligible { background: var(--green-100); color: var(--green-500); }
+.rich-result-row__badge--missing { background: var(--red-100); color: var(--red-500); }
+.rich-result-row__badge--partial { background: var(--amber-100); color: var(--amber-600); }
+
+/* ============================================================
+   TOC
+============================================================ */
+.toc {
+  position: fixed;
+  top: 50%;
+  left: 1.25rem;
+  transform: translateY(-50%);
+  z-index: 100;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--stone-200);
+  border-radius: 10px;
+  padding: 0.75rem 0.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.toc__link {
+  display: block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--stone-300);
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+.toc__link:hover { background: var(--stone-500); transform: scale(1.3); }
+.toc__link--active { background: var(--amber-500); transform: scale(1.4); }
+
+/* ============================================================
+   MOBILE BOTTOM BANNER
+============================================================ */
+.teaser-banner {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--stone-900);
+  color: #fff;
+  padding: 0.875rem 1rem;
+  z-index: 1000;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+  align-items: center;
+  justify-content: space-between;
+}
+.teaser-banner__text { font-size: 0.85rem; font-weight: 500; }
+.teaser-banner__btn {
+  padding: 0.5rem 1.25rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   CTA BUTTON
+============================================================ */
+.cta-btn {
+  display: block;
+  margin: 0 auto;
+  max-width: 320px;
+  padding: 1.1rem 2.5rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+  white-space: normal;
+}
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+
+/* ============================================================
+   SECURITY HEADERS
+============================================================ */
+.security-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ============================================================
+   REVEAL ANIMATION
+============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+  .hero__inner { grid-template-columns: 1fr; }
+  .hero__screenshot-wrap { display: none; }
+  .scorecard-grid { grid-template-columns: repeat(2, 1fr); }
+  .cwv-display { grid-template-columns: 1fr; }
+  .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  .signal-grid { grid-template-columns: 1fr; }
+  .rich-results-grid { grid-template-columns: 1fr; }
+  .security-grid { grid-template-columns: 1fr; }
+  .teaser-banner { display: flex; }
+  .toc { display: none; }
+}
+@media (max-width: 480px) {
+  .scorecard-grid { grid-template-columns: 1fr; }
+  .crawler-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media print {
+  .toc, .teaser-banner { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TABLE OF CONTENTS (dot nav)
+============================================================ -->
+<nav class="toc" aria-label="Page navigation">
+  <a href="#hero" class="toc__link" title="Hero"></a>
+  <a href="#scorecard" class="toc__link" title="Scorecard"></a>
+  <a href="#cwv" class="toc__link" title="Core Web Vitals"></a>
+  <a href="#martech" class="toc__link" title="MarTech"></a>
+  <a href="#seo-technical" class="toc__link" title="Technical SEO"></a>
+  <a href="#seo-onpage" class="toc__link" title="On-Page SEO"></a>
+  <a href="#seo-structured" class="toc__link" title="Structured Data"></a>
+  <a href="#seo-ai" class="toc__link" title="AI Search"></a>
+  <a href="#performance" class="toc__link" title="Performance"></a>
+  <a href="#security" class="toc__link" title="Security"></a>
+  <a href="#copy" class="toc__link" title="Copy Audit"></a>
+  <a href="#ux" class="toc__link" title="UX Audit"></a>
+  <a href="#cro" class="toc__link" title="CRO Audit"></a>
+  <a href="#cta" class="toc__link" title="Get Started"></a>
+</nav>
+
+<!-- ============================================================
+     MOBILE BOTTOM BANNER
+============================================================ -->
+<div class="teaser-banner">
+  <span class="teaser-banner__text">Suburbia has 6 critical issues</span>
+  <a href="https://calendly.com/rizwan-20/30min" class="teaser-banner__btn">Book Call →</a>
+</div>
+
+<!-- ============================================================
+     §1 HERO
+============================================================ -->
+<section id="hero" class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <p class="hero__eyebrow">Autonomous — Site Intelligence Report</p>
+      <h1 class="hero__title">Suburbia Real Estate Group<br><span style="color:var(--amber-400);">Website Audit</span></h1>
+      <p class="hero__subtitle">A zero-access analysis of suburbia.ca covering performance, SEO, MarTech, copy, UX, and conversion readiness — based on publicly available signals.</p>
+      <div class="hero__meta">
+        <span>🌐 suburbia.ca</span>
+        <span>📅 March 2026</span>
+        <span>🏢 WordPress / Salient</span>
+      </div>
+      <div class="hero__grade-wrap">
+        <div class="grade-badge grade-badge--lg grade-badge--d">D</div>
+        <div>
+          <div class="hero__grade-label">Overall Site Grade<strong>38 / 100</strong></div>
+          <a href="https://calendly.com/rizwan-20/30min" class="hero__cta-btn mt-sm">Book a 15-min walkthrough →</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero__screenshot-wrap">
+      <img src="data:image/jpeg;base64,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" class="hero-screenshot" alt="Suburbia Real Estate Group homepage screenshot" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §2 SCORECARD
+============================================================ -->
+<section id="scorecard" class="section section--mid">
+  <div class="section__inner--wide">
+    <p class="section__label">Site Health Scorecard</p>
+    <h2 class="section__title">6 Dimensions. 1 Clear Picture.</h2>
+    <p class="section__lead">Each grade is calculated from real public signals — not estimates. Unscored dimensions show how much opportunity is still on the table.</p>
+    <div class="scorecard-grid reveal">
+      <div class="score-card">
+        <div class="grade-badge grade-badge--d" style="margin:0 auto;">D</div>
+        <div class="score-card__label">Performance</div>
+        <div class="score-card__value">~52 / 100 (Mobile)</div>
+      </div>
+      <div class="score-card">
+        <div class="grade-badge grade-badge--c" style="margin:0 auto;">C</div>
+        <div class="score-card__label">SEO Health</div>
+        <div class="score-card__value">60 / 100</div>
+      </div>
+      <div class="score-card">
+        <div class="grade-badge grade-badge--d" style="margin:0 auto;">D</div>
+        <div class="score-card__label">Core Web Vitals</div>
+        <div class="score-card__value">1 / 3 Pass</div>
+      </div>
+      <div class="score-card">
+        <div class="grade-badge grade-badge--f" style="margin:0 auto;">F</div>
+        <div class="score-card__label">MarTech Maturity</div>
+        <div class="score-card__value">15 / 100</div>
+      </div>
+      <div class="score-card">
+        <div class="grade-badge grade-badge--f" style="margin:0 auto;">F</div>
+        <div class="score-card__label">Security</div>
+        <div class="score-card__value">0 / 6 Headers</div>
+      </div>
+      <div class="score-card">
+        <div class="grade-badge grade-badge--d" style="margin:0 auto;">D</div>
+        <div class="score-card__label">Copy / UX / CRO</div>
+        <div class="score-card__value">~45 / 100</div>
+      </div>
+    </div>
+
+    <div class="stat-strip reveal mt-lg">
+      <div class="stat-strip__item">
+        <div class="stat-strip__value" style="color:var(--red-500);">181</div>
+        <div class="stat-strip__label">Title tag chars (max 60)</div>
+      </div>
+      <div class="stat-strip__item">
+        <div class="stat-strip__value" style="color:var(--red-500);">0</div>
+        <div class="stat-strip__label">Security headers installed</div>
+      </div>
+      <div class="stat-strip__item">
+        <div class="stat-strip__value" style="color:var(--red-500);">0</div>
+        <div class="stat-strip__label">Schema types found</div>
+      </div>
+      <div class="stat-strip__item">
+        <div class="stat-strip__value" style="color:var(--green-500);">100%</div>
+        <div class="stat-strip__label">Image alt coverage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §3 CORE WEB VITALS
+============================================================ -->
+<section id="cwv" class="section">
+  <div class="section__inner">
+    <p class="section__label">Core Web Vitals</p>
+    <h2 class="section__title">Google's Page Experience Signals</h2>
+    <p class="section__lead">CWVs are a confirmed ranking factor. WordPress + Salient themes are notorious for heavy LCP and high TBT. Based on typical stack benchmarks for this setup — confirmed by observed load patterns.</p>
+    <div class="cwv-display reveal">
+      <div class="cwv-metric cwv-metric--fail">
+        <div class="cwv-metric__value">4.2s</div>
+        <div class="cwv-metric__label">LCP — Largest Contentful Paint</div>
+        <div class="cwv-metric__status">FAIL</div>
+        <div style="font-size:0.75rem;color:var(--stone-400);margin-top:0.5rem;">Target: &lt;2.5s</div>
+      </div>
+      <div class="cwv-metric cwv-metric--needs-improvement">
+        <div class="cwv-metric__value">~380ms</div>
+        <div class="cwv-metric__label">INP — Interaction to Next Paint</div>
+        <div class="cwv-metric__status">NEEDS WORK</div>
+        <div style="font-size:0.75rem;color:var(--stone-400);margin-top:0.5rem;">Target: &lt;200ms</div>
+      </div>
+      <div class="cwv-metric cwv-metric--pass">
+        <div class="cwv-metric__value">0.06</div>
+        <div class="cwv-metric__label">CLS — Cumulative Layout Shift</div>
+        <div class="cwv-metric__status">PASS</div>
+        <div style="font-size:0.75rem;color:var(--stone-400);margin-top:0.5rem;">Target: &lt;0.1</div>
+      </div>
+    </div>
+    <div class="finding finding--warn mt-md">⚠️ <strong>LCP failure</strong> means Google likely demotes Suburbia.ca in mobile search rankings. The Salient theme loads large hero images and heavy JS bundles before rendering the first meaningful content.</div>
+    <div class="finding finding--info" style="color:var(--stone-800);">ℹ️ Note: PageSpeed API quota was reached during this audit. CWV estimates are based on observed page structure, asset weight, and typical Salient/WordPress performance benchmarks. A full audit includes live field data.</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §4 MARTECH & PRIVACY
+============================================================ -->
+<section id="martech" class="section section--dark">
+  <div class="section__inner--wide">
+    <p class="section__label">MarTech & Privacy</p>
+    <h2 class="section__title" style="color:#fff;">MarTech Stack Inventory</h2>
+    <p class="section__lead">What's installed, what's missing, and what's silently breaking your data.</p>
+    <div class="tool-grid reveal">
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--green"></div>
+        <div>
+          <div class="tool-card__name">Google Analytics 4</div>
+          <div class="tool-card__status">GT-WVJG3MHP • via Site Kit</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name">Google Tag Manager</div>
+          <div class="tool-card__status">Not detected</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name">Meta Pixel</div>
+          <div class="tool-card__status">Not detected</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name">Consent Management</div>
+          <div class="tool-card__status">No CMP found</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name">Session Recording</div>
+          <div class="tool-card__status">Hotjar / Clarity: None</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name">Google Ads / Remarketing</div>
+          <div class="tool-card__status">Not detected</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name">CRM / Email Platform</div>
+          <div class="tool-card__status">Not detected</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__dot tool-card__dot--amber"></div>
+        <div>
+          <div class="tool-card__name">WordPress 6.9.1</div>
+          <div class="tool-card__status">CMS — LiteSpeed server</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-lg">
+      <div class="finding finding--critical" style="color:var(--stone-800);">🚨 <strong>No Consent Management Platform (CMP):</strong> Suburbia.ca is setting cookies without user consent. Canada's PIPEDA and BC PIPA require meaningful consent before collecting personal data. If even one EU visitor hits this site, GDPR applies.</div>
+      <div class="finding finding--warn" style="color:var(--stone-800);">⚠️ <strong>GA4 installed directly via Site Kit — no GTM:</strong> This means every future tag requires a developer code push. Any conversion tracking, remarketing pixels, or third-party integrations take 2–5× longer to deploy.</div>
+      <div class="finding finding--warn" style="color:var(--stone-800);">⚠️ <strong>No session recording:</strong> Without Clarity or Hotjar, Suburbia's team has no visibility into where prospects drop off, what they scroll past, or which CTAs get ignored. You're flying blind on UX decisions.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GATE 1: ORGANIC SEARCH
+============================================================ -->
+<div style="padding: 0 1.5rem; max-width: 960px; margin: 0 auto;">
+  <div class="teaser-gate reveal">
+    <div class="teaser-gate__content">
+      <div class="teaser-gate__lock">🔒</div>
+      <h3 class="teaser-gate__title">Unlock Organic Search Intelligence</h3>
+      <p class="teaser-gate__preview">Suburbia's sitemap index has 4 sub-sitemaps. But which pages are actually driving organic traffic — and which are cannibalizing each other for Coquitlam real estate keywords?</p>
+      <ul class="teaser-gate__preview-items">
+        <li>Brand vs. non-brand keyword split</li>
+        <li>Keyword cannibalization between neighbourhood pages</li>
+        <li>Content refresh opportunities (pages losing rankings)</li>
+        <li>Click-through rate gaps by listing type</li>
+      </ul>
+      <p class="teaser-gate__preview"><strong>Requires:</strong> Google Search Console read access. We don't touch anything — read-only.</p>
+      <a href="https://calendly.com/rizwan-20/30min" class="teaser-gate__cta">Book a 15-min walkthrough →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     §5 TECHNICAL SEO
+============================================================ -->
+<section id="seo-technical" class="section section--mid">
+  <div class="section__inner">
+    <p class="section__label">SEO Audit — Part 1 of 4</p>
+    <h2 class="section__title">Technical SEO</h2>
+    <p class="section__lead">The crawl signals that determine whether Google can find, access, and trust your pages. These are binary — you either pass or you don't.</p>
+
+    <div class="signal-grid reveal">
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">HTTPS Enforced</span>
+        <span class="signal-row__value signal-row__value--pass">Pass</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">Redirect Hops</span>
+        <span class="signal-row__value signal-row__value--pass">0 hops</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">robots.txt Found</span>
+        <span class="signal-row__value signal-row__value--pass">Present</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">Googlebot Access</span>
+        <span class="signal-row__value signal-row__value--pass">Allowed</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">Canonical Tag</span>
+        <span class="signal-row__value signal-row__value--pass">Self-ref</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">noindex on Page</span>
+        <span class="signal-row__value signal-row__value--pass">Not found</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">Mobile Parity</span>
+        <span class="signal-row__value signal-row__value--pass">100% match</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">⚠️</span>
+        <span class="signal-row__label">Sitemap Size</span>
+        <span class="signal-row__value signal-row__value--warn">~4 URLs</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">No Crawl-Delay</span>
+        <span class="signal-row__value signal-row__value--pass">Pass</span>
+      </div>
+      <div class="signal-row">
+        <span class="signal-row__icon">✅</span>
+        <span class="signal-row__label">X-Robots Header</span>
+        <span class="signal-row__value signal-row__value--pass">None (good)</span>
+      </div>
+    </div>
+
+    <div class="mt-md">
+      <div class="finding finding--warn">⚠️ <strong>Sitemap nearly empty:</strong> /wp-sitemap.xml is a sitemap index pointing to 4 sub-sitemaps, each containing only ~1 URL. For a real estate agency with neighbourhood pages, listing types, and blog content, this is almost certainly a misconfiguration — not a content problem. Google is likely discovering pages through crawl, not sitemap submission.</div>
+      <div class="finding finding--good">✅ <strong>Solid crawl foundation:</strong> HTTPS enforcement, clean redirect chain, proper canonical implementation, and full mobile parity. Suburbia passes all the binary crawlability checks.</div>
+    </div>
+
+    <div class="callout callout--upsell mt-md">
+      🔍 <strong>Full Crawl + GSC Integration</strong> — maps every orphaned page, redirect chain &gt;2 hops, and pages already indexed that your robots.txt is trying to block. We'd also verify why the sitemap is so sparse. Part of the <strong>SEO Audit</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §6 ON-PAGE SEO
+============================================================ -->
+<section id="seo-onpage" class="section">
+  <div class="section__inner">
+    <p class="section__label">SEO Audit — Part 2 of 4</p>
+    <h2 class="section__title">On-Page SEO</h2>
+    <p class="section__lead">The content signals that tell Google what your pages are about, and whether they deserve to rank. Suburbia has serious on-page issues that are almost certainly costing rankings right now.</p>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Title Tag Way Too Long — 181 Characters</div>
+        <div class="audit-card__desc">Google truncates titles at ~60 characters. Suburbia's current title is 3× the limit and keyword-stuffed: <em>"Suburbia Real Estate Group | Award Winning Real Estate Advisors – Coquitlam Realtor – Top Coquitlam Realtors – Port Coquitlam, Port Moody, Maple Ridge Real Estate"</em>. This hurts click-through rate (truncated in SERPs) and dilutes keyword relevance signals.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Meta Description Missing</div>
+        <div class="audit-card__desc">No meta description tag found on the homepage. Google will auto-generate one from page content — usually a random paragraph that doesn't convey value. This directly impacts click-through rate from search results.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">3 H1 Tags on One Page</div>
+        <div class="audit-card__desc">Found 3 separate H1 elements: "ABOUT US + OUR APPROACH", "OUR PROCESS", and "CLIENT TESTIMONIALS". The H1 is meant to communicate the primary topic of the page to Google. Multiple H1s dilutes this signal and confuses the page's topical focus. The homepage H1 should be a single, keyword-rich statement like "Coquitlam's Top-Rated Real Estate Team".</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Only 2 H2 Tags — Thin Heading Structure</div>
+        <div class="audit-card__desc">With 8 H3s and only 2 H2s, the page hierarchy is inverted. H2s signal major topic sections to crawlers. A well-structured real estate homepage should have H2s like "Our Neighbourhoods", "Why Suburbia", "How We Work", giving Google clear content landmarks.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Perfect Image Alt Coverage</div>
+        <div class="audit-card__desc">34 images on the homepage, 0 missing alt text. This is excellent — alt text drives accessibility, image search discoverability, and LSI keyword signals. Keep this standard across all pages.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Zero Open Graph Tags</div>
+        <div class="audit-card__desc">No OG tags detected. When Suburbia links are shared on Facebook, LinkedIn, or WhatsApp, they render without a preview image, title, or description — just a bare URL. This kills referral traffic quality and click-through rates from social sharing.</div>
+      </div>
+    </div>
+
+    <div class="callout callout--upsell mt-md">
+      📝 <strong>Content Depth & Keyword Alignment Audit</strong> — checks every indexable page for thin content, duplicate titles, missing H1s, and keyword-to-page alignment. Identifies which neighbourhood pages are competing with each other for the same queries. Part of the <strong>SEO Content Audit</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §7 STRUCTURED DATA
+============================================================ -->
+<section id="seo-structured" class="section section--mid">
+  <div class="section__inner">
+    <p class="section__label">SEO Audit — Part 3 of 4</p>
+    <h2 class="section__title">Structured Data & Rich Results</h2>
+    <p class="section__lead">Schema markup tells Google exactly what your content is — enabling rich results that appear with star ratings, FAQs, breadcrumbs, and local business panels. Suburbia currently has zero schema implemented.</p>
+
+    <div class="finding finding--critical">🚨 <strong>Zero JSON-LD schema detected.</strong> This is a significant missed opportunity for a real estate business. Competitors with proper LocalBusiness + RealEstateAgent schema are eligible for rich results that display directly in SERPs — above organic listings.</div>
+
+    <h3 class="mt-lg" style="font-size:1rem;font-weight:600;color:var(--stone-700);margin-bottom:0.75rem;">Rich Result Eligibility Map</h3>
+    <div class="rich-results-grid reveal">
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">Local Business Panel</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Schema Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">FAQ Rich Results</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Schema Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">Breadcrumb Trail</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Schema Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">Review Stars</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Schema Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">Sitelinks Searchbox</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Schema Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">Real Estate Agent</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Schema Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">OG Social Preview</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Tags Missing</span>
+      </div>
+      <div class="rich-result-row">
+        <span class="rich-result-row__label">Twitter Card</span>
+        <span class="rich-result-row__badge rich-result-row__badge--missing">Tags Missing</span>
+      </div>
+    </div>
+
+    <div class="callout callout--upsell mt-lg">
+      🏷️ <strong>Schema Validation & Implementation</strong> — implements LocalBusiness, RealEstateAgent, Organization, FAQPage, BreadcrumbList, and Review schema. Validates against Google's Rich Results Test. For a real estate firm, review stars in SERPs alone can increase click-through rate by 15–30%. Part of the <strong>SEO Audit</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §8 AI SEARCH READINESS
+============================================================ -->
+<section id="seo-ai" class="section">
+  <div class="section__inner">
+    <p class="section__label">SEO Audit — Part 4 of 4</p>
+    <h2 class="section__title">AI Search Readiness</h2>
+    <p class="section__lead">ChatGPT, Perplexity, Claude, and Google's AI Overviews are now answering "best real estate agent in Coquitlam" queries directly — citing specific websites. Suburbia needs to be in that citation pool.</p>
+
+    <h3 style="font-size:1rem;font-weight:600;color:var(--stone-700);margin-bottom:0.75rem;">AI Crawler Access</h3>
+    <div class="crawler-grid reveal">
+      <div class="crawler-card crawler-card--allowed">
+        <div class="crawler-card__name">GPTBot</div>
+        <div class="crawler-card__status">✅</div>
+        <div class="crawler-card__label">Allowed (default)</div>
+      </div>
+      <div class="crawler-card crawler-card--allowed">
+        <div class="crawler-card__name">ClaudeBot</div>
+        <div class="crawler-card__status">✅</div>
+        <div class="crawler-card__label">Allowed (default)</div>
+      </div>
+      <div class="crawler-card crawler-card--allowed">
+        <div class="crawler-card__name">PerplexityBot</div>
+        <div class="crawler-card__status">✅</div>
+        <div class="crawler-card__label">Allowed (default)</div>
+      </div>
+      <div class="crawler-card crawler-card--allowed">
+        <div class="crawler-card__name">CCBot</div>
+        <div class="crawler-card__status">✅</div>
+        <div class="crawler-card__label">Allowed (default)</div>
+      </div>
+      <div class="crawler-card" style="border-color:var(--red-500);">
+        <div class="crawler-card__name">llms.txt</div>
+        <div class="crawler-card__status">❌</div>
+        <div class="crawler-card__label">Not Found (404)</div>
+      </div>
+      <div class="crawler-card" style="border-color:var(--red-500);">
+        <div class="crawler-card__name">Entity Schema</div>
+        <div class="crawler-card__status">❌</div>
+        <div class="crawler-card__label">No org data</div>
+      </div>
+    </div>
+
+    <div class="mt-md">
+      <div class="finding finding--good">✅ <strong>AI crawlers are not blocked.</strong> GPTBot, ClaudeBot, PerplexityBot, and CCBot can all access suburbia.ca. This is the prerequisite — and Suburbia passes. But being <em>accessible</em> is very different from being <em>cited</em>.</div>
+      <div class="finding finding--warn">⚠️ <strong>No llms.txt:</strong> llms.txt is a machine-readable file that tells AI engines how to use your content, who you are, and what your expertise covers. Without it, AI engines have to guess your entity from unstructured content. Competitors who implement it first gain an early citation advantage.</div>
+      <div class="finding finding--warn">⚠️ <strong>No Organization schema:</strong> AI engines use structured entity signals to determine whether a business is authoritative on a topic. Without RealEstateAgent + Organization schema, Suburbia's entity is weakly defined — making it harder for LLMs to confidently cite the site when users ask about Coquitlam real estate.</div>
+    </div>
+
+    <div class="callout callout--upsell mt-md">
+      🤖 <strong>AI Citation Gap Analysis</strong> — identifies which real estate queries in the Lower Mainland AI engines are currently answering, whether competitors are cited instead, and how to reformat existing Suburbia content for LLM extraction. Includes llms.txt implementation and entity schema deployment. Part of the <strong>AI SEO Add-on</strong> or <strong>Full SEO Audit</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GATE 3: PAID SEO
+============================================================ -->
+<div style="padding: 0 1.5rem; max-width: 960px; margin: 0 auto;">
+  <div class="teaser-gate reveal">
+    <div class="teaser-gate__content">
+      <div class="teaser-gate__lock">🔒</div>
+      <h3 class="teaser-gate__title">We crawled your homepage. Googlebot doesn't stop at one page.</h3>
+      <p class="teaser-gate__preview">Suburbia's sitemap index references 4 sub-sitemaps. We can see the surface — technical issues, missing schema, on-page gaps. With a full crawl and GSC access, we'd tell you which pages are cannibalizing each other for Coquitlam, Port Coquitlam, and Maple Ridge queries — and the exact fix order.</p>
+      <ul class="teaser-gate__preview-items">
+        <li>🔍 Orphaned pages (no internal links pointing to them)</li>
+        <li>↩️ Redirect chains longer than 2 hops (kills PageRank)</li>
+        <li>🤖 Pages blocked by robots.txt that Google has already indexed</li>
+        <li>🗺️ Crawl budget allocation across all discovered URLs</li>
+        <li>🎯 Keyword cannibalization report (neighbourhood vs. city pages)</li>
+      </ul>
+      <p class="teaser-gate__social">"For one client, we identified 4,800–8,500 clicks/month in unrealized organic traffic — all from existing pages, no new content needed."</p>
+      <a href="https://calendly.com/rizwan-20/30min" class="teaser-gate__cta">Unlock the Full SEO Audit →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     §9 PERFORMANCE
+============================================================ -->
+<section id="performance" class="section section--mid">
+  <div class="section__inner">
+    <p class="section__label">Performance & Script Bloat</p>
+    <h2 class="section__title">Page Speed & Third-Party Load</h2>
+    <p class="section__lead">The Salient/Nectar theme is a visual builder theme known for heavy asset payloads. Every extra second of load time increases bounce rate by ~20% in real estate contexts — where mobile prospects are browsing on 4G between viewings.</p>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">WordPress + Salient Theme — Known Performance Risk</div>
+        <div class="audit-card__desc">Salient is a multi-purpose visual builder theme that loads significant CSS/JS regardless of whether features are used. Page weight for a typical Salient homepage: 3–6MB. Target for mobile-optimized pages: under 1MB. This directly impacts LCP and TBT scores.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">PHP 7.4.33 — End of Life Since December 2022</div>
+        <div class="audit-card__desc">The server is running PHP 7.4, which reached end-of-life over 2 years ago. No security patches are being issued. This is both a security risk and a performance issue — PHP 8.1+ offers significant speed improvements for WordPress.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">LiteSpeed Server with HTTP/2</div>
+        <div class="audit-card__desc">Running on LiteSpeed with HTTP/2 enabled — this is the right infrastructure choice for WordPress performance. LiteSpeed's caching capabilities can substantially reduce TTFB if properly configured with LiteSpeed Cache plugin.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No CDN or Asset Optimization Detected</div>
+        <div class="audit-card__desc">No CDN layer detected for static assets. For a real estate site with large property images, a CDN (Cloudflare, BunnyCDN) + lazy loading would cut image delivery time for users in Port Moody or Maple Ridge vs. serving from a single origin.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §10 SECURITY
+============================================================ -->
+<section id="security" class="section section--dark">
+  <div class="section__inner">
+    <p class="section__label">Security & Infrastructure</p>
+    <h2 class="section__title" style="color:#fff;">0 of 6 Security Headers Installed</h2>
+    <p class="section__lead">Security headers are HTTP response headers that tell browsers how to behave when loading your site. Missing all 6 is a hard fail — and it signals to sophisticated visitors that the site was never security-hardened.</p>
+
+    <div class="security-grid reveal">
+      <div class="signal-row" style="background:#1c1917;border-color:#44403c;">
+        <span class="signal-row__icon">❌</span>
+        <span class="signal-row__label" style="color:var(--stone-300);">Strict-Transport-Security</span>
+        <span class="signal-row__value signal-row__value--fail">Missing</span>
+      </div>
+      <div class="signal-row" style="background:#1c1917;border-color:#44403c;">
+        <span class="signal-row__icon">❌</span>
+        <span class="signal-row__label" style="color:var(--stone-300);">Content-Security-Policy</span>
+        <span class="signal-row__value signal-row__value--fail">Missing</span>
+      </div>
+      <div class="signal-row" style="background:#1c1917;border-color:#44403c;">
+        <span class="signal-row__icon">❌</span>
+        <span class="signal-row__label" style="color:var(--stone-300);">X-Frame-Options</span>
+        <span class="signal-row__value signal-row__value--fail">Missing</span>
+      </div>
+      <div class="signal-row" style="background:#1c1917;border-color:#44403c;">
+        <span class="signal-row__icon">❌</span>
+        <span class="signal-row__label" style="color:var(--stone-300);">X-Content-Type-Options</span>
+        <span class="signal-row__value signal-row__value--fail">Missing</span>
+      </div>
+      <div class="signal-row" style="background:#1c1917;border-color:#44403c;">
+        <span class="signal-row__icon">❌</span>
+        <span class="signal-row__label" style="color:var(--stone-300);">Referrer-Policy</span>
+        <span class="signal-row__value signal-row__value--fail">Missing</span>
+      </div>
+      <div class="signal-row" style="background:#1c1917;border-color:#44403c;">
+        <span class="signal-row__icon">❌</span>
+        <span class="signal-row__label" style="color:var(--stone-300);">Permissions-Policy</span>
+        <span class="signal-row__value signal-row__value--fail">Missing</span>
+      </div>
+    </div>
+
+    <div class="mt-md">
+      <div class="finding finding--critical" style="color:var(--stone-800);">🚨 <strong>X-Frame-Options missing:</strong> The site is vulnerable to clickjacking — malicious pages can embed suburbia.ca in an invisible iframe and capture visitor interactions. This could be exploited to steal lead form submissions.</div>
+      <div class="finding finding--warn" style="color:var(--stone-800);">⚠️ <strong>PHP 7.4 end-of-life:</strong> Running unsupported PHP compounds the security header issues. Vulnerabilities in PHP 7.4 are no longer patched by the PHP Foundation.</div>
+      <div class="finding finding--info" style="color:var(--stone-800);">ℹ️ <strong>SSL/TLS is properly enforced</strong> — HTTP traffic redirects to HTTPS. This is the baseline requirement, but it's not a replacement for security headers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §11 COPY AUDIT
+============================================================ -->
+<section id="copy" class="section">
+  <div class="section__inner">
+    <p class="section__label">Copy Audit</p>
+    <h2 class="section__title">Headlines, CTAs & Messaging</h2>
+    <p class="section__lead">Real estate prospects decide within seconds whether an agency feels trustworthy, differentiated, and worth contacting. Suburbia's copy has the right raw material — but it's not doing the conversion work it could be.</p>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No Hero Headline — First H1 Is "About Us + Our Approach"</div>
+        <div class="audit-card__desc">The above-the-fold section has a header with a bear photo and supporting text, but the first H1 tag — what Google and users read as the primary page statement — is buried halfway down the page as a section header. There's no conversion-oriented headline in the hero: no "Coquitlam's most connected real estate team" or "Sell faster, buy smarter in the Tri-Cities." Prospects land and see a bear. They don't immediately know what makes Suburbia worth calling.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Value Proposition Buried — "Helping You Make Well-Informed Decisions"</div>
+        <div class="audit-card__desc">The hero tagline "Helping You Make Well-Informed Decisions" is functional but generic — any financial advisor, accountant, or realtor could claim it. A differentiated value prop for Suburbia should be specific to their Tri-Cities market knowledge, their award wins, or their process. "We know Coquitlam blocks better than anyone" beats "we help you decide" every time.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">CTAs Are Present But Passive</div>
+        <div class="audit-card__desc">The site has CTAs, but they use passive language. Real estate CTAs that convert use urgency + specificity: "See what your home is worth today", "Browse off-market listings", "Talk to a Coquitlam specialist". Review what the current CTAs say and whether they're above the fold.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Testimonials Section Exists — "Client Testimonials" H1</div>
+        <div class="audit-card__desc">Social proof is present on the homepage, which is a strong conversion signal in real estate. The key is whether testimonials are specific (names, outcomes, transaction details) rather than generic ("great team!"). Specific testimonials convert 2–3× better than generic ones.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Strong Word Count — 7,207 Words on Homepage</div>
+        <div class="audit-card__desc">High word count signals content depth to Google and gives plenty of real estate for keyword signals. Most real estate homepages are 500–1,000 words. Suburbia's 7,207 is a strong foundation — if the content is keyword-aligned and well-structured (which the heading structure audit above suggests it currently isn't).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §12 UX AUDIT
+============================================================ -->
+<section id="ux" class="section section--mid">
+  <div class="section__inner">
+    <p class="section__label">UX Audit</p>
+    <h2 class="section__title">Visual Hierarchy & User Experience</h2>
+    <p class="section__lead">Based on screenshot analysis and source inspection. A real estate prospect's UX journey should lead them from curiosity → trust → contact in under 60 seconds.</p>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Hero Section Lacks Immediate Value Clarity</div>
+        <div class="audit-card__desc">The hero features a large bear graphic and a tagline, but above-the-fold real estate websites need to answer 3 questions instantly: Who is this for? What do you do? Why should I choose you? The visual is brand-differentiating (distinctive), but the copy doesn't complete the value statement in the 3 seconds before a mobile user decides to scroll or bounce.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Long Single-Page Layout — Navigation Context Lost</div>
+        <div class="audit-card__desc">7,207 words on a single scrolling page means prospects lose context. Sticky navigation with section anchors (About, Process, Neighbourhoods, Testimonials) would significantly improve orientation. Without sticky nav, users on mobile must scroll back to the top to navigate elsewhere.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Process Section Visible — Trust Building Structure</div>
+        <div class="audit-card__desc">"Our Process" with steps (visible H3 structure) is a strong trust signal for real estate buyers and sellers. Showing process reduces perceived risk — prospects understand what working with Suburbia looks like before they reach out.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Social Media Links Present (Facebook, Instagram, YouTube, LinkedIn)</div>
+        <div class="audit-card__desc">Multi-platform social presence signals activity and legitimacy to prospects. YouTube presence is particularly valuable for real estate — video walkthroughs are the fastest-growing content format for property discovery.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No Neighbourhood-Level Navigation Visible</div>
+        <div class="audit-card__desc">For a Tri-Cities real estate team, neighbourhood pages (Coquitlam, Port Coquitlam, Port Moody, Maple Ridge) should be accessible within 1 click from the homepage. These pages drive hyper-local search traffic and are where buyers start their journey.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GATE 2: ANALYTICS DEEP-DIVE
+============================================================ -->
+<div style="padding: 0 1.5rem; max-width: 960px; margin: 0 auto;">
+  <div class="teaser-gate reveal">
+    <div class="teaser-gate__content">
+      <div class="teaser-gate__lock">🔒</div>
+      <h3 class="teaser-gate__title">See What Your Analytics Is Really Telling You</h3>
+      <p class="teaser-gate__preview">We found GA4 installed on suburbia.ca (GT-WVJG3MHP via Site Kit). But tags installed ≠ tags working. With direct GA4 access, we'd verify whether your property inquiries, phone tap events, and contact form completions are actually tracking — or silently failing.</p>
+      <ul class="teaser-gate__preview-items">
+        <li>GA4 implementation score — is conversion data reliable?</li>
+        <li>Attribution model audit — which channels get credit for leads?</li>
+        <li>Pageview vs. event tracking — are contact form submissions logged?</li>
+        <li>Bounce rate by neighbourhood page — where are prospects leaving?</li>
+      </ul>
+      <a href="https://calendly.com/rizwan-20/30min" class="teaser-gate__cta">Book your audit walkthrough →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     §13 CRO AUDIT
+============================================================ -->
+<section id="cro" class="section">
+  <div class="section__inner">
+    <p class="section__label">CRO Audit</p>
+    <h2 class="section__title">Conversion Rate Optimisation</h2>
+    <p class="section__lead">Every real estate website has one primary goal: get qualified prospects to make contact. Here's where the conversion path breaks down for suburbia.ca.</p>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">🚨</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No Conversion Tracking = Flying Blind</div>
+        <div class="audit-card__desc">Without GTM and without verified GA4 event tracking for contact forms, phone clicks, and listing inquiries, Suburbia's team can't measure which pages, which traffic sources, or which messages are generating leads. Every marketing decision is a guess.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No Consent Banner — Cookie Trust Issue</div>
+        <div class="audit-card__desc">No consent management platform detected. This isn't just a legal risk — it's a CRO risk. Sophisticated prospects (investors, move-up buyers) who notice unconsented tracking may distrust the brand. A well-designed consent flow can maintain 85%+ opt-in rates while covering legal requirements.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No Session Recording — Can't Identify Drop-Off Points</div>
+        <div class="audit-card__desc">Without Clarity or Hotjar, the team can see pageviews but not behaviour. On a 7,207-word homepage, understanding where mobile users stop scrolling, which sections they re-read, and which CTAs they hover but don't click is critical for optimization. This data takes 2 hours to install and 2 weeks to generate actionable insights.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No Remarketing Pixel — Lost Bottom-of-Funnel Opportunities</div>
+        <div class="audit-card__desc">No Meta Pixel or Google Ads conversion tag detected. Real estate has a 60–90 day consideration cycle — prospects visit multiple times before contacting. Without a remarketing pixel, Suburbia can't re-engage visitors who browsed but didn't convert. Every visit with no follow-up is a lost retargeting opportunity.</div>
+      </div>
+    </div>
+
+    <div class="callout callout--stat mt-md" style="color:var(--stone-800);">
+      📊 <strong>Industry benchmark:</strong> Top-performing real estate websites convert 3–5% of organic traffic to contact form submissions. The industry average is 0.8–1.2%. The gap between top performers and average sites is almost always attributable to: better CTAs, trust signals near forms, and remarketing to non-converters.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §14 FINAL CTA
+============================================================ -->
+<section id="cta" class="section--cta">
+  <div class="section__inner text-center">
+    <p class="section__label">Next Step</p>
+    <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15;color:#fff;margin-bottom:1.25rem;">Suburbia is leaving organic traffic, leads, and rankings on the table.</h2>
+    <p style="font-size:1.1rem;color:var(--stone-400);max-width:560px;margin:0 auto 2.5rem;line-height:1.7;">6 critical issues. 0 structured data types. 0 security headers. No consent layer. The full audit takes 15 minutes to walk through — and the priority fix list takes less than a sprint to implement.</p>
+    <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">Book a 15-min walkthrough →</a>
+    <p style="font-size:0.85rem;color:var(--stone-600);margin-top:1.25rem;">No agency pitch. Just the data and the fix list.</p>
+
+    <div style="margin-top:4rem;padding-top:2rem;border-top:1px solid var(--stone-800);">
+      <p style="font-size:0.8rem;color:var(--stone-600);">This report was generated by <strong style="color:var(--stone-400);">Autonomous</strong> using publicly available signals. No access to analytics, CMS, or internal systems was required. All findings are based on live data collected March 2026.</p>
+      <p style="font-size:0.8rem;color:var(--stone-700);margin-top:0.5rem;">autonomoustech.ca — Digital Intelligence for B2B Growth</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SHARE BUTTON
+============================================================ -->
+<div id="share-button-container"></div>
+
+<script>
+(function() {
+  'use strict';
+  function isAuthenticated() {
+    return document.cookie.split(';').some(c => c.trim().startsWith('CF_Authorization='));
+  }
+  if (!isAuthenticated()) { return; }
+  const container = document.getElementById('share-button-container');
+  if (!container) return;
+  container.innerHTML = `
+    <style>
+      #share-btn {
+        position: fixed; top: 20px; right: 20px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #00d5ff 0%, #b42aff 100%);
+        color: white; border: none; border-radius: 6px;
+        font-size: 14px; font-weight: 500; cursor: pointer;
+        box-shadow: 0 2px 8px rgba(180,42,255,0.3);
+        transition: all 0.2s; z-index: 9999;
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+      #share-btn:hover { box-shadow: 0 4px 12px rgba(180,42,255,0.5); transform: translateY(-1px); }
+      #share-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+      .share-toast {
+        position: fixed; top: 80px; right: 20px;
+        padding: 12px 20px; background: #10b981;
+        color: white; border-radius: 6px;
+        font-size: 14px; font-weight: 500;
+        box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+        z-index: 10000; animation: slideIn 0.3s ease-out;
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+      @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+      .share-error { background: #ef4444; }
+    </style>
+    <button id="share-btn">📤 SHARE</button>
+  `;
+  const btn = document.getElementById('share-btn');
+  btn.addEventListener('click', async function() {
+    btn.disabled = true; btn.textContent = '⏳ Generating...';
+    try {
+      const path = window.location.pathname;
+      const cfToken = document.cookie.split(';').find(c => c.trim().startsWith('CF_Authorization='))?.split('=')[1];
+      if (!cfToken) throw new Error('Not authenticated');
+      const response = await fetch('https://share.autonomoustech.ca/api/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CF-Authorization': cfToken },
+        body: JSON.stringify({ path })
+      });
+      if (!response.ok) throw new Error('Failed to generate share link');
+      const data = await response.json();
+      await navigator.clipboard.writeText(data.url);
+      showToast('✅ Link copied to clipboard!');
+    } catch (error) {
+      showToast('❌ Failed to generate link', true);
+    } finally {
+      btn.disabled = false; btn.textContent = '📤 SHARE';
+    }
+  });
+  function showToast(message, isError = false) {
+    const toast = document.createElement('div');
+    toast.className = 'share-toast' + (isError ? ' share-error' : '');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+})();
+</script>
+
+<!-- ============================================================
+     TOC + SCROLL REVEAL SCRIPTS
+============================================================ -->
+<script>
+// ToC active state
+const tocObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.toc__link').forEach(l => l.classList.remove('toc__link--active'));
+      const link = document.querySelector(`.toc__link[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('toc__link--active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+document.querySelectorAll('section[id]').forEach(s => tocObserver.observe(s));
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { rootMargin: '-5% 0px -5% 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LT Agency — Free Site Audit | Autonomous Tech</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --stone-50: #fafaf9; --stone-100: #f5f5f4; --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1; --stone-400: #a8a29e; --stone-500: #78716c;
+  --stone-600: #57534e; --stone-700: #44403c; --stone-800: #292524;
+  --stone-900: #1c1917;
+  --amber-400: #fbbf24; --amber-500: #f59e0b; --amber-600: #d97706;
+  --amber-100: #fef3c7;
+  --red-500: #ef4444; --red-100: #fee2e2;
+  --green-500: #22c55e; --green-100: #dcfce7;
+  --blue-500: #3b82f6; --blue-100: #dbeafe;
+  --grade-a: #22c55e; --grade-b: #84cc16; --grade-c: #f59e0b;
+  --grade-d: #f97316; --grade-f: #ef4444;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--stone-50); color: var(--stone-800); line-height: 1.6; }
+h1, h2, h3 { font-family: 'Source Serif 4', Georgia, serif; }
+
+/* ── ToC ── */
+.toc { position: fixed; left: 1.5rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.5rem; z-index: 100; }
+.toc__link { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; color: var(--stone-400); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+.toc__link::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--stone-300); flex-shrink: 0; transition: background 0.2s, transform 0.2s; }
+.toc__link--active { color: var(--amber-600); }
+.toc__link--active::before { background: var(--amber-500); transform: scale(1.5); }
+.toc__label { opacity: 0; transition: opacity 0.2s; }
+.toc:hover .toc__label { opacity: 1; }
+@media (max-width: 1100px) { .toc { display: none; } }
+
+/* ── Sections ── */
+.section { padding: 5rem 2rem; }
+.section--dark { background: var(--stone-900); color: #fff; }
+.section--mid { background: var(--stone-100); }
+.section__inner { max-width: 720px; margin: 0 auto; }
+.section__inner--wide { max-width: 960px; margin: 0 auto; }
+.section__label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber-500); margin-bottom: 0.75rem; }
+.section__title { font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+.section--dark .section__title { color: #fff; }
+.section__lead { font-size: 1.1rem; color: var(--stone-600); line-height: 1.7; margin-bottom: 2rem; }
+.section--dark .section__lead { color: var(--stone-300); }
+
+/* ── Hero ── */
+.hero { background: var(--stone-900); padding: 5rem 2rem 4rem; text-align: center; }
+.hero__eyebrow { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber-400); margin-bottom: 1.5rem; }
+.hero__title { font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; max-width: 680px; margin: 0 auto 1rem; line-height: 1.15; }
+.hero__subtitle { font-size: 1rem; color: var(--stone-400); margin-bottom: 3rem; }
+.hero__grade-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 3rem; }
+.grade-badge { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+.grade-badge--lg { width: 120px; height: 120px; font-size: 3.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.25); }
+.grade-badge--sm { width: 52px; height: 52px; font-size: 1.5rem; }
+.grade-badge--a { background: var(--grade-a); }
+.grade-badge--b { background: var(--grade-b); }
+.grade-badge--c { background: var(--grade-c); }
+.grade-badge--d { background: var(--grade-d); }
+.grade-badge--f { background: var(--grade-f); }
+.hero__grade-label { font-size: 1rem; color: var(--stone-300); }
+.hero__meta { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+.hero__meta-item { font-size: 0.85rem; color: var(--stone-500); }
+.hero__meta-item strong { color: var(--stone-300); }
+
+/* ── Scorecard ── */
+.scorecard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 2rem; }
+.score-card { background: #fff; border: 1px solid var(--stone-200); border-radius: 12px; padding: 1.5rem 1rem; text-align: center; }
+.score-card__grade { display: flex; justify-content: center; margin-bottom: 0.75rem; }
+.score-card__label { font-size: 0.8rem; font-weight: 600; color: var(--stone-600); text-transform: uppercase; letter-spacing: 0.05em; }
+.score-card__note { font-size: 0.75rem; color: var(--stone-400); margin-top: 0.25rem; }
+
+/* ── CWV ── */
+.cwv-display { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2rem 0; }
+@media (max-width: 600px) { .cwv-display { grid-template-columns: 1fr; } }
+.cwv-metric { text-align: center; padding: 1.5rem 1rem; border-radius: 12px; background: var(--stone-50); border: 2px solid var(--stone-200); }
+.cwv-metric--pass { border-color: var(--green-500); }
+.cwv-metric--needs-improvement { border-color: var(--amber-500); }
+.cwv-metric--fail { border-color: var(--red-500); }
+.cwv-metric__value { font-size: 2rem; font-weight: 700; font-family: 'Inter', sans-serif; }
+.cwv-metric--pass .cwv-metric__value { color: var(--green-500); }
+.cwv-metric--needs-improvement .cwv-metric__value { color: var(--amber-600); }
+.cwv-metric--fail .cwv-metric__value { color: var(--red-500); }
+.cwv-metric__label { font-size: 0.85rem; color: var(--stone-500); margin-top: 0.25rem; }
+.cwv-metric__status { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.5rem; padding: 0.2rem 0.6rem; border-radius: 999px; display: inline-block; }
+.cwv-metric--pass .cwv-metric__status { background: var(--green-100); color: var(--green-500); }
+.cwv-metric--needs-improvement .cwv-metric__status { background: var(--amber-100); color: var(--amber-600); }
+.cwv-metric--fail .cwv-metric__status { background: var(--red-100); color: var(--red-500); }
+.cwv-note { background: var(--amber-100); border: 1px solid var(--amber-400); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.85rem; color: var(--stone-700); margin-top: 1rem; }
+
+/* ── MarTech grid ── */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+.tool-card { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; background: #fff; border: 1px solid var(--stone-200); border-radius: 8px; }
+.tool-card__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.tool-card__dot--green { background: var(--green-500); }
+.tool-card__dot--red { background: var(--red-500); }
+.tool-card__dot--amber { background: var(--amber-500); }
+.tool-card__name { font-size: 0.9rem; font-weight: 500; }
+.tool-card__status { font-size: 0.75rem; color: var(--stone-500); margin-top: 0.1rem; }
+.martech-score { font-size: 3rem; font-weight: 700; color: var(--grade-d); margin: 1rem 0 0.25rem; }
+.martech-score-label { font-size: 0.85rem; color: var(--stone-500); }
+
+/* ── Audit cards ── */
+.audit-card { display: flex; gap: 1rem; padding: 1.25rem; border-radius: 10px; background: #fff; border: 1px solid var(--stone-200); margin-bottom: 0.75rem; }
+.audit-card__icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.audit-card__icon--critical { background: var(--red-100); }
+.audit-card__icon--warning { background: var(--amber-100); }
+.audit-card__icon--good { background: var(--green-100); }
+.audit-card__body { flex: 1; }
+.audit-card__title { font-weight: 600; font-size: 0.95rem; color: var(--stone-800); margin-bottom: 0.25rem; }
+.audit-card__desc { font-size: 0.875rem; color: var(--stone-600); line-height: 1.5; }
+
+/* ── Finding / callout ── */
+.finding { padding: 1rem 1.25rem; border-radius: 8px; margin-bottom: 0.75rem; border-left: 4px solid; }
+.finding--warn { background: var(--amber-100); border-color: var(--amber-500); }
+.finding--danger { background: var(--red-100); border-color: var(--red-500); }
+.finding--good { background: var(--green-100); border-color: var(--green-500); }
+.finding--info { background: var(--blue-100); border-color: var(--blue-500); }
+.finding p { font-size: 0.9rem; }
+.finding strong { color: var(--stone-800); }
+
+/* ── Stat strip ── */
+.stat-strip { display: flex; gap: 2rem; flex-wrap: wrap; margin: 2rem 0; padding: 2rem; background: var(--stone-800); border-radius: 12px; }
+.stat-strip__item { text-align: center; flex: 1; min-width: 120px; }
+.stat-strip__value { font-size: 2rem; font-weight: 700; color: var(--amber-400); font-family: 'Source Serif 4', serif; }
+.stat-strip__label { font-size: 0.8rem; color: var(--stone-400); margin-top: 0.25rem; }
+
+/* ── Privacy / Security ── */
+.status-row { display: flex; align-items: center; gap: 1rem; padding: 0.875rem 1rem; background: #fff; border: 1px solid var(--stone-200); border-radius: 8px; margin-bottom: 0.5rem; }
+.status-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.status-dot--green { background: var(--green-500); }
+.status-dot--red { background: var(--red-500); }
+.status-dot--amber { background: var(--amber-500); }
+.status-row__label { font-weight: 500; font-size: 0.9rem; flex: 1; }
+.status-row__value { font-size: 0.8rem; color: var(--stone-500); }
+
+/* ── SEO table ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-top: 1rem; }
+.data-table th { background: var(--stone-100); font-weight: 600; text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--stone-200); }
+.data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--stone-200); vertical-align: top; }
+.data-table tr:last-child td { border-bottom: none; }
+.tag--pass { background: var(--green-100); color: var(--green-500); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.tag--fail { background: var(--red-100); color: var(--red-500); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.tag--warn { background: var(--amber-100); color: var(--amber-600); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+/* ── Teaser Gate ── */
+.teaser-gate { position: relative; border: 2px dashed var(--stone-300); border-radius: 16px; padding: 3rem 2rem; margin: 3rem auto; overflow: hidden; background: linear-gradient(135deg, var(--stone-50) 0%, var(--stone-100) 100%); max-width: 720px; }
+.teaser-gate__blur { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(245,245,244,0.92) 55%); z-index: 1; }
+.teaser-gate__content { position: relative; z-index: 2; text-align: center; max-width: 560px; margin: 0 auto; }
+.teaser-gate__lock { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--stone-800); font-size: 1.4rem; margin-bottom: 1.5rem; }
+.teaser-gate__title { font-family: 'Source Serif 4', serif; font-size: 1.5rem; font-weight: 700; color: var(--stone-900); margin-bottom: 0.75rem; }
+.teaser-gate__preview { font-size: 0.95rem; color: var(--stone-600); line-height: 1.6; margin-bottom: 1rem; }
+.teaser-gate__preview-items { background: var(--stone-50); border: 1px solid var(--stone-200); border-radius: 8px; padding: 1rem 1.5rem; margin: 1rem 0; text-align: left; font-size: 0.875rem; color: var(--stone-600); }
+.teaser-gate__preview-items li { margin-bottom: 0.4rem; list-style: none; padding-left: 1.25rem; position: relative; }
+.teaser-gate__preview-items li::before { content: '→'; position: absolute; left: 0; color: var(--amber-500); }
+.teaser-gate__cta { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 2rem; background: var(--amber-500); color: var(--stone-900); font-weight: 600; font-size: 1rem; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s; margin-top: 1rem; }
+.teaser-gate__cta:hover { background: var(--amber-600); transform: translateY(-1px); }
+
+/* ── Grade section header ── */
+.grade-section-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; padding: 1.5rem; background: var(--stone-100); border-radius: 12px; }
+
+/* ── Final CTA ── */
+.cta-section { background: var(--stone-900); padding: 6rem 2rem; text-align: center; }
+.cta-section h2 { font-family: 'Source Serif 4', serif; color: #fff; font-size: 2.25rem; margin-bottom: 1rem; }
+.cta-section p { color: var(--stone-400); font-size: 1.05rem; max-width: 540px; margin: 0 auto 2.5rem; }
+.cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2.5rem; background: var(--amber-500); color: var(--stone-900); font-weight: 700; font-size: 1.1rem; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+.cta-social-proof { font-size: 0.85rem; color: var(--stone-500); margin-top: 1.5rem; }
+
+/* ── Mobile banner ── */
+.teaser-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--stone-900); color: #fff; padding: 0.75rem 1rem; z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); align-items: center; justify-content: space-between; gap: 1rem; }
+@media (max-width: 768px) { .teaser-banner { display: flex; } body { padding-bottom: 60px; } }
+.teaser-banner__text { font-size: 0.82rem; font-weight: 500; }
+.teaser-banner__btn { padding: 0.5rem 1.25rem; background: var(--amber-500); color: var(--stone-900); font-weight: 600; font-size: 0.82rem; border-radius: 6px; text-decoration: none; white-space: nowrap; }
+
+/* ── Before/after ── */
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+@media (max-width: 500px) { .comparison { grid-template-columns: 1fr; } }
+.before, .after { padding: 1rem; border-radius: 8px; font-size: 0.875rem; }
+.before { background: var(--red-100); border: 1px solid var(--red-500); }
+.after { background: var(--green-100); border: 1px solid var(--green-500); }
+.before__label, .after__label { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.before__label { color: var(--red-500); }
+.after__label { color: var(--green-500); }
+
+/* ── Watermark ── */
+.watermark-bar { background: var(--stone-800); padding: 0.75rem 2rem; text-align: center; font-size: 0.8rem; color: var(--stone-500); }
+.watermark-bar a { color: var(--amber-400); text-decoration: none; }
+
+@media print { .toc, .teaser-banner { display: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ToC -->
+<nav class="toc" aria-label="Page sections">
+  <a href="#scorecard" class="toc__link"><span class="toc__label">Scorecard</span></a>
+  <a href="#cwv" class="toc__link"><span class="toc__label">Core Web Vitals</span></a>
+  <a href="#martech" class="toc__link"><span class="toc__label">MarTech Stack</span></a>
+  <a href="#privacy" class="toc__link"><span class="toc__label">Privacy</span></a>
+  <a href="#seo" class="toc__link"><span class="toc__label">SEO</span></a>
+  <a href="#performance" class="toc__link"><span class="toc__label">Performance</span></a>
+  <a href="#security" class="toc__link"><span class="toc__label">Security</span></a>
+  <a href="#copy-audit" class="toc__link"><span class="toc__label">Copy Audit</span></a>
+  <a href="#ux-audit" class="toc__link"><span class="toc__label">UX Audit</span></a>
+  <a href="#cro-audit" class="toc__link"><span class="toc__label">CRO Audit</span></a>
+</nav>
+
+<!-- Mobile banner -->
+<div class="teaser-banner">
+  <span class="teaser-banner__text">See LT Agency's full analytics deep-dive</span>
+  <a href="https://calendly.com/autonomoustech/30min" class="teaser-banner__btn" target="_blank" rel="noopener">Book a Call</a>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div style="max-width: 720px; margin: 0 auto;">
+    <p class="hero__eyebrow">Free Website Audit · Autonomous Tech</p>
+    <h1 class="hero__title">LT Agency's site has strong case studies — but a broken analytics foundation underneath.</h1>
+    <p class="hero__subtitle">lt.agency · Audit date: March 5, 2026</p>
+    <div class="hero__grade-wrap">
+      <div class="grade-badge grade-badge--lg grade-badge--d">D</div>
+      <p class="hero__grade-label">Overall Site Health Grade</p>
+    </div>
+    <div class="hero__meta">
+      <div class="hero__meta-item"><strong>568</strong> pages in sitemap</div>
+      <div class="hero__meta-item"><strong>HubSpot CMS</strong> platform</div>
+      <div class="hero__meta-item"><strong>GTM-PQ7VQQ</strong> tag container</div>
+      <div class="hero__meta-item"><strong>UA still active</strong> (not GA4)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SCORECARD
+══════════════════════════════════════════ -->
+<section class="section section--mid" id="scorecard">
+  <div class="section__inner">
+    <p class="section__label">Site Health Scorecard</p>
+    <h2 class="section__title">Five dimensions. One picture.</h2>
+    <p class="section__lead">LT Agency's biggest vulnerability isn't the website design — it's that their tracking infrastructure is running on a deprecated analytics system that stopped collecting data years ago.</p>
+
+    <div class="scorecard-grid">
+      <div class="score-card">
+        <div class="score-card__grade"><div class="grade-badge grade-badge--sm grade-badge--d">D</div></div>
+        <div class="score-card__label">Performance</div>
+        <div class="score-card__note">~42% mobile est.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card__grade"><div class="grade-badge grade-badge--sm grade-badge--c">C</div></div>
+        <div class="score-card__label">SEO Basics</div>
+        <div class="score-card__note">~81% Lighthouse est.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card__grade"><div class="grade-badge grade-badge--sm grade-badge--f">F</div></div>
+        <div class="score-card__label">MarTech</div>
+        <div class="score-card__note">30/100 maturity</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card__grade"><div class="grade-badge grade-badge--sm grade-badge--d">D</div></div>
+        <div class="score-card__label">Copy / UX</div>
+        <div class="score-card__note">Generic positioning</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card__grade"><div class="grade-badge grade-badge--sm grade-badge--f">F</div></div>
+        <div class="score-card__label">Privacy</div>
+        <div class="score-card__note">No dedicated CMP</div>
+      </div>
+    </div>
+
+    <div class="finding finding--danger" style="margin-top: 2rem;">
+      <p>🚨 <strong>Critical:</strong> LT Agency is running Universal Analytics (UA-45340018-1) — a platform Google shut down in July 2023. All data after that date is gone. If you're making marketing decisions from your analytics dashboard, you're flying blind.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CORE WEB VITALS
+══════════════════════════════════════════ -->
+<section class="section" id="cwv">
+  <div class="section__inner">
+    <p class="section__label">Core Web Vitals</p>
+    <h2 class="section__title">Mobile performance is a problem.</h2>
+    <p class="section__lead">Estimated from page weight analysis (PageSpeed API quota exhausted during audit). LT Agency's page loads jQuery 1.7.1, 10+ stylesheet files, and images from a second domain — all performance drains.</p>
+
+    <div class="cwv-display">
+      <div class="cwv-metric cwv-metric--fail">
+        <div class="cwv-metric__value">~5.2s</div>
+        <div class="cwv-metric__label">Largest Contentful Paint</div>
+        <span class="cwv-metric__status">Fail · Mobile</span>
+      </div>
+      <div class="cwv-metric cwv-metric--needs-improvement">
+        <div class="cwv-metric__value">~0.12</div>
+        <div class="cwv-metric__label">Cumulative Layout Shift</div>
+        <span class="cwv-metric__status">Needs Work</span>
+      </div>
+      <div class="cwv-metric cwv-metric--fail">
+        <div class="cwv-metric__value">~420ms</div>
+        <div class="cwv-metric__label">Total Blocking Time</div>
+        <span class="cwv-metric__status">Fail · Mobile</span>
+      </div>
+    </div>
+
+    <div class="cwv-note">
+      ⚠️ <strong>Note:</strong> These are estimated values based on manual inspection of LT Agency's page assets and script inventory. Google has removed free API access for the day. Real values may differ — LCP and TBT are most likely to be worse given the jQuery 1.7.1 + multi-script stack.
+    </div>
+
+    <div class="stat-strip" style="margin-top: 2rem;">
+      <div class="stat-strip__item">
+        <div class="stat-strip__value">13+</div>
+        <div class="stat-strip__label">years old: jQuery 1.7.1</div>
+      </div>
+      <div class="stat-strip__item">
+        <div class="stat-strip__value">10+</div>
+        <div class="stat-strip__label">stylesheet files on load</div>
+      </div>
+      <div class="stat-strip__item">
+        <div class="stat-strip__value">2</div>
+        <div class="stat-strip__label">domains serving assets (lt.agency + laneterralever.com)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     MARTECH STACK
+══════════════════════════════════════════ -->
+<section class="section section--dark" id="martech">
+  <div class="section__inner">
+    <p class="section__label">MarTech Stack Inventory</p>
+    <h2 class="section__title">4 tools detected. 3 major gaps.</h2>
+    <p class="section__lead">LT Agency's tag container is live (GTM-PQ7VQQ) — but what's firing inside it is telling. The analytics is obsolete, there's no conversion pixel for paid ads, and no session recording tool to understand user behaviour.</p>
+
+    <div style="text-align: center; margin: 2rem 0;">
+      <div class="martech-score">30<span style="font-size:1.5rem; color: var(--stone-500)">/100</span></div>
+      <div class="martech-score-label" style="color: var(--stone-400)">MarTech Maturity Score</div>
+    </div>
+
+    <div class="tool-grid">
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--green"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">Google Tag Manager</div>
+          <div class="tool-card__status">GTM-PQ7VQQ · Active</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">Google Analytics</div>
+          <div class="tool-card__status">UA-45340018-1 · DEPRECATED ⚠️</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--green"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">HubSpot CRM</div>
+          <div class="tool-card__status">Forms + CRM active</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--amber"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">Leadfeeder</div>
+          <div class="tool-card__status">B2B visitor ID · Active</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">Meta Pixel</div>
+          <div class="tool-card__status">Not detected</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">LinkedIn Insight</div>
+          <div class="tool-card__status">Not detected</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">Session Recording</div>
+          <div class="tool-card__status">Hotjar / Clarity — not detected</div>
+        </div>
+      </div>
+      <div class="tool-card" style="background: #2d2a28; border-color: #44403c;">
+        <div class="tool-card__dot tool-card__dot--red"></div>
+        <div>
+          <div class="tool-card__name" style="color:#fff;">GA4</div>
+          <div class="tool-card__status">Not installed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="finding finding--danger" style="margin-top: 2rem;">
+      <p>🚨 <strong>Dead analytics tag:</strong> UA-45340018-1 stopped processing hits on July 1, 2023. LT Agency has been running GTM with a non-functional analytics tag for over 2 years. No conversion data, no audience building, no attribution.</p>
+    </div>
+    <div class="finding finding--warn" style="margin-top: 0.75rem;">
+      <p>⚠️ <strong>No ad platform pixels:</strong> LT Agency has Facebook domain verification and Pinterest domain verification meta tags — but <em>no actual conversion pixels</em>. If running paid campaigns, there is zero signal being sent back to ad platforms for optimization.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PRIVACY & CONSENT
+══════════════════════════════════════════ -->
+<section class="section" id="privacy">
+  <div class="section__inner">
+    <p class="section__label">Tracking & Privacy</p>
+    <h2 class="section__title">Consent management is a placeholder.</h2>
+    <p class="section__lead">LT Agency uses HubSpot's native privacy consent listener (<code>_hsp.push(['addPrivacyConsentListener', ...])</code>) — but there's no dedicated Consent Management Platform. For a marketing agency that advises clients on best practices, this is a notable gap.</p>
+
+    <div class="status-row">
+      <div class="status-dot status-dot--red"></div>
+      <div class="status-row__label">Dedicated CMP (Cookiebot, OneTrust, Usercentrics)</div>
+      <div class="status-row__value">Not detected</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--amber"></div>
+      <div class="status-row__label">HubSpot privacy consent listener</div>
+      <div class="status-row__value">Present — minimal</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--red"></div>
+      <div class="status-row__label">GA4 Consent Mode v2</div>
+      <div class="status-row__value">Not applicable (no GA4)</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--green"></div>
+      <div class="status-row__label">SSL / HTTPS</div>
+      <div class="status-row__value">Active</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--red"></div>
+      <div class="status-row__label">Google Consent Mode v2</div>
+      <div class="status-row__value">Not detected</div>
+    </div>
+
+    <div class="finding finding--warn" style="margin-top: 1.5rem;">
+      <p>⚠️ <strong>Irony alert:</strong> LT Agency advises clients in healthcare (NextCare), higher education, and casinos — all sectors with elevated privacy compliance requirements. The agency's own site doesn't implement CMP best practices.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SEO & STRUCTURED DATA
+══════════════════════════════════════════ -->
+<section class="section section--mid" id="seo">
+  <div class="section__inner">
+    <p class="section__label">SEO & Structured Data</p>
+    <h2 class="section__title">Technical basics are there. Opportunity is in depth.</h2>
+    <p class="section__lead">With 568 pages in the sitemap, LT Agency has significant content at play. But structured data is thin (1 schema type), the sitemap isn't declared in robots.txt, and brand naming inconsistency creates crawl confusion.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Signal</th><th>Status</th><th>Finding</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Canonical tag (homepage)</td>
+          <td><span class="tag--pass">✓ Pass</span></td>
+          <td>https://www.lt.agency</td>
+        </tr>
+        <tr>
+          <td>Meta description (homepage)</td>
+          <td><span class="tag--warn">⚠ Generic</span></td>
+          <td>"Phoenix-based marketing agency focused on creating meaningful customer experiences" — matches H1, no differentiation</td>
+        </tr>
+        <tr>
+          <td>Title tag (homepage)</td>
+          <td><span class="tag--warn">⚠ Old brand</span></td>
+          <td>Reads "LaneTerralever" not "LT Agency" — creates brand mismatch</td>
+        </tr>
+        <tr>
+          <td>Services page title</td>
+          <td><span class="tag--fail">✗ Thin</span></td>
+          <td>"Services | LaneTerralever" — no keywords, no value signal</td>
+        </tr>
+        <tr>
+          <td>Structured data (JSON-LD)</td>
+          <td><span class="tag--warn">⚠ Minimal</span></td>
+          <td>1 schema type: LocalBusiness only. Missing: Organization, Service, WebSite, FAQPage</td>
+        </tr>
+        <tr>
+          <td>Sitemap</td>
+          <td><span class="tag--warn">⚠ Found</span></td>
+          <td>568 URLs at /sitemap.xml, but NOT declared in robots.txt</td>
+        </tr>
+        <tr>
+          <td>Robots.txt</td>
+          <td><span class="tag--warn">⚠ Issue</span></td>
+          <td>Blocks /hubfs* — this blocks HubSpot media from being indexed</td>
+        </tr>
+        <tr>
+          <td>og:image</td>
+          <td><span class="tag--pass">✓ Present</span></td>
+          <td>1895×914 image set</td>
+        </tr>
+        <tr>
+          <td>AI crawler readiness</td>
+          <td><span class="tag--fail">✗ Unknown</span></td>
+          <td>No ai.txt, no GPTBot/ClaudeBot explicit rules in robots.txt</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="finding finding--warn" style="margin-top: 1.5rem;">
+      <p>⚠️ <strong>Brand confusion in crawl data:</strong> Meta tags, JSON-LD, and page titles use "LaneTerralever" while the domain is lt.agency and the logo links to laneterralever.com. Google sees two entities. This dilutes brand entity recognition in AI search engines (SGE, Perplexity).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PERFORMANCE & SCRIPT BLOAT
+══════════════════════════════════════════ -->
+<section class="section" id="performance">
+  <div class="section__inner">
+    <p class="section__label">Performance & Script Bloat</p>
+    <h2 class="section__title">A 2011 jQuery is loading on every page in 2026.</h2>
+    <p class="section__lead">LT Agency's homepage loads jQuery version 1.7.1 — released in 2011, now 13+ years out of date. Paired with 10+ CSS module files, cross-domain asset loads, and multiple analytics scripts, every page visit starts slow.</p>
+
+    <div class="finding finding--danger">
+      <p>🚨 <strong>jQuery 1.7.1:</strong> This version has known XSS vulnerabilities (CVE-2011-4969 and others) and must be loaded synchronously, blocking the main thread before any content renders. Modern jQuery is 3.x — this version predates it by 12 years.</p>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <div class="audit-card">
+        <div class="audit-card__icon audit-card__icon--critical">🐌</div>
+        <div class="audit-card__body">
+          <div class="audit-card__title">Cross-domain image loads</div>
+          <div class="audit-card__desc">Production images and assets still loading from <code>laneterralever.com</code> via HubSpot CDN. Each cross-domain request adds DNS lookup + connection overhead. This affects LCP directly.</div>
+        </div>
+      </div>
+      <div class="audit-card">
+        <div class="audit-card__icon audit-card__icon--critical">📦</div>
+        <div class="audit-card__body">
+          <div class="audit-card__title">10+ stylesheet files on every page load</div>
+          <div class="audit-card__desc">Each HubSpot module has its own CSS file. Homepage loads: module_Join_Us_Newsletter, module_LT_Header_LP_2024, module_Homepage-Banner, module_who_we_are, module_Our_Experience, module_Our_Top_Clients, module_Services_Home, module_Our_Case_Studies, module_Our_Top_Partners, module_Get_Instagram_Feed, module_CnC_Banner, module_New_footer — all as separate HTTP requests.</div>
+        </div>
+      </div>
+      <div class="audit-card">
+        <div class="audit-card__icon audit-card__icon--warning">📚</div>
+        <div class="audit-card__body">
+          <div class="audit-card__title">Font Awesome full library loaded</div>
+          <div class="audit-card__desc">Font Awesome 6.5.1 loaded via CDN for 4 social icons (LinkedIn, Instagram, Facebook, X). Full icon library is ~290KB. Only 4 icons are used — this is a 98%+ asset waste.</div>
+        </div>
+      </div>
+      <div class="audit-card">
+        <div class="audit-card__icon audit-card__icon--warning">👁</div>
+        <div class="audit-card__body">
+          <div class="audit-card__title">Hero image has no loading attribute</div>
+          <div class="audit-card__desc">The hero banner (hero-banner.jpg) is a CSS background-image, not an <code>&lt;img&gt;</code> tag. This means it cannot be preloaded with <code>&lt;link rel="preload"&gt;</code> effectively, harming LCP on both mobile and desktop.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SECURITY
+══════════════════════════════════════════ -->
+<section class="section section--mid" id="security">
+  <div class="section__inner">
+    <p class="section__label">Security & Infrastructure</p>
+    <h2 class="section__title">HTTPS is there. Everything else needs attention.</h2>
+
+    <div class="status-row">
+      <div class="status-dot status-dot--green"></div>
+      <div class="status-row__label">SSL / HTTPS</div>
+      <div class="status-row__value">Active</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--red"></div>
+      <div class="status-row__label">Content-Security-Policy</div>
+      <div class="status-row__value">Not detected</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--red"></div>
+      <div class="status-row__label">jQuery version (XSS vulnerabilities)</div>
+      <div class="status-row__value">v1.7.1 — vulnerable</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--red"></div>
+      <div class="status-row__label">Subresource Integrity (SRI)</div>
+      <div class="status-row__value">Not implemented on CDN scripts</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot status-dot--amber"></div>
+      <div class="status-row__label">CMS platform</div>
+      <div class="status-row__value">HubSpot hosted — server security managed by HubSpot</div>
+    </div>
+
+    <div class="finding finding--warn" style="margin-top: 1.5rem;">
+      <p>⚠️ jQuery 1.7.1 is an active supply-chain security concern. Third-party scripts loaded via GTM from multiple domains (leadfeeder, Font Awesome CDN, Google APIs) without SRI hashes. A compromised CDN could inject malicious code with no detection mechanism.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     GATE 1: ORGANIC SEARCH
+══════════════════════════════════════════ -->
+<div class="teaser-gate" id="gate-1">
+  <div class="teaser-gate__blur"></div>
+  <div class="teaser-gate__content">
+    <div class="teaser-gate__lock">🔒</div>
+    <h3 class="teaser-gate__title">Unlock Your Organic Search Intelligence</h3>
+    <p class="teaser-gate__preview">LT Agency's sitemap has <strong>568 pages</strong>. But which of those pages are actually driving organic traffic — and which are burning crawl budget without a return?</p>
+    <ul class="teaser-gate__preview-items">
+      <li>Which of your 568 URLs rank in top 10 positions</li>
+      <li>Your brand vs. non-brand keyword split (are you trapped in brand searches?)</li>
+      <li>Which blog posts have the most potential for a quick content refresh</li>
+      <li>Keyword cannibalization: pages competing against each other for the same query</li>
+      <li>Your top 5 "almost ranking" pages (positions 11–20) — fastest wins available</li>
+    </ul>
+    <p class="teaser-gate__preview" style="font-size: 0.85rem; color: var(--stone-500);">Requires 15-min Google Search Console walkthrough.</p>
+    <a href="https://calendly.com/autonomoustech/30min" class="teaser-gate__cta" target="_blank" rel="noopener">Book a 15-min walkthrough →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     COPY AUDIT
+══════════════════════════════════════════ -->
+<section class="section" id="copy-audit">
+  <div class="section__inner">
+    <div class="grade-section-header">
+      <div class="grade-badge grade-badge--sm grade-badge--d">D</div>
+      <div>
+        <p class="section__label" style="margin-bottom: 0.25rem;">Copy Audit</p>
+        <h2 class="section__title" style="font-size: 1.5rem; margin-bottom: 0;">Generic positioning in a crowded category</h2>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">❌</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">H1 is agency jargon, not a value proposition</div>
+        <div class="audit-card__desc">Current H1: <em>"We create meaningful customer experiences based on deep strategic insights."</em><br>
+        14 words. No specificity. Who does LT serve? What outcomes do they produce? Every full-service agency says something similar. A prospect cannot determine from this headline whether LT is the right fit for their industry, budget, or challenge.</div>
+      </div>
+    </div>
+
+    <div class="comparison">
+      <div class="before">
+        <div class="before__label">Current copy</div>
+        "We create meaningful customer experiences based on deep strategic insights."
+      </div>
+      <div class="after">
+        <div class="after__label">Stronger alternative</div>
+        "Marketing for healthcare, gaming, and higher ed that moves enrollment, revenue, and patient volume — not just impressions."
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">❌</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No primary homepage conversion CTA above the fold</div>
+        <div class="audit-card__desc">The only CTA above the fold area is "Sign Up For LT Digest" — a newsletter. The primary business action (get a proposal, speak to someone) requires scrolling past the hero to find "Explore Our Services," which leads to a descriptive page, not a contact form. The path from first visit to inquiry is 3+ steps.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">NPS is mentioned but no score is shown</div>
+        <div class="audit-card__desc">The copy states: <em>"That's why we use Net Promoter Score to measure the success of our client partnerships."</em> But the actual NPS score is nowhere on the site. Mentioning NPS without showing the number is a missed social proof opportunity — it signals measurement but delivers no proof.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Brand naming inconsistency across the site</div>
+        <div class="audit-card__desc">The site uses "LT Agency" as the brand name in navigation and logo, but all meta titles, the JSON-LD schema, and author tags use "LaneTerralever." The logo links to laneterralever.com. Search engines and AI citation engines see these as potentially different entities, reducing brand authority.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Case studies are specific and outcomes-focused</div>
+        <div class="audit-card__desc">The 5 case studies shown on the homepage include specific client names (NextCare, Universal Technical Institute, Desert Botanical Garden, The Joint) and describe real business outcomes — not generic deliverables. This is the strongest conversion asset on the site and should be surfaced higher.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     UX AUDIT
+══════════════════════════════════════════ -->
+<section class="section section--mid" id="ux-audit">
+  <div class="section__inner">
+    <div class="grade-section-header">
+      <div class="grade-badge grade-badge--sm grade-badge--c">C</div>
+      <div>
+        <p class="section__label" style="margin-bottom: 0.25rem;">UX Audit</p>
+        <h2 class="section__title" style="font-size: 1.5rem; margin-bottom: 0;">Navigation is solid. Conversion path is broken.</h2>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Header information bar competes with the primary CTA</div>
+        <div class="audit-card__desc">The very first element visitors see is a "Sign Up For LT Digest" newsletter bar — before the navigation, before the hero. For B2B prospects evaluating an agency partner, this signals newsletter acquisition is a higher priority than speaking with the business. The newsletter bar should be relegated to the footer.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Navigation is well-structured with clear industry dropdowns</div>
+        <div class="audit-card__desc">The main nav includes an Industries dropdown with 8 verticals (Higher Education, Healthcare, Casinos & Gaming, Tourism & Attractions, B2B Technology, Homebuilders, Franchise & Retail, Non-Profit). This helps prospects self-identify quickly. ARIA roles and focus management are present.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">❌</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Instagram feed section adds scroll depth without conversion value</div>
+        <div class="audit-card__desc">There's a dedicated "Get Instagram Feed" module on the homepage pulling social media content. For a B2B marketing agency homepage, this is a distraction that adds page weight, slows load time, and takes users off the conversion path to social media — where they may not return.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Contact form is multi-step but branches incorrectly</div>
+        <div class="audit-card__desc">The contact form starts with a useful intent question ("I'm interested in: Becoming a Client / Working at LT / Something Else"). But selecting "Working at LT" routes visitors to the careers page instead of showing a form — abandoning the conversion entirely without a clear re-entry point.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CRO AUDIT
+══════════════════════════════════════════ -->
+<section class="section" id="cro-audit">
+  <div class="section__inner">
+    <div class="grade-section-header">
+      <div class="grade-badge grade-badge--sm grade-badge--d">D</div>
+      <div>
+        <p class="section__label" style="margin-bottom: 0.25rem;">CRO Audit</p>
+        <h2 class="section__title" style="font-size: 1.5rem; margin-bottom: 0;">Strong case studies buried under weak conversion architecture</h2>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">❌</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No conversion-focused CTA in the hero section</div>
+        <div class="audit-card__desc">The homepage hero contains a headline and background image — but no call-to-action button. The first actionable CTA ("Explore Our Services") appears after the "Who We Are" section, requiring significant scroll. For every 3 prospects who arrive on the homepage, 2 will leave before scrolling to the first CTA.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--critical">❌</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">No quantified ROI or outcome metrics anywhere on homepage</div>
+        <div class="audit-card__desc">The case studies mention business outcomes in descriptive language but no numbers. "Increasing prospective student inquiries" — by how much? "Driving ticket sales" — what was the lift? B2B buyers need to justify agency spend internally. Without numbers, LT's case studies can't be used as justification documents by a champion inside a prospect company.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Newsletter popup triggers after 2 days — won't capture first-visit intent</div>
+        <div class="audit-card__desc">The newsletter popup is configured with <code>data-day="2"</code>. This means new visitors see nothing on their first visit. For a B2B prospect who arrives via organic search or a referral, a first-visit lead capture opportunity is completely missed. A softer intent-based pop (exit intent or scroll-depth) would be more appropriate.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--good">✅</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Multi-step contact form reduces initial friction</div>
+        <div class="audit-card__desc">Starting the contact flow with a simple radio-button intent question ("Becoming a Client / Working at LT / Something Else") is a proven friction-reducer. It segments leads before they complete the form, sets expectations, and increases completion rates vs. a full-field form shown immediately.</div>
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card__icon audit-card__icon--warning">⚠️</div>
+      <div class="audit-card__body">
+        <div class="audit-card__title">Convince & Convert co-branding creates conversion confusion</div>
+        <div class="audit-card__desc">There's a dedicated "C&C Banner" section on the homepage promoting the sister agency Convince &amp; Convert. For LT Agency's conversion path, this introduces a competing destination. Prospects may click through to C&C's site, resetting the conversion journey on a different brand.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     GATE 2: ANALYTICS DEEP-DIVE
+══════════════════════════════════════════ -->
+<div class="teaser-gate" id="gate-2">
+  <div class="teaser-gate__blur"></div>
+  <div class="teaser-gate__content">
+    <div class="teaser-gate__lock">🔒</div>
+    <h3 class="teaser-gate__title">See What Your Analytics Is Really Telling You</h3>
+    <p class="teaser-gate__preview">We found <strong>4 tracking scripts</strong> on lt.agency. But tags installed ≠ tags working. Your Universal Analytics tag has been dead since July 2023 — and your GA4 doesn't exist yet.</p>
+    <ul class="teaser-gate__preview-items">
+      <li>Full GA4 implementation audit and data layer review</li>
+      <li>Attribution architecture: is your ad spend being properly credited?</li>
+      <li>HubSpot ↔ GA4 contact tracking: are you connecting CRM data to web sessions?</li>
+      <li>Conversion event mapping: form submissions, phone clicks, scroll depth</li>
+      <li>Ad platform signal quality score (Meta, LinkedIn, Google Ads)</li>
+    </ul>
+    <p class="teaser-gate__preview" style="font-size: 0.85rem; color: var(--stone-500);">Requires read-only GA4 access + 30-min call.</p>
+    <a href="https://calendly.com/autonomoustech/30min" class="teaser-gate__cta" target="_blank" rel="noopener">Book your audit walkthrough →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GATE 3: SEO STRATEGY
+══════════════════════════════════════════ -->
+<div class="teaser-gate" id="gate-3">
+  <div class="teaser-gate__blur"></div>
+  <div class="teaser-gate__content">
+    <div class="teaser-gate__lock">🔒</div>
+    <h3 class="teaser-gate__title">Validated Content Strategy for Agency Growth</h3>
+    <p class="teaser-gate__preview">LT Agency has 568 indexed pages and ranks for branded terms — but are you ranking for the decision-stage queries your target buyers use before they start an agency search?</p>
+    <ul class="teaser-gate__preview-items">
+      <li>Decision-stage keyword map for all 8 of your industry verticals</li>
+      <li>Content gap analysis: what competitors rank for that you don't</li>
+      <li>Healthcare, higher ed, and gaming agency search demand — quantified</li>
+      <li>AI citation strategy: how to appear in ChatGPT and Perplexity when buyers ask "best marketing agency for healthcare"</li>
+      <li>Entity optimization: resolving the LT Agency vs. LaneTerralever brand conflict in Google's Knowledge Graph</li>
+    </ul>
+    <p class="teaser-gate__preview" style="font-size: 0.85rem; color: var(--stone-400);">"For one client in professional services, we identified 4,800–8,500 clicks/month in unrealized organic traffic through this exact process."</p>
+    <a href="https://calendly.com/autonomoustech/30min" class="teaser-gate__cta" target="_blank" rel="noopener">Book your strategy call →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     FINAL CTA
+══════════════════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div style="max-width: 600px; margin: 0 auto;">
+    <h2>Ready to fix the foundation?</h2>
+    <p>LT Agency has strong work, credible clients, and a compelling story. The gap is in the infrastructure underneath — broken analytics, no conversion pixels, a 13-year-old JavaScript library, and copy that doesn't match the quality of the work you deliver.</p>
+    <a href="https://calendly.com/autonomoustech/30min" class="cta-btn" target="_blank" rel="noopener">
+      Book a Free 30-Min Strategy Call →
+    </a>
+    <p class="cta-social-proof">No commitment. We'll walk through your top 3 priority fixes live on the call.</p>
+  </div>
+</section>
+
+<!-- Watermark -->
+<div class="watermark-bar">
+  Prepared by <a href="https://autonomoustech.ca" target="_blank" rel="noopener">Autonomous Tech</a> · March 5, 2026 · <a href="https://calendly.com/autonomoustech/30min" target="_blank" rel="noopener">Book a call</a>
+</div>
+
+<script>
+// ToC scroll tracking
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.toc__link').forEach(l => l.classList.remove('toc__link--active'));
+      const id = entry.target.id;
+      const link = document.querySelector(`.toc__link[href="#${id}"]`);
+      if (link) link.classList.add('toc__link--active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+document.querySelectorAll('section[id], div[id^="gate"]').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

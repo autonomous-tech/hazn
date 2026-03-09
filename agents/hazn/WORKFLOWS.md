@@ -294,3 +294,60 @@ Not everything needs a workflow. Spawn individual agents for:
 - Conversion analysis → Conversion Specialist
 
 Just spawn with a clear, focused task.
+
+---
+
+## `/analytics-audit` — Full MarTech & Attribution Audit
+
+**Duration:** 3-6 hours  
+**Requires:** GA4 property ID, GSC access (optional)
+
+### Phases
+```
+1. SETUP — parse URL, GA4 property, create output dir
+2. DATA COLLECTION (parallel) — GA4 + GSC + site inspection
+   └─→ Agent: analytics-inspector
+   └─→ Scripts: ga4_collector.py, gsc_collector.py
+3. ANALYSIS — analytics-report-writer + skills: analytics-audit, analytics-audit-martech
+   └─→ Output: .hazn/outputs/analytics-audit/<domain>-audit.md
+4. ADVERSARIAL REVIEW — analytics-adversary challenges findings
+5. CLIENT REPORT — analytics-client-reporter generates HTML report
+   └─→ Output: .hazn/outputs/analytics-audit/client-report/index.html
+```
+
+---
+
+## `/analytics-teaser` — Zero-Access Prospect Teaser Report
+
+**Duration:** 30-60 minutes  
+**Requires:** Just a URL — no GA4/GSC access needed
+
+### Phases
+```
+1. SETUP — parse URL, normalize, create output dir
+2. DATA COLLECTION (parallel) — PageSpeed + public data + Playwright screenshots
+   └─→ Agents: analytics-inspector, analytics-teaser-collector
+   └─→ Scripts: pagespeed_collector.py, teaser_collector.py
+3. REPORT GENERATION — analytics-teaser-writer + analytics-teaser-report skill
+   └─→ Output: .hazn/outputs/analytics-teaser/<domain>/index.html
+4. VERIFICATION — 3 viewport checks, content verification
+```
+
+---
+
+## `/ngo` — NGO / Association / Institutional Website
+
+**Duration:** 3 days – 4 weeks  
+**Skill:** ngo-web-design (mandatory — NOT b2b-marketing-ux)
+
+### Phases
+```
+1. STRATEGY — mission, audience hierarchy, action hierarchy
+2. COMPLIANCE — Impressum, DSGVO, BITV 2.0, cookie consent
+3. UX — transparency-first IA (not conversion funnels)
+4. COPY (optional) — trustworthy, warm, not startup-speak
+5. WIREFRAME (optional)
+6. DEV — WordPress or static, must include all legal pages
+7. ACCESSIBILITY AUDIT — WCAG 2.1 AA mandatory
+8. SEO — discoverability, schema, RSS for journalists
+```

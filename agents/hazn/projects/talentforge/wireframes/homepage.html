@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TalentForge — Hire Senior Data & AI Engineers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: '#050A14',
+              900: '#0A0F1E',
+              800: '#0D1528',
+              700: '#111C35',
+              600: '#162040',
+            },
+            electric: {
+              500: '#3B82F6',
+              400: '#60A5FA',
+              300: '#93C5FD',
+            },
+            teal: {
+              500: '#06B6D4',
+              400: '#22D3EE',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(59,130,246,0.3)' },
+              '100%': { boxShadow: '0 0 40px rgba(59,130,246,0.7), 0 0 80px rgba(6,182,212,0.3)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #0A0F1E; color: #fff; }
+
+    /* Hero background — animated circuit/data viz */
+    .hero-bg {
+      background-color: #0A0F1E;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59,130,246,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(6,182,212,0.12) 0%, transparent 50%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 30%, transparent 100%);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 20% 80%, rgba(6,182,212,0.08) 0%, transparent 60%);
+    }
+
+    /* Floating nodes */
+    .node {
+      position: absolute;
+      border-radius: 50%;
+      animation: pulse-node 3s ease-in-out infinite;
+    }
+    @keyframes pulse-node {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Glow effect */
+    .btn-glow {
+      box-shadow: 0 0 20px rgba(59,130,246,0.4), 0 0 40px rgba(59,130,246,0.15);
+      transition: all 0.3s ease;
+    }
+    .btn-glow:hover {
+      box-shadow: 0 0 30px rgba(59,130,246,0.6), 0 0 60px rgba(59,130,246,0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Card glass effect */
+    .glass-card {
+      background: rgba(13, 21, 40, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(59,130,246,0.15);
+    }
+    .glass-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transition: border-color 0.3s ease;
+    }
+
+    /* Section label */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #06B6D4;
+      text-transform: uppercase;
+    }
+
+    /* Engineer card visual */
+    .engineer-card-visual {
+      background: linear-gradient(135deg, #0D1528 0%, #111C35 100%);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .engineer-card-visual::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0A0F1E; background-image: url('hero-bg.png'); background-size: cover; background-position: center; }
+    ::-webkit-scrollbar-thumb { background: #162040; border-radius: 3px; }
+
+    /* Code snippet animation */
+    .code-line { opacity: 0; animation: fadeInLine 0.5s ease forwards; }
+    .code-line:nth-child(1) { animation-delay: 0.2s; }
+    .code-line:nth-child(2) { animation-delay: 0.4s; }
+    .code-line:nth-child(3) { animation-delay: 0.6s; }
+    .code-line:nth-child(4) { animation-delay: 0.8s; }
+    @keyframes fadeInLine { to { opacity: 1; } }
+
+    /* Tier card accent */
+    .tier-accent-blue { border-top: 3px solid #3B82F6; }
+    .tier-accent-teal { border-top: 3px solid #06B6D4; }
+
+    /* Step connector */
+    .step-connector {
+      position: absolute;
+      top: 32px;
+      left: calc(50% + 40px);
+      width: calc(100% - 80px);
+      height: 1px;
+      background: linear-gradient(90deg, rgba(59,130,246,0.6), rgba(6,182,212,0.6));
+    }
+
+    /* Availability dot */
+    .avail-dot {
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(34,197,94,0.8);
+      animation: pulse-node 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ════════════════════════════════════════════════
+       NAVIGATION
+  ════════════════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5" style="background: rgba(10,15,30,0.85); backdrop-filter: blur(20px);">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #3B82F6, #06B6D4);">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 4h4v4H2V4zM10 4h4v4h-4V4zM6 8h4v4H6V8z" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <span class="text-white font-bold text-lg tracking-tight">TalentForge</span>
+      </div>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#how-it-works" class="text-sm text-gray-400 hover:text-white transition-colors">How It Works</a>
+        <a href="#engineers" class="text-sm font-medium text-electric-400 hover:text-electric-300 transition-colors">Browse Engineers</a>
+        <a href="#pricing" class="text-sm text-gray-400 hover:text-white transition-colors">Pricing</a>
+        <a href="#contact" class="text-sm px-4 py-2 rounded-lg border border-white/20 text-white hover:border-white/40 transition-all">Talk to Our Team</a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button class="md:hidden text-gray-400 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════════════ -->
+  <section class="hero-bg min-h-screen flex items-center pt-20 pb-16 relative" id="hero">
+
+    <!-- Decorative floating nodes -->
+    <div class="node w-2 h-2 bg-electric-500" style="top:15%; left:8%; animation-delay:0s;"></div>
+    <div class="node w-3 h-3 bg-teal-500" style="top:30%; left:92%; animation-delay:1s;"></div>
+    <div class="node w-1.5 h-1.5 bg-electric-400" style="top:70%; left:5%; animation-delay:2s;"></div>
+    <div class="node w-2 h-2 bg-teal-400" style="top:80%; left:88%; animation-delay:0.5s;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Left: Copy -->
+        <div class="space-y-6">
+
+          <!-- Eyebrow -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #60A5FA;">
+            <span class="avail-dot inline-block"></span>
+            Data Engineers & AI Engineers — Pre-Screened, Pakistan-Based
+          </div>
+
+          <!-- H1 -->
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+            Hire Senior Data &amp; AI Engineers.
+            <span style="background: linear-gradient(90deg, #3B82F6, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+              In Days. Not Months.
+            </span>
+          </h1>
+
+          <!-- Subhead -->
+          <p class="text-lg text-gray-400 leading-relaxed max-w-lg">
+            TalentForge is the only platform built exclusively for Data Engineers and AI Engineers — pre-screened, production-ready, and available now.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#engineers" class="btn-glow px-6 py-3 rounded-xl font-semibold text-white text-sm inline-flex items-center gap-2" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">
+              Browse Engineer Profiles
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="#contact" class="px-6 py-3 rounded-xl font-semibold text-sm border border-white/20 text-white hover:border-white/40 hover:bg-white/5 transition-all inline-flex items-center gap-2">
+              Talk to Our Team
+            </a>
+          </div>
+
+          <!-- Trust line -->
+          <div class="flex flex-wrap items-center gap-2 pt-4 text-sm text-gray-500">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-electric-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>[TBC] engineers screened</span>
+            </span>
+            <span class="text-gray-700">·</span>
+            <span>[TBC] companies matched</span>
+            <span class="text-gray-700">·</span>
+            <span class="text-teal-400 font-medium">Zero entity setup required</span>
+          </div>
+        </div>
+
+        <!-- Right: Engineer Card Visual -->
+        <div class="hidden lg:block relative">
+          <!-- Glow backdrop -->
+          <div class="absolute inset-0 rounded-2xl" style="background: radial-gradient(ellipse at center, rgba(59,130,246,0.15) 0%, transparent 70%); filter: blur(40px);"></div>
+
+          <!-- Engineer Card -->
+          <div class="engineer-card-visual p-6 relative animate-float" style="animation: float 6s ease-in-out infinite;">
+            <!-- Card header -->
+            <div class="flex items-start justify-between mb-5">
+              <div class="flex items-center gap-3">
+                <!-- Avatar placeholder -->
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-bold" style="background: linear-gradient(135deg, #1e3a8a, #1e40af); border: 1px solid rgba(59,130,246,0.4);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" fill="rgba(59,130,246,0.6)"/>
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(59,130,246,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-semibold text-white text-sm">Ahmed K.</div>
+                  <div class="text-gray-400 text-xs">Senior Data Engineer · 7 yrs</div>
+                </div>
+              </div>
+              <!-- Availability -->
+              <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium" style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); color: #4ade80;">
+                <div class="avail-dot"></div>
+                Available
+              </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium font-mono" style="background: rgba(59,130,246,0.15); color: #93C5FD; border: 1px solid rgba(59,130,246,0.2);">Python</span>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium font-mono" style="background: rgba(6,182,212,0.15); color: #67e8f9; border: 1px solid rgba(6,182,212,0.2);">Apache Spark</span>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium font-mono" style="background: rgba(59,130,246,0.15); color: #93C5FD; border: 1px solid rgba(59,130,246,0.2);">SQL</span>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium font-mono" style="background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.2);">TensorFlow</span>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium font-mono" style="background: rgba(59,130,246,0.15); color: #93C5FD; border: 1px solid rgba(59,130,246,0.2);">dbt</span>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium font-mono" style="background: rgba(6,182,212,0.15); color: #67e8f9; border: 1px solid rgba(6,182,212,0.2);">Airflow</span>
+            </div>
+
+            <!-- Code snippet -->
+            <div class="rounded-lg p-3 mb-4 font-mono text-xs" style="background: rgba(5,10,20,0.7); border: 1px solid rgba(59,130,246,0.1);">
+              <div class="code-line text-gray-500 mb-1"><span class="text-blue-400">def</span> <span class="text-teal-400">build_pipeline</span><span class="text-gray-300">(df, config):</span></div>
+              <div class="code-line text-gray-500 mb-1">&nbsp;&nbsp;<span class="text-blue-400">return</span> <span class="text-gray-300">(df</span></div>
+              <div class="code-line text-gray-500 mb-1">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-teal-400">.filter</span><span class="text-gray-300">(config.rules)</span></div>
+              <div class="code-line text-gray-500">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-teal-400">.transform</span><span class="text-gray-300">(normalize))</span></div>
+            </div>
+
+            <!-- Rate indicator -->
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-gray-500">Monthly rate</span>
+              <span class="font-semibold text-white">$4,200 – $5,800</span>
+            </div>
+          </div>
+
+          <!-- Second card (peaking behind) -->
+          <div class="absolute -bottom-4 -right-4 -z-10 w-full rounded-2xl opacity-40" style="background: rgba(13,21,40,0.9); border: 1px solid rgba(59,130,246,0.1); height: 100%;"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       LOGO BAR / SOCIAL PROOF
+  ════════════════════════════════════════════════ -->
+  <div class="border-y border-white/5 py-6" style="background: rgba(13,21,40,0.5);">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-center text-xs text-gray-600 mb-5 tracking-widest uppercase font-mono">Trusted by engineering teams at</p>
+      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-14 opacity-40">
+        <!-- Placeholder logos rendered as text wordmarks -->
+        <span class="text-gray-400 font-semibold text-sm tracking-tight">Stripe</span>
+        <span class="text-gray-400 font-semibold text-sm tracking-tight">Notion</span>
+        <span class="text-gray-400 font-semibold text-sm tracking-tight">Vercel</span>
+        <span class="text-gray-400 font-semibold text-sm tracking-tight">Linear</span>
+        <span class="text-gray-400 font-semibold text-sm tracking-tight">Retool</span>
+        <span class="text-gray-400 font-semibold text-sm tracking-tight">Loom</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       PROBLEM SECTION
+  ════════════════════════════════════════════════ -->
+  <section class="py-24 relative" id="problem">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 60% 40% at 100% 50%, rgba(239,68,68,0.04) 0%, transparent 60%);"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <div class="section-label mb-4">THE STAFFING PROBLEM</div>
+
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-8">
+        You've Been Burned by<br/>
+        <span class="text-red-400">Generalist Platforms</span> Before.
+      </h2>
+
+      <!-- Problem narrative as visual blocks -->
+      <div class="grid md:grid-cols-3 gap-4 mb-12">
+        <div class="glass-card rounded-xl p-5 text-left">
+          <div class="text-3xl font-black text-red-500 mb-2">200</div>
+          <div class="text-sm text-gray-300 font-medium mb-1">CVs received</div>
+          <div class="text-xs text-gray-500">180 of them wrong for your stack</div>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-left">
+          <div class="text-3xl font-black text-orange-500 mb-2">50%</div>
+          <div class="text-sm text-gray-300 font-medium mb-1">No-shows</div>
+          <div class="text-xs text-gray-500">Technically unprepared at interview</div>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-left">
+          <div class="text-3xl font-black text-yellow-500 mb-2">6 wks</div>
+          <div class="text-sm text-gray-300 font-medium mb-1">Then they fail</div>
+          <div class="text-xs text-gray-500">Can't handle your data architecture</div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-8 md:p-10 text-left max-w-3xl mx-auto">
+        <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+          "You post a data engineering role. You get 200 CVs — 180 of them wrong. You schedule interviews. Half don't show up technically prepared. You make a hire. Six weeks in, they can't handle your data architecture.
+          <br/><br/>
+          <span class="text-white font-semibold">That's not a hiring problem. That's a platform problem.</span>"
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       SOLUTION / DIFFERENTIATION SECTION
+  ════════════════════════════════════════════════ -->
+  <section class="py-24 relative" id="solution" style="background: linear-gradient(180deg, transparent 0%, rgba(13,21,40,0.5) 50%, transparent 100%);">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center mb-16">
+        <div class="section-label mb-4">HOW WE'RE DIFFERENT</div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight">
+          The Only Platform
+          <span style="background: linear-gradient(90deg, #3B82F6, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            Exclusively for Data &amp; AI Engineers.
+          </span>
+        </h2>
+      </div>
+
+      <!-- 4 Pillars -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Pillar 1 -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-electric-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(59,130,246,0.05)); border: 1px solid rgba(59,130,246,0.3);">
+            <svg class="w-6 h-6 text-electric-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Niche Only</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">No full-stack generalists. No "data analysts." Every engineer on TalentForge is a Data or AI specialist.</p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-electric-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(6,182,212,0.05)); border: 1px solid rgba(6,182,212,0.3);">
+            <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Pre-Screened Pool</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Technical screening, portfolio review, and live coding assessments before any engineer joins the platform.</p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-electric-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(59,130,246,0.05)); border: 1px solid rgba(59,130,246,0.3);">
+            <svg class="w-6 h-6 text-electric-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Fast Matching</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Submit a brief. Get matched with vetted engineers within 72 hours. First interview scheduled in days.</p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="glass-card rounded-2xl p-6 group hover:border-electric-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mb-5 flex items-center justify-center" style="background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(6,182,212,0.05)); border: 1px solid rgba(6,182,212,0.3);">
+            <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Full Compliance Handled</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Payroll, contracts, tax compliance, and cross-border setup — fully managed. No entity needed in Pakistan.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       HOW IT WORKS
+  ════════════════════════════════════════════════ -->
+  <section class="py-24" id="how-it-works">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center mb-16">
+        <div class="section-label mb-4">THE PROCESS</div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">From Brief to Interview in Days.</h2>
+      </div>
+
+      <!-- Process visual + steps -->
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Process visual (CSS generated) -->
+        <div class="relative rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, #0D1528, #111C35); border: 1px solid rgba(59,130,246,0.15); min-height: 320px;">
+          <!-- Grid overlay -->
+          <div class="absolute inset-0" style="background-image: linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+          <div class="relative z-10 p-8 flex flex-col items-center justify-center h-full gap-6">
+            <!-- Step indicators connected by lines -->
+            <div class="flex items-center gap-4 w-full justify-center">
+
+              <!-- Step 1 -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); box-shadow: 0 0 20px rgba(59,130,246,0.2);">
+                  <svg class="w-7 h-7 text-electric-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500 text-center w-20 font-mono">Brief</span>
+              </div>
+
+              <!-- Connector line -->
+              <div class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(59,130,246,0.6), rgba(6,182,212,0.6)); max-width: 60px;"></div>
+
+              <!-- Step 2 -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.4); box-shadow: 0 0 20px rgba(6,182,212,0.2);">
+                  <svg class="w-7 h-7 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500 text-center w-20 font-mono">Match</span>
+              </div>
+
+              <!-- Connector line -->
+              <div class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(6,182,212,0.6), rgba(59,130,246,0.6)); max-width: 60px;"></div>
+
+              <!-- Step 3 -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); box-shadow: 0 0 20px rgba(34,197,94,0.2);">
+                  <svg class="w-7 h-7" style="color: #4ade80;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500 text-center w-20 font-mono">Hired</span>
+              </div>
+            </div>
+
+            <!-- Timeline indicator -->
+            <div class="mt-4 px-4 py-2 rounded-lg text-center" style="background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15);">
+              <span class="text-xs text-gray-400 font-mono">Average time-to-interview: <span class="text-electric-400 font-semibold">3–5 business days</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Steps list -->
+        <div class="space-y-6">
+
+          <!-- Step 1 -->
+          <div class="flex gap-5">
+            <div class="flex-shrink-0 flex flex-col items-center">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); color: #60A5FA;">01</div>
+              <div class="w-px flex-1 mt-3" style="background: linear-gradient(180deg, rgba(59,130,246,0.4), rgba(59,130,246,0.05));"></div>
+            </div>
+            <div class="pb-6">
+              <h3 class="text-xl font-bold text-white mb-2">Tell Us What You Need</h3>
+              <p class="text-gray-400 leading-relaxed">Complete our 5-minute intake form. Describe the role, tech stack, timeline, and engagement type. No sales call needed to get started.</p>
+              <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-mono text-electric-400">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                5 minutes
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex gap-5">
+            <div class="flex-shrink-0 flex flex-col items-center">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold" style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.4); color: #22D3EE;">02</div>
+              <div class="w-px flex-1 mt-3" style="background: linear-gradient(180deg, rgba(6,182,212,0.4), rgba(6,182,212,0.05));"></div>
+            </div>
+            <div class="pb-6">
+              <h3 class="text-xl font-bold text-white mb-2">We Match You</h3>
+              <p class="text-gray-400 leading-relaxed">Our team reviews your brief and surfaces screened engineers who fit your exact requirements. You receive profiles within 72 hours, ready for review.</p>
+              <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-mono text-teal-400">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                Within 72 hours
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex gap-5">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #4ade80;">03</div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white mb-2">You Hire, We Handle the Rest</h3>
+              <p class="text-gray-400 leading-relaxed">Select your engineer, sign off on terms, and onboard within days. TalentForge manages payroll, compliance, contracts, and ongoing HR — so you focus on building.</p>
+              <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-mono" style="color: #4ade80;">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                Payroll · Compliance · Contracts
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       HIRING MODELS / PRICING TIERS
+  ════════════════════════════════════════════════ -->
+  <section class="py-24" id="pricing" style="background: linear-gradient(180deg, transparent 0%, rgba(13,21,40,0.6) 50%, transparent 100%);">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center mb-16">
+        <div class="section-label mb-4">HIRING MODELS</div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">Choose Your Hiring Model</h2>
+        <p class="text-gray-400 mt-4 max-w-xl mx-auto">Two ways to engage — depending on how much infrastructure you want us to handle.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+
+        <!-- Tier 1 -->
+        <div class="glass-card tier-accent-blue rounded-2xl p-8 relative">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="text-xs font-mono text-electric-400 mb-2 tracking-widest">TIER 1</div>
+              <h3 class="text-2xl font-black text-white">Talent + Payroll</h3>
+            </div>
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">
+              <svg class="w-6 h-6 text-electric-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+          </div>
+
+          <p class="text-gray-400 mb-6 text-sm leading-relaxed">We match you with pre-screened engineers and handle payroll. You manage the work. They work from their own setup.</p>
+
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-electric-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Pre-screened engineer matching</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-electric-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Payroll + compliance handling</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-electric-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Standard SLA contracts</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-electric-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">No Pakistan entity required</span>
+            </li>
+          </ul>
+
+          <a href="#contact" class="block text-center px-6 py-3 rounded-xl text-sm font-semibold border border-electric-500/40 text-electric-400 hover:bg-electric-500/10 transition-all">
+            Get Started →
+          </a>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="rounded-2xl p-8 relative tier-accent-teal" style="background: linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(13,21,40,0.9) 100%); border: 1px solid rgba(6,182,212,0.25);">
+          <!-- Popular badge -->
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span class="px-4 py-1 rounded-full text-xs font-bold text-white" style="background: linear-gradient(90deg, #06B6D4, #3B82F6);">MOST POPULAR</span>
+          </div>
+
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="text-xs font-mono text-teal-400 mb-2 tracking-widest">TIER 2</div>
+              <h3 class="text-2xl font-black text-white">Full Stack Hire</h3>
+            </div>
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.25);">
+              <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+            </div>
+          </div>
+
+          <p class="text-gray-400 mb-6 text-sm leading-relaxed">Everything in Tier 1, plus a fully-equipped workspace and dedicated team infrastructure managed from our Karachi office.</p>
+
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Everything in Tier 1</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Dedicated workspace in Karachi</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Equipment + tech stack provided</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Full compliance managed in Karachi</span>
+            </li>
+            <li class="flex items-start gap-3 text-sm">
+              <svg class="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-300">Team leads + HR support on-site</span>
+            </li>
+          </ul>
+
+          <a href="#contact" class="btn-glow block text-center px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all" style="background: linear-gradient(135deg, #06B6D4, #0891B2);">
+            Talk to Our Team →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       TESTIMONIAL / QUOTE (placeholder)
+  ════════════════════════════════════════════════ -->
+  <section class="py-16">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="glass-card rounded-2xl p-10">
+        <svg class="w-8 h-8 text-electric-400 mx-auto mb-6 opacity-60" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <p class="text-xl text-gray-300 leading-relaxed italic mb-6">
+          "We went from a stale job posting to a first interview in 4 days. The engineer was exactly what we needed — senior Spark experience, clean communication, production mindset."
+        </p>
+        <div class="flex items-center justify-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style="background: linear-gradient(135deg, #1e3a8a, #1e40af);">CL</div>
+          <div class="text-left">
+            <div class="text-white text-sm font-semibold">[Client Name TBC]</div>
+            <div class="text-gray-500 text-xs">Head of Data, Series B SaaS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       FINAL CTA SECTION
+  ════════════════════════════════════════════════ -->
+  <section class="py-28 relative" id="contact">
+    <!-- Background glow -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(59,130,246,0.1) 0%, transparent 70%);"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <div class="section-label mb-6">GET STARTED</div>
+
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
+        Your Data Team Doesn't Have to
+        <span style="background: linear-gradient(90deg, #3B82F6, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          Wait Six Months.
+        </span>
+      </h2>
+
+      <p class="text-lg text-gray-400 mb-10 max-w-xl mx-auto">
+        Join companies already building their data infrastructure with TalentForge engineers.
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="#engineers" class="btn-glow px-8 py-4 rounded-xl font-bold text-white inline-flex items-center gap-2 text-base" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">
+          Browse Engineer Profiles
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="mailto:hello@talentforge.io" class="px-8 py-4 rounded-xl font-bold text-sm border border-white/20 text-white hover:border-white/40 hover:bg-white/5 transition-all inline-flex items-center gap-2">
+          Talk to Our Team
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </a>
+      </div>
+
+      <!-- Reassurance micro-copy -->
+      <p class="mt-6 text-xs text-gray-600 font-mono">No commitment required · First match in 72 hours · Zero Pakistan entity needed</p>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════ -->
+  <footer class="border-t border-white/5 py-10" style="background: #050A14;">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #3B82F6, #06B6D4);">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 4h4v4H2V4zM10 4h4v4h-4V4zM6 8h4v4H6V8z" fill="white" opacity="0.9"/></svg>
+          </div>
+          <span class="text-white font-bold text-base tracking-tight">TalentForge</span>
+        </div>
+
+        <div class="flex gap-6 text-sm text-gray-600">
+          <a href="#" class="hover:text-gray-400 transition-colors">How It Works</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">Pricing</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">For Engineers</a>
+          <a href="#" class="hover:text-gray-400 transition-colors">Contact</a>
+        </div>
+
+        <div class="text-xs text-gray-700 font-mono">
+          © 2025 TalentForge · Karachi · London · Remote
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
