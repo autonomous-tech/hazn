@@ -32,6 +32,7 @@ Load from `sub-agents/{name}.md`:
 - `seo-specialist.md`
 - `content-writer.md`
 - `auditor.md`
+- `case-study-builder.md`
 
 ### Context to Include
 
@@ -121,6 +122,7 @@ Sub-agents have access to these skills (symlinked from HAZN):
 **Development:** payload-nextjs-stack
 **SEO:** keyword-research, seo-audit, seo-optimizer, entity-knowledge-graph
 **Audits:** conversion-audit, website-audit
+**Portfolio:** case-study
 
 ## Memory
 

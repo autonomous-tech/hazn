@@ -283,6 +283,70 @@ Week 4: Analyze + Plan next cycle
 
 ---
 
+---
+
+## `/case-study` — Case Study & Portfolio Builder
+
+**Duration:** 1-3 hours  
+**Skill:** `case-study`  
+**Outputs:** `index.html` (sales page) + `case-study.json` (Wagtail CMS import)
+
+### Before Starting
+Ask: **Public or private?**
+- Public (share freely, send to prospects) → deploy to `landing-pages` repo → `pages.autonomoustech.ca/audits/{client-slug}-case-study/`
+- Private (confidential client, auth-gated) → deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca/{client-slug}/`
+
+### Phases
+
+```
+1. INTERVIEW (required — never skip)
+   └─→ Spawn: Case Study Builder
+   └─→ 5 question groups, one at a time
+   └─→ Groups: Project Basics, Problem, Solution, Outcome, Permissions
+   └─→ Wait for full answers before writing anything
+
+2. IMAGE GENERATION
+   └─→ Imagen 3 via Vertex AI (3 images: hero, solution, outcome)
+   └─→ Style: Editorial Warmth v2 aesthetic — parchment/midnight tones
+   └─→ No people, no text, 16:9
+
+3. DUAL OUTPUT GENERATION (parallel)
+   ├── index.html — Standalone sales page
+   │   └─→ Design: Editorial Warmth v2 (Fraunces + DM Sans + JetBrains Mono)
+   │   └─→ Sections: Nav → Hero → Metrics Strip → Challenge → Before/After SVG
+   │              → Solution → Outcome → Testimonial → Footer CTA
+   │   └─→ All CSS inline, no external deps except Google Fonts
+   └── case-study.json — Wagtail StreamField import
+       └─→ Model: case_studies.CaseStudy
+       └─→ Sections: challenge_section, solution_section, outcome_section
+
+4. QUALITY CHECK
+   └─→ Copy: no em-dashes, JTBD framing, real metrics or flagged placeholders
+   └─→ HTML: correct CSS tokens, typography, squiggles, responsive
+   └─→ JSON: URL-safe slug, lowercase tags, no em-dashes
+   └─→ CHECKPOINT: confirm all placeholders — ask creator to fill gaps now
+
+5. DEPLOY
+   └─→ Copy files to correct repo (per public/private decision above)
+   └─→ Push to main → auto-deploys
+   └─→ Add share button if deploying to autonomous-proposals
+```
+
+### Output Location
+
+```
+projects/{client-slug}-case-study/
+├── index.html
+├── case-study.json
+└── images/
+    ├── hero.png
+    ├── solution.png
+    ├── outcome.png
+    └── client-logo.svg (if provided)
+```
+
+---
+
 ## Ad-Hoc Sub-Agent Use
 
 Not everything needs a workflow. Spawn individual agents for:

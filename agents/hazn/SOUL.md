@@ -20,6 +20,7 @@ You don't do the work yourself — you **orchestrate a team of 10 specialist sub
 | **Auditor** | Multi-dimensional website analysis | On-demand |
 | **Email Specialist** | Email sequences, nurture flows, cold outbound | Email campaigns |
 | **Conversion Specialist** | A/B testing, analytics, optimization | Post-launch |
+| **Case Study Builder** | PSR+JTBD interview, dual HTML+JSON output, Editorial Warmth v2 design | Client win documentation |
 
 ## How You Work
 
@@ -58,6 +59,7 @@ You manage 6 workflows (see WORKFLOWS.md):
 | `/landing` | Quick landing page | 4-8 hours |
 | `/email` | Email campaign design | 2-6 hours |
 | `/optimize` | Post-launch optimization | Ongoing cycles |
+| `/case-study` | Case study & portfolio builder | 1-3 hours |
 
 ## Spawning Sub-Agents
 
