@@ -6,6 +6,10 @@ allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 
 # Conversion Audit
 
+> **When conducted without analytics access: this is a lead gen tool.**
+
+A teaser conversion audit (public signals only) serves a dual purpose: it delivers real, actionable findings AND builds the case for a deeper paid engagement. Every section should make the prospect think "these people already understand my site — imagine what they'd find with full access."
+
 Generate a comprehensive, branded landing page conversion audit covering three pillars: Copywriting, SEO, and Frontend Design — plus a measurement framework for validating improvements.
 
 ## Process
@@ -222,22 +226,96 @@ Key sections in the HTML:
 
 ---
 
-## Save & Deliver
+## Teaser Mode (Public Signals Only)
 
-Save the audit report to the project directory:
+When the audit is conducted **without analytics access** (GA4, GSC, PostHog, Hotjar, or platform data not provided), the report is a **teaser** and MUST include:
 
-```bash
-# Save report to project folder
-mkdir -p projects/{client}/audits
-# Write to: projects/{client}/audits/conversion-audit-{date}.html
+### 1. Teaser Header Banner (mandatory, top of `<body>`)
+
+A slim informational banner immediately before the cover section. **Context-setting only — no CTA button.** The CTA lives at the end of the report where it has been earned by the content.
+
+```html
+<div class="teaser-header-banner">
+  <div class="teaser-header-banner__inner">
+    <div class="teaser-header-banner__eyebrow">📊 Teaser Report — Public Signals Only</div>
+    <p class="teaser-header-banner__body">
+      This report was built from publicly available data only. With access to <strong>GA4, Google Search Console, 
+      PostHog</strong> (or whatever you use), this analysis can be dramatically more powerful.
+    </p>
+  </div>
+</div>
 ```
 
-**Delivery options:**
-- Use `canvas action=present` to display the report inline for immediate preview
-- Share the HTML file directly with the client
-- Deploy to client's preferred hosting if configured
+Style: dark (`#1c1917`) background, `3px solid` amber bottom border. No CTA button in the banner.
 
-**Alternative:** For quick sharing, the report can be converted to PDF or hosted on any static file server.
+### 2. Methodology Disclaimer Section
+
+Include a "How This Report Was Built" section early in the report (after the executive summary scores):
+
+> **Methodology Note:** This audit was conducted using publicly available signals only — page source inspection, browser-observable tracking calls, public sitemap and robots.txt, and manual UX review. Where analytics or platform data (GA4, GSC, Hotjar, CRM) was unavailable, findings are directional and based on industry benchmarks. Revenue and conversion estimates are illustrative ranges, not projections.
+>
+> **What changes with full access:** Form completion rates, actual funnel drop-off by step, real bounce rates, keyword rankings, and attribution accuracy. [Book a call](https://calendly.com/rizwan-20/30min) to unlock the full picture.
+
+### 3. Upsell Callouts in Each Track
+
+At the end of each audit track section, include a brief upsell callout:
+
+```html
+<div class="upsell-callout">
+  <span class="upsell-callout__icon">🔒</span>
+  <div>
+    <strong>Want to go deeper on [MarTech / SEO / CRO / Copy]?</strong>
+    With GA4 + GSC access, we can show you exactly where users drop off, which pages are cannibalizing each other, 
+    and what your top converting traffic sources actually are.
+    <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call →</a>
+  </div>
+</div>
+```
+
+### 4. Sticky TOC Sidebar
+
+All audit reports (teaser or full) must include a sticky sidebar Table of Contents:
+- Desktop (≥1024px): left sidebar, `240px` wide, `position: sticky; top: 2rem`
+- Mobile: hidden off-canvas, toggled by hamburger button
+- Frosted glass: `background: rgba(255,255,255,0.75); backdrop-filter: blur(8px)`
+- Active link: amber background highlight
+- Intersection Observer tracks current section
+
+### 5. Caveat Language for Estimates
+
+In teaser mode, all revenue/conversion estimates **must** use directional language:
+- ❌ "This will increase revenue by $50K–$200K"
+- ✅ "Based on industry benchmarks for comparable B2B agencies, this could represent significant revenue impact — exact numbers require your actual traffic and close rate data"
+- ❌ "+15–25% contact page visits"
+- ✅ "Directional uplift expected — establish your baseline first"
+
+---
+
+## Save & Deliver
+
+Save the audit report to the project directory first, then deploy to `autonomous-proposals`:
+
+```bash
+# 1. Save report to project folder
+mkdir -p projects/{client}/audits
+# Write to: projects/{client}/audits/conversion-audit-{date}.html
+
+# 2. Deploy to docs.autonomoustech.ca (ALWAYS — audits are confidential)
+mkdir -p /home/rizki/autonomous-proposals/audits/{client}
+cp projects/{client}/audits/conversion-audit-{date}.html /home/rizki/autonomous-proposals/audits/{client}/index.html
+# Make sure share button is present before </body>
+cd /home/rizki/autonomous-proposals
+git add audits/{client}/index.html
+git commit -m "Agent Hazn: Conversion Audit for {Client Name}"
+git push origin main
+```
+
+**⚠️ Audits ALWAYS go to `autonomous-proposals` → `docs.autonomoustech.ca`. Never to `landing-pages`.**
+Audit reports contain confidential client analysis. Share externally using the 📤 SHARE button (generates 30-day expiry link via `share.autonomoustech.ca`).
+
+**Share button:** Copy from `briar-creek-construction/index.html` in `autonomous-proposals`. Must be present before `</body>`.
+
+**Preview locally:** Use `canvas action=present` to display the report inline before deploying.
 
 ---
 
@@ -245,7 +323,8 @@ mkdir -p projects/{client}/audits
 
 - **Always lead with strengths.** Clients need to feel validated before hearing criticism.
 - **Before/After for everything.** Don't just say "this is bad" — show what "good" looks like.
-- **Quantify impact.** Use CVR projections, revenue lift estimates, time-to-implement.
+- **Quantify impact.** Use CVR projections and revenue lift estimates. Never time-to-implement estimates.
+- **No time estimates on fixes.** Never say "this takes 30 mins" or "easy 2-hour fix." Time is subjective and condescending — the client's team or context may be completely different. State effort level (Low/Medium/High) without attaching a duration.
 - **Make it actionable.** Every recommendation should be implementable, not theoretical.
 - **Make it testable.** Frame recommendations as hypotheses when traffic allows.
 - **Design for the price point.** A $50K service needs a premium-feeling audit. A $20 product can be simpler.

@@ -252,6 +252,32 @@ Use client's brand guidelines if provided, or apply the **Autonomous Editorial W
    - Benchmark data
 ```
 
+### Teaser Mode (No Analytics Access)
+
+When audit is conducted without GA4, GSC, PostHog, or platform data, the report is a **teaser**. Mandatory additions:
+
+**1. Teaser Header Banner** — slim informational strip at the very top of `<body>`, before any content. **Context-setting only — no CTA button here:**
+- Dark (`#1c1917`) background, `3px solid` amber bottom border
+- Eyebrow: "📊 Teaser Report — Public Signals Only"  
+- Body (one line): "This report was built from publicly available data. With access to GA4, GSC, PostHog (or your stack), it can be dramatically more powerful."
+- The Calendly CTA lives at the end of the report — after the content has earned it
+
+**2. Methodology Disclaimer** — after the executive summary scores:
+State clearly that findings are based on public signals, revenue estimates are illustrative benchmarks (not projections), and full access changes the analysis significantly.
+
+**3. Per-Track Upsell Callouts** — at the end of each section:
+"Want deeper [CRO / SEO / Copy] analysis? With GA4 + GSC access, we can show exact drop-off points, keyword rankings, and attribution gaps. [Book a call →](https://calendly.com/rizwan-20/30min)"
+
+**4. Caveat revenue estimates** — always use directional language in teaser mode, never specific dollar figures without real data.
+
+### Sticky Sidebar TOC (ALL audit reports)
+
+Every audit report must include a sticky TOC sidebar:
+- **Desktop (≥1024px):** Left sidebar, `240px` wide, `position: sticky; top: 2rem`, frosted glass (`rgba(255,255,255,0.75)` + `backdrop-filter: blur(8px)`)
+- **Mobile:** Hidden off-canvas, toggled by hamburger button
+- **Active state:** Amber highlight on current section (Intersection Observer)
+- **Layout:** `display: flex; gap: 3rem` wrapper with sidebar + `<main>` content column
+
 ### Save & Deploy
 
 ```bash
@@ -262,10 +288,10 @@ projects/{client}/audits/{site-name}-audit-{date}.html
 projects/{client}/audits/{site-name}-assets/
 ```
 
-**Delivery options:**
-- Use `canvas action=present` for immediate preview
-- Share HTML file directly with client
-- Deploy to client's preferred hosting if configured
+**⚠️ Audits ALWAYS deploy to `autonomous-proposals` → `docs.autonomoustech.ca`** (never to `landing-pages`).
+Add the share button before `</body>`. Share externally via 30-day expiry link.
+
+**Preview:** Use `canvas action=present` for immediate preview before deploying.
 
 ---
 
@@ -311,6 +337,11 @@ projects/{client}/audits/{site-name}-assets/
 [Then proceeds with audit execution]
 
 ---
+
+## Core Rules
+
+- **No time estimates on fixes.** Never say "this takes 30 mins" or "a quick 2-hour fix." Time is subjective and different for every team. Use effort levels (Low / Medium / High) only — no durations.
+- **No CTA in the teaser header banner.** The banner is context-setting ("this is public-signals only"). The Calendly CTA belongs at the end of the report, after the content has earned it.
 
 ## Related Skills
 

@@ -2,10 +2,9 @@
 
 ## Deployment Repos
 
-### Decision Rule — Always Ask First
-> **Public or private?**
-> - Needs to be shared externally without auth → `landing-pages`
-> - Internal / confidential / shared via expiring link → `autonomous-proposals`
+### Deployment Rule — Always Use `autonomous-proposals`
+> **All deliverables deploy to `docs.autonomoustech.ca`** via the `autonomous-proposals` repo.
+> External sharing is handled via the share button (30-day expiry link via `share.autonomoustech.ca`) — no need for a public repo.
 
 ---
 
@@ -26,27 +25,11 @@
 
 ---
 
-### landing-pages (PUBLIC)
-- **Repo:** `autonomous-tech/landing-pages` (private repo, public deployment)
+### landing-pages (DEPRECATED — do not use for new deploys)
+- **Repo:** `autonomous-tech/landing-pages` (private repo)
 - **Local clone:** `/home/rizki/landing-pages`
-- **Domain:** `pages.autonomoustech.ca` — fully public, no auth
-- **Deploy:** Push to `main` → Cloudflare Pages GitHub integration (auto, ~30-60s)
-- **`index.html` is AUTO-GENERATED** — never edit manually. Runs via GitHub Action on any `.html` push.
-- **Structure:** Files go in category subfolders, URL = file path from repo root
-  ```
-  proposals/      ← client proposals
-  audits/         ← audit reports
-  docs/           ← internal docs, multi-file projects
-  demos/          ← demos and prototypes
-  lunch-n-learn/  ← presentations
-  services/       ← service pages
-  assets/         ← shared assets (logos, fonts)
-  ```
-- **Single-file pages:** `proposals/client-name-YYYY-MM-DD.html`
-- **Multi-file pages:** `docs/project-name-YYYY-MM-DD/index.html` + assets
-- **File naming:** lowercase, hyphenated, date-stamped
-- **Commit message convention:** `Agent Hazn: [Page Type] for [Client Name]`
-- **Logo paths:** `../logo-01.jpg` from subfolders, `../../logo-01.jpg` from sub-subfolders
+- **Status:** No longer the primary deployment target. All new work goes to `autonomous-proposals` → `docs.autonomoustech.ca`.
+- **Note:** Existing files remain accessible but no new content should be published here.
 
 ---
 

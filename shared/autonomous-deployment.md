@@ -18,6 +18,10 @@
 | Internal deliverables — confidential, shared via expiring link | `autonomous-proposals` → `docs.autonomoustech.ca` |
 | Public-facing pages — anyone can access via URL | `landing-pages` → `pages.autonomoustech.ca` |
 
+> ⚠️ **Audits always go to `autonomous-proposals` → `docs.autonomoustech.ca`** — never to `landing-pages`.
+> Audit reports contain client analysis and competitive insights. Always treat as confidential.
+> Share externally using the 30-day expiry share button.
+
 ---
 
 ## Repo: autonomous-proposals (PRIVATE — auth gated)

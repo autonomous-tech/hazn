@@ -9,7 +9,18 @@ version: 2.0.0
 
 # Teaser Report — Prospect Teaser HTML Generator
 
-Generate a single-file HTML teaser report from publicly collected website data. This is a sales asset — a zero-access prospect report that delivers genuine value across analytics, UX, copy, and CRO, while funneling prospects toward deeper paid engagements.
+> **Strategic intent: This is a lead gen tool, not just a report.**
+
+The teaser audit exists to open conversations with prospects who haven't hired us yet. Every design and copy decision should serve one goal: **get them to book a call.**
+
+The playbook:
+1. **Deliver real value** — findings based on public signals that are genuinely useful. Not fluff. The prospect should feel "these people already understand my site better than my last agency did."
+2. **Reveal a gap they didn't know existed** — each track should surface at least one finding that makes them uncomfortable in a productive way.
+3. **Make the upgrade irresistible** — every section closes with a concrete "here's what we'd show you with GA4/GSC access." The report is a preview, not the full product.
+4. **Remove friction from the next step** — every upsell CTA goes to the same Calendly link. One action, everywhere.
+5. **No time estimates on fixes.** Never say "this takes 30 mins" or "a quick 2-hour fix." Time is subjective and presumptuous. Use effort levels (Low / Medium / High) only — no durations.
+
+Generate a single-file HTML teaser report from publicly collected website data. Delivers genuine value across analytics, UX, copy, and CRO — while building the case for a deeper paid engagement.
 
 ---
 
@@ -646,15 +657,153 @@ The final CTA button must always include `white-space: nowrap` to prevent text l
 ### Layout Patterns
 
 - **Light/dark section alternation** for visual rhythm
-- **Max content width:** 720px centered within sections
+- **Max content width:** 720px centered within sections (left column in desktop layout)
 - **Section padding:** 5rem top/bottom on desktop, 3rem on mobile
 - **Grid layouts:** CSS Grid for score cards and CWV metrics
 - **Responsive breakpoints:** 375px, 768px, 1024px, 1440px
 - **Base64-embed screenshots** into the HTML for single-file delivery
+- **Two-column desktop layout:** sticky sidebar TOC (240px) + main content (flex: 1), with `gap: 3rem`, inside a `max-width: 1200px` outer wrapper
+
+### Teaser Header Banner (MANDATORY)
+
+Every teaser report **must** open with a slim informational banner immediately below the `<body>` tag — before the main nav/cover — clearly marking this as a teaser. **The banner is context-setting only — no CTA button here.** The CTA lives at the end of the report where it earns it.
+
+```html
+<div class="teaser-header-banner">
+  <div class="teaser-header-banner__inner">
+    <div class="teaser-header-banner__eyebrow">📊 Teaser Report — Public Signals Only</div>
+    <p class="teaser-header-banner__body">
+      This report was built from publicly available data only. With access to <strong>GA4, Google Search Console, 
+      PostHog</strong> (or whatever you use), this analysis can be dramatically more powerful.
+    </p>
+  </div>
+</div>
+```
+
+```css
+.teaser-header-banner {
+  background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+  border-bottom: 3px solid var(--amber-500);
+  padding: 1.5rem 2rem;
+}
+.teaser-header-banner__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.teaser-header-banner__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber-400);
+}
+.teaser-header-banner__body {
+  font-size: 0.95rem;
+  color: #d6d3d1;
+  line-height: 1.6;
+  max-width: 700px;
+}
+.teaser-header-banner__body strong { color: #fff; }
+@media (max-width: 768px) {
+  .teaser-header-banner { padding: 1rem; }
+}
+```
+
+### Sticky Sidebar TOC
+
+On desktop (≥1024px), the ToC renders as a **fixed left sidebar**. On mobile/tablet it collapses to a hidden off-canvas drawer toggled by a hamburger button.
+
+```css
+.page-layout {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  gap: 3rem;
+  align-items: flex-start;
+}
+.toc {
+  width: 240px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--stone-200);
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.toc__title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-600);
+  margin-bottom: 0.75rem;
+}
+.toc__link {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--stone-600);
+  text-decoration: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.15rem;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+.toc__link:hover { background: var(--stone-100); color: var(--stone-900); }
+.toc__link--active { 
+  background: var(--amber-500); 
+  color: var(--stone-900); 
+  font-weight: 600;
+}
+.toc__main { flex: 1; min-width: 0; }
+@media (max-width: 1023px) {
+  .page-layout { display: block; padding: 0 1rem; }
+  .toc { 
+    display: none; 
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 280px; z-index: 1000;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+  .toc.toc--open { display: block; }
+  .toc__toggle {
+    display: flex;
+    position: fixed; bottom: 5rem; right: 1rem;
+    background: var(--stone-900); color: white;
+    border: none; border-radius: 50%;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    cursor: pointer; z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+}
+```
+
+HTML structure:
+```html
+<button class="toc__toggle" aria-label="Toggle navigation" onclick="this.closest('body').querySelector('.toc').classList.toggle('toc--open')">☰</button>
+<div class="page-layout">
+  <nav class="toc">
+    <div class="toc__title">Contents</div>
+    <a href="#executive-summary" class="toc__link">01 — Executive Summary</a>
+    <!-- ... one link per section ... -->
+  </nav>
+  <main class="toc__main">
+    <!-- all sections go here -->
+  </main>
+</div>
+```
 
 ### ToC Implementation
-
-Same Intersection Observer pattern as client-report:
 
 ```javascript
 const observer = new IntersectionObserver(entries => {
@@ -689,21 +838,25 @@ This ensures the report is a single self-contained HTML file with no external de
 
 ### Gate 1: Organic Search Intelligence (GSC Access)
 
+**Lead gen framing:** The prospect is reading this because they care about growth. The GSC gate should make them feel like they're standing in front of a locked room full of their own data. The CTA isn't "hire us" — it's "let's look at this together."
+
 - **Lock icon:** 🔒
-- **Title:** "Unlock Your Organic Search Intelligence"
-- **Hook:** Use sitemap URL count from teaser_data.json: "Your site has {N} pages in its sitemap. But which ones actually drive organic traffic?"
+- **Title:** "Your organic search data tells a story. We can't read it without GSC access."
+- **Hook:** Use sitemap URL count from teaser_data.json: "Your site has {N} pages. We can see which ones are indexed — but not which ones are actually winning traffic, which are cannibalizing each other, or where you're ranking on page 2 and just need a nudge."
 - **Preview items** (2–3 visible): Use real data from robots/sitemap analysis
-- **What the full analysis delivers:** Brand vs non-brand split, keyword cannibalization, content refresh opportunities
-- **CTA:** "Book a 15-min walkthrough →" → Calendly link
+- **What the full analysis delivers:** Brand vs non-brand split, keyword cannibalization, content refresh opportunities, exact queries driving impressions with no clicks
+- **CTA:** "Book a 20-min call — we'll pull this up live →" → `https://calendly.com/rizwan-20/30min`
 
 ### Gate 2: Analytics Deep-Dive (GA4 Access)
 
+**Lead gen framing:** Don't just say "we need GA4 access." Show them what they're flying blind on. Make the gap feel concrete.
+
 - **Lock icon:** 🔒
-- **Title:** "See What Your Analytics Is Really Telling You"
-- **Hook:** Use tag count from site_inspection.json: "We found {N} tracking tags on your site. But tags installed ≠ tags working."
-- **Preview items:** Blurred score cards with "??/100" scores
-- **What the full analysis delivers:** GA4 implementation score, attribution architecture, ad platform signal loss
-- **CTA:** "Book your audit walkthrough →" → Calendly link
+- **Title:** "You have analytics. But is it telling you the truth?"
+- **Hook:** Use tag count from site_inspection.json: "We found {N} tracking tags on your site. Tags installed ≠ tags working. Without a live GA4 review, you may be making decisions on data that's been silently broken for months."
+- **Preview items:** Blurred score cards with "??/100" scores, greyed-out funnel visualization
+- **What the full analysis delivers:** GA4 implementation score, attribution architecture review, ad platform signal loss, actual conversion funnel by step, real bounce rates vs. GA4 session inflation
+- **CTA:** "Book a 20-min call — we'll walk through your GA4 live →" → `https://calendly.com/rizwan-20/30min`
 
 ### Gate 3: Paid SEO — Full Site Crawl + GSC Integration
 
@@ -756,7 +909,9 @@ Before finalizing, verify:
 - [ ] **All screenshots** Base64-embedded and rendering
 - [ ] **Responsive** at 375px, 768px, 1440px — test all three
 - [ ] **Mobile bottom CTA banner** visible on mobile only
-- [ ] **ToC** with working scroll-tracking
+- [ ] **Teaser header banner** — slim amber-bordered dark banner at top of `<body>`, eyebrow "📊 Teaser Report — Public Signals Only" + one-line body naming GA4/GSC/PostHog. **No CTA button in the banner** — CTA lives at the end of the report only
+- [ ] **Sticky sidebar TOC** — renders as left sidebar on desktop (≥1024px), hidden off-canvas drawer on mobile; frosted glass panel (`rgba(255,255,255,0.75)` + `backdrop-filter: blur(8px)`); active link highlighted amber
+- [ ] **ToC** with working scroll-tracking (Intersection Observer)
 - [ ] **Single file** — no external dependencies except Google Fonts
 - [ ] **File size** under 300KB (screenshots may push this; aim for <500KB max with screenshots)
 - [ ] **Print-friendly** — hide ToC and banner for print
@@ -765,7 +920,7 @@ Before finalizing, verify:
 - [ ] **Company name** personalized throughout (not just "this site")
 - [ ] **Finding box text** — `.finding` always has `color: var(--stone-800)` explicitly set to prevent white text bleeding from dark parent sections (amber-100, red-100, green-100 backgrounds must never render white text)
 - [ ] **CTA button** — use `display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center` — do NOT use `<br>` hacks or `white-space: nowrap`. Let it wrap naturally. Add `box-shadow: 0 6px 24px rgba(245,158,11,0.35)` for visual weight.
-- [ ] **Deployment** — ALWAYS deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca` (auth-gated, shareable via expiring link). NEVER deploy prospect reports to `landing-pages` → `pages.autonomoustech.ca` (public). See TOOLS.md decision rule.
+- [ ] **Deployment** — ALWAYS deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca`. Share externally via the share button (30-day expiry link via `share.autonomoustech.ca`). See TOOLS.md.
 - [ ] **Hover states** — all interactive cards (`.audit-card`, `.tool-card`, `.score-card`, `.status-row`) must have smooth `0.2s` transitions with subtle `translateY(-1px)` or `translateY(-2px)` lift + shadow
 - [ ] **Scroll reveal** — add `IntersectionObserver` fade-in-up (`.reveal` class, `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`) on scorecard grid, CWV display, tool grid, stat strip, gates
 - [ ] **Gate lock animation** — `.teaser-gate__lock` must have a `@keyframes lockPulse` amber glow ring animation (every 2.4s) to draw attention
