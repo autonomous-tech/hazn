@@ -189,12 +189,16 @@ Output: Prioritized issue list with CVR impact estimates.
 
 ### Apply Professional Styling
 
-Use client's brand guidelines if provided, or apply professional defaults:
+Use client's brand guidelines if provided, or apply the **Autonomous Editorial Warmth v2** design system as the default:
+- Source: `/home/rizki/clawd/agents/hazn/skills/conversion-audit/references/brand.md`
+- Fonts: Fraunces (display) + DM Sans (body) + JetBrains Mono (labels)
+- Colors: parchment `#F5EFE0` background, midnight `#0D0D1F` dark sections, vermillion `#E8513D` accent
+- Score circles: sage `#7CA982` (≥70), gold `#D4A853` (50–69), vermillion `#E8513D` (<50)
+- Reference wireframes: `/home/rizki/autonomous-proposals/wireframes-v2/`
 - Clean header with client/agency logo
 - Clear score visualization
 - Section numbers (01, 02, etc.)
 - Card-based layout for findings
-- High-contrast, readable typography
 - Consistent color scheme throughout
 
 ### Report Structure

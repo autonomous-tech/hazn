@@ -477,4 +477,8 @@ When auditing B2B SaaS websites specifically:
 
 ## Branded Report (Optional)
 
-If generating a client-facing report, apply the client's brand guidelines if provided, or use professional styling with clean typography, adequate whitespace, and a color scheme appropriate for the client's industry.
+If generating a client-facing report, apply the client's brand guidelines if provided, or use the **Autonomous Editorial Warmth v2** design system as the default:
+- Source: `/home/rizki/clawd/agents/hazn/skills/conversion-audit/references/brand.md`
+- Fonts: Fraunces (display) + DM Sans (body) + JetBrains Mono (labels)
+- Colors: parchment `#F5EFE0` background, midnight `#0D0D1F` dark sections, vermillion `#E8513D` accent
+- Reference wireframes: `/home/rizki/autonomous-proposals/wireframes-v2/`

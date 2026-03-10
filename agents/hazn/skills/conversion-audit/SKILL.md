@@ -1,6 +1,6 @@
 ---
 name: conversion-audit
-description: Run a comprehensive landing page conversion audit covering copywriting, SEO, and frontend design. Use when auditing client websites, preparing for sales calls, or delivering value-add reports. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Autonomous brand guide.
+description: Run a comprehensive landing page conversion audit covering copywriting, SEO, and frontend design. Use when auditing client websites, preparing for sales calls, or delivering value-add reports. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Autonomous Editorial Warmth v2 brand guide (Fraunces + DM Sans, parchment/vermillion palette). Brand tokens in references/brand.md.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 

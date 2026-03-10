@@ -444,7 +444,7 @@ Choose fonts that reflect the agency's personality:
 - **Modern/tech-forward**: Plus Jakarta Sans, Manrope, DM Sans
 - **Professional/established**: Source Serif, Lora, Merriweather for body paired with clean sans heading
 - **Bold/creative**: Space Grotesk, Clash Display, Cabinet Grotesk
-- **Warm/approachable**: Nunito, Outfit, General Sans
+- **Warm/editorial**: Fraunces + DM Sans (Autonomous default — Editorial Warmth v2), Nunito, General Sans
 
 Always pair a distinctive heading font with a highly readable body font. Vary per project — never default to the same pair.
 

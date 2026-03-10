@@ -235,15 +235,19 @@ When no brand direction is provided, use this palette. It's intentionally restra
 
 Use Google Fonts. Pair a slightly distinctive heading font with a clean body font. Vary per project when brand direction is given.
 
-**Default pairing (when no direction given):**
-- Heading: `DM Sans` at weights 500, 600, 700
-- Body: `Inter` at weights 400, 500
+**Default pairing (when no direction given — Autonomous Editorial Warmth v2):**
+- Display/Headings: `Fraunces` (variable, opsz) at weights 300–600 — use `font-variation-settings: 'opsz' 144` for hero, `'opsz' 72` for section titles
+- Body: `DM Sans` at weights 400, 500, 600
+- Labels/Eyebrows: `JetBrains Mono` at weight 400
 
-**Alternate pairings to suggest during review:**
+When using this pairing, default background is parchment `#F5EFE0`, accent is vermillion `#E8513D`.
+Full token reference: `/home/rizki/clawd/agents/hazn/skills/conversion-audit/references/brand.md`
+
+**Alternate pairings for client-specific projects:**
 - Plus Jakarta Sans + Inter (modern/tech-forward)
 - Manrope + Source Serif 4 (warm/professional)
 - Space Grotesk + Work Sans (bold/creative)
-- Outfit + Lora (approachable/established)
+- Fraunces + DM Sans (editorial warmth — Autonomous default)
 
 ### Typography Scale
 
