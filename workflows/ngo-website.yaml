@@ -1,0 +1,122 @@
+# NGO / Association / Institutional Website Build Workflow
+# Triggered by: /hazn-ngo
+
+name: ngo-website
+description: Full website build for NGOs, associations, political orgs, and international institutions
+trigger: /hazn-ngo
+skill: ngo-web-design
+
+phases:
+  - id: strategy
+    name: Mission & Audience Strategy
+    agent: strategist
+    command: /hazn-strategy
+    skill: ngo-web-design
+    outputs:
+      - .hazn/outputs/strategy.md
+    required: true
+    note: |
+      Focus on: mission alignment, audience hierarchy (supporters/media/funders/members),
+      action hierarchy (donate/join/sign/attend), legal form, compliance requirements.
+      NOT conversion funnels or revenue targets.
+
+  - id: compliance
+    name: Legal & Compliance Checklist
+    agent: strategist
+    command: /hazn-compliance
+    depends_on: [strategy]
+    outputs:
+      - .hazn/outputs/compliance-checklist.md
+    required: true
+    note: |
+      Germany-based orgs: Impressum (§5 TMG), Datenschutzerklärung (DSGVO),
+      Cookie consent, Accessibility statement (BITV 2.0), Satzung, Jahresbericht.
+      International orgs: equivalent requirements for jurisdiction.
+
+  - id: ux
+    name: Information Architecture
+    agent: ux-architect
+    command: /hazn-ux
+    skill: ngo-web-design
+    depends_on: [strategy]
+    outputs:
+      - .hazn/outputs/ux-blueprint.md
+    required: true
+    note: |
+      Structure around: transparency, trust, mobilization — not conversion.
+      Key sections: Über uns/About, Themen/Work, Mitmachen/Join, Spenden/Donate,
+      Aktuelles/News, Kontakt/Presse. Full transparency footer mandatory.
+
+  - id: copy
+    name: Mission-Driven Copy
+    agent: copywriter
+    command: /hazn-copy
+    skill: ngo-web-design
+    depends_on: [strategy, ux]
+    outputs:
+      - .hazn/outputs/copy/
+    required: false
+    note: Tone — trustworthy, warm, urgent but not manipulative. Never startup-speak.
+
+  - id: wireframe
+    name: Wireframe Validation
+    agent: wireframer
+    command: /hazn-wireframe
+    depends_on: [ux]
+    outputs:
+      - .hazn/outputs/wireframes/
+    required: false
+
+  - id: dev
+    name: Development
+    agent: developer
+    command: /hazn-dev
+    depends_on: [ux]
+    optional_inputs: [copy, wireframe]
+    outputs:
+      - src/
+    required: true
+    note: |
+      CMS options: WordPress (with ngo-friendly setup) or static (Astro/Next.js).
+      Must include: Impressum page, Datenschutz page, accessibility statement,
+      cookie consent, privacy-friendly analytics (Matomo/Plausible).
+
+  - id: accessibility
+    name: Accessibility Audit
+    agent: auditor
+    command: /hazn-audit
+    depends_on: [dev]
+    outputs:
+      - .hazn/outputs/accessibility-report.md
+    required: true
+    note: WCAG 2.1 AA minimum. Keyboard nav, screen reader, contrast, heading hierarchy.
+
+  - id: seo
+    name: SEO + Discoverability
+    agent: seo-specialist
+    command: /hazn-seo
+    depends_on: [dev]
+    outputs:
+      - .hazn/outputs/seo-checklist.md
+    required: true
+    note: |
+      Focus on: political education content discoverability, schema for Organization/Event/Person,
+      RSS feed for journalists, sitemap. Also GEO (generative engine visibility).
+
+checkpoints:
+  - after: strategy
+    message: "Strategy complete. Review mission alignment and compliance requirements before proceeding."
+
+  - after: compliance
+    message: "Compliance checklist ready. Ensure all legal requirements are scoped before design."
+
+  - after: wireframe
+    message: "Wireframes ready. Get board/stakeholder approval before development."
+
+  - after: dev
+    message: "Build complete. Accessibility audit is mandatory before launch."
+
+estimated_duration:
+  minimal: "3-5 days (small association, simple site)"
+  standard: "1-2 weeks (full process, no member portal)"
+  thorough: "3-4 weeks (member portal, multilingual, donation integration)"

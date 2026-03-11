@@ -1,0 +1,17 @@
+# Runtime & private context — never commit these
+memory/
+MEMORY.md
+USER.md
+.openclaw/
+.hazn/
+.pi/
+
+# Client project work
+projects/
+
+# Generated outputs
+outputs/
+
+# Session/runtime files
+*.session
+*.jsonl
