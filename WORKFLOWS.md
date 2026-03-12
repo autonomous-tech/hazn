@@ -35,12 +35,16 @@ This determines the entire strategy, IA, tone, and compliance requirements.
        └─→ CHECKPOINT: Stakeholder approval
 
 4. DEVELOPMENT (required)
-   └─→ Ask: WordPress or Next.js?
+   └─→ Ask: Which stack?
        ├── WordPress → Spawn: WordPress Developer (sub-agents/wordpress-developer.md)
        │   └─→ Stack: GeneratePress Premium + Meta Box + Filter Everything (see skill)
        │   └─→ Needs: HestiaCP SSH access + domain
-       └── Next.js → Spawn: Developer (sub-agents/developer.md)
-           └─→ Stack: Next.js + Payload CMS + Tailwind
+       ├── Next.js + Payload → Spawn: Developer (sub-agents/developer.md)
+       │   └─→ Stack: Next.js + Payload CMS + Tailwind
+       │   └─→ Best for: B2B commercial, greenfield marketing sites
+       └── Django + Wagtail + Next.js → Spawn: Wagtail Developer (sub-agents/wagtail-developer.md)
+           └─→ Stack: cookiecutter-django + Wagtail LTS + Next.js
+           └─→ Best for: Content-heavy, existing Django backend, Autonomous own properties, case study import workflow
    └─→ Input: ux-blueprint.md, copy/, wireframes/
    └─→ CHECKPOINT: Review in browser
 

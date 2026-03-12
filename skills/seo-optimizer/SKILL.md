@@ -1,307 +1,145 @@
 ---
 name: seo-optimizer
-description: Optimizes Next.js frontend websites for SEO. Use when improving search engine visibility, adding metadata, optimizing page structure, implementing structured data, or improving Core Web Vitals.
+description: Optimizes Next.js frontend websites for SEO. Supports both Payload CMS and Django + Wagtail (headless) stacks. Use when improving search engine visibility, adding metadata, implementing structured data (JSON-LD), configuring sitemaps, optimizing Core Web Vitals, or implementing AEO/GEO patterns.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
-# SEO Optimization for Next.js
+# SEO Optimizer
 
-You are an expert SEO specialist for Next.js applications. Audit and optimize sites for maximum search engine visibility.
+You are an expert SEO specialist for Next.js applications. Audit and optimize for maximum search engine visibility, AI engine citability, and Core Web Vitals performance.
 
-## 1. Metadata & Head Tags
+## Stack Detection
 
-### App Router (Next.js 13+)
-Check for proper metadata exports in `layout.tsx` and `page.tsx`:
+**Before doing anything**, identify the stack from context clues:
 
-```typescript
-export const metadata: Metadata = {
-  title: 'Page Title | Brand',
-  description: 'Compelling 155-160 char description',
-  openGraph: {
-    title: 'OG Title',
-    description: 'OG Description',
-    images: ['/og-image.jpg'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Twitter Title',
-    description: 'Twitter Description',
-  },
-}
-```
+| Signal | Stack |
+|--------|-------|
+| `wagtail`, `django`, `Page`, `StreamField`, `page_published`, `wagtailimages` | **Wagtail + Next.js** |
+| `payload`, `PayloadCMS`, `collections`, `payload.config.ts` | **Payload CMS + Next.js** |
+| Generic Next.js (no CMS mentioned) | **Next.js standalone** |
 
-### Pages Router
-Check for `next/head` usage:
+**Then load the appropriate reference:**
 
-```typescript
-import Head from 'next/head'
+- **Wagtail + Next.js** → Read `references/wagtail-nextjs.md`
+- **Payload CMS + Next.js** → Read `references/nextjs-payload.md`
+- **Generic Next.js** → Use core principles below + `references/nextjs-payload.md`
 
-<Head>
-  <title>Page Title | Brand</title>
-  <meta name="description" content="..." />
-  <meta property="og:title" content="..." />
-</Head>
-```
-
-### Checklist
-- [ ] Unique title per page (50-60 characters)
-- [ ] Meta description per page (155-160 characters)
-- [ ] Open Graph tags for social sharing
-- [ ] Twitter Card meta tags
-- [ ] Canonical URLs set correctly
-- [ ] No duplicate titles across pages
+If the stack is ambiguous, ask: _"Is this using Wagtail (Django) or Payload CMS as the backend?"_
 
 ---
 
-## 2. Structured Data (JSON-LD)
+## Core Principles (All Stacks)
 
-Add schema.org markup for rich snippets:
+These apply regardless of backend.
 
-```typescript
-// components/JsonLd.tsx
-export function JsonLd({ data }: { data: object }) {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  )
-}
+### 1. Metadata Completeness
 
-// Usage in page
-<JsonLd data={{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Article Title",
-  "author": { "@type": "Person", "name": "Author" },
-  "datePublished": "2024-01-01",
-}} />
+Every page must have:
+- **Title** — 50–60 characters, unique per page, includes primary keyword
+- **Meta description** — 155–160 characters, compelling, includes secondary keyword
+- **Open Graph** — title, description, image (1200×630px)
+- **Twitter Card** — `summary_large_image` for content pages
+- **Canonical URL** — explicit, resolves duplication
+
+### 2. Structured Data (JSON-LD)
+
+Match schema type to page type:
+
+| Page Type | Schema |
+|-----------|--------|
+| Homepage | `Organization` + `WebSite` with `SearchAction` |
+| Blog post | `Article` or `BlogPosting` |
+| FAQ section | `FAQPage` |
+| Product/service | `Product` or `Service` |
+| Any page with breadcrumbs | `BreadcrumbList` |
+| Location-based | `LocalBusiness` |
+
+Always render JSON-LD in `<head>` scope via a `<JsonLd>` component. Never rely solely on visual rendering for structured data signals.
+
+### 3. Image SEO
+
+- Use `next/image` for all images — no exceptions
+- Set explicit `width` + `height` to prevent CLS
+- Add descriptive `alt` text (not filename, not empty)
+- Use `priority` prop for above-the-fold images (LCP)
+- Configure WebP/AVIF in `next.config.js`
+
+### 4. Crawlability & AI Access
+
+`robots.txt` must explicitly **allow** these bots (do not rely on default allow):
+
+```
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 ```
 
-### Common Schema Types
-- **Organization**: Company info, logo, social links
-- **Article/BlogPosting**: Blog posts
-- **Product**: E-commerce products
-- **BreadcrumbList**: Navigation breadcrumbs
-- **FAQPage**: FAQ sections
-- **LocalBusiness**: Physical locations
+Blocking these → invisible to ChatGPT, Perplexity, Claude, and Google AI Overviews.
 
----
+### 5. Core Web Vitals
 
-## 3. Image Optimization
+| Metric | Target | Primary Fix |
+|--------|--------|-------------|
+| LCP | < 2.5s | `priority` on hero images, fast server |
+| INP | < 200ms | Code splitting, defer non-critical JS |
+| CLS | < 0.1 | Explicit image dimensions, no layout injections |
 
-### Using next/image
-```typescript
-import Image from 'next/image'
+### 6. Sitemap
 
-<Image
-  src="/hero.jpg"
-  alt="Descriptive alt text for SEO"
-  width={1200}
-  height={630}
-  priority // for LCP images
-  placeholder="blur"
-  blurDataURL="data:image/jpeg;base64,..."
-/>
-```
+- Sitemap at `/sitemap.xml` — dynamically generated from CMS data
+- Only include `live`, `public`, non-`noindex` pages
+- Include `lastModified`, `changeFrequency`, `priority`
+- Submit to Google Search Console after launch
 
-### Checklist
-- [ ] All images use `next/image` component
-- [ ] Descriptive alt text on every image
-- [ ] Priority attribute on above-fold images
-- [ ] Proper width/height to prevent layout shift
-- [ ] WebP/AVIF formats configured in next.config.js
+### 7. AEO/GEO (AI Engine Optimization)
 
----
+For visibility in ChatGPT, Perplexity, Claude, and Google AI Overviews:
 
-## 4. Core Web Vitals
-
-### LCP (Largest Contentful Paint)
-- Preload critical images: `priority` prop on hero images
-- Optimize fonts with `next/font`
-- Reduce server response time
-
-### FID/INP (Interactivity)
-- Code split with dynamic imports
-- Defer non-critical JavaScript
-- Use `next/script` with proper strategy
-
-### CLS (Cumulative Layout Shift)
-- Set explicit dimensions on images/videos
-- Reserve space for dynamic content
-- Avoid inserting content above existing content
-
-```typescript
-import Script from 'next/script'
-
-<Script
-  src="https://analytics.example.com/script.js"
-  strategy="lazyOnload" // or afterInteractive, beforeInteractive
-/>
-```
-
----
-
-## 5. Sitemap & Robots
-
-### App Router Sitemap
-```typescript
-// app/sitemap.ts
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: 'https://example.com', lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: 'https://example.com/about', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-  ]
-}
-```
-
-### App Router Robots
-```typescript
-// app/robots.ts
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: { userAgent: '*', allow: '/', disallow: '/private/' },
-    sitemap: 'https://example.com/sitemap.xml',
-  }
-}
-```
-
----
-
-## 6. URL Structure
-
-### Best Practices
-- Use descriptive, keyword-rich slugs
-- Lowercase with hyphens (not underscores)
-- Keep URLs short and meaningful
-- Implement proper redirects for changed URLs
-
-```typescript
-// next.config.js
-module.exports = {
-  async redirects() {
-    return [
-      { source: '/old-page', destination: '/new-page', permanent: true },
-    ]
-  },
-}
-```
-
----
-
-## 7. Internal Linking
-
-- Use `next/link` for all internal navigation
-- Descriptive anchor text (not "click here")
-- Logical site hierarchy
-- Breadcrumb navigation
-
-```typescript
-import Link from 'next/link'
-
-<Link href="/products/widget">
-  Premium Widget Features  {/* Descriptive anchor text */}
-</Link>
-```
-
----
-
-## 8. Performance Configuration
-
-### next.config.js optimizations
-```javascript
-module.exports = {
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-  },
-  compress: true,
-  poweredByHeader: false,
-  generateEtags: true,
-}
-```
-
----
-
-## 9. AI Search Readiness
-
-AI crawlers have different access requirements than Googlebot. A site can be fully crawlable by Google and completely invisible to ChatGPT, Perplexity, and Claude.
-
-### AI Bot Access Audit
-
-Check `robots.txt` for blocks against these bots:
-
-```bash
-curl -sL "https://[domain]/robots.txt" | grep -iE "gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|google-extended|bingbot"
-```
-
-**Bots to allow:**
-- `GPTBot`, `ChatGPT-User` — ChatGPT (87.4% of AI referral traffic — most important)
-- `PerplexityBot` — Perplexity
-- `ClaudeBot`, `anthropic-ai` — Claude
-- `Google-Extended` — Gemini / AI Overviews
-- `Bingbot` — Copilot
-
-**Note:** `CCBot` is a training crawler (Common Crawl). Blocking it is fine and doesn't affect citations.
-
-### Beyond robots.txt — Common AI Crawler Blockers
-
-These break AI access even when robots.txt is permissive:
-
-| Issue | How to Check | Fix |
-|-------|-------------|-----|
-| **JS-only navigation** | Disable JS in browser, check if content loads | Ensure critical content in server-rendered HTML |
-| **Login/paywall walls** | Test page in incognito | Ensure key pages are publicly accessible |
-| **Missing/broken canonicals** | Inspect `<link rel="canonical">` | Canonical must point to the correct indexable URL |
-| **Server errors on key pages** | Check server logs or run a crawl | Fix 5xx errors, reduce timeouts |
-| **Extremely slow load times** | Run Lighthouse or WebPageTest | AI bots time out on slow pages; target <3s TTFB |
-
-### Speakable Schema
-
-Marks which content is optimized for voice assistants and AI reading. Add to blog posts and key landing pages:
-
-```typescript
-// In generateMetadata or as JSON-LD
-const speakableSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": [".tldr", ".key-takeaway", ".faq-answer"]
-  },
-  "url": "https://example.com/page"
-}
-```
-
-### AI Readiness Checklist
-
-- [ ] AI bots allowed in robots.txt (GPTBot, PerplexityBot, ClaudeBot, Google-Extended)
-- [ ] Key pages load without JavaScript enabled (server-rendered content)
-- [ ] No login walls blocking priority pages
-- [ ] Canonical tags present and correct on all indexable pages
-- [ ] No 5xx errors on priority pages
-- [ ] Page load time under 3 seconds (TTFB)
-- [ ] FAQPage schema on FAQ sections
-- [ ] Speakable schema on blog posts and key content pages
-- [ ] Author metadata visible in HTML (not just visually)
-- [ ] `lastModified` / `dateModified` in schema markup
+- **FAQ sections** — render Q+A in semantic HTML (visible text, not just JSON-LD)
+- **Direct answer paragraphs** — 40–60 word definitions at the top of key sections
+- **Author metadata** — visible in HTML, not just structured data
+- **`llms.txt`** — serve at `/llms.txt` (see reference files for implementation)
+- **Speakable schema** — on blog posts and key content pages
 
 ---
 
 ## Audit Workflow
 
-When invoked, follow this process:
+When auditing a site:
 
-1. **Scan the project structure** - Identify pages, layouts, components
-2. **Check metadata** - Audit title/description on each page
-3. **Verify images** - Ensure next/image usage and alt text
-4. **Review structured data** - Check for JSON-LD implementation
-5. **Analyze performance** - Review script loading and image optimization
-6. **Check sitemap/robots** - Verify existence and correctness
-7. **Generate report** - Summarize findings with priorities
+1. **Detect stack** — load correct reference file
+2. **Scan structure** — pages, layouts, components, CMS models
+3. **Metadata audit** — title/description coverage across all pages
+4. **Structured data audit** — JSON-LD present, valid, correct types
+5. **Image audit** — next/image usage, alt text, dimensions, priority flags
+6. **Crawlability check** — robots.txt, sitemap, canonical tags, noindex handling
+7. **Core Web Vitals** — LCP images, CLS-causing elements, script loading
+8. **AI readiness** — bot access, server-rendered content, llms.txt
+9. **Report** — prioritized findings with code-level fixes
 
-Prioritize fixes by impact:
-- **Critical**: Missing titles, no meta descriptions, broken images
-- **High**: Missing structured data, poor Core Web Vitals
-- **Medium**: Suboptimal image formats, missing Open Graph
-- **Low**: Minor URL improvements, additional schema types
+### Priority Tiers
+
+- 🔴 **Critical** — Missing titles, no meta descriptions, robots.txt blocking indexing, sitemap missing
+- 🟠 **High** — Missing structured data, noindex not working, broken canonicals, poor LCP
+- 🟡 **Medium** — Missing og_image, suboptimal image formats, missing AEO patterns
+- 🟢 **Low** — Minor URL improvements, additional schema types, llms.txt
+
+---
+
+## Reference Files
+
+| File | Contents |
+|------|----------|
+| `references/nextjs-payload.md` | Full Next.js + Payload CMS SEO implementation |
+| `references/wagtail-nextjs.md` | Full Django + Wagtail (headless) + Next.js SEO implementation |

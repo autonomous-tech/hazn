@@ -3,15 +3,15 @@ name: seo-blog-writer
 description: >
   Writes SEO, AEO, and GEO-optimized blog posts (1,500–3,000 words) using keyword research data as input.
   Optimizes for traditional search rankings, AI answer engines (ChatGPT, Perplexity, Google AI Overviews),
-  and generative engine citation. Outputs markdown with frontmatter (title, meta description, slug, keywords,
-  schema markup, entity map, answer blocks) ready for import into Payload CMS. Use this skill whenever the
-  user asks to write a blog post, create blog content, draft an article, write SEO content, "write a post
-  about [topic]", "create content for [keyword]", or any request involving long-form content creation for a
-  blog. Also trigger when the user references keyword research output and wants content produced from it, or
-  asks to "turn these keywords into content", "write content from this research", "create a content calendar",
-  or anything related to AEO/GEO content optimization. Pairs with the `keyword-research` skill (upstream data),
-  `entity-knowledge-graph` skill (entity optimization), and the `payload-nextjs-stack` skill (downstream CMS
-  integration).
+  and generative engine citation. Outputs markdown with frontmatter for Payload CMS import, or JSON for
+  Wagtail StreamField import. Use this skill whenever the user asks to write a blog post, create blog
+  content, draft an article, write SEO content, "write a post about [topic]", "create content for
+  [keyword]", or any request involving long-form content creation for a blog. Also trigger when the user
+  references keyword research output and wants content produced from it, or asks to "turn these keywords
+  into content", "write content from this research", "create a content calendar", or anything related to
+  AEO/GEO content optimization. Pairs with the `keyword-research` skill (upstream data),
+  `entity-knowledge-graph` skill (entity optimization), and the `payload-nextjs-stack` and
+  `wagtail-nextjs-stack` skills (downstream CMS integration).
 ---
 
 # SEO + AEO + GEO Blog Writer
@@ -177,33 +177,23 @@ Build the article structure optimized for all three channels:
 ```
 
 #### Structure Rules
-1. **H1**: One per article. Contains primary keyword. Under 60 characters.
-2. **H2s**: 5-8 per article. At least 2 should contain supporting keywords naturally. At least 2 should be phrased as questions (AEO optimization).
-3. **H3s**: Use sparingly for genuine subsections. In FAQ section, use H3s for individual questions.
-4. **TL;DR block**: REQUIRED at the top. This is the single most important AEO/GEO element. Write it as a standalone answer.
-5. **Key takeaway blocks**: Include under each major H2. These are secondary extraction targets. Use blockquote formatting.
+1. **H1**: One per article, contains primary keyword, under 60 chars.
+2. **H2s**: 5-8 per article; at least 2 with supporting keywords, at least 2 phrased as questions.
+3. **H3s**: Use sparingly. In FAQ section, H3s = individual questions.
+4. **TL;DR block**: REQUIRED at the top — standalone answer, the #1 AEO/GEO extraction target.
+5. **Key takeaway blocks**: Blockquote under each major H2 — secondary extraction targets.
 6. **Paragraphs**: 2-4 sentences max. No walls of text.
-7. **Definition sentences**: When introducing a concept, lead with "[Term] is [definition]." — clean, quotable, citable.
-8. **Lists**: Use when genuinely listing items. Don't use as a crutch for lazy writing. For AEO, numbered lists work better than bullets for "how-to" and "steps" queries.
-9. **Bold**: Emphasize key terms or definitions on first use. Don't overdo it.
-10. **Internal links**: Suggest 2-4 internal link placements using `[anchor text]({{internal_link:related-topic}})` placeholder syntax.
-11. **External links**: Suggest 2-3 authoritative external sources for claims or statistics. Prefer primary sources (.gov, .edu, peer-reviewed, official company blogs).
+7. **Definition sentences**: Lead with "[Term] is [definition]." — clean, quotable, citable.
+8. **Lists**: Use for genuine lists; numbered > bullets for how-to and steps (AEO).
+9. **Internal links**: Suggest 2-4 placements with `[anchor text]({{internal_link:related-topic}})`.
+10. **External links**: 2-3 authoritative sources for claims. Prefer primary sources (.gov, .edu, peer-reviewed).
 
 ### Step 4: AEO-Specific Optimization
 
 Apply these patterns to maximize answer engine visibility:
 
 #### Direct Answer Pattern
-For every question-format H2, follow this structure:
-```
-## How long does [process] take?
-
-[Process] typically takes [specific timeframe] for [common scenario]. [Qualifier for different situations]. [Evidence or source for the claim].
-
-For more complex cases, the timeline breaks down like this...
-```
-
-The first sentence IS the featured snippet / AI Overview answer. Write it to stand alone.
+For every question-format H2: answer in the first sentence (this IS the featured snippet / AI Overview answer), then expand. Example: "[Process] typically takes [specific timeframe] for [common scenario]. [Qualifier]. [Evidence/source]."
 
 #### Featured Snippet Targeting
 Match the current SERP format for your target query:
@@ -212,16 +202,9 @@ Match the current SERP format for your target query:
 - **Table snippet**: Use a markdown table comparing options, features, or data points
 - **Definition snippet**: Start with "[Term] is..." or "[Term] refers to..."
 
-#### People Also Ask (PAA) Optimization
-- Use exact PAA question phrasing as H2s or H3s when natural
-- Answer in the first 1-2 sentences below the heading
-- Keep the direct answer under 50 words (Google truncates beyond this)
-- Then expand with the full explanation
-
-#### Voice Search Optimization
-- Include at least 2-3 natural language, conversational question phrasings
-- Answers to voice queries should be speakable — clear, concise, no jargon
-- Target position zero content: if someone asks Alexa/Siri this question, your sentence is what gets read aloud
+#### PAA + Voice Optimization
+- Use exact PAA question phrasing as H2s/H3s; direct answer in first 1-2 sentences (under 50 words)
+- Voice answers must be speakable — clear, concise, no jargon; write as if Alexa will read it aloud
 
 ### Step 5: GEO-Specific Optimization
 
@@ -302,149 +285,72 @@ Write the full article following the outline. Key principles:
 6. **Answer-first writing**: For every section, lead with the answer, then explain. Inverted pyramid at the section level.
 7. **Citable precision**: Every major claim should be specific enough that an AI model could confidently cite it with attribution.
 
-### Step 8: Generate Frontmatter & Structured Data
+### Step 8: Detect CMS Target & Generate Output
 
-Produce complete frontmatter that maps to the Payload CMS blog collection schema AND provides rich signals for AI engines:
+**Detect which CMS to target** before generating output:
 
-```yaml
+| Signal | Target CMS |
+|--------|-----------|
+| User mentions Wagtail, Django, or `wagtail-nextjs-stack` | **Wagtail** |
+| Project context includes `wagtail` in stack or filenames | **Wagtail** |
+| User mentions Payload, Next.js, or `payload-nextjs-stack` | **Payload CMS** (default) |
+| No explicit CMS mentioned | **Payload CMS** (default) |
+
+**When target is Payload CMS:** produce the markdown file with YAML frontmatter (see below).
+
+**When target is Wagtail:** produce BOTH:
+1. The markdown post body (for review/editing) saved as `./outputs/blog-{slug}.md`
+2. The Wagtail import JSON saved as `./outputs/blog-{slug}-wagtail.json`
+
+See `references/output-formats.md` for the full JSON schema and field mapping details.
+
 ---
-title: "Primary Keyword: Compelling Benefit or Hook"
-slug: "primary-keyword-focused-slug"
-meta_title: "Primary Keyword — Benefit Statement | Brand Name"  # Under 60 chars
-meta_description: "Action-oriented description with primary keyword. Includes benefit and implicit CTA. Under 155 chars."
-primary_keyword: "exact primary keyword"
-supporting_keywords:
-  - "keyword 1"
-  - "keyword 2"
-  - "keyword 3"
-search_intent: "informational"
-target_word_count: 2000
-estimated_reading_time: "8 min"
-date: "YYYY-MM-DD"
-lastModified: "YYYY-MM-DD"
-author: ""  # To be filled by editor
-author_credentials: ""  # e.g., "10 years in B2B SaaS marketing" — GEO authority signal
-category: ""  # To be filled based on site taxonomy
-featured_image_alt: "Descriptive alt text containing primary keyword naturally"
 
-# SEO
-internal_links_suggested:
-  - anchor: "anchor text"
-    target_topic: "related topic or slug"
-external_sources:
-  - url: "https://example.com/study"
-    context: "Cited for [specific claim]"
-    type: "primary_source"  # primary_source | industry_report | official_documentation
+#### Payload CMS Frontmatter
 
-# AEO
-tldr: "2-3 sentence executive summary — the primary AI extraction target."
-featured_snippet_format: "paragraph"  # paragraph | list | table | definition
-paa_questions:
-  - "Exact PAA question 1?"
-  - "Exact PAA question 2?"
-  - "Exact PAA question 3?"
-voice_search_phrases:
-  - "natural language voice query version"
+Produce complete YAML frontmatter covering these sections:
+- **Core**: `title`, `slug`, `meta_title`, `meta_description`, `primary_keyword`, `supporting_keywords`, `search_intent`, `date`, `lastModified`, `author`, `author_credentials`, `category`, `featured_image_alt`
+- **SEO**: `internal_links_suggested`, `external_sources`
+- **AEO**: `tldr`, `featured_snippet_format`, `paa_questions`, `voice_search_phrases`
+- **GEO**: `entities` (with `name`, `type`, `relationship`, `sameAs`), `citable_claims`, `original_value`, `content_freshness`
+- **Schema**: `schema_type`, `schema_markup` (Article/HowTo/FAQ JSON-LD), `faq_schema`, `how_to_schema`, `speakable_selectors`
 
-# GEO
-entities:
-  - name: "Entity Name"
-    type: "Organization"  # Person | Organization | Product | Concept | Technology
-    relationship: "subject"  # subject | competitor | tool | framework | authority
-    sameAs: "https://en.wikipedia.org/wiki/Entity"  # or official URL
-citable_claims:
-  - claim: "Specific statistic or definition"
-    source: "Source name, year"
-    context: "Where this appears in the article"
-original_value: "Brief description of what's unique — original data, novel framework, contrarian insight"
-content_freshness: "evergreen"  # evergreen | timely | seasonal
-
-# Schema
-schema_type: "Article"
-schema_markup:
-  "@context": "https://schema.org"
-  "@type": "Article"
-  headline: "Same as title"
-  description: "Same as meta_description"
-  datePublished: "YYYY-MM-DD"
-  dateModified: "YYYY-MM-DD"
-  author:
-    "@type": "Person"
-    name: ""
-    url: ""
-    sameAs: []  # LinkedIn, Twitter, etc.
-  publisher:
-    "@type": "Organization"
-    name: ""
-    url: ""
-    logo:
-      "@type": "ImageObject"
-      url: ""
-  mainEntityOfPage:
-    "@type": "WebPage"
-    "@id": ""
-faq_schema:  # Only if FAQ section exists
-  - question: "Question from the article?"
-    answer: "Concise answer from the article."
-how_to_schema: null  # Populate if article contains step-by-step instructions
-  # "@type": "HowTo"
-  # name: "How to..."
-  # step:
-  #   - "@type": "HowToStep"
-  #     name: "Step 1 name"
-  #     text: "Step 1 description"
-speakable_selectors:  # CSS selectors for content optimized for voice/TTS
-  - ".tldr"
-  - ".key-takeaway"
-  - ".faq-answer"
----
-```
+See `references/output-formats.md` for the full annotated YAML template and Payload field mapping table.
 
 ### Step 9: Output
 
-Save the complete markdown file with frontmatter to:
+**Payload CMS (default):** Save the complete markdown file with frontmatter to:
 ```
 ./outputs/blog-{slug}.md
 ```
 
-If writing multiple posts (batch mode), save to:
+**Wagtail:** Save both outputs:
+```
+./outputs/blog-{slug}.md               ← markdown body for review
+./outputs/blog-{slug}-wagtail.json     ← import-ready JSON
+```
+
+**Batch mode (multiple posts):**
 ```
 ./outputs/blog-posts/
 ├── blog-{slug-1}.md
+├── blog-{slug-1}-wagtail.json   ← only when target is Wagtail
 ├── blog-{slug-2}.md
-└── blog-{slug-3}.md
+└── blog-{slug-2}-wagtail.json
 ```
 
 ---
 
-## Payload CMS Integration Notes
+## CMS Integration
 
-The frontmatter maps to Payload's blog collection as follows:
+This skill supports two CMS output formats. See `references/output-formats.md` for complete field mappings, JSON schemas, and block-type documentation.
 
-| Frontmatter Field | Payload Field | Notes |
-|-------------------|---------------|-------|
-| `title` | `title` (text) | Direct map |
-| `slug` | `slug` (text, unique) | Direct map |
-| `meta_title` | `meta.title` (text) | SEO override |
-| `meta_description` | `meta.description` (textarea, max 160) | SEO description |
-| `tldr` | `tldr` (richText or text block) | Display at top of post + used in speakable schema |
-| `featured_image_alt` | Media `alt` field | For the hero/featured image |
-| `date` | `publishedDate` | Publication date |
-| `lastModified` | `updatedAt` or custom `lastModified` | GEO freshness signal |
-| `author` | `author` (relationship) | Needs human input |
-| `author_credentials` | `author.credentials` (text) | Display in byline for E-E-A-T |
-| `category` | `category` (relationship or select) | Based on site taxonomy |
-| `entities` | `entities` (array block) | For knowledge graph integration |
-| `schema_markup` | Injected via `generateMetadata` or JSON-LD script | In the blog post template |
-| `faq_schema` | Rendered as FAQ block + JSON-LD | Use FAQBlock from Payload blocks |
-| `how_to_schema` | Rendered as HowTo block + JSON-LD | Use HowToBlock from Payload blocks |
-| `speakable_selectors` | Added to Speakable schema in page head | Tells Google which content is voice-ready |
+| CMS | Output | Reference |
+|-----|--------|-----------|
+| **Payload CMS** (default) | `blog-{slug}.md` with YAML frontmatter | `references/output-formats.md#payload-cms` |
+| **Wagtail** | `blog-{slug}.md` + `blog-{slug}-wagtail.json` | `references/output-formats.md#wagtail` |
 
-### New Payload Blocks Needed for AEO/GEO
-- **TLDRBlock**: Renders the executive summary with `.tldr` class for speakable targeting
-- **KeyTakeawayBlock**: Blockquote-style callout with `.key-takeaway` class
-- **DefinitionBlock**: Clean "[Term] is [definition]" with Definition schema markup
-- **EntityMentionBlock**: Inline entity reference with `sameAs` link for knowledge graph
+For Wagtail import instructions and the Django management command, see `references/wagtail-import.md`.
 
 ---
 
@@ -453,22 +359,11 @@ The frontmatter maps to Payload's blog collection as follows:
 When the user provides full keyword research JSON and asks to "create content" or "build a content calendar", switch to batch planning mode:
 
 1. Review all `content_opportunities` from the keyword research
-2. If `topical_authority` data exists, use the `content_creation_order` as the writing sequence
-3. Present a content calendar with AEO/GEO annotations:
-
-```
-CONTENT CALENDAR
-================
-Pri | Title                              | Primary Keyword      | Intent        | Words | AEO Target           | GEO Value
-----|------------------------------------|--------------------- |---------------|-------|----------------------|-----------
-1   | [Pillar] Complete Guide to X       | main keyword         | informational | 3,000 | AI Overview          | Definitions, framework
-2   | How to Do Y: Step-by-Step          | how to Y             | informational | 2,000 | Featured snippet     | HowTo schema, steps
-3   | X vs Z: Which Is Better?           | X vs Z               | commercial    | 2,000 | Comparison table     | Entity relationships
-4   | 7 Best Tools for X in 2026         | best tools for X     | commercial    | 2,500 | List snippet         | Product entities
-5   | What Is X? [Definition Post]       | what is X            | informational | 1,500 | Definition snippet   | Citable definition
-6   | [FAQ] Common Questions About X     | X questions          | informational | 1,500 | PAA domination       | FAQ schema, voice
-```
-
+2. If `topical_authority` data exists, use `content_creation_order` as the writing sequence
+3. Present a content calendar: `Pri | Title | Primary Keyword | Intent | Words | AEO Target | GEO Value`
+   - Use keyword research data to populate all columns
+   - Annotate AEO target format (AI Overview / featured snippet / PAA domination / definition snippet)
+   - Annotate GEO value (definitions, framework, entity relationships, original data)
 4. Ask the user which posts to write (or confirm the full calendar)
 5. Write posts one at a time, saving each to the outputs directory
 
@@ -476,71 +371,27 @@ Pri | Title                              | Primary Keyword      | Intent        
 
 ## Quality Checklist
 
-Before finalizing any blog post, verify:
+Before finalizing any blog post, run through these gates. Full checklists in `references/quality-checklist.md`.
 
-### SEO Checks
-- [ ] Word count is 1,500–3,000 words
-- [ ] Primary keyword appears in: H1, TL;DR, first 100 words, one H2, meta description, slug, conclusion
-- [ ] 5-8 supporting keywords are naturally woven throughout
-- [ ] All H2s are meaningful section headers (not generic "Introduction" or "Conclusion")
-- [ ] No paragraph exceeds 4 sentences
-- [ ] At least one data point, example, or specific claim per major section
-- [ ] Hook in the first 2 sentences is compelling (no clichés)
-- [ ] CTA is clear and relevant to search intent
-- [ ] Frontmatter is complete (all fields populated except author/category)
-- [ ] Internal link suggestions are included
-- [ ] External source suggestions are included for claims/stats
-- [ ] Tone matches the niche (see Tone Adaptation table)
+**SEO** — Keyword in H1/TL;DR/first 100 words/one H2/meta/slug/conclusion. 5-8 supporting keywords woven in. Hook in first 2 sentences. Frontmatter complete. Tone matches niche.
 
-### AEO Checks
-- [ ] TL;DR block at the top (2-3 sentences, standalone answer)
-- [ ] Key takeaway block under each major H2
-- [ ] At least 2 H2s phrased as questions (matching PAA data)
-- [ ] Direct answer in first sentence after each question H2
-- [ ] FAQ section with 3-5 questions and concise answers
-- [ ] Featured snippet format matches SERP format for target query
-- [ ] FAQPage schema is present and accurate
-- [ ] HowTo schema present if article contains steps
-- [ ] Voice search phrases included in frontmatter
-- [ ] Speakable selectors identified
+**AEO** — TL;DR block present. Key takeaway under each H2. At least 2 question-format H2s. Direct answer first sentence after each question H2. FAQ section with 3-5 items. FAQPage + HowTo schema where applicable.
 
-### GEO Checks
-- [ ] At least 3 citable claims with specific attribution (source + date)
-- [ ] Key concepts have clean, standalone definition sentences
-- [ ] All entities named explicitly with context on first mention
-- [ ] Entity map in frontmatter with types, relationships, and sameAs URLs
-- [ ] Author credentials included for E-E-A-T signals
-- [ ] lastModified date set for content freshness
-- [ ] Original value clearly present (unique data, framework, or perspective)
-- [ ] Content passes the "would an AI confidently cite this?" test
-- [ ] No vague claims — everything is specific and attributable
-- [ ] Publisher and author schema include sameAs links
+**GEO** — 3+ citable claims with source + date. Clean definition sentences for key concepts. Entities named explicitly on first mention with `sameAs` URLs. Author credentials included. `lastModified` set. Original value present.
 
-### Content Quality
-- [ ] Content is original — not a rehash of what's already ranking
-- [ ] No SEO spam — reads naturally to a human first
-- [ ] No filler or padding to hit word count
-- [ ] Active voice predominates
-- [ ] Varied paragraph and sentence structure
+**Content quality** — No filler. Active voice. Not a rehash of what's ranking. No SEO spam.
 
 ---
 
 ## Anti-Patterns (DO NOT)
 
-- ❌ "In today's fast-paced digital landscape..." — Generic openings
-- ❌ "Without further ado..." — Filler transitions
-- ❌ Keyword stuffing — If it reads awkwardly, remove the keyword
-- ❌ Thin sections — Every H2 section should be 200+ words with substance
-- ❌ Clickbait titles that don't deliver — Title must match content
-- ❌ "As an AI language model..." — Never break character
-- ❌ Lists as a crutch — Use prose when explaining concepts
-- ❌ Passive voice domination — Default to active voice
-- ❌ Vague claims without evidence — "Many experts agree" means nothing
-- ❌ Identical paragraph structure — Vary rhythm: short-long-medium-short
-- ❌ Writing to hit word count — Don't pad if topic is well covered
-- ❌ Burying the answer — Lead with the answer, then explain (AEO rule)
-- ❌ Unnamed frameworks — If you create a methodology, name it (GEO rule)
-- ❌ Unattributed statistics — Every number needs a source and date (GEO rule)
+- ❌ Generic openings — "In today's fast-paced digital landscape..."
+- ❌ Keyword stuffing — if it reads awkwardly, remove the keyword
+- ❌ Thin sections — every H2 should be 200+ words with substance
+- ❌ Burying the answer — lead with the answer, then explain (AEO rule)
+- ❌ Unnamed frameworks — if you create a methodology, name it (GEO rule)
+- ❌ Unattributed statistics — every number needs a source and date (GEO rule)
 - ❌ Entity ambiguity — "the platform" instead of "Payload CMS" (GEO rule)
-- ❌ Stale dates — Never publish without `date` and `lastModified` (GEO rule)
-- ❌ Missing author signals — Anonymous content gets deprioritized by AI models
+- ❌ Stale dates — never publish without `date` and `lastModified` (GEO rule)
+- ❌ Missing author signals — anonymous content gets deprioritized by AI models
+- ❌ Writing to hit word count — don't pad if the topic is well covered
