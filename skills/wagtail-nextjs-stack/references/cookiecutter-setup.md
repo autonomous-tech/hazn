@@ -570,3 +570,34 @@ autonomous_site/                # Django project root
     ├── tailwind.config.ts
     └── package.json
 ```
+
+---
+
+## Multi-Client Architecture Decision
+
+For Autonomous managing multiple client sites, choose one of two patterns before starting any project:
+
+### Option A: One Wagtail instance per client (recommended for most cases)
+
+- Separate Django/Wagtail deployment per client
+- Complete data isolation
+- Independent deployment schedules
+- Simpler permissions model
+- Higher ops overhead (N deployments to maintain)
+
+**Use when:** Client has sensitive data requirements, different tech stacks per client, or the project is large enough to justify dedicated infrastructure.
+
+### Option B: Single Wagtail instance, Wagtail Sites framework
+
+- One deployment, multiple `Site` objects in Wagtail admin
+- Each site has its own root page and domain
+- Shared codebase, shared page types
+- Lower ops overhead
+- Shared failure domain (one bad deploy affects all clients)
+- Complex permissions — must use Wagtail collection permissions carefully to prevent cross-client content access
+
+**Use when:** Multiple smaller sites with identical tech requirements, internal tooling, or you're managing 10+ small sites.
+
+### Autonomous default: Option A
+
+Deploy one Wagtail instance per client. Use Railway or Render for straightforward per-project deploys. The ops overhead is manageable and the isolation is worth it.

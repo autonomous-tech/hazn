@@ -32,6 +32,8 @@ SEO is a first-class concern in every project built on this stack. These pattern
 
 ## 1. SEO-First Page Model Design
 
+> **Note:** For AEO/GEO schema auto-generation from StreamField blocks (FAQPage, HowTo, etc.), see `references/aeo-geo.md` which extends the patterns defined here.
+
 Every page model must extend `BasePage`, which ships with full SEO fields out of the box. Wagtail already provides `seo_title` and `search_description` on the base `Page` model — `BasePage` extends that with OG image, canonical URL, noindex control, and a JSON-LD hook.
 
 ```python

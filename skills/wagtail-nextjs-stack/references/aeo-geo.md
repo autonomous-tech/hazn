@@ -26,10 +26,7 @@ into every project built on this stack — not bolted on afterward.
    - 5.4 [CaseStudyPage Schema](#54-casestudypage-schema)
    - 5.5 [SchemaMarkupField Serializer (API exposure)](#55-schemamarkupfield-serializer-api-exposure)
 6. [llms.txt — Live Django View](#6-llmstxt--live-django-view)
-7. [AICitationLog — GEO Monitoring Model](#7-aicitationlog--geo-monitoring-model)
-   - 7.1 [Model Definition](#71-model-definition)
-   - 7.2 [Wagtail Admin Registration](#72-wagtail-admin-registration)
-   - 7.3 [Management Command Scaffold](#73-management-command-scaffold)
+7. [GEO Monitoring — Future Intelligence Suite Integration](#7-geo-monitoring--future-intelligence-suite-integration)
 8. [HTML Rendering Constraints (Next.js)](#8-html-rendering-constraints-nextjs)
    - 8.1 [AnswerBlock Component](#81-answerblock-component)
    - 8.2 [FAQBlock Component](#82-faqblock-component)
@@ -107,15 +104,24 @@ class AnswerBlock(StructBlock):
     )
 
     def clean(self, value):
+        # AEO validation should guide editors, not gate content.
+        # Use logging warnings, not ValidationError, for AEO checks.
+        # Reserve ValidationError for structural errors (missing required fields).
         cleaned = super().clean(value)
         answer_text = cleaned["answer"].source if hasattr(cleaned["answer"], "source") else str(cleaned["answer"])
         # Strip HTML tags for word count
         import re
+        import logging
+        logger = logging.getLogger("wagtail.blocks")
         plain = re.sub(r"<[^>]+>", " ", answer_text)
         word_count = len(plain.split())
         if word_count < 40:
-            raise ValidationError(
-                {"answer": f"Answer is too short ({word_count} words). Minimum 40 words for AI citability."}
+            # Warn via logging (non-blocking) — editors see this in server logs
+            # ValidationError would block publish; we prefer to guide, not gate
+            logger.warning(
+                "AnswerBlock answer is short (%d words). "
+                "Aim for 40–300 words for better AI citation probability.",
+                word_count,
             )
         if word_count > 300:
             raise ValidationError(
@@ -452,24 +458,16 @@ class AEOEntityMixin(models.Model):
             "'TechArticle', 'HowTo', 'FAQPage', 'Organization', 'Person'"
         ),
     )
-    mentions = models.TextField(
+    # entity_map is NOT a computed field — it's a simple TextField on the page model
+    # populated by the editor (or optionally pre-filled by a wagtail_hook on save)
+    mentioned_entities = models.TextField(
         blank=True,
-        help_text=(
-            "Comma-separated entities mentioned in this content. "
-            "Include tools, brands, concepts, and people. "
-            "Example: 'Google Analytics 4, Shopify, server-side tracking, GTM'"
-        ),
+        help_text='Comma-separated entities mentioned in this content. e.g. "GA4, Klaviyo, Shopify Plus"',
     )
 
-    @property
-    def entity_map(self):
-        """Structured entity data for the API."""
-        mentioned = [e.strip() for e in self.mentions.split(",") if e.strip()]
-        return {
-            "primary": self.primary_entity,
-            "type": self.entity_type,
-            "mentions": mentioned,
-        }
+    # In api_fields — expose as structured data:
+    # APIField('primary_entity')
+    # APIField('mentioned_entities')  # Next.js splits on comma to get list
 
     class Meta:
         abstract = True
@@ -505,20 +503,24 @@ class BlogPostPage(AEOEntityMixin, AEOSchemaMixin, Page):
         self._warn_entity_in_first_paragraph()
 
     def _validate_search_description(self):
-        """search_description is required and must be 120–160 chars."""
+        """search_description is required and must not exceed 160 chars.
+        Under 120 chars triggers a warning (non-blocking) — editors are guided, not gated.
+        AEO validation should guide editors, not gate content.
+        """
+        import logging
+        logger = logging.getLogger(__name__)
         desc = (self.search_description or "").strip()
         if not desc:
             raise ValidationError(
                 {"search_description": "Search description is required for AEO. Write 120–160 characters."}
             )
         if len(desc) < 120:
-            raise ValidationError(
-                {
-                    "search_description": (
-                        f"Search description is too short ({len(desc)} chars). "
-                        "Minimum 120 characters for AI engine indexing quality."
-                    )
-                }
+            # Warn — do not block. Short descriptions are still valid; longer is better for AEO.
+            logger.warning(
+                "search_description on '%s' is short (%d chars). "
+                "Aim for 120–160 characters for AI engine indexing quality.",
+                self.title,
+                len(desc),
             )
         if len(desc) > 160:
             raise ValidationError(
@@ -573,9 +575,9 @@ These constraints are enforced at the model level — editors cannot bypass them
 
 | Field | Rule | Error type |
 |---|---|---|
-| `AnswerBlock.answer` | 40–300 words | Hard error (ValidationError) |
+| `AnswerBlock.answer` | < 40 words: logged warning; > 300 words: hard error | Warning / Hard error |
 | `FAQItemBlock.answer` | Cannot start with reference phrases | Hard error |
-| `search_description` | Required, 120–160 chars | Hard error |
+| `search_description` | Required (hard error); < 120 chars: logged warning; > 160 chars: hard error | Warning / Hard error |
 | First paragraph entity mention | Must contain `primary_entity` | Soft warning (logged) |
 
 The `AnswerBlock.clean()` and `FAQItemBlock.clean()` are defined on the block itself (see Section 2.1).
@@ -680,17 +682,6 @@ class SchemaMarkupField(serializers.Field):
         if hasattr(page, "get_schema_markup"):
             return page.get_schema_markup()
         return {}
-
-
-class EntityMapField(serializers.Field):
-    """
-    Returns the entity map from the AEOEntityMixin.entity_map property.
-    """
-
-    def to_representation(self, page):
-        if hasattr(page, "entity_map"):
-            return page.entity_map
-        return {"primary": "", "type": "", "mentions": []}
 ```
 
 ---
@@ -700,7 +691,7 @@ class EntityMapField(serializers.Field):
 ```python
 # {app}/models.py (continued)
 from wagtail.api import APIField
-from .serializers import AnswerBlocksField, FAQItemsField, SchemaMarkupField, EntityMapField
+from .serializers import AnswerBlocksField, FAQItemsField, SchemaMarkupField
 
 
 class BlogPostPage(AEOEntityMixin, AEOSchemaMixin, Page):
@@ -715,11 +706,14 @@ class BlogPostPage(AEOEntityMixin, AEOSchemaMixin, Page):
         APIField("publish_date"),
         APIField("body"),
 
+        # Entity fields — editor-filled, not computed
+        APIField("primary_entity"),
+        APIField("mentioned_entities"),  # Next.js splits on comma to get list
+
         # AEO computed fields — Next.js uses these, not raw body
         APIField("answer_blocks", serializer=AnswerBlocksField(source="*")),
         APIField("faq_items", serializer=FAQItemsField(source="*")),
         APIField("schema_markup", serializer=SchemaMarkupField(source="*")),
-        APIField("entity_map", serializer=EntityMapField(source="*")),
     ]
 ```
 
@@ -729,6 +723,8 @@ class BlogPostPage(AEOEntityMixin, AEOSchemaMixin, Page):
 {
   "title": "What is Server-Side Tracking?",
   "search_description": "Server-side tracking moves data collection off the browser...",
+  "primary_entity": "Server-Side Tracking",
+  "mentioned_entities": "Google Tag Manager, Shopify, GDPR, first-party data",
   "answer_blocks": [
     {
       "question": "What is server-side tracking?",
@@ -746,11 +742,6 @@ class BlogPostPage(AEOEntityMixin, AEOSchemaMixin, Page):
   "schema_markup": {
     "@context": "https://schema.org",
     "@graph": [...]
-  },
-  "entity_map": {
-    "primary": "Server-Side Tracking",
-    "type": "TechArticle",
-    "mentions": ["Google Tag Manager", "Shopify", "GDPR", "first-party data"]
   }
 }
 ```
@@ -758,6 +749,8 @@ class BlogPostPage(AEOEntityMixin, AEOSchemaMixin, Page):
 ---
 
 ## 5. Schema Auto-Generation from StreamField
+
+> **Note:** This section builds on the `BasePage` SEO model and schema hook defined in `references/seo.md`. Read that file first — the `get_schema_markup()` method defined there is what `AEOSchemaMixin` extends.
 
 Schema is a **consequence of content structure** — not a separate task. Adding a `FAQBlock`
 automatically adds `FAQPage` schema. Adding a `HowToBlock` automatically adds `HowTo` schema.
@@ -1255,257 +1248,13 @@ strategy instead.
 
 ---
 
-## 7. AICitationLog — GEO Monitoring Model
+## 7. GEO Monitoring — Future Intelligence Suite Integration
 
-The `AICitationLog` tracks which pages are being cited by which AI engines for which queries.
-It is visible in the Wagtail admin as a snippet. This model is the foundation of future
-SearchIntel product functionality.
+GEO citation monitoring (tracking which queries your pages are cited for across ChatGPT, Perplexity, and Google AI Overviews) is handled by the **SearchIntel** product in the Autonomous Intelligence Suite — not by the CMS layer.
 
-### 7.1 Model Definition
+Once SearchIntel is integrated with a project, it will read from the Wagtail page tree to identify citation candidates. No additional CMS configuration is required.
 
-```python
-# {app}/models.py (continued)
-from django.db import models
-from wagtail.models import Page
-from wagtail.snippets.models import register_snippet
-
-
-class AICitationLog(models.Model):
-    """
-    Records AI engine citation checks for a page and query combination.
-    Visible in Wagtail admin. Foundation of GEO monitoring and SearchIntel.
-    """
-
-    ENGINE_CHOICES = [
-        ("chatgpt", "ChatGPT"),
-        ("perplexity", "Perplexity"),
-        ("google_aio", "Google AI Overviews"),
-        ("gemini", "Gemini"),
-        ("copilot", "Copilot"),
-        ("claude", "Claude"),
-        ("other", "Other"),
-    ]
-
-    page = models.ForeignKey(
-        Page,
-        on_delete=models.CASCADE,
-        related_name="citation_logs",
-        help_text="The page being monitored for AI citations.",
-    )
-    query = models.TextField(
-        help_text=(
-            "The exact search query tested. "
-            "Example: 'What is server-side tracking?' or 'best Shopify analytics tools'"
-        )
-    )
-    engine = models.CharField(
-        max_length=50,
-        choices=ENGINE_CHOICES,
-        help_text="The AI engine checked.",
-    )
-    cited = models.BooleanField(
-        default=False,
-        help_text="Was this page cited in the AI engine's response to the query?",
-    )
-    checked_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="When this check was performed.",
-    )
-    notes = models.TextField(
-        blank=True,
-        help_text=(
-            "Optional notes about the citation context, sentiment, or accuracy. "
-            "Paste relevant excerpt from the AI response here."
-        ),
-    )
-
-    class Meta:
-        ordering = ["-checked_at"]
-        verbose_name = "AI Citation Log"
-        verbose_name_plural = "AI Citation Logs"
-
-    def __str__(self):
-        cited_str = "✓ cited" if self.cited else "✗ not cited"
-        return f"{self.engine} | {self.page.title[:40]} | {cited_str}"
-```
-
----
-
-### 7.2 Wagtail Admin Registration
-
-```python
-# {app}/wagtail_hooks.py
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.views.snippets import SnippetViewSet
-from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList
-from .models import AICitationLog
-
-
-class AICitationLogViewSet(SnippetViewSet):
-    model = AICitationLog
-    icon = "search"
-    menu_label = "AI Citation Log"
-    menu_order = 900
-    list_display = ["page", "engine", "query_truncated", "cited", "checked_at"]
-    list_filter = ["engine", "cited", "checked_at"]
-    search_fields = ["query", "notes"]
-
-    panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel("page"),
-                FieldPanel("query"),
-            ],
-            heading="What was checked",
-        ),
-        FieldRowPanel(
-            [
-                FieldPanel("engine"),
-                FieldPanel("cited"),
-                FieldPanel("checked_at", read_only=True),
-            ],
-            heading="Result",
-        ),
-        FieldPanel("notes"),
-    ]
-
-    def query_truncated(self, obj):
-        return obj.query[:60] + "..." if len(obj.query) > 60 else obj.query
-
-    query_truncated.short_description = "Query"
-
-
-register_snippet(AICitationLogViewSet)
-```
-
----
-
-### 7.3 Management Command Scaffold
-
-```python
-# {app}/management/commands/check_ai_citations.py
-import json
-import logging
-from pathlib import Path
-
-from django.core.management.base import BaseCommand, CommandError
-from django.utils import timezone
-
-from yourapp.models import AICitationLog
-
-logger = logging.getLogger(__name__)
-
-
-class Command(BaseCommand):
-    help = "Check if site content is being cited by AI engines. Logs results to AICitationLog."
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            "--config",
-            type=str,
-            default="geo_queries.json",
-            help="Path to JSON config file containing target queries. Default: geo_queries.json",
-        )
-        parser.add_argument(
-            "--engine",
-            type=str,
-            default="perplexity",
-            choices=["perplexity", "chatgpt", "google_aio", "all"],
-            help="Which AI engine to check. Default: perplexity",
-        )
-        parser.add_argument(
-            "--dry-run",
-            action="store_true",
-            help="Print queries without calling APIs or writing to DB.",
-        )
-
-    def handle(self, *args, **options):
-        config_path = Path(options["config"])
-        if not config_path.exists():
-            raise CommandError(
-                f"Config file not found: {config_path}\n"
-                "Create a JSON file like: "
-                '{"queries": [{"page_id": 1, "query": "What is server-side tracking?"}]}'
-            )
-
-        with open(config_path) as f:
-            config = json.load(f)
-
-        queries = config.get("queries", [])
-        if not queries:
-            self.stderr.write("No queries found in config file.")
-            return
-
-        self.stdout.write(f"Checking {len(queries)} queries against {options['engine']}...")
-
-        for item in queries:
-            page_id = item.get("page_id")
-            query = item.get("query", "").strip()
-
-            if not page_id or not query:
-                self.stderr.write(f"Skipping malformed item: {item}")
-                continue
-
-            if options["dry_run"]:
-                self.stdout.write(f"[DRY RUN] Would check: '{query}' (page_id={page_id})")
-                continue
-
-            # --- API call stub ---
-            # Replace this with your actual Perplexity/ChatGPT API integration.
-            # The result should be: cited=True/False, notes=excerpt_from_response
-            cited, notes = self._check_citation(query, options["engine"])
-
-            try:
-                from wagtail.models import Page
-                page = Page.objects.get(pk=page_id)
-            except Page.DoesNotExist:
-                self.stderr.write(f"Page {page_id} not found. Skipping.")
-                continue
-
-            AICitationLog.objects.create(
-                page=page,
-                query=query,
-                engine=options["engine"],
-                cited=cited,
-                checked_at=timezone.now(),
-                notes=notes,
-            )
-            status = "✓ cited" if cited else "✗ not cited"
-            self.stdout.write(f"  [{status}] '{query[:60]}'")
-
-        self.stdout.write(self.style.SUCCESS("Done. Results saved to AICitationLog."))
-
-    def _check_citation(self, query: str, engine: str) -> tuple[bool, str]:
-        """
-        Stub: Implement actual API call to the target AI engine.
-
-        For Perplexity:
-          POST https://api.perplexity.ai/chat/completions
-          Check if response citations contain your domain.
-
-        For ChatGPT (with search):
-          Use OpenAI Responses API with web_search_preview tool.
-          Check annotations for your domain.
-
-        Returns: (cited: bool, notes: str)
-        """
-        # TODO: implement
-        logger.warning("_check_citation is a stub. Implement API call for engine: %s", engine)
-        return False, "Stub — not yet implemented. Check manually."
-```
-
-**Config file format (`geo_queries.json`):**
-
-```json
-{
-  "queries": [
-    { "page_id": 5, "query": "What is server-side tracking?" },
-    { "page_id": 5, "query": "server-side tracking GDPR benefits" },
-    { "page_id": 8, "query": "best Shopify analytics tools 2025" },
-    { "page_id": 12, "query": "how to set up GA4 server-side tracking" }
-  ]
-}
-```
+For manual spot-checking during development: test key queries directly in Perplexity and ChatGPT. Document results in the project's `dev-progress.md`.
 
 ---
 

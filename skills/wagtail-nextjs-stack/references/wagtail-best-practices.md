@@ -740,3 +740,51 @@ CELERYBEAT_SCHEDULE = {
     },
 }
 ```
+
+---
+
+## Agency Content Workflow (Moderation)
+
+For Autonomous managing client sites: configure Wagtail's built-in workflow system so client editors can create/edit content, but only agency reviewers can approve and publish.
+
+### Setup
+
+```python
+# In Wagtail admin: Settings → Workflows → Create workflow
+# Or programmatically in a data migration:
+
+from wagtail.models import Workflow, WorkflowTask, GroupApprovalTask
+from django.contrib.auth.models import Group
+
+def setup_agency_workflow(apps, schema_editor):
+    # Create groups
+    client_editors, _ = Group.objects.get_or_create(name='Client Editors')
+    agency_reviewers, _ = Group.objects.get_or_create(name='Agency Reviewers')
+
+    # Create approval task
+    task = GroupApprovalTask.objects.create(name='Agency Review')
+    task.groups.add(agency_reviewers)
+
+    # Create workflow
+    workflow = Workflow.objects.create(name='Client → Agency Review')
+    WorkflowTask.objects.create(workflow=workflow, task=task, sort_order=1)
+
+    # Assign to root page (applies to all pages)
+    from wagtail.models import Page
+    root = Page.objects.first()
+    workflow.workflow_pages.create(page=root)
+```
+
+### Permission model for agency projects
+
+| Group | Can create | Can edit | Can publish | Can approve |
+|---|---|---|---|---|
+| Client Editors | ✅ | Own pages only | ❌ | ❌ |
+| Agency Reviewers | ✅ | All pages | ✅ (after review) | ✅ |
+| Agency Admins | ✅ | All pages | ✅ | ✅ |
+
+Configure in Wagtail admin under Settings → Groups → Page permissions.
+
+### Notification emails
+
+Wagtail sends email notifications at each workflow step. Configure `EMAIL_BACKEND` and `DEFAULT_FROM_EMAIL` in Django settings. Wagtail uses these automatically.
