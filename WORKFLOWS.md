@@ -146,8 +146,9 @@ This determines the entire strategy, IA, tone, and compliance requirements.
 **Duration:** 4-8 hours
 
 ### Before Starting
-All landing pages deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca/{client}/`
-External sharing: use the share button (30-day expiry link).
+Ask: **Public or private?**
+- Public → deploy to `landing-pages` repo → `pages.autonomoustech.ca/{client}/`
+- Private → deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca/{client}/`
 
 See `TOOLS.md` for repo details.
 
@@ -295,8 +296,9 @@ Week 4: Analyze + Plan next cycle
 **Outputs:** `index.html` (sales page) + `case-study.json` (Wagtail CMS import)
 
 ### Before Starting
-All case studies deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca/{client-slug}/`
-External sharing: use the share button (30-day expiry link).
+Ask: **Public or private?**
+- Public (share freely, send to prospects) → deploy to `landing-pages` repo → `pages.autonomoustech.ca/audits/{client-slug}-case-study/`
+- Private (confidential client, auth-gated) → deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca/{client-slug}/`
 
 ### Phases
 
