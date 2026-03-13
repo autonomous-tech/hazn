@@ -99,7 +99,7 @@ Clean, hierarchical URLs for services sites:
 ```
 /services/web-development           (service page)
 /services/web-development/payload-cms (sub-service, if needed)
-/work/containerone-3x-leads         (case study)
+/work/your-client-3x-leads         (case study)
 /blog/why-agencies-need-martech     (thought leadership)
 /packages                           (productized services)
 ```

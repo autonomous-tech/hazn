@@ -16,8 +16,8 @@ Run a comprehensive GA4 property audit and live site tracking inspection. This i
 ## Prerequisites
 
 Before starting, confirm with the user:
-1. **Site URL** — the Shopify store domain (e.g., `containerone.net`)
-2. **GA4 Property ID** — numeric ID (e.g., `373350812`)
+1. **Site URL** — the Shopify store domain (e.g., `your-client.com`)
+2. **GA4 Property ID** — numeric ID (e.g., `{GA4_PROPERTY_ID}`)
 3. **Output directory** — where to save data and report (default: `.hazn/outputs/analytics-audit/`)
 4. **OAuth credentials** — at `~/.config/ga4-audit/credentials.json` for GA4 API access
 

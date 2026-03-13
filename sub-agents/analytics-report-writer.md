@@ -22,7 +22,7 @@ whenToUse: >
 
   <example>
   Context: All audit data is collected, ready to write
-  user: "Write the audit report for containerone.net"
+  user: "Write the audit report for your-client.com"
   assistant: "I'll launch the analytics-report-writer agent to generate the full report."
   </example>
 

@@ -93,7 +93,7 @@ Transforms the markdown report and JSON data into a single-file HTML executive p
 
 ```
 /hazn-analytics-audit
-URL: https://containerone.net
+URL: https://your-client.com
 GA4 Property ID: 123456789
-GSC: https://containerone.net
+GSC: https://your-client.com
 ```
