@@ -28,7 +28,7 @@ whenToUse: >
 
   <example>
   Context: User wants to verify report accuracy
-  user: "Challenge the numbers in the containerone audit"
+  user: "Challenge the numbers in the your-client audit"
   assistant: "I'll use the analytics-adversary to find any holes or inconsistencies."
   </example>
 

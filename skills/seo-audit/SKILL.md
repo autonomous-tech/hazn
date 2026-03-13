@@ -263,6 +263,8 @@ Structured data significantly improves AI visibility. Beyond basic schema, check
 
 ## Output Format
 
+> **Primary deliverable is a standalone HTML report** — see Step 9 for the full HTML generation process, design system, and deployment instructions. The markdown structure below is for internal analysis notes only (or when a quick summary is requested instead of a full HTML report).
+
 Structure your audit report as:
 
 ```markdown
@@ -475,10 +477,168 @@ When auditing B2B SaaS websites specifically:
 
 ---
 
-## Branded Report (Optional)
+---
 
-If generating a client-facing report, apply the client's brand guidelines if provided, or use the **Autonomous Editorial Warmth v2** design system as the default:
-- Source: `/home/rizki/clawd/agents/hazn/skills/conversion-audit/references/brand.md`
-- Fonts: Fraunces (display) + DM Sans (body) + JetBrains Mono (labels)
-- Colors: parchment `#F5EFE0` background, midnight `#0D0D1F` dark sections, vermillion `#E8513D` accent
-- Reference wireframes: `/home/rizki/autonomous-proposals/wireframes-v2/`
+## Step 9: Generate HTML Report
+
+After completing the audit analysis (Steps 1–8), generate a single-file HTML report using the Stone/Amber design system. This is a required deliverable, not optional.
+
+### Design System — Stone/Amber Palette
+
+```css
+:root {
+  /* Base palette — Stone */
+  --stone-50: #fafaf9;    --stone-100: #f5f5f4;   --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1;   --stone-400: #a8a29e;   --stone-500: #78716c;
+  --stone-600: #57534e;   --stone-700: #44403c;   --stone-800: #292524;
+  --stone-900: #1c1917;
+
+  /* Accent — Amber */
+  --amber-400: #fbbf24;   --amber-500: #f59e0b;   --amber-600: #d97706;
+
+  /* Severity */
+  --red-500: #ef4444;     --red-100: #fee2e2;
+  --amber-100: #fef3c7;
+  --green-500: #22c55e;   --green-100: #dcfce7;
+  --blue-500: #3b82f6;    --blue-100: #dbeafe;
+}
+```
+
+### Typography
+
+```css
+/* Google Fonts — REQUIRED */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+
+/* Headings: 'Source Serif 4', Georgia, serif */
+/* Body:     'Inter', system-ui, -apple-system, sans-serif */
+```
+
+### Section Padding
+
+- Regular sections: `padding: 6rem 0`
+- Final CTA section: `padding: 8rem 0`
+
+### CTA Button (MANDATORY)
+
+```css
+.cta-btn {
+  display: block;
+  margin: 0 auto;
+  max-width: 280px;
+  white-space: normal;
+  text-align: center;
+  padding: 1rem 2rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+  transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+```
+
+All CTAs link to: **`https://calendly.com/rizwan-20/30min`** — no exceptions. No email links. No `autonomoustech.ca/contact`.
+
+> CTA copy examples:
+> - "Book a 20-min call — we'll walk through your findings live →"
+> - "Your implementation roadmap starts here →"
+> - "Let's turn these findings into fixes — book a 20-min call →"
+
+### Report Sections
+
+Include all of the following in the HTML output:
+
+1. **Cover** — Domain, audit date, overall SEO Score (0–100), score badge
+2. **Executive Summary** — top 3 critical issues, overall score breakdown by category
+3. **Technical SEO** — crawlability, redirects, canonical, noindex, sitemap health, HTTPS/www consistency. End with a micro-upsell callout for deeper paid engagement
+4. **On-Page SEO** — title tag, meta description, H1–H3, alt text coverage, word count, OG tags. End with micro-upsell callout
+5. **Structured Data & Rich Results** — schema inventory, rich result eligibility, missing schema types. End with micro-upsell callout
+6. **AI Search Readiness** — AI crawler access grid, llms.txt status, entity signals, content extractability. End with micro-upsell callout
+7. **Priority Fix Roadmap** — top 10 issues with effort levels (Low / Medium / High — **no time estimates**)
+8. **Final CTA Section** — full-width dark background (`var(--stone-900)`), Calendly CTA + 3 trust signals
+
+### Micro-Upsell Callout Pattern (end of each section)
+
+```html
+<div class="callout callout--info" style="color: var(--stone-800);">
+  🔍 <strong>Want the full picture?</strong> With a complete crawl + GSC integration, we'd show you
+  [specific deeper insight]. Part of the <strong>SEO Audit</strong> engagement.
+  <a href="https://calendly.com/rizwan-20/30min" style="color: var(--amber-600); font-weight: 600;">
+    Book a 20-min call →
+  </a>
+</div>
+```
+
+### Final CTA Section Template
+
+```html
+<section style="padding: 8rem 0; background: var(--stone-900); text-align: center;">
+  <p style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">
+    Ready to Fix This?
+  </p>
+  <h2 style="color: #fff; font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; margin: 0.75rem 0 1rem;">
+    Let's turn these findings into fixes
+  </h2>
+  <p style="color: var(--stone-300); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.6;">
+    Book a 20-min call and we'll walk through your SEO audit findings live — and map out exactly what to tackle first.
+  </p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">
+    Book a 20-min call — we'll walk through your findings live →
+  </a>
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ No commitment required</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ We come with your audit findings loaded</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ Implementation roadmap included</span>
+  </div>
+</section>
+```
+
+### Sticky Sidebar TOC
+
+Every HTML report must include a sticky sidebar TOC on desktop (≥1024px):
+- Frosted glass panel: `background: rgba(255,255,255,0.75); backdrop-filter: blur(8px)`
+- Active link: amber highlight (`background: var(--amber-500); color: var(--stone-900)`)
+- Mobile: hidden off-canvas, toggled by hamburger button
+- Intersection Observer tracks active section
+
+---
+
+## HTML Report Quality Checklist
+
+Before delivering the HTML report, verify:
+
+- [ ] **Stone/Amber palette** — CSS variables only, no old parchment/vermillion/fraunces tokens
+- [ ] **Google Fonts** — `Inter` + `Source Serif 4` imported at top of `<style>`
+- [ ] **Section padding** — `6rem` on regular sections, `8rem` on final CTA section
+- [ ] **Calendly links** — ALL CTAs use `https://calendly.com/rizwan-20/30min` — no exceptions
+- [ ] **CTA button CSS** — `display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center; box-shadow: 0 6px 24px rgba(245,158,11,0.35)`
+- [ ] **Final CTA section** — full-width dark background + Calendly CTA + 3 trust signals
+- [ ] **Scroll reveal** — `IntersectionObserver` fade-in-up on score cards, findings grids, stat strips (`.reveal` class: `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`)
+- [ ] **Hover states** — all interactive cards have `0.2s` transitions with `translateY(-1px)` lift + shadow
+- [ ] **Mobile bottom CTA banner** — fixed bottom amber strip on mobile only (`max-width: 768px`)
+- [ ] **Sticky sidebar TOC** — frosted glass panel with amber active links on desktop
+- [ ] **Single file** — no external dependencies except Google Fonts
+- [ ] **Responsive** at 375px, 768px, 1024px, 1440px
+- [ ] **No inline styles** — use CSS classes throughout
+- [ ] **4 SEO sections** — Technical SEO, On-Page, Structured Data, AI Search Readiness all present
+- [ ] **4 micro-upsell callouts** — one at end of each SEO section, each with Calendly link
+- [ ] **Priority roadmap** — top 10 issues with effort levels (Low/Medium/High), no time estimates
+- [ ] **Score 0–100** — overall score calculated and displayed in cover/hero
+- [ ] **Dark/light section alternation** maintained
+- [ ] **Finding box text** — `.finding` boxes always have `color: var(--stone-800)` set explicitly
+- [ ] **Deployment** — deployed per the Deployment section below
+
+---
+
+## Deployment
+
+After generating the report HTML:
+1. Save to `~/autonomous-proposals/audits/{client-slug}-seo-audit-{date}/index.html`
+2. Commit and push to `https://github.com/autonomous-tech/autonomous-proposals` (main branch)
+3. Cloudflare Pages auto-deploys to `https://docs.autonomoustech.ca/audits/{client-slug}-seo-audit-{date}/`
+4. Use the SHARE button (auto-injected by GitHub Actions) to generate a 30-day shareable link via `share.autonomoustech.ca`
+5. Share the link with the client — no login required for the recipient

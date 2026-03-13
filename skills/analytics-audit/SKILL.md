@@ -16,8 +16,8 @@ Run a comprehensive GA4 property audit and live site tracking inspection. This i
 ## Prerequisites
 
 Before starting, confirm with the user:
-1. **Site URL** — the Shopify store domain (e.g., `containerone.net`)
-2. **GA4 Property ID** — numeric ID (e.g., `373350812`)
+1. **Site URL** — the Shopify store domain (e.g., `your-client.com`)
+2. **GA4 Property ID** — numeric ID (e.g., `{GA4_PROPERTY_ID}`)
 3. **Output directory** — where to save data and report (default: `.hazn/outputs/analytics-audit/`)
 4. **OAuth credentials** — at `~/.config/ga4-audit/credentials.json` for GA4 API access
 
@@ -27,10 +27,10 @@ Run the GA4 collector scripts to pull all property data:
 
 ```bash
 # Primary dataset: property config, events, conversions, traffic, campaigns, ecommerce
-python .hazn/scripts/analytics-audit/ga4_collector.py <PROPERTY_ID> .hazn/outputs/analytics-audit/ga4_audit_data.json --days 30
+python scripts/analytics-audit/ga4_collector.py <PROPERTY_ID> .hazn/outputs/analytics-audit/ga4_audit_data.json --days 30
 
 # Extended dataset: engagement, browsers, UTMs, keywords, weekly trends
-python .hazn/scripts/analytics-audit/ga4_collector_extra.py <PROPERTY_ID> .hazn/outputs/analytics-audit/ga4_audit_extra.json --days 90
+python scripts/analytics-audit/ga4_collector_extra.py <PROPERTY_ID> .hazn/outputs/analytics-audit/ga4_audit_extra.json --days 90
 ```
 
 If the scripts fail (missing credentials, wrong property ID), troubleshoot:
@@ -44,10 +44,10 @@ If the user has GSC access for the site, collect organic search data:
 
 ```bash
 # Discover available GSC properties (if site_url format is unknown)
-python .hazn/scripts/analytics-audit/gsc_collector.py --discover
+python scripts/analytics-audit/gsc_collector.py --discover
 
 # Collect GSC data (90 days, with brand term classification)
-python .hazn/scripts/analytics-audit/gsc_collector.py <SITE_URL> .hazn/outputs/analytics-audit/gsc_audit_data.json --days 90 --brand-terms "<brand_term1>,<brand_term2>"
+python scripts/analytics-audit/gsc_collector.py <SITE_URL> .hazn/outputs/analytics-audit/gsc_audit_data.json --days 90 --brand-terms "<brand_term1>,<brand_term2>"
 ```
 
 **Site URL format:**

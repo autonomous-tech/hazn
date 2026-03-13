@@ -187,19 +187,107 @@ Output: Prioritized issue list with CVR impact estimates.
 
 ## Report Generation
 
-### Apply Professional Styling
+### Apply Professional Styling — Stone/Amber Design System
 
-Use client's brand guidelines if provided, or apply the **Autonomous Editorial Warmth v2** design system as the default:
-- Source: `/home/rizki/clawd/agents/hazn/skills/conversion-audit/references/brand.md`
-- Fonts: Fraunces (display) + DM Sans (body) + JetBrains Mono (labels)
-- Colors: parchment `#F5EFE0` background, midnight `#0D0D1F` dark sections, vermillion `#E8513D` accent
-- Score circles: sage `#7CA982` (≥70), gold `#D4A853` (50–69), vermillion `#E8513D` (<50)
-- Reference wireframes: `/home/rizki/autonomous-proposals/wireframes-v2/`
-- Clean header with client/agency logo
-- Clear score visualization
-- Section numbers (01, 02, etc.)
-- Card-based layout for findings
-- Consistent color scheme throughout
+Use the **Stone/Amber design system** for ALL audit HTML reports. Do not use Fraunces/DM Sans/parchment. The only exception is if a client provides brand guidelines that override this — even then, maintain the CTA and UX interaction patterns.
+
+#### Color Tokens
+
+```css
+:root {
+  /* Base palette — Stone */
+  --stone-50: #fafaf9;    --stone-100: #f5f5f4;   --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1;   --stone-400: #a8a29e;   --stone-500: #78716c;
+  --stone-600: #57534e;   --stone-700: #44403c;   --stone-800: #292524;
+  --stone-900: #1c1917;
+
+  /* Accent — Amber */
+  --amber-400: #fbbf24;   --amber-500: #f59e0b;   --amber-600: #d97706;
+
+  /* Severity */
+  --red-500: #ef4444;     --red-100: #fee2e2;
+  --amber-100: #fef3c7;
+  --green-500: #22c55e;   --green-100: #dcfce7;
+  --blue-500: #3b82f6;    --blue-100: #dbeafe;
+}
+```
+
+#### Typography
+
+```css
+/* Google Fonts import — REQUIRED */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+
+/* Headings */
+font-family: 'Source Serif 4', Georgia, serif;
+
+/* Body */
+font-family: 'Inter', system-ui, -apple-system, sans-serif;
+```
+
+#### Section Padding
+
+- Regular sections: `padding: 6rem 0` (top/bottom)
+- Final CTA section: `padding: 8rem 0` (top/bottom)
+- Score cards: `padding: 2rem 1.25rem`, gap: `1.25rem`
+
+#### CTA Button Style (MANDATORY)
+
+All CTA buttons must use this exact styling — no exceptions:
+
+```css
+.cta-btn {
+  display: block;
+  margin: 0 auto;
+  max-width: 280px;
+  white-space: normal;
+  text-align: center;
+  padding: 1rem 2rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+  transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+```
+
+#### Final CTA Section (MANDATORY)
+
+Every audit report must close with a full-width dark section:
+
+```html
+<section class="section section--dark" style="padding: 8rem 0; background: var(--stone-900); text-align: center;">
+  <p class="section__label" style="color: var(--amber-400);">Ready to Fix This?</p>
+  <h2 class="section__title" style="color: #fff; font-family: 'Source Serif 4', Georgia, serif;">
+    Let's turn these findings into fixes
+  </h2>
+  <p style="color: var(--stone-300); max-width: 560px; margin: 1rem auto 2.5rem;">
+    Book a 20-min call and we'll walk through your findings live — and map out exactly what to tackle first.
+  </p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">
+    Book a 20-min call — we'll walk through your findings live →
+  </a>
+  <!-- 3 trust signals -->
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ No commitment required</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ We come with your audit findings loaded</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ Implementation roadmap included</span>
+  </div>
+</section>
+```
+
+> **CTA copy variants** (pick whichever fits the context):
+> - "Book a 20-min call — we'll walk through your findings live →"
+> - "Your implementation roadmap starts here →"
+> - "Let's turn these findings into fixes — book a 20-min call →"
+>
+> ALL CTAs link to: `https://calendly.com/rizwan-20/30min` — no exceptions. Do NOT use generic email links or `autonomoustech.ca/contact`.
+
+> ⚠️ **Color override required:** Always set `color: var(--stone-800)` explicitly on `.finding`, `.before`, `.after` boxes — these use light backgrounds (amber-100, red-100, green-100) that will render white text if nested inside a `.section--dark` parent.
 
 ### Report Structure
 
@@ -293,6 +381,15 @@ Add the share button before `</body>`. Share externally via 30-day expiry link.
 
 **Preview:** Use `canvas action=present` for immediate preview before deploying.
 
+## Deployment
+
+After generating the report HTML:
+1. Save to `~/autonomous-proposals/audits/{client-slug}-{audit-type}-{date}/index.html` (or single HTML file for simpler reports)
+2. Commit and push to `https://github.com/autonomous-tech/autonomous-proposals` (main branch)
+3. Cloudflare Pages auto-deploys to `https://docs.autonomoustech.ca/audits/{client-slug}-{audit-type}-{date}/`
+4. Use the SHARE button (auto-injected by GitHub Actions) to generate a 30-day shareable link via `share.autonomoustech.ca`
+5. Share the link with the client — no login required for the recipient
+
 ---
 
 ## Example Workflow
@@ -335,6 +432,38 @@ Add the share button before `</body>`. Share externally via 30-day expiry link.
 > Capturing screenshots now...
 
 [Then proceeds with audit execution]
+
+---
+
+---
+
+## HTML Report Quality Checklist
+
+Before finalizing any HTML audit report, verify every item below:
+
+### Design System
+- [ ] **Stone/Amber palette** — CSS variables from the tokens above (`--stone-*`, `--amber-*`, severity tokens) — no old parchment/vermillion colors
+- [ ] **Google Fonts import** — `Inter` (body) + `Source Serif 4` (headings) at top of `<style>`
+- [ ] **Section padding** — `6rem` top/bottom on regular sections, `8rem` on final CTA section
+- [ ] **Score card padding** — `2rem 1.25rem` with `1.25rem` gap
+
+### CTA
+- [ ] **Calendly links** — ALL CTAs use `https://calendly.com/rizwan-20/30min` — no exceptions (no email links, no `autonomoustech.ca/contact`)
+- [ ] **CTA button CSS** — `display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center; box-shadow: 0 6px 24px rgba(245,158,11,0.35)`
+- [ ] **Final CTA section** — full-width dark background (`var(--stone-900)`) with amber CTA + 3 trust signals
+
+### UX Interactions
+- [ ] **Scroll reveal** — `IntersectionObserver` fade-in-up on score cards, findings grids, stat strips (`.reveal` class: `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`)
+- [ ] **Hover states** — all interactive cards have `0.2s` transitions with `translateY(-1px)` lift + shadow increase
+- [ ] **Mobile bottom CTA banner** — fixed bottom amber strip visible on mobile only (`max-width: 768px`): dark bg, amber CTA button
+- [ ] **Sticky sidebar TOC** — frosted glass panel (`rgba(255,255,255,0.75)` + `backdrop-filter: blur(8px)`) on desktop (≥1024px) with amber active link; collapses to off-canvas drawer on mobile
+
+### Technical
+- [ ] **Single file** — no external dependencies except Google Fonts
+- [ ] **Responsive** — tested at 375px, 768px, 1024px, 1440px
+- [ ] **No inline styles** — use CSS classes (utility classes `mt-sm`, `mt-md`, `mt-lg` for margin variations)
+- [ ] **Finding box text** — `.finding`, `.before`, `.after` always have `color: var(--stone-800)` to prevent white-on-light rendering inside dark sections
+- [ ] **Dark/light section alternation** maintained throughout
 
 ---
 

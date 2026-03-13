@@ -23,7 +23,7 @@ whenToUse: >
 
   <example>
   Context: User wants to audit tracking on a Shopify store
-  user: "Inspect the tracking implementation at containerone.net"
+  user: "Inspect the tracking implementation at your-client.com"
   assistant: "I'll launch the analytics-inspector agent to analyze the site."
   </example>
 

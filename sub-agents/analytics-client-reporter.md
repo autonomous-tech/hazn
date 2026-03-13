@@ -23,7 +23,7 @@ whenToUse: >
 
   <example>
   Context: Audit report is finalized, ready for client delivery
-  user: "Create the client report for containerone.net"
+  user: "Create the client report for your-client.com"
   assistant: "I'll launch the analytics-client-reporter agent to generate the HTML report."
   </example>
 
