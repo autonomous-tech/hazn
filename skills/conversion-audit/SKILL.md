@@ -207,6 +207,38 @@ Key sections in the HTML:
 9. **Part 5: Measurement Framework** — Tracking checklist + funnel visualization
 10. **Implementation Roadmap** — Prioritized tables by timeframe
 11. **Conclusion** — Hero-style closing with single biggest win + risk + CVR potential
+12. **Final CTA Section** — Full-width, midnight/dark background. Calendly CTA button + 3 trust signals below it. No other links in this section.
+
+### Final CTA Section Spec
+
+The last section of every report must be a full-width dark-background CTA block:
+
+```html
+<section class="bg-midnight text-center py-20 px-8">
+  <span class="eyebrow">Ready to fix what's costing you conversions?</span>
+  <h2 class="section-headline text-parchment-light mt-4">Your CRO roadmap starts with a 20-min call</h2>
+  <p class="text-prose max-w-xl mx-auto mt-4 mb-8">
+    Walk through these findings live. We'll prioritize the fixes that move the needle fastest for your site.
+  </p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">
+    Book a 20-min call — we'll walk through the fixes live →
+  </a>
+  <div class="trust-signals mt-10">
+    <span>No commitment required</span>
+    <span>Walk away with a prioritized fix list</span>
+    <span>We've improved CVR for 30+ brands</span>
+  </div>
+</section>
+```
+
+**CTA copy options** (use one per report, vary across clients):
+- "Book a 20-min call — we'll walk through the fixes live →"
+- "Your CRO roadmap starts with a 20-min call →"
+- "Let's turn these findings into a conversion plan →"
+- "See which fix to tackle first — book a 20-min call →"
+
+**All CTAs in the report must link to:** `https://calendly.com/rizwan-20/30min`
+No `autonomoustech.ca/contact`, no email links, no generic contact forms.
 
 ---
 
@@ -291,31 +323,77 @@ In teaser mode, all revenue/conversion estimates **must** use directional langua
 
 ---
 
-## Save & Deliver
+## Deployment
 
-Save the audit report to the project directory first, then deploy to `autonomous-proposals`:
+After generating the report HTML:
+
+1. **Save** to `~/autonomous-proposals/audits/{client-slug}-conversion-audit-{date}.html`
+2. **Commit and push** to `https://github.com/autonomous-tech/autonomous-proposals` (main branch)
+3. **Cloudflare Pages auto-deploys** to `https://docs.autonomoustech.ca/audits/{client-slug}-conversion-audit-{date}.html`
+4. **Use the SHARE button** (auto-injected by GitHub Actions) to generate a 30-day shareable link via `share.autonomoustech.ca`
+5. **Share the link with the client** — no login required
 
 ```bash
-# 1. Save report to project folder
-mkdir -p projects/{client}/audits
-# Write to: projects/{client}/audits/conversion-audit-{date}.html
+# Full deployment flow
+CLIENT_SLUG="acme-corp"
+DATE=$(date +%Y-%m-%d)
+FILENAME="${CLIENT_SLUG}-conversion-audit-${DATE}.html"
 
-# 2. Deploy to docs.autonomoustech.ca (ALWAYS — audits are confidential)
-mkdir -p /home/rizki/autonomous-proposals/audits/{client}
-cp projects/{client}/audits/conversion-audit-{date}.html /home/rizki/autonomous-proposals/audits/{client}/index.html
-# Make sure share button is present before </body>
-cd /home/rizki/autonomous-proposals
-git add audits/{client}/index.html
-git commit -m "Agent Hazn: Conversion Audit for {Client Name}"
+# 1. Write the file
+# (agent writes HTML to this path)
+
+# 2. Commit and push
+cd ~/autonomous-proposals
+git add "audits/${FILENAME}"
+git commit -m "Agent Hazn: Conversion Audit for ${CLIENT_SLUG} (${DATE})"
 git push origin main
+
+# 3. Cloudflare Pages deploys automatically
+# Live at: https://docs.autonomoustech.ca/audits/${FILENAME}
 ```
 
 **⚠️ Audits ALWAYS go to `autonomous-proposals` → `docs.autonomoustech.ca`. Never to `landing-pages`.**
-Audit reports contain confidential client analysis. Share externally using the 📤 SHARE button (generates 30-day expiry link via `share.autonomoustech.ca`).
+Audit reports contain confidential client analysis. Share externally via the 📤 SHARE button only (generates 30-day expiry link via `share.autonomoustech.ca`).
 
 **Share button:** Copy from `briar-creek-construction/index.html` in `autonomous-proposals`. Must be present before `</body>`.
 
 **Preview locally:** Use `canvas action=present` to display the report inline before deploying.
+
+---
+
+---
+
+## Quality Checklist
+
+Before delivering the final HTML report, verify every item below:
+
+### CTA & Links
+- [ ] **Calendly links** — ALL CTAs use `https://calendly.com/rizwan-20/30min` — no exceptions. No `autonomoustech.ca/contact`, no email links.
+- [ ] **Final CTA section** — full-width dark background, Calendly CTA button, 3 trust signals present
+- [ ] **CTA copy** — implementation-hire framing (e.g. "Book a 20-min call — we'll walk through the fixes live →"), not generic "Contact Us"
+
+### UX & Interactivity
+- [ ] **Scroll reveal** — `IntersectionObserver` fade-in-up on score cards, findings grids, before/after sections (`.reveal` class: `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`)
+- [ ] **Hover states** — all finding cards and score cards have `0.2s` transitions with subtle lift (`translateY(-2px)` + shadow increase)
+- [ ] **Mobile bottom CTA banner** — fixed bottom strip visible on mobile only (`display: none` → `display: flex` at `max-width: 768px`), vermillion CTA button linking to Calendly
+- [ ] **Sticky sidebar TOC** — desktop: left sidebar `240px wide`, `position: sticky; top: 2rem`; mobile: hidden off-canvas, toggled by hamburger; frosted glass (`rgba(255,255,255,0.75)` + `backdrop-filter: blur(8px)`)
+- [ ] **TOC active link** — Intersection Observer tracks current section, active link highlighted in vermillion
+
+### File & Output
+- [ ] **Single file** — no external dependencies except Google Fonts. All images/screenshots Base64-embedded.
+- [ ] **Responsive** at 375px, 768px, 1440px — manually verify all three breakpoints
+- [ ] **Print-friendly** — `@media print` hides TOC, banners, and sticky elements; `break-inside: avoid` on cards/tables
+
+### Content Rules
+- [ ] **No time estimates on fixes** — use effort levels only: **Low / Medium / High**. Never say "this takes 30 mins", "easy fix", "a quick 2-hour change", or any duration phrasing.
+- [ ] **Before/After for every issue** — don't just flag problems; show the improved version
+- [ ] **Scores justified** — every pillar score has a written rationale, not just a number
+- [ ] **Quantities, not vague claims** — "3 CTAs compete for attention" not "CTAs are unclear"
+
+### Design Integrity
+- [ ] **Editorial Warmth v2 tokens intact** — Fraunces + DM Sans + JetBrains Mono, parchment/vermillion/midnight palette. No design token changes.
+- [ ] **Dark section text** — any light-background component (`parchment-light`, `white`) inside a dark section must have `color: #1A1A2E` explicitly set to prevent white-on-white
+- [ ] **Share button** — injected from `briar-creek-construction/index.html` in `autonomous-proposals`, present before `</body>`
 
 ---
 

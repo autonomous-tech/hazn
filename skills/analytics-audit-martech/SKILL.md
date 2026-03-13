@@ -210,6 +210,130 @@ Leverage clean data:
 Each task should have: task #, description, owner, effort estimate, impact statement.
 Include cost summary and expected ROI table.
 
+---
+
+## Design System
+
+All HTML output for sections K-P must use the **Stone/Amber** design system. This ensures visual continuity with Phase 1 and the teaser report.
+
+### Colors
+
+```css
+:root {
+  /* Base palette — Stone */
+  --stone-50: #fafaf9;    --stone-100: #f5f5f4;   --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1;   --stone-400: #a8a29e;   --stone-500: #78716c;
+  --stone-600: #57534e;   --stone-700: #44403c;   --stone-800: #292524;
+  --stone-900: #1c1917;
+
+  /* Accent — Amber */
+  --amber-400: #fbbf24;   --amber-500: #f59e0b;   --amber-600: #d97706;
+
+  /* Severity */
+  --red-500: #ef4444;     --red-100: #fee2e2;
+  --amber-100: #fef3c7;
+  --green-500: #22c55e;   --green-100: #dcfce7;
+  --blue-500: #3b82f6;    --blue-100: #dbeafe;
+}
+```
+
+### Typography
+
+```css
+/* Import — always include this at the top of the <style> block */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+
+/* Headings */
+font-family: 'Source Serif 4', Georgia, serif;
+
+/* Body */
+font-family: 'Inter', system-ui, -apple-system, sans-serif;
+```
+
+### Component Standards
+
+Use these shared component classes inherited from the client-report skill:
+`.section`, `.section--dark`, `.finding`, `.finding--warn`, `.finding--good`, `.tool-card`, `.tool-card__dot--red/amber/green`, `.callout`, `.callout--danger`, `.stat-strip`, `.metric-card`, `.data-table`
+
+> ⚠️ Always set `color: var(--stone-800)` explicitly on `.finding`, `.before`, `.after` — light-background components inside `.section--dark` will bleed white text without it.
+
+### CTA Button
+
+```css
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+}
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+```
+
+---
+
+## CTA Strategy — Implementation-Hire Framing
+
+> **All CTAs must link to:** `https://calendly.com/rizwan-20/30min`
+>
+> Frame every recommendation as "let's implement this together" — not "you should fix this."
+> Never say "this takes 30 mins" or "a quick 2-hour fix." Use effort levels only: **Low / Medium / High**.
+
+### Micro-Upsell Callouts
+
+Each major section (K-P) must end with a micro-upsell `.callout` block naming the exact implementation service and linking to Calendly. Use this HTML pattern:
+
+```html
+<div class="callout callout--cta" style="background: var(--amber-100); border-left: 4px solid var(--amber-500); padding: 1.25rem 1.5rem; border-radius: 8px; margin-top: 2rem;">
+  <p style="margin: 0; font-size: 0.95rem; color: var(--stone-800);">
+    🔗 <strong>Attribution Architecture</strong> — We design and implement your full multi-touch
+    attribution model. <a href="https://calendly.com/rizwan-20/30min" style="color: var(--amber-600); font-weight: 600;">Book a 20-min call to map it out →</a>
+  </p>
+</div>
+```
+
+#### Required Micro-Upsells by Section
+
+| Section | Emoji | Service Name | Framing |
+|---------|-------|-------------|---------|
+| K — MarTech Stack | 🧰 | *MarTech Stack Consolidation* | We audit, rationalise, and rewire your stack into a clean, non-redundant setup. |
+| L — Attribution Architecture | 🔗 | *Attribution Architecture* | We design and implement your full multi-touch attribution model. Book a 20-min call to map it out → |
+| M — CDP Evaluation | 🔄 | *CDP Integration* | Connects your tools into a single customer view. We scope and implement the right tier for your volume. Book a call → |
+| N — Google Ads | 🎯 | *Google Ads Conversion Setup* | We restructure your conversion actions, wire Enhanced Conversions, and configure offline import. Book a call → |
+| O — Channel Attribution | 📊 | *Attribution & Reporting Build* | We build the CRM attribution model, GA4 channel groups, and Looker Studio dashboard. Book a call → |
+| P — Implementation Roadmap | ⚙️ | *Server-Side Tracking Implementation* | Removes ad blockers from your signal loss equation. We handle sGTM, CAPI, and the full offline conversion loop. Book a call → |
+
+### Final Section CTA (End of Section P)
+
+Section P must close with a **full-width dark CTA block**:
+
+```html
+<section class="section section--dark" style="text-align: center; padding: 8rem 2rem; background: var(--stone-900);">
+  <p class="section__label" style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;">
+    Ready to fix this?
+  </p>
+  <h2 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 2.25rem; color: #fff; max-width: 640px; margin: 0 auto 1.25rem;">
+    Your MarTech stack is only as good as its implementation. Let's audit it together.
+  </h2>
+  <p style="color: var(--stone-400); max-width: 520px; margin: 0 auto 2.5rem; font-size: 1.05rem; line-height: 1.6;">
+    We've identified the gaps. The next step is a 20-minute call to walk through your stack live — and scope exactly what we'd implement first.
+  </p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">
+    Book a 20-min call →
+  </a>
+</section>
+```
+
+---
+
 ## Step 10.5: Write Phase 2 Report Sections (K-P)
 
 Append sections K-P to the existing Phase 1 report at `.hazn/outputs/analytics-audit/<domain>-audit.md`. Follow the section structure defined in `.hazn/skills/analytics-audit/references/report-template.md`. Use the `analytics-report-writer` agent for full report generation if both phases are being written together.
@@ -220,3 +344,35 @@ After the full report is written, launch the `analytics-adversary` agent to red-
 > Red-team the audit report at .hazn/outputs/analytics-audit/<domain>-audit.md against the data files
 
 The adversary will challenge every number, flag weak claims, and find inconsistencies. Fix any valid issues before delivering to the client.
+
+---
+
+## Quality Checklist
+
+Before finalising sections K-P, verify:
+
+- [ ] **All CTAs use** `https://calendly.com/rizwan-20/30min` — no other Calendly or booking URL
+- [ ] **Micro-upsell callouts** present at the end of each major section: K (MarTech), L (Attribution), M (CDP), N (Google Ads), O (Channel Attribution), P (Roadmap)
+- [ ] **Implementation framing** — every recommendation ends with "we can implement this" not just "you should fix this"
+- [ ] **No time estimates** — use effort levels only: **Low / Medium / High** (never "30 mins", "a quick fix", "a few hours")
+- [ ] **Stone/Amber design system** applied — Stone-50/900 palette, Amber-400/500/600 accents, severity colors
+- [ ] **Typography** — `Inter` for body, `Source Serif 4` for headings, Google Fonts import at top of `<style>`
+- [ ] **Scroll reveal** — `IntersectionObserver` fade-in-up (`.reveal` class: `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`) on all new component sections (tool grid, findings, stat strips, roadmap cards)
+- [ ] **Hover states** on tool cards and finding cards — smooth `0.2s` transition with `translateY(-1px)` or `translateY(-2px)` lift + shadow
+- [ ] **Final dark CTA block** — full-width `var(--stone-900)` section at end of Section P with Calendly link and "Let's audit it together" framing
+- [ ] **No inline styles for repeated patterns** — extract to CSS classes; use utility classes for margin variations
+- [ ] **Finding text contrast** — `.finding`, `.before`, `.after` always have `color: var(--stone-800)` to prevent white text on light backgrounds inside dark sections
+- [ ] **Single file output** — no external dependencies except Google Fonts
+- [ ] **Adversarial review passed** — `analytics-adversary` agent ran and all valid issues resolved
+
+---
+
+## Deployment
+
+After generating the full audit report (Phases 1+2):
+
+1. Save to `~/autonomous-proposals/docs/{client-slug}-analytics-audit-{date}/index.html`
+2. Commit and push to `https://github.com/autonomous-tech/autonomous-proposals` (main branch)
+3. Cloudflare Pages auto-deploys to `https://docs.autonomoustech.ca/docs/{client-slug}-analytics-audit-{date}/`
+4. Use the **SHARE** button (auto-injected by GitHub Actions) to generate a 30-day shareable link via `share.autonomoustech.ca`
+5. Share the link with the client
