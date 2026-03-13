@@ -11,8 +11,11 @@ The goal: keep our depth, add their quality culture and missing functional cover
 
 ---
 
-## Phase 1 — Quality Culture (Week 1)
+## Phase 1 — Quality Culture (Week 1) ✅ Complete
+
 *Biggest gap. Zero QA today. This breaks the delivery chain.*
+
+**Status:** ✅ Complete — `sub-agents/qa-tester.md` exists. QA gate is live in WORKFLOWS.md and SOUL.md.
 
 ### 1A. Build `qa-tester.md` sub-agent
 Inspired by their Evidence Collector + Reality Checker, but B2B website-specific.

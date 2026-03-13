@@ -4,6 +4,10 @@ AI-driven marketing website development framework.
 
 ## Quick Commands
 
+> **Two command systems:**
+> - **Chat** (WhatsApp/Telegram/Signal): `/website`, `/audit`, `/landing`, `/content`, `/email`, `/case-study`, `/optimize`, `/ngo`
+> - **Claude Code slash commands**: `/hazn-website`, `/hazn-audit`, `/hazn-landing` etc. (register via `.claude/commands/`)
+
 | Command | Description |
 |---------|-------------|
 | `/hazn-help` | Contextual guidance on what to do next |

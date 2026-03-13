@@ -150,7 +150,8 @@ Ask: **Public or private?**
 - Public → deploy to `landing-pages` repo → `pages.autonomoustech.ca/{client}/`
 - Private → deploy to `autonomous-proposals` repo → `docs.autonomoustech.ca/{client}/`
 
-See `TOOLS.md` for repo details.
+- Public → `landing-pages` repo → `pages.autonomoustech.ca/{client}/`
+- Private → `autonomous-proposals` repo → `docs.autonomoustech.ca/{client}/`
 
 ### Phases
 

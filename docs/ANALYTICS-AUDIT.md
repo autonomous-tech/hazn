@@ -11,7 +11,7 @@ Run comprehensive MarTech & Attribution audits on Shopify stores with GA4 and op
 ```bash
 cd your-project
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r .hazn/scripts/analytics-audit/requirements.txt
+pip install -r scripts/analytics-audit/requirements.txt
 ```
 
 ### 2. GA4 API OAuth Credentials
@@ -39,7 +39,7 @@ For organic search analysis (Section Q):
 ## Quick Start
 
 ```
-/hazn-analytics-audit containerone.net 373350812
+/hazn-analytics-audit your-client.com {GA4_PROPERTY_ID}
 ```
 
 This kicks off the full 5-phase workflow:
@@ -59,27 +59,27 @@ You can also run individual components:
 ### Collect GA4 data
 ```bash
 source .venv/bin/activate
-python .hazn/scripts/analytics-audit/ga4_collector.py 373350812 .hazn/outputs/analytics-audit/ga4_audit_data.json --days 30
-python .hazn/scripts/analytics-audit/ga4_collector_extra.py 373350812 .hazn/outputs/analytics-audit/ga4_audit_extra.json --days 90
+python scripts/analytics-audit/ga4_collector.py {GA4_PROPERTY_ID} .hazn/outputs/analytics-audit/ga4_audit_data.json --days 30
+python scripts/analytics-audit/ga4_collector_extra.py {GA4_PROPERTY_ID} .hazn/outputs/analytics-audit/ga4_audit_extra.json --days 90
 ```
 
 ### Collect GSC data
 ```bash
-python .hazn/scripts/analytics-audit/gsc_collector.py --discover  # list available properties
-python .hazn/scripts/analytics-audit/gsc_collector.py sc-domain:containerone.net .hazn/outputs/analytics-audit/gsc_audit_data.json --days 90 --brand-terms "container one,containerone"
+python scripts/analytics-audit/gsc_collector.py --discover  # list available properties
+python scripts/analytics-audit/gsc_collector.py sc-domain:your-client.com .hazn/outputs/analytics-audit/gsc_audit_data.json --days 90 --brand-terms "your brand,yourbrand"
 ```
 
 ### Inspect site tracking
-> Inspect the tracking implementation at containerone.net and save findings to .hazn/outputs/analytics-audit/site_inspection.json
+> Inspect the tracking implementation at your-client.com and save findings to .hazn/outputs/analytics-audit/site_inspection.json
 
 ### Write the report
-> Write the audit report for containerone.net using the data in .hazn/outputs/analytics-audit/
+> Write the audit report for your-client.com using the data in .hazn/outputs/analytics-audit/
 
 ### Red-team the report
-> Red-team the audit report at .hazn/outputs/analytics-audit/containerone-audit.md against the data files
+> Red-team the audit report at .hazn/outputs/analytics-audit/your-client-audit.md against the data files
 
 ### Generate HTML client report
-> Create the HTML client report for containerone.net from the audit data and markdown report
+> Create the HTML client report for your-client.com from the audit data and markdown report
 
 ---
 
