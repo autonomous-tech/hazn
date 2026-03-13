@@ -355,7 +355,7 @@ git push origin main
 **⚠️ Audits ALWAYS go to `autonomous-proposals` → `docs.autonomoustech.ca`. Never to `landing-pages`.**
 Audit reports contain confidential client analysis. Share externally via the 📤 SHARE button only (generates 30-day expiry link via `share.autonomoustech.ca`).
 
-**Share button:** Copy from `briar-creek-construction/index.html` in `autonomous-proposals`. Must be present before `</body>`.
+**Share button:** Copy from `{client-name}/index.html` in `autonomous-proposals`. Must be present before `</body>`.
 
 **Preview locally:** Use `canvas action=present` to display the report inline before deploying.
 
@@ -393,7 +393,7 @@ Before delivering the final HTML report, verify every item below:
 ### Design Integrity
 - [ ] **Editorial Warmth v2 tokens intact** — Fraunces + DM Sans + JetBrains Mono, parchment/vermillion/midnight palette. No design token changes.
 - [ ] **Dark section text** — any light-background component (`parchment-light`, `white`) inside a dark section must have `color: #1A1A2E` explicitly set to prevent white-on-white
-- [ ] **Share button** — injected from `briar-creek-construction/index.html` in `autonomous-proposals`, present before `</body>`
+- [ ] **Share button** — injected from `{client-name}/index.html` in `autonomous-proposals`, present before `</body>`
 
 ---
 

@@ -930,7 +930,7 @@ Before finalizing, verify:
 - [ ] **No inline styles** — extract all repeated inline styles to CSS classes. Use utility classes (`mt-sm`, `mt-md`, `mt-lg`) for margin-top variations
 - [ ] **Tool card HTML** — every `.tool-card__name` div must have a proper closing `>` before the text content: `<div class="tool-card__name">Tool Name</div>`. Missing `>` causes the entire MarTech grid to collapse. Always validate HTML structure after any automated edits.
 - [ ] **Mobile scorecard grid** — collapses to 2-col at 600px, 1-col at 400px
-- [ ] **Share button** — must be injected from `briar-creek-construction/index.html` before `</body>` in every report
+- [ ] **Share button** — must be injected from `{client-name}/index.html` before `</body>` in every report
 
 ### SEO Section Checks (when SEO is included)
 
