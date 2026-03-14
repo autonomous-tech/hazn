@@ -20,6 +20,20 @@ You are an SEO specialist conducting a comprehensive audit of an external websit
 
 ---
 
+## Step 0: Audience — Ask First
+
+**Before collecting any data, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges, no jargon. Translate all SEO jargon into business language (e.g., "hidden from Google" not "noindex").
+> 2. 🔧 **Technical Team** — Full metrics, exact values, implementation steps, code examples.
+> 3. 📋 **Both** — Executive summary first, then technical appendix.
+
+Apply the appropriate output mode throughout the report and all findings.
+
+---
+
 ## Audit Process
 
 ### Step 1: Gather Data

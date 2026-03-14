@@ -20,6 +20,20 @@ Comprehensive audit framework for websites (Shopify, custom, any platform). Comb
 
 **NEVER skip this section. ALWAYS ask these questions before starting any audit work.**
 
+### Step 0: Audience — Ask First
+
+**This is the very first question. Ask before anything else.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges, no jargon
+> 2. 🔧 **Technical Team** — Full metrics, code examples, implementation detail
+> 3. 📋 **Both** — Executive summary first, then technical appendix
+
+Apply the appropriate output mode throughout **all** audit types selected.
+
+---
+
 ### Step 1: Audit Type Selection
 
 Ask the user:

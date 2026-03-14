@@ -12,6 +12,20 @@ A teaser conversion audit (public signals only) serves a dual purpose: it delive
 
 Generate a comprehensive, branded landing page conversion audit covering three pillars: Copywriting, SEO, and Frontend Design — plus a measurement framework for validating improvements.
 
+## Step 0: Audience — Ask First
+
+**Before anything else, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges, no jargon
+> 2. 🔧 **Technical Team** — Full metrics, code examples, implementation detail
+> 3. 📋 **Both** — Executive summary first, then technical appendix
+
+Apply the appropriate output mode throughout the report and all findings.
+
+---
+
 ## Process
 
 ### 1. Gather Target Info

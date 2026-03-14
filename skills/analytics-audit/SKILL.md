@@ -13,6 +13,20 @@ version: 1.0.0
 
 Run a comprehensive GA4 property audit and live site tracking inspection. This is Phase 1 of the full MarTech & Attribution audit.
 
+## Step 0: Audience — Ask First
+
+**Before collecting any data, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges, no jargon
+> 2. 🔧 **Technical Team** — Full metrics, code examples, implementation detail
+> 3. 📋 **Both** — Executive summary first, then technical appendix
+
+Apply the appropriate output mode throughout the report and all findings.
+
+---
+
 ## Prerequisites
 
 Before starting, confirm with the user:

@@ -56,6 +56,20 @@ Evaluate interfaces against proven UX principles. Based on [Making UX Decisions]
 - `references/30-patterns-information.md` — Breadcrumbs, sitemaps, tagging, faceted search
 - `references/31-patterns-navigation.md` — Priority nav, off-canvas, sticky, bottom nav
 
+## Step 0: Audience — Ask First
+
+**Before starting any audit or review, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges. Translate UX jargon into business language (e.g., "users leave before seeing the offer" not "above-fold conversion drop").
+> 2. 🔧 **Technical / Design Team** — Full UX detail, design system notes, implementation specs, pattern references.
+> 3. 📋 **Both** — Executive summary first, then technical appendix.
+
+Apply the appropriate output mode throughout the audit.
+
+---
+
 ## Usage Instructions
 
 ### For Design Decisions

@@ -15,6 +15,20 @@ Expand a Phase 1 GA4 audit into a comprehensive MarTech & Attribution assessment
 
 Refer to `.hazn/skills/analytics-audit/references/report-template.md` for the expected output structure of sections K-P.
 
+## Step 0: Audience — Ask First (if not already set in Phase 1)
+
+If the audience wasn't established during Phase 1, ask now. Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges, no jargon
+> 2. 🔧 **Technical Team** — Full metrics, code examples, implementation detail
+> 3. 📋 **Both** — Executive summary first, then technical appendix
+
+Apply the appropriate output mode throughout all sections.
+
+---
+
 ## Prerequisites
 
 Phase 1 must be complete with:

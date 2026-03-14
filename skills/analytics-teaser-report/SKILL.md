@@ -26,7 +26,19 @@ Generate a single-file HTML teaser report from publicly collected website data. 
 
 ## Step 0: Intake — ALWAYS Ask First
 
-Before collecting any data or generating the report, ask:
+**Before anything else, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
+
+> **Who is this report for?**
+>
+> 1. 👔 **Business Executive** — ROI framing, plain English, impact/effort badges, no jargon
+> 2. 🔧 **Technical Team** — Full metrics, code examples, implementation detail
+> 3. 📋 **Both** — Executive summary first, then technical appendix
+
+Apply the appropriate mode throughout. In Executive mode: use the banned jargon list, order sections by impact × speed of fix, open every section with the business cost headline, use 🔴/🟠/🟡 badges.
+
+---
+
+Before collecting any data or generating the report, also ask:
 
 > **"Which sections do you want included in this teaser report?"**
 >
