@@ -420,3 +420,101 @@ Just spawn with a clear, focused task.
 7. ACCESSIBILITY AUDIT — WCAG 2.1 AA mandatory
 8. SEO — discoverability, schema, RSS for journalists
 ```
+
+---
+
+## `/sow` — Statement of Work Generator
+
+**Duration:** 10–15 minutes  
+**Skill:** `sow` (skills/sow/SKILL.md)  
+**Output:** `autonomous-proposals/proposals/{client-slug}-sow.pdf`
+
+### Overview
+Generates a branded, PDF-ready Statement of Work using the Autonomous Editorial Warmth v2 design system. Always client-first (You-view). Supports flat fee, monthly retainer, hybrid, and fixed-term payment structures.
+
+### Interview (one message, all at once)
+```
+1. Client name?
+2. Client logo:
+   a) Website URL (auto-fetched)
+   b) Upload/paste file
+   c) Skip — use placeholder
+3. Scope (bullet points — expanded into You-view copy)
+4. Price (USD)
+5. Payment structure:
+   a) Flat fee — 50% deposit / 50% on delivery (default)
+   b) Monthly retainer — $/mo, ongoing
+   c) Hybrid — setup fee + monthly
+   d) Fixed term — $/mo × N months
+6. Timeline (e.g. "2–3 weeks", "3 months")
+7. Optional sections:
+   □ Milestone list
+   □ Stats bar
+   □ Quote/testimonial block
+   □ Assumptions & exclusions
+   □ CTA block on signature page (default: yes)
+```
+
+### Phases
+```
+1. INTERVIEW — gather all required info in one message
+   └─→ Defaults: 50/50 split, 30-day validity, $150/hr OOS rate, CTA block on
+
+2. LOGO FETCH
+   └─→ node scripts/fetch-logo.js <url> <slug>
+   └─→ On failure: text placeholder — never block generation
+
+3. HTML GENERATION
+   └─→ Output: proposals/{slug}-sow.html
+   └─→ Always: Cover → Scope → Deliverables+Timeline → Investment+Payment → Terms+Signatures
+   └─→ Optional sections inserted before Investment page
+   └─→ Signatures always on their own final page
+
+4. PDF EXPORT
+   └─→ node scripts/to-pdf.js proposals/{slug}-sow.html proposals/{slug}-sow.pdf
+   └─→ Both files kept — HTML for edits, PDF for sending
+
+5. DELIVER
+   └─→ Send PDF via WhatsApp
+   └─→ State: page count, file size, HTML path for edits
+```
+
+### Page Structure (standard 5-page SoW)
+```
+P1 — Cover         (client logo × Autonomous, headline, price, meta)
+P2 — Your Scope    (overview + numbered scope items, You-view)
+P3 — Deliverables  (2-col cards + timeline strip)
+P4 — Investment    (table + payment schedule bar)
+P5 — Agreement     (terms grid + CTA + signatures)
+```
+
+### Design Rules
+- Client logo always first (before Autonomous wordmark)
+- Signatures: client LEFT, Autonomous RIGHT
+- Investment table header: "What you're getting"
+- Total row: "Your Total"
+- Signatures always on their own dedicated page
+- All amounts in USD
+
+### Files
+```
+autonomous-proposals/
+  scripts/
+    fetch-logo.js     ← URL → logo file
+    to-pdf.js         ← HTML → PDF (Puppeteer)
+  templates/
+    doc-base-kit.html ← component library / design reference
+  proposals/
+    {slug}-sow.html   ← generated source
+    {slug}-sow.pdf    ← final output
+
+hazn/
+  skills/sow/
+    SKILL.md
+    references/
+      copy-guide.md   ← You-view writing rules
+      logo-fetch.md   ← logo handling
+      components.md   ← copy-paste HTML for all 14 components
+  logos/
+    {slug}.svg/.png   ← cached client logos
+```

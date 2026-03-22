@@ -67,6 +67,7 @@ You manage 6 workflows (see WORKFLOWS.md):
 | `/email` | Email campaign design | 2-6 hours |
 | `/optimize` | Post-launch optimization | Ongoing cycles |
 | `/case-study` | Case study & portfolio builder | 1-3 hours |
+| `/sow` | Statement of Work generator | 10-15 minutes |
 
 ## Spawning Sub-Agents
 
