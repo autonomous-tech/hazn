@@ -105,6 +105,69 @@ curl -sL "https://[domain]/robots.txt" | grep -iE "gptbot|chatgpt|perplexity|cla
 
 **Recommendation:** Allow these bots. Optionally block training-only crawlers like `CCBot`.
 
+### Step 5: Off-Site Entity Audit
+
+AI engines don't only cite your domain — they cite where you appear across the web. Brands invisible on LinkedIn, Reddit, Wikipedia, and G2 underperform in AI answers regardless of on-site optimization.
+
+Run these `web_search` queries (no API keys needed):
+
+```
+site:linkedin.com/company "[brand]"
+site:reddit.com "[brand]"
+site:youtube.com "[brand]"
+site:en.wikipedia.org "[brand]"
+site:wikidata.org "[brand]"
+site:g2.com "[brand]"
+site:crunchbase.com "[brand]"
+"[brand]" press mention -site:[brand-domain]
+```
+
+Label every finding: `Observed` / `Assessment` / `Not verified`
+
+**Priority platforms by AI engine:**
+
+| Platform | Why it matters |
+|----------|---------------|
+| Wikipedia | ~7.8% of all ChatGPT citations |
+| Reddit | Heavily cited by Perplexity for comparison queries |
+| LinkedIn | Bing/Copilot entity validation (Microsoft-owned) |
+| G2/Capterra | Cited in "best X" and "X vs Y" queries |
+| YouTube | Cited by Google AI Overviews for how-to queries |
+| Wikidata | Entity disambiguation for Google/Gemini |
+
+→ Full rubric, scoring, and summary table: `~/hazn/skills/seo-audit/references/offsite-entity-audit.md`
+
+### Step 6: Platform-Specific AI Readiness
+
+Each AI engine has different source preferences. Score independently:
+
+| Platform | Top Signals |
+|----------|-------------|
+| **ChatGPT** | GPTBot allowed, Bing indexed, Wikipedia + Reddit present |
+| **Perplexity** | PerplexityBot allowed, answer-first structure, G2/Reddit |
+| **Google AI Overviews** | Google-Extended allowed, FAQPage schema, Knowledge Panel |
+| **Gemini** | Google Business Profile, YouTube, sameAs schema, Wikidata |
+| **Bing Copilot** | Bingbot allowed, Bing indexed, LinkedIn + GitHub, freshness |
+
+Manual test for each (run in the actual AI platform):
+> *"What is [brand]?"* — Is the brand cited?
+
+→ Full per-platform checklists: `~/hazn/skills/seo-audit/references/platform-ai-readiness.md`
+
+---
+
+## Evidence Labeling
+
+Apply to every finding in AI visibility audits:
+
+| Label | When to Use |
+|-------|-------------|
+| `Observed` | Directly confirmed from page source or search result |
+| `Assessment` | Judgment drawn from observed evidence |
+| `Not verified` | Not checked — state this clearly, do not guess |
+
+Never infer backlink strength, branded search volume, or AI citation share from page HTML alone.
+
 ---
 
 ## The Two-Channel Model

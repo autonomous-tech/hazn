@@ -1,6 +1,6 @@
 ---
 name: seo-audit
-description: Run a comprehensive SEO audit on any external website. Use when auditing client websites, preparing for sales calls, or delivering SEO reports. Analyzes meta tags, structured data, technical SEO, content, AI search readiness, and produces actionable recommendations.
+description: Run a comprehensive SEO audit on any external website. Use when auditing client websites, preparing for sales calls, or delivering SEO reports. Analyzes meta tags, structured data, technical SEO, content, AI search readiness, off-site entity presence, and platform-specific AI readiness. Produces actionable recommendations with evidence labels.
 allowed-tools: web_fetch, web_search, Bash, Read, Write
 ---
 
@@ -31,6 +31,23 @@ You are an SEO specialist conducting a comprehensive audit of an external websit
 > 3. 📋 **Both** — Executive summary first, then technical appendix.
 
 Apply the appropriate output mode throughout the report and all findings.
+
+---
+
+## Evidence Labeling (Apply to All Findings)
+
+Every finding in this audit must carry one of these labels — no exceptions:
+
+| Label | When to Use |
+|-------|-------------|
+| `Observed` | Directly confirmed from page source, live URL, or search result |
+| `Assessment` | Interpretation or judgment drawn from observed evidence |
+| `Not verified` | Not checked, not findable, or requires access not available (Search Console, GA4, backlink tools) |
+
+**Rules:**
+- Never infer backlink strength, branded search volume, or AI citation share from page HTML alone
+- Never claim Search Console, GA4, or crawl data access unless the user provided it
+- Always state what was and wasn't checked at the end of each section
 
 ---
 
@@ -273,6 +290,54 @@ Structured data significantly improves AI visibility. Beyond basic schema, check
 
 **Validation:** Test schema at https://validator.schema.org/
 
+### Step 8b: Off-Site Entity Audit
+
+Run the full off-site entity check using `references/offsite-entity-audit.md`.
+
+This step checks brand presence across: LinkedIn, Reddit, YouTube, Wikipedia, Wikidata, G2/Capterra, Crunchbase, GitHub, Product Hunt, and industry press.
+
+All checks use `web_search` — no API keys required.
+
+**Quick reference — searches to run:**
+
+```
+web_search: site:linkedin.com/company "[brand]"
+web_search: site:reddit.com "[brand]"
+web_search: site:youtube.com "[brand]"
+web_search: site:en.wikipedia.org "[brand]"
+web_search: site:wikidata.org "[brand]"
+web_search: site:g2.com "[brand]"
+web_search: site:crunchbase.com "[brand]"
+web_search: "[brand]" press mention -site:[brand-domain]
+```
+
+Label all findings: `Observed` / `Assessment` / `Not verified`
+
+→ Full scoring rubric, signal definitions, and summary table template: `references/offsite-entity-audit.md`
+
+---
+
+### Step 8c: Platform-Specific AI Readiness
+
+Run per-platform checks using `references/platform-ai-readiness.md`.
+
+Score each AI engine independently:
+
+| Platform | Key Signals |
+|----------|-------------|
+| **ChatGPT** | GPTBot allowed, Bing indexed, Wikipedia present, Reddit mentions |
+| **Perplexity** | PerplexityBot allowed, answer-first structure, G2/Reddit presence |
+| **Google AI Overviews** | Google-Extended allowed, FAQPage schema, Knowledge Panel |
+| **Gemini** | Google Business Profile, YouTube presence, sameAs schema, Wikidata |
+| **Bing Copilot** | Bingbot allowed, Bing indexed, LinkedIn/GitHub presence, freshness signals |
+
+Manual test prompt (run in each AI engine):
+> *"What is [brand]?"* and *"Best [category] for [use case]"*
+
+Label all findings: `Observed` / `Assessment` / `Not verified`
+
+→ Full per-platform checklists and summary table template: `references/platform-ai-readiness.md`
+
 ---
 
 ## Output Format
@@ -427,6 +492,28 @@ Structure your audit report as:
 - [ ] Author attribution with credentials
 - [ ] FAQPage or HowTo schema implemented
 
+### Off-Site Entity
+- [ ] LinkedIn company page present
+- [ ] LinkedIn founder/leadership page present
+- [ ] Reddit mentions found
+- [ ] YouTube presence found
+- [ ] Wikipedia article or mention found
+- [ ] Wikidata entity found
+- [ ] G2/Capterra profile (SaaS only)
+- [ ] Crunchbase profile found
+- [ ] Industry press/publication mentions found
+
+### Platform-Specific AI Readiness
+- [ ] GPTBot + ChatGPT-User allowed
+- [ ] PerplexityBot + Perplexity-User allowed
+- [ ] Google-Extended allowed
+- [ ] Bingbot allowed
+- [ ] Bing indexed (verify via bing.com)
+- [ ] Knowledge Panel / Google entity present
+- [ ] Manual test: brand cited in ChatGPT?
+- [ ] Manual test: brand cited in Perplexity?
+- [ ] Manual test: brand in Google AI Overviews?
+
 ---
 
 ## Tools to Use
@@ -571,9 +658,10 @@ Include all of the following in the HTML output:
 3. **Technical SEO** — crawlability, redirects, canonical, noindex, sitemap health, HTTPS/www consistency. End with a micro-upsell callout for deeper paid engagement
 4. **On-Page SEO** — title tag, meta description, H1–H3, alt text coverage, word count, OG tags. End with micro-upsell callout
 5. **Structured Data & Rich Results** — schema inventory, rich result eligibility, missing schema types. End with micro-upsell callout
-6. **AI Search Readiness** — AI crawler access grid, llms.txt status, entity signals, content extractability. End with micro-upsell callout
-7. **Priority Fix Roadmap** — top 10 issues with effort levels (Low / Medium / High — **no time estimates**)
-8. **Final CTA Section** — full-width dark background (`var(--stone-900)`), Calendly CTA + 3 trust signals
+6. **AI Search Readiness** — AI crawler access grid (all bots), llms.txt status, entity signals, content extractability, **platform-specific readiness grid** (ChatGPT/Perplexity/Google AIO/Gemini/Bing Copilot). End with micro-upsell callout
+7. **Off-Site Entity Presence** — summary table for LinkedIn, Reddit, YouTube, Wikipedia, Wikidata, G2, Crunchbase, GitHub, Product Hunt, press. Observed/Not verified labels on each row. End with micro-upsell callout
+8. **Priority Fix Roadmap** — top 10 issues with effort levels (Low / Medium / High — **no time estimates**)
+9. **Final CTA Section** — full-width dark background (`var(--stone-900)`), Calendly CTA + 3 trust signals
 
 ### Micro-Upsell Callout Pattern (end of each section)
 
@@ -638,8 +726,11 @@ Before delivering the HTML report, verify:
 - [ ] **Single file** — no external dependencies except Google Fonts
 - [ ] **Responsive** at 375px, 768px, 1024px, 1440px
 - [ ] **No inline styles** — use CSS classes throughout
-- [ ] **4 SEO sections** — Technical SEO, On-Page, Structured Data, AI Search Readiness all present
-- [ ] **4 micro-upsell callouts** — one at end of each SEO section, each with Calendly link
+- [ ] **6 content sections** — Technical SEO, On-Page, Structured Data, AI Search Readiness, Off-Site Entity, Platform AI Readiness all present
+- [ ] **Off-Site Entity table** — LinkedIn, Reddit, YouTube, Wikipedia, Wikidata, G2, Crunchbase, GitHub, Product Hunt, Press — each with ✅/🟡/🔴 status and `Observed`/`Not verified` label
+- [ ] **Platform AI Readiness grid** — ChatGPT, Perplexity, Google AIO, Gemini, Bing Copilot each scored independently
+- [ ] **Evidence labels applied** — every finding section includes `Observed` / `Assessment` / `Not verified` labels
+- [ ] **5 micro-upsell callouts** — one at end of each SEO section + off-site section, each with Calendly link
 - [ ] **Priority roadmap** — top 10 issues with effort levels (Low/Medium/High), no time estimates
 - [ ] **Score 0–100** — overall score calculated and displayed in cover/hero
 - [ ] **Dark/light section alternation** maintained
