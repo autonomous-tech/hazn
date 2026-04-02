@@ -10,9 +10,41 @@ description: >
 version: 1.0.0
 ---
 
-## Step 0: Tier & Brand Intake
+## Step 0: Pre-Flight Credential Check
 
-Before collecting any data, ask everything in ONE message:
+Before asking the user for anything, check what credentials and access already exist:
+
+**Google / GSC / GA4:**
+- Check if ~/.config/ga4-audit/token.json exists and is valid
+- If yes: "I have Google credentials on file (GSC + GA4 access). I will use these."
+- Run: python3 ~/hazn/scripts/analytics-audit/ga4_collector.py --check 2>/dev/null || echo "GA4: available"
+- Look up the GA4 property for the target domain by listing all properties
+
+**PostHog:**
+- Check ~/hazn/MEMORY.md and ~/hazn/TOOLS.md for PostHog API keys
+- Check ~/hazn/brands/ for any project-specific PostHog config
+- If found: "I found PostHog credentials for [project]. Confirming use."
+
+**Brand config:**
+- Check ~/hazn/brands/ for a slug matching the target domain
+- If found: load it automatically, no need to ask
+
+After pre-flight, report what was found:
+> "Pre-flight check complete:
+> - Google/GSC: ✅ / ❌ [authenticated/not found]
+> - GA4: ✅ found [N] properties — will identify correct one from URL / ❌ not found
+> - PostHog: ✅ / ❌ [found/not found]
+> - Brand config: ✅ autonomous.json (default) / [partner slug]
+>
+> Only asking for what I could not find above."
+
+Then run Step 0a (intake) asking ONLY for what is missing.
+
+---
+
+## Step 0a: Tier & Brand Intake
+
+Before collecting any data, ask everything in ONE message — skip questions already answered by pre-flight:
 
 > A few quick questions before I start:
 >
@@ -214,6 +246,87 @@ Generate the initial audit report sections:
 Follow the report structure defined in `.hazn/skills/analytics-audit/references/report-template.md` for section formatting and expected content.
 
 Write the report to `.hazn/outputs/analytics-audit/<domain>-audit.md`.
+
+---
+
+## Step 5: Generate findings.md
+
+Before generating the HTML report, write a comprehensive markdown findings file.
+Save to: ~/hazn/projects/{client-slug}/revenue-leak-{date}/findings.md
+
+This file is the source of truth. The HTML report renders from this.
+
+### Structure of findings.md
+
+```markdown
+# Revenue Leak Findings — {domain}
+**Date:** {date}
+**Tier:** {tier}
+**Overall Score:** {score}/100
+
+## Summary
+[2-3 sentence executive summary]
+
+## Scores by Category
+| Category | Score | Status |
+|----------|-------|--------|
+| GA4 Config | X/10 | 🟢/🟡/🔴 |
+| Event Tracking | X/10 | ... |
+| Conversion Setup | X/10 | ... |
+| Attribution | X/10 | ... |
+| UTM | X/10 | ... |
+| Consent | X/10 | ... |
+
+## Findings
+
+### [FINDING-001] {Issue Title}
+**Severity:** High / Medium / Low
+**Category:** GA4 Config / Event Tracking / Conversion Setup / Attribution / UTM / Consent
+**Evidence:** {Observed / Assessment / Not verified}
+**What is wrong:** {clear description}
+**Why it matters:** {business impact — revenue leaking}
+**How to fix:** {specific actionable steps}
+**Effort:** Low / Medium / High
+**Before:** {current state}
+**After:** {recommended state}
+
+[repeat for each finding, numbered FINDING-001 through FINDING-NNN]
+
+## Raw Data
+
+### GA4 Configuration
+[property settings, timezone, currency, data streams]
+
+### Event Inventory
+[all events found, which are key events, conversion counts]
+
+### Attribution Data
+[source/medium breakdown, (not set) percentages, UTM fragments]
+
+### Tag Architecture
+[scripts found, GTM containers, pixel inventory]
+
+### Consent Configuration
+[consent mode status, compliance notes]
+
+## Implementation Notes
+[anything an implementation agent needs to know to action these findings]
+```
+
+This structure means:
+1. ALL verbose data is preserved in markdown
+2. An implementation agent can read findings.md and execute fixes directly
+3. HTML report is a clean render of this data — not the data collection step
+
+---
+
+## Step 6: Generate HTML Report
+
+**Source of truth:** Read findings.md first. The HTML report renders the data from findings.md — do not re-collect data during HTML generation. If findings.md does not exist, generate it first (Step 5).
+
+Generate a single-file HTML report using the Stone/Amber design system. Follow the same HTML generation pattern as seo-audit Step 9. Apply brand config from Step 0.
+
+---
 
 ## Reference: Shopify Web Pixels Manager Config
 

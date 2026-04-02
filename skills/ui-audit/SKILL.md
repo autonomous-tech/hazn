@@ -56,9 +56,27 @@ Evaluate interfaces against proven UX principles. Based on [Making UX Decisions]
 - `references/30-patterns-information.md` — Breadcrumbs, sitemaps, tagging, faceted search
 - `references/31-patterns-navigation.md` — Priority nav, off-canvas, sticky, bottom nav
 
-## Step 0: Tier & Brand Intake
+## Step 0: Pre-Flight Credential Check
 
-Ask everything in ONE message:
+Before asking the user for anything, check what already exists:
+
+**Brand config:**
+- Check ~/hazn/brands/ for a slug matching the target domain
+- If found: load it automatically, no need to ask
+
+After pre-flight, report what was found:
+> "Pre-flight check complete:
+> - Brand config: ✅ autonomous.json (default) / [partner slug]
+>
+> Only asking for what I could not find above."
+
+Then run Step 0a (intake) asking ONLY for what is missing.
+
+---
+
+## Step 0a: Tier & Brand Intake
+
+Ask everything in ONE message — skip questions already answered by pre-flight:
 
 > A few quick questions before I start:
 >
@@ -270,7 +288,76 @@ When asked to audit a design, generate a comprehensive report. Always include th
 
 ---
 
+## Step 6e: Generate findings.md
+
+Before generating the HTML report, write a comprehensive markdown findings file.
+Save to: ~/hazn/projects/{client-slug}/ux-audit-{date}/findings.md
+
+This file is the source of truth. The HTML report renders from this.
+
+### Structure of findings.md
+
+```markdown
+# UX/UI Audit Findings — {domain}
+**Date:** {date}
+**Tier:** {tier}
+**Overall Score:** {score}/100
+
+## Summary
+[2-3 sentence executive summary]
+
+## Scores by Category
+| Category | Score | Status |
+|----------|-------|--------|
+| Visual Hierarchy | X/10 | 🟢/🟡/🔴 |
+| Accessibility | X/10 | ... |
+| Cognitive Load | X/10 | ... |
+| Navigation | X/10 | ... |
+| Deep Dive Extras | X/10 | ... |
+
+## Findings
+
+### [FINDING-001] {Issue Title}
+**Severity:** High / Medium / Low
+**Category:** Visual Hierarchy / Accessibility / Cognitive Load / Navigation / Deep Dive Extras
+**Evidence:** {Observed / Assessment / Not verified}
+**What is wrong:** {clear description}
+**Why it matters:** {user experience impact}
+**How to fix:** {specific actionable steps}
+**Effort:** Low / Medium / High
+**Before:** {current state, e.g. screenshot reference}
+**After:** {recommended state}
+
+[repeat for each finding, numbered FINDING-001 through FINDING-NNN]
+
+## Raw Data
+
+### Screenshot Inventory
+[list of all captured screenshots with paths and descriptions]
+
+### Accessibility Checks
+[WCAG 2.1 AA results: contrast ratios, alt text, keyboard nav, ARIA]
+
+### Navigation Analysis
+[menu structure, breadcrumbs, mobile nav pattern, search]
+
+### Cognitive Load Assessment
+[form complexity, step counts, information density metrics]
+
+## Implementation Notes
+[anything an implementation agent needs to know to action these findings]
+```
+
+This structure means:
+1. ALL verbose data is preserved in markdown
+2. An implementation agent can read findings.md and execute fixes directly
+3. HTML report is a clean render of this data — not the data collection step
+
+---
+
 ## Step 7: Generate HTML Report
+
+**Source of truth:** Read findings.md first. The HTML report renders the data from findings.md — do not re-collect data during HTML generation. If findings.md does not exist, generate it first (Step 6e).
 
 Generate a single-file HTML report using the Stone/Amber design system.
 

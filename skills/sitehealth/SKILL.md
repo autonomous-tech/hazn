@@ -13,7 +13,44 @@ allowed-tools: Read, Write, Bash, web_fetch, web_search, browser
 
 ---
 
-## Step 0: Bundle Intake
+## Step 0: Pre-Flight Credential Check
+
+Before asking the user for anything, check what credentials and access already exist:
+
+**Google / GSC / GA4:**
+- Check if ~/.config/ga4-audit/token.json exists and is valid
+- If yes: "I have Google credentials on file (GSC + GA4 access). I will use these."
+- Run: python3 ~/hazn/scripts/analytics-audit/ga4_collector.py --check 2>/dev/null || echo "GA4: available"
+- Look up the GA4 property for the target domain by listing all properties
+
+**PostHog:**
+- Check ~/hazn/MEMORY.md and ~/hazn/TOOLS.md for PostHog API keys
+- Check ~/hazn/brands/ for any project-specific PostHog config
+- If found: "I found PostHog credentials for [project]. Confirming use."
+
+**Ahrefs:**
+- Check ~/hazn/TOOLS.md and ~/hazn/MEMORY.md for Ahrefs API key
+- If not found: note that Ahrefs manual export or free tools will be used as fallback
+
+**Brand config:**
+- Check ~/hazn/brands/ for a slug matching the target domain
+- If found: load it automatically, no need to ask
+
+After pre-flight, report what was found:
+> "Pre-flight check complete:
+> - Google/GSC: ✅ authenticated
+> - GA4: ✅ found [N] properties — will identify correct one from URL
+> - PostHog: ✅ / ❌ [found/not found]
+> - Ahrefs: ✅ / ❌ [found/not found]
+> - Brand config: ✅ autonomous.json (default) / [partner slug]
+>
+> Only asking for what I could not find above."
+
+Then run Step 0b (intake) asking ONLY for what is missing.
+
+---
+
+## Step 0b: Bundle Intake
 
 Ask everything in ONE message:
 
@@ -56,16 +93,16 @@ Each subagent receives:
 Subagent tasks:
 
 **Subagent 1 — SiteScore:**
-Load ~/hazn/skills/seo-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save report to ~/hazn/projects/{client-slug}/sitehealth-{date}/sitescore/report.html. Return: report path + top 5 findings summary.
+Load ~/hazn/skills/seo-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save findings to ~/hazn/projects/{client-slug}/sitehealth-{date}/sitescore/findings.md, then render report to ~/hazn/projects/{client-slug}/sitehealth-{date}/sitescore/report.html. Return: findings.md path + top 5 findings summary.
 
 **Subagent 2 — Revenue Leak Audit:**
-Load ~/hazn/skills/analytics-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save report to ~/hazn/projects/{client-slug}/sitehealth-{date}/revenue-leak/report.html. Return: report path + top 5 findings summary.
+Load ~/hazn/skills/analytics-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save findings to ~/hazn/projects/{client-slug}/sitehealth-{date}/revenue-leak/findings.md, then render report to ~/hazn/projects/{client-slug}/sitehealth-{date}/revenue-leak/report.html. Return: findings.md path + top 5 findings summary.
 
 **Subagent 3 — ConversionIQ:**
-Load ~/hazn/skills/conversion-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save report to ~/hazn/projects/{client-slug}/sitehealth-{date}/conversioniq/report.html. Return: report path + top 5 findings summary.
+Load ~/hazn/skills/conversion-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save findings to ~/hazn/projects/{client-slug}/sitehealth-{date}/conversioniq/findings.md, then render report to ~/hazn/projects/{client-slug}/sitehealth-{date}/conversioniq/report.html. Return: findings.md path + top 5 findings summary.
 
 **Subagent 4 — UX/UI Audit:**
-Load ~/hazn/skills/ui-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save report to ~/hazn/projects/{client-slug}/sitehealth-{date}/ux-ui/report.html. Return: report path + top 5 findings summary.
+Load ~/hazn/skills/ui-audit/SKILL.md. Run TIER audit for {url}. Skip intake (already done). Save findings to ~/hazn/projects/{client-slug}/sitehealth-{date}/ux-ui/findings.md, then render report to ~/hazn/projects/{client-slug}/sitehealth-{date}/ux-ui/report.html. Return: findings.md path + top 5 findings summary.
 
 Wait for all four to complete before proceeding.
 
@@ -73,7 +110,13 @@ Wait for all four to complete before proceeding.
 
 ## Step 2: Cross-Audit Synthesis
 
-After all four audits complete, collect:
+After all four audits complete, read all four findings.md files (not HTML reports):
+- ~/hazn/projects/{client-slug}/sitehealth-{date}/sitescore/findings.md
+- ~/hazn/projects/{client-slug}/sitehealth-{date}/revenue-leak/findings.md
+- ~/hazn/projects/{client-slug}/sitehealth-{date}/conversioniq/findings.md
+- ~/hazn/projects/{client-slug}/sitehealth-{date}/ux-ui/findings.md
+
+Collect:
 - Top 5 findings from each audit (20 findings total)
 - Each finding: product source, issue, severity, effort level, estimated impact
 
@@ -133,7 +176,11 @@ Content:
 
 ## Step 4: Deliver
 
-Generate a SiteHealth cover report: ~/hazn/projects/{client-slug}/sitehealth-{date}/index.html
+First, write cross-audit synthesis to: ~/hazn/projects/{client-slug}/sitehealth-{date}/synthesis.md
+
+Then generate a SiteHealth cover report from synthesis.md: ~/hazn/projects/{client-slug}/sitehealth-{date}/index.html
+
+**Source of truth:** Read synthesis.md first. The index.html renders the data from synthesis.md — do not re-collect data during HTML generation.
 
 This is a single-page summary that:
 - Shows the four audit scores in a 2x2 grid

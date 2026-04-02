@@ -496,3 +496,37 @@ All CTAs link to: `https://calendly.com/rizwan-20/30min` (or brand_config.cta_ur
 - Ahrefs API key management
 
 These are documented here for future spec. Don't build them now.
+
+---
+
+## 11. Markdown-First Workflow
+
+Every audit produces two outputs in order:
+1. `findings.md` — verbose, structured, source of truth, agent-readable
+2. `report.html` — rendered from findings.md, human-readable deliverable
+
+Benefits:
+- Token efficiency: data collection and HTML rendering are separate passes
+- Agent handoff: implementation agents read findings.md directly
+- Auditability: findings are preserved in plain text, git-diffable
+- Resilience: if HTML generation fails, findings are not lost
+
+Output directory structure:
+```
+~/hazn/projects/{client-slug}/sitehealth-{date}/
+  sitescore/
+    findings.md       ← source of truth
+    report.html       ← rendered deliverable
+  revenue-leak/
+    findings.md
+    report.html
+  conversioniq/
+    findings.md
+    report.html
+  ux-ui/
+    findings.md
+    report.html
+  synthesis.md        ← cross-audit synthesis
+  strategy-call-brief.md
+  index.html
+```

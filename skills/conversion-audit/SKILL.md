@@ -4,9 +4,39 @@ description: Run a comprehensive landing page conversion audit covering copywrit
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
-## Step 0: Tier & Brand Intake
+## Step 0: Pre-Flight Credential Check
 
-Before collecting any data, ask everything in ONE message:
+Before asking the user for anything, check what credentials and access already exist:
+
+**GA4 (Deep Dive only):**
+- Check if ~/.config/ga4-audit/token.json exists and is valid
+- If yes: "I have Google credentials on file (GA4 access). I will use these."
+- Run: python3 ~/hazn/scripts/analytics-audit/ga4_collector.py --check 2>/dev/null || echo "GA4: available"
+
+**PostHog (Deep Dive only):**
+- Check ~/hazn/MEMORY.md and ~/hazn/TOOLS.md for PostHog API keys
+- Check ~/hazn/brands/ for any project-specific PostHog config
+- If found: "I found PostHog credentials for [project]. Confirming use."
+
+**Brand config:**
+- Check ~/hazn/brands/ for a slug matching the target domain
+- If found: load it automatically, no need to ask
+
+After pre-flight, report what was found:
+> "Pre-flight check complete:
+> - GA4: ✅ / ❌ [authenticated/not found]
+> - PostHog: ✅ / ❌ [found/not found]
+> - Brand config: ✅ autonomous.json (default) / [partner slug]
+>
+> Only asking for what I could not find above."
+
+Then run Step 0a (intake) asking ONLY for what is missing.
+
+---
+
+## Step 0a: Tier & Brand Intake
+
+Before collecting any data, ask everything in ONE message — skip questions already answered by pre-flight:
 
 > A few quick questions before I start:
 >
@@ -259,7 +289,76 @@ After Optimization:
 
 ---
 
+## Generate findings.md
+
+Before generating the HTML report, write a comprehensive markdown findings file.
+Save to: ~/hazn/projects/{client-slug}/conversioniq-{date}/findings.md
+
+This file is the source of truth. The HTML report renders from this.
+
+### Structure of findings.md
+
+```markdown
+# ConversionIQ Findings — {domain}
+**Date:** {date}
+**Tier:** {tier}
+**Overall Score:** {score}/100
+
+## Summary
+[2-3 sentence executive summary]
+
+## Scores by Category
+| Category | Score | Status |
+|----------|-------|--------|
+| Copy | X/10 | 🟢/🟡/🔴 |
+| Design | X/10 | ... |
+| UX Friction | X/10 | ... |
+| A/B Opportunities | X/10 | ... |
+| CVR Projections | X/10 | ... |
+
+## Findings
+
+### [FINDING-001] {Issue Title}
+**Severity:** High / Medium / Low
+**Category:** Copy / Design / UX Friction / A/B Opportunities / CVR Projections
+**Evidence:** {Observed / Assessment / Not verified}
+**What is wrong:** {clear description}
+**Why it matters:** {business impact — conversions lost}
+**How to fix:** {specific actionable steps}
+**Effort:** Low / Medium / High
+**Before:** {current state, e.g. current CTA text}
+**After:** {recommended state, e.g. improved CTA text}
+
+[repeat for each finding, numbered FINDING-001 through FINDING-NNN]
+
+## Raw Data
+
+### Page Analysis
+[headline audit, CTA inventory, form analysis, trust signals]
+
+### Funnel Data (if GA4 available)
+[drop-off rates, conversion paths, exit pages]
+
+### A/B Test Plan
+[hypotheses, expected lift, traffic requirements, sequencing]
+
+### CVR Projections
+[current CVR, projected CVR, revenue impact estimates]
+
+## Implementation Notes
+[anything an implementation agent needs to know to action these findings]
+```
+
+This structure means:
+1. ALL verbose data is preserved in markdown
+2. An implementation agent can read findings.md and execute fixes directly
+3. HTML report is a clean render of this data — not the data collection step
+
+---
+
 ## Generate HTML Report
+
+**Source of truth:** Read findings.md first. The HTML report renders the data from findings.md — do not re-collect data during HTML generation. If findings.md does not exist, generate it first (Generate findings.md step above).
 
 **Brand config:** Load from Step 0 brand config.
 - Use brand_config.cta_url for all Calendly links (default: https://calendly.com/rizwan-20/30min)

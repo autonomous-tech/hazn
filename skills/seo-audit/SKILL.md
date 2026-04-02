@@ -20,9 +20,39 @@ You are an SEO specialist conducting a comprehensive audit of an external websit
 
 ---
 
-## Step 0: Tier & Brand Intake
+## Step 0: Pre-Flight Credential Check
 
-Before collecting any data, run this intake. Ask everything in ONE message.
+Before asking the user for anything, check what credentials and access already exist:
+
+**Google / GSC / GA4:**
+- Check if ~/.config/ga4-audit/token.json exists and is valid
+- If yes: "I have Google credentials on file (GSC + GA4 access). I will use these."
+- Run: python3 ~/hazn/scripts/analytics-audit/ga4_collector.py --check 2>/dev/null || echo "GA4: available"
+- Look up the GA4 property for the target domain by listing all properties
+
+**Ahrefs:**
+- Check ~/hazn/TOOLS.md and ~/hazn/MEMORY.md for Ahrefs API key
+- If not found: note that Ahrefs manual export or free tools will be used as fallback
+
+**Brand config:**
+- Check ~/hazn/brands/ for a slug matching the target domain
+- If found: load it automatically, no need to ask
+
+After pre-flight, report what was found:
+> "Pre-flight check complete:
+> - Google/GSC: ✅ / ❌ [authenticated/not found]
+> - Ahrefs: ✅ / ❌ [found/not found]
+> - Brand config: ✅ autonomous.json (default) / [partner slug]
+>
+> Only asking for what I could not find above."
+
+Then run Step 0a (intake) asking ONLY for what is missing.
+
+---
+
+## Step 0a: Tier & Brand Intake
+
+Before collecting any data, run this intake. Ask everything in ONE message — skip questions already answered by pre-flight.
 
 Ask:
 > A few quick questions before I start:
@@ -44,6 +74,8 @@ After intake:
 - Load brand config from ~/hazn/brands/{slug}.json. Default: ~/hazn/brands/autonomous.json
 - If Deep Dive and GSC/GA4 NOT provided: offer downgrade — "I do not have GSC/GA4 access. Want me to run Standard instead?"
 - Set TIER variable. Proceed to Step 0b (audience routing) then Step 0c.
+
+**Note:** If pre-flight already found credentials, skip asking for them here.
 
 ---
 
@@ -669,7 +701,77 @@ When auditing B2B SaaS websites specifically:
 
 ---
 
+## Step 8e: Generate findings.md
+
+Before generating the HTML report, write a comprehensive markdown findings file.
+Save to: ~/hazn/projects/{client-slug}/sitescore-{date}/findings.md
+
+This file is the source of truth. The HTML report renders from this.
+
+### Structure of findings.md
+
+```markdown
+# SiteScore Findings — {domain}
+**Date:** {date}
+**Tier:** {tier}
+**Overall Score:** {score}/100
+
+## Summary
+[2-3 sentence executive summary]
+
+## Scores by Category
+| Category | Score | Status |
+|----------|-------|--------|
+| Technical SEO | X/10 | 🟢/🟡/🔴 |
+| On-Page SEO | X/10 | ... |
+| Structured Data | X/10 | ... |
+| AEO Readiness | X/10 | ... |
+| GEO Readiness | X/10 | ... |
+| Off-Site Entity | X/10 | ... |
+
+## Findings
+
+### [FINDING-001] {Issue Title}
+**Severity:** High / Medium / Low
+**Category:** Technical SEO / On-Page / AEO / GEO / Off-Site
+**Evidence:** {Observed / Assessment / Not verified}
+**What is wrong:** {clear description}
+**Why it matters:** {business impact}
+**How to fix:** {specific actionable steps}
+**Effort:** Low / Medium / High
+**Before:** {current state, e.g. robots.txt snippet}
+**After:** {recommended state, e.g. corrected robots.txt}
+
+[repeat for each finding, numbered FINDING-001 through FINDING-NNN]
+
+## Raw Data
+
+### GSC Data (if available)
+[paste key GSC metrics: top queries, top pages, clicks, impressions, CTR, position]
+
+### Technical Checks
+[paste raw results: robots.txt content, sitemap URLs, meta tags, schema found]
+
+### AI Crawler Access
+[table of all crawlers: allowed/blocked]
+
+### Off-Site Entity Presence
+[table: platform, found Y/N, URL, notes]
+
+## Implementation Notes
+[anything an implementation agent needs to know to action these findings]
+```
+
+This structure means:
+1. ALL verbose data is preserved in markdown
+2. An implementation agent can read findings.md and execute fixes directly
+3. HTML report is a clean render of this data — not the data collection step
+
+---
+
 ## Step 9: Generate HTML Report
+
+**Source of truth:** Read findings.md first. The HTML report renders the data from findings.md — do not re-collect data during HTML generation. If findings.md does not exist, generate it first (Step 8e).
 
 **Brand config injection:** Load brand config from Step 0. Replace hardcoded design tokens:
 - Use brand_config.primary_color for CTA buttons and accent elements
