@@ -103,10 +103,10 @@ For each selected audit type, load the corresponding skill:
 
 | Audit Type | Skill to Load | Location |
 |------------|---------------|----------|
-| Copy Audit | landing-page-copywriter | `~/clawd/skills/landing-page-copywriter/SKILL.md` |
-| SEO Audit | seo-audit | `~/clawd/skills/seo-audit/SKILL.md` |
-| Visual/UI Audit | ui-audit | `~/clawd/skills/ui-audit/SKILL.md` |
-| CRO Audit | shopify-cro-audit (or this skill's CRO section) | `~/clawd/skills/shopify-cro-audit/SKILL.md` |
+| Copy Audit | landing-page-copywriter | `~/hazn/skills/landing-page-copywriter/SKILL.md` |
+| SEO Audit | seo-audit | `~/hazn/skills/seo-audit/SKILL.md` |
+| Visual/UI Audit | ui-audit | `~/hazn/skills/ui-audit/SKILL.md` |
+| CRO Audit | shopify-cro-audit (or this skill's CRO section) | `~/hazn/skills/shopify-cro-audit/SKILL.md` |
 
 Also apply:
 - **Brand styling:** Use client's brand guidelines if provided, or professional default styling
