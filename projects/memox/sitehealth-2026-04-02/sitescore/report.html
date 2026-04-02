@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiteScore Deep Dive — memox.io | Autonomous Technology Inc.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+:root {
+  --stone-50: #fafaf9; --stone-100: #f5f5f4; --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1; --stone-400: #a8a29e; --stone-500: #78716c;
+  --stone-600: #57534e; --stone-700: #44403c; --stone-800: #292524;
+  --stone-900: #1c1917;
+  --amber-400: #fbbf24; --amber-500: #f59e0b; --amber-600: #d97706;
+  --amber-100: #fef3c7;
+  --red-500: #ef4444; --red-100: #fee2e2;
+  --green-500: #22c55e; --green-100: #dcfce7;
+  --blue-500: #3b82f6; --blue-100: #dbeafe;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--stone-800);
+  background: var(--stone-50);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif; color: var(--stone-900); }
+.container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Sidebar TOC */
+.toc-sidebar {
+  position: fixed; top: 2rem; left: 1.5rem; width: 220px;
+  background: rgba(255,255,255,0.75); backdrop-filter: blur(8px);
+  border-radius: 12px; padding: 1.25rem; z-index: 100;
+  border: 1px solid var(--stone-200);
+  max-height: calc(100vh - 4rem); overflow-y: auto;
+}
+.toc-sidebar h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--stone-500); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
+.toc-sidebar a {
+  display: block; font-size: 0.8rem; color: var(--stone-600); text-decoration: none;
+  padding: 0.35rem 0.6rem; border-radius: 6px; margin-bottom: 2px; transition: all 0.2s;
+}
+.toc-sidebar a:hover { color: var(--stone-900); background: var(--stone-100); }
+.toc-sidebar a.active { background: var(--amber-500); color: var(--stone-900); font-weight: 600; }
+.toc-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 200; background: var(--stone-900); color: #fff; border: none; border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 1.2rem; cursor: pointer; }
+
+/* Score badge */
+.score-hero {
+  background: var(--stone-900); padding: 5rem 0 4rem; text-align: center; position: relative; overflow: hidden;
+}
+.score-hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(to top, var(--stone-50), transparent);
+}
+.score-circle {
+  width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 1.5rem;
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  border: 4px solid var(--amber-500); position: relative;
+}
+.score-circle .number { font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1; font-family: 'Source Serif 4', serif; }
+.score-circle .label { font-size: 0.75rem; color: var(--stone-400); text-transform: uppercase; letter-spacing: 0.1em; }
+.score-hero .domain { color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.score-hero h1 { color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; }
+.score-hero .meta { color: var(--stone-400); font-size: 0.875rem; }
+.review-flag {
+  background: var(--amber-100); color: var(--stone-800); padding: 0.75rem 1.5rem;
+  text-align: center; font-size: 0.85rem; border-bottom: 2px solid var(--amber-500);
+}
+
+/* Sections */
+section { padding: 6rem 0; }
+section.alt { background: var(--stone-100); }
+section h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber-600); font-weight: 700; margin-bottom: 0.25rem; }
+
+/* Score cards grid */
+.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+.score-card {
+  background: #fff; border-radius: 12px; padding: 2rem 1.25rem; text-align: center;
+  border: 1px solid var(--stone-200); transition: transform 0.2s, box-shadow 0.2s;
+}
+.score-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.score-card .card-score { font-size: 2rem; font-weight: 700; font-family: 'Source Serif 4', serif; }
+.score-card .card-label { font-size: 0.8rem; color: var(--stone-500); margin-top: 0.25rem; }
+.score-card .card-bar { height: 4px; border-radius: 2px; background: var(--stone-200); margin-top: 0.75rem; }
+.score-card .card-bar span { display: block; height: 100%; border-radius: 2px; }
+.bar-green { background: var(--green-500); }
+.bar-amber { background: var(--amber-500); }
+.bar-red { background: var(--red-500); }
+
+/* Findings */
+.finding {
+  background: #fff; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem;
+  border-left: 4px solid var(--stone-300); color: var(--stone-800);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.finding:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.finding.high { border-left-color: var(--red-500); }
+.finding.medium { border-left-color: var(--amber-500); }
+.finding.low { border-left-color: var(--green-500); }
+.finding .severity { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+.finding .severity.high { color: var(--red-500); }
+.finding .severity.medium { color: var(--amber-600); }
+.finding .severity.low { color: var(--green-500); }
+.finding h4 { font-size: 1rem; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; font-weight: 600; }
+.finding p { font-size: 0.9rem; color: var(--stone-600); }
+.evidence { display: inline-block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; }
+.evidence.observed { background: var(--green-100); color: var(--green-500); }
+.evidence.assessment { background: var(--blue-100); color: var(--blue-500); }
+.evidence.not-verified { background: var(--stone-200); color: var(--stone-500); }
+
+/* Tables */
+.audit-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
+.audit-table th { background: var(--stone-900); color: #fff; padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.audit-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--stone-200); }
+.audit-table tr:hover { background: var(--stone-100); }
+.status-pass { color: var(--green-500); font-weight: 600; }
+.status-warn { color: var(--amber-600); font-weight: 600; }
+.status-fail { color: var(--red-500); font-weight: 600; }
+
+/* Callout */
+.callout {
+  background: var(--amber-100); border-radius: 10px; padding: 1.25rem 1.5rem;
+  margin: 2rem 0; color: var(--stone-800); font-size: 0.9rem; line-height: 1.6;
+}
+.callout a { color: var(--amber-600); font-weight: 600; text-decoration: none; }
+.callout a:hover { text-decoration: underline; }
+
+/* CTA */
+.cta-btn {
+  display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center;
+  padding: 1rem 2rem; background: var(--amber-500); color: var(--stone-900); font-weight: 700;
+  font-size: 1.05rem; border-radius: 8px; text-decoration: none;
+  box-shadow: 0 6px 24px rgba(245,158,11,0.35); transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+
+/* Effort badges */
+.effort { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+.effort.low { background: var(--green-100); color: var(--green-500); }
+.effort.medium { background: var(--amber-100); color: var(--amber-600); }
+.effort.high { background: var(--red-100); color: var(--red-500); }
+.impact { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; background: var(--blue-100); color: var(--blue-500); }
+
+/* Mobile CTA */
+.mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--amber-500); padding: 0.75rem 1rem; text-align: center; z-index: 100; }
+.mobile-cta a { color: var(--stone-900); font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+
+/* Responsive */
+@media (max-width: 1240px) {
+  .toc-sidebar { display: none; }
+  .toc-toggle { display: block; }
+  .toc-sidebar.open { display: block; top: 0; left: 0; right: 0; width: 100%; max-width: 300px; height: 100vh; border-radius: 0; z-index: 300; }
+}
+@media (max-width: 768px) {
+  .score-hero { padding: 3rem 0 2.5rem; }
+  .score-hero h1 { font-size: 1.75rem; }
+  section { padding: 3rem 0; }
+  .score-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .mobile-cta { display: block; }
+  body { padding-bottom: 60px; }
+}
+@media print {
+  .toc-sidebar, .toc-toggle, .mobile-cta, .review-flag { display: none !important; }
+  section { break-inside: avoid; padding: 2rem 0; }
+  .finding { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<button class="toc-toggle" onclick="document.querySelector('.toc-sidebar').classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
+<nav class="toc-sidebar" id="toc">
+  <h4>SiteScore</h4>
+  <a href="#cover">Overview</a>
+  <a href="#executive">Executive Summary</a>
+  <a href="#technical">Technical SEO</a>
+  <a href="#onpage">On-Page SEO</a>
+  <a href="#structured">Structured Data</a>
+  <a href="#ai-readiness">AI Search Readiness</a>
+  <a href="#entity">Off-Site Entity</a>
+  <a href="#platform-ai">Platform AI Readiness</a>
+  <a href="#gsc">GSC Intelligence</a>
+  <a href="#roadmap">Priority Roadmap</a>
+  <a href="#cta-final">Next Steps</a>
+</nav>
+
+<div class="review-flag">This report has been queued for human expert review. Final delivery within 3-5 business days.</div>
+
+<!-- COVER -->
+<section class="score-hero" id="cover">
+  <div class="container">
+    <p class="domain">memox.io &middot; SiteScore Deep Dive</p>
+    <div class="score-circle reveal">
+      <span class="number">81</span>
+      <span class="label">out of 100</span>
+    </div>
+    <h1>SiteScore Audit</h1>
+    <p class="meta">Autonomous Technology Inc. &middot; April 2, 2026</p>
+  </div>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section id="executive">
+  <div class="container">
+    <p class="section-label">Executive Summary</p>
+    <h2>Strong on-site fundamentals, invisible off-site</h2>
+    <p style="color: var(--stone-600); margin: 1rem 0 2rem; max-width: 680px;">Memox.io has excellent technical SEO and schema markup — one of the best structured data implementations we've audited. However, blog content is blocked from search engines, organic visibility is near-zero outside branded searches, and off-site entity presence is effectively non-existent. These three issues compound: search engines and AI platforms have no content to index and no third-party signals to validate the brand.</p>
+
+    <div class="score-grid reveal">
+      <div class="score-card">
+        <div class="card-score" style="color: var(--green-500);">8.5</div>
+        <div class="card-label">Technical SEO</div>
+        <div class="card-bar"><span class="bar-green" style="width:85%"></span></div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--green-500);">9</div>
+        <div class="card-label">On-Page SEO</div>
+        <div class="card-bar"><span class="bar-green" style="width:90%"></span></div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--green-500);">8</div>
+        <div class="card-label">Content Quality</div>
+        <div class="card-bar"><span class="bar-green" style="width:80%"></span></div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--amber-600);">7</div>
+        <div class="card-label">AI Search Readiness</div>
+        <div class="card-bar"><span class="bar-amber" style="width:70%"></span></div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">Top 3 Critical Issues</h3>
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>Blog content blocked in robots.txt <span class="evidence observed">Observed</span></h4>
+      <p>robots.txt disallows <code>/blog/</code> for all user agents including AI crawlers. Memox has 15+ insight articles in its sitemap that cannot be crawled, indexed, or cited by any search engine or AI platform. This single rule makes the entire content marketing investment invisible.</p>
+    </div>
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>Zero non-brand organic traffic <span class="evidence observed">Observed</span></h4>
+      <p>GSC data shows 21 clicks over 90 days — 100% from branded queries ("memox"). Non-brand keywords like "AI sales assistant equipment dealers" and "lead response automation" generate 0 clicks. The site is effectively invisible for discovery searches.</p>
+    </div>
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>No off-site entity presence <span class="evidence observed">Observed</span></h4>
+      <p>No G2 profile, no Crunchbase listing, no Reddit mentions, no YouTube presence, no Wikipedia or Wikidata entity. AI platforms rely on third-party corroboration to validate brand claims — without it, Memox cannot be confidently cited by ChatGPT, Perplexity, or Google AI Overviews.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL SEO -->
+<section class="alt" id="technical">
+  <div class="container">
+    <p class="section-label">Section 1</p>
+    <h2>Technical SEO</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Score: <strong>8.5/10</strong> — Strong infrastructure with one critical robots.txt issue.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Check</th><th>Status</th><th>Detail</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>HTTPS</td><td class="status-pass">Pass</td><td>HTTP/2, HSTS with preload (max-age 63072000)</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Robots.txt</td><td class="status-warn">Warn</td><td>Present but blocks /blog/, /products/, /category/</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Sitemap</td><td class="status-pass">Pass</td><td>XML sitemap at /sitemap.xml, 29 URLs, referenced in robots.txt</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Mobile Viewport</td><td class="status-pass">Pass</td><td><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Canonical URL</td><td class="status-warn">Warn</td><td>No explicit <code>&lt;link rel="canonical"&gt;</code> tag found; og:url set to https://memox.io</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Security Headers</td><td class="status-pass">Pass</td><td>CSP, X-Content-Type-Options, X-Frame-Options, Permissions-Policy, Referrer-Policy</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>CDN / Performance</td><td class="status-pass">Pass</td><td>Cloudflare CDN, Next.js with preloaded fonts, s-maxage caching</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Crawl Errors</td><td class="status-warn">Warn</td><td>Ghost pages from previous site version ranking for irrelevant keywords</td><td><span class="evidence observed">Observed</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>Blog content blocked by robots.txt <span class="evidence observed">Observed</span></h4>
+      <p><code>Disallow: /blog/</code> appears for every user agent. Meanwhile, 15 insight articles are listed in sitemap.xml (under /insights/). The /blog/ disallow may be an artifact from a content restructure — the live content lives at /insights/ which is <strong>not blocked</strong>. However, the /products/ and /category/ disallow rules may also be blocking legitimate content paths. <strong>Recommendation:</strong> Audit which paths under /products/, /ctg/, /category/, and /blog/ should actually be blocked vs. indexed. Remove the /blog/ rule if that content has been migrated to /insights/.</p>
+    </div>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>No explicit canonical tags <span class="evidence observed">Observed</span></h4>
+      <p>The homepage HTML has no <code>&lt;link rel="canonical"&gt;</code> tag. While og:url is set to https://memox.io, explicit canonical tags are the SEO standard for deduplication. Without them, search engines may index duplicate versions (www vs non-www, trailing slash variants). <strong>Recommendation:</strong> Add self-referencing canonical tags to every page via Next.js metadata.</p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With a complete crawl and log file analysis, we'd surface orphan pages, redirect chains, and crawl budget waste across all 29+ indexed URLs. Part of the <strong>SiteScore</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ON-PAGE SEO -->
+<section id="onpage">
+  <div class="container">
+    <p class="section-label">Section 2</p>
+    <h2>On-Page SEO</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Score: <strong>9/10</strong> — Excellent meta tag implementation across the board.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Element</th><th>Status</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Title Tag</td><td class="status-pass">Pass</td><td>"AI Sales Assistant for Equipment Dealers | 24/7 Lead Response | Memox" (69 chars — slightly long, target 60)</td></tr>
+        <tr><td>Meta Description</td><td class="status-pass">Pass</td><td>"Memox is an AI sales agent that responds to equipment dealer leads in under 5 seconds, 24/7..." (comprehensive, keyword-rich)</td></tr>
+        <tr><td>H1</td><td class="status-pass">Pass</td><td>"Respond First. Win More Deals." — single H1, clear, compelling</td></tr>
+        <tr><td>H2 Structure</td><td class="status-pass">Pass</td><td>7 H2s with clear section hierarchy: problem, solution, how-it-works, demo, results, FAQ, CTA</td></tr>
+        <tr><td>og:title</td><td class="status-pass">Pass</td><td>Present, matches page title</td></tr>
+        <tr><td>og:description</td><td class="status-pass">Pass</td><td>Present, compelling social copy</td></tr>
+        <tr><td>og:image</td><td class="status-pass">Pass</td><td>Present, 1200x630, custom OG image</td></tr>
+        <tr><td>og:type</td><td class="status-pass">Pass</td><td>"website"</td></tr>
+        <tr><td>twitter:card</td><td class="status-pass">Pass</td><td>summary_large_image</td></tr>
+        <tr><td>Keywords Meta</td><td class="status-pass">Pass</td><td>24 targeted keywords covering AI sales, equipment dealers, lead response</td></tr>
+        <tr><td>Citation Meta</td><td class="status-pass">Pass</td><td>citation_title, citation_author, citation_publication_date — helps academic/AI crawlers</td></tr>
+        <tr><td>Robots Meta</td><td class="status-pass">Pass</td><td>"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding low reveal">
+      <div class="severity low">Low Priority</div>
+      <h4>Title tag slightly long (69 chars) <span class="evidence observed">Observed</span></h4>
+      <p>Target is 50-60 characters for full SERP display. Current: "AI Sales Assistant for Equipment Dealers | 24/7 Lead Response | Memox". <strong>Recommendation:</strong> Shorten to "AI Sales Agent for Equipment Dealers | Memox" (45 chars) or "24/7 AI Sales Agent for Equipment Dealers | Memox" (50 chars).</p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With Search Console click data, we'd show you which meta descriptions drive the highest CTR and which pages need rewriting. Part of the <strong>SiteScore</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURED DATA -->
+<section class="alt" id="structured">
+  <div class="container">
+    <p class="section-label">Section 3</p>
+    <h2>Structured Data &amp; Rich Results</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">One of the strongest schema implementations we've audited. Six schema types in a connected graph.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Schema Type</th><th>Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Organization</td><td class="status-pass">Pass</td><td>Name, alternateName, URL, logo, description, foundingDate, areaServed, contactPoint, sameAs, knowsAbout (15 topics)</td></tr>
+        <tr><td>WebSite</td><td class="status-pass">Pass</td><td>Connected to Organization via publisher @id</td></tr>
+        <tr><td>SoftwareApplication</td><td class="status-pass">Pass</td><td>3 pricing offers (Starter $349, Professional $799, Enterprise), featureList, review with rating</td></tr>
+        <tr><td>HowTo</td><td class="status-pass">Pass</td><td>"How to Set Up an AI Sales Agent" — 3 steps, totalTime P3D</td></tr>
+        <tr><td>Service</td><td class="status-pass">Pass</td><td>AI Chat Agent + AI Voice Agent offers, audience targeting (Equipment Dealers, 1-500 employees)</td></tr>
+        <tr><td>FAQPage</td><td class="status-pass">Pass</td><td>9 questions with detailed answers — eligible for FAQ rich results</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding low reveal">
+      <div class="severity low">Low Priority</div>
+      <h4>Missing Article schema on blog posts <span class="evidence assessment">Assessment</span></h4>
+      <p>The homepage schema is excellent. Blog/insight posts should also implement Article schema with author attribution and datePublished/dateModified for enhanced AI citability and Google News eligibility.</p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With a full schema validation pass, we'd verify rich result eligibility for each page and surface any validation errors. Part of the <strong>SiteScore</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- AI SEARCH READINESS -->
+<section id="ai-readiness">
+  <div class="container">
+    <p class="section-label">Section 4</p>
+    <h2>AI Search Readiness (AEO &amp; GEO)</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Score: <strong>7/10</strong> — AI crawlers are allowed, content is extractable, but blog content is blocked and off-site signals are missing.</p>
+
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">AI Crawler Access Audit</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Crawler</th><th>Platform</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>GPTBot</td><td>ChatGPT (training)</td><td class="status-pass">Allowed</td><td>Explicit allow rule; /admin, /api, /products, /blog blocked</td></tr>
+        <tr><td>ChatGPT-User</td><td>ChatGPT (Browse)</td><td class="status-pass">Allowed</td><td>Explicit allow rule</td></tr>
+        <tr><td>ClaudeBot</td><td>Claude</td><td class="status-pass">Allowed</td><td>Explicit allow rule</td></tr>
+        <tr><td>anthropic-ai</td><td>Claude training</td><td class="status-warn">Not addressed</td><td>No specific rule — falls under wildcard (*) which allows /</td></tr>
+        <tr><td>PerplexityBot</td><td>Perplexity</td><td class="status-pass">Allowed</td><td>Explicit allow rule</td></tr>
+        <tr><td>Perplexity-User</td><td>Perplexity live</td><td class="status-warn">Not addressed</td><td>No specific rule — falls under wildcard</td></tr>
+        <tr><td>Google-Extended</td><td>Gemini / AI Overviews</td><td class="status-pass">Allowed</td><td>Explicit allow rule</td></tr>
+        <tr><td>Googlebot</td><td>Google Search</td><td class="status-pass">Allowed</td><td>Falls under wildcard allow</td></tr>
+        <tr><td>Bingbot</td><td>Bing / Copilot</td><td class="status-pass">Allowed</td><td>Falls under wildcard allow</td></tr>
+        <tr><td>Applebot-Extended</td><td>Apple Intelligence</td><td class="status-pass">Allowed</td><td>Explicit allow rule</td></tr>
+        <tr><td>CCBot</td><td>Common Crawl</td><td class="status-pass">Allowed</td><td>Falls under wildcard — consider blocking (training only)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">Content Extractability (GEO)</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Check</th><th>Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>First-paragraph definition</td><td class="status-pass">Pass</td><td>"Memox is an AI sales agent that responds to equipment dealer leads in under 5 seconds, 24/7"</td></tr>
+        <tr><td>Self-contained answers</td><td class="status-pass">Pass</td><td>FAQ answers are 40-80 words, standalone, extractable</td></tr>
+        <tr><td>Query-pattern headings</td><td class="status-pass">Pass</td><td>FAQ headings use "How...", "What...", "Can..." patterns</td></tr>
+        <tr><td>Statistics with sources</td><td class="status-warn">Partial</td><td>Industry stats present (42hr avg, 78% choose first responder) but no inline source citations</td></tr>
+        <tr><td>Expert attribution</td><td class="status-warn">Partial</td><td>Glenn Taylor quote attributed with title — only 1 testimonial</td></tr>
+        <tr><td>Freshness signals</td><td class="status-warn">Missing</td><td>No "Last updated" dates visible on any page</td></tr>
+        <tr><td>Comparison tables</td><td class="status-fail">Missing</td><td>No "Memox vs X" comparison content — high-value AI query pattern</td></tr>
+        <tr><td>llms.txt</td><td class="status-pass">Present</td><td>/llms.txt returns 200</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>Blog content blocked from AI crawlers <span class="evidence observed">Observed</span></h4>
+      <p>All AI crawlers have <code>Disallow: /blog/</code> in their robots.txt section. If the content has migrated to /insights/, confirm the /blog/ path no longer serves content and remove the rule. If any content still lives at /blog/, this blocks AI platforms from citing it. Note: the /insights/ path is <strong>not blocked</strong>, which is correct.</p>
+    </div>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>No comparison content for "[Memox] vs [X]" queries <span class="evidence assessment">Assessment</span></h4>
+      <p>AI engines frequently answer "X vs Y" queries. Memox has no comparison pages against competitors (Impel AI, Conversica, traditional answering services). These pages are high-value for both SEO and AI citation — they directly map to purchase-intent queries. <strong>Recommendation:</strong> Create 2-3 comparison pages targeting "Memox vs answering service", "Memox vs Conversica", "AI sales agent vs BDC team".</p>
+    </div>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>Statistics lack inline source citations <span class="evidence observed">Observed</span></h4>
+      <p>The homepage cites "42 hours average response time", "63% never respond", "78% of buyers choose the first responder" but none have inline source citations. AI platforms boost citation confidence ~40% when statistics include their sources. <strong>Recommendation:</strong> Add source links inline (e.g., "according to Harvard Business Review" or "source: InsideSales.com study").</p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With a full AI citation audit, we'd test your brand mentions across ChatGPT, Perplexity, and Google AI Overviews in real-time and build a content strategy to maximize AI visibility. Part of the <strong>SiteScore</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- OFF-SITE ENTITY -->
+<section class="alt" id="entity">
+  <div class="container">
+    <p class="section-label">Section 5</p>
+    <h2>Off-Site Entity Presence</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Memox has virtually no third-party digital footprint. AI platforms cannot corroborate the brand from independent sources.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Platform</th><th>Status</th><th>Detail</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>LinkedIn (Company)</td><td class="status-warn">Exists but confused</td><td>linkedin.com/company/memox-io in sameAs schema — but search returns 4+ other "Memox" companies (Switzerland, Norway, Philippines). Brand disambiguation issue.</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>LinkedIn (Founder)</td><td class="status-warn">Not verified</td><td>Not searched — would strengthen entity graph if linked</td><td><span class="evidence not-verified">Not verified</span></td></tr>
+        <tr><td>Reddit</td><td class="status-fail">Not found</td><td>No mentions of "memox" or "memox.io" on Reddit</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>YouTube</td><td class="status-fail">Not found</td><td>No YouTube channel or video content</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Wikipedia</td><td class="status-fail">Not found</td><td>No article or mention</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Wikidata</td><td class="status-fail">Not found</td><td>No entity</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>G2</td><td class="status-fail">Not found</td><td>No G2 profile — critical for B2B SaaS AI citation</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Crunchbase</td><td class="status-fail">Not found</td><td>Only "Memox Innovations AG" (Swiss meeting company) — no Memox.io listing</td><td><span class="evidence observed">Observed</span></td></tr>
+        <tr><td>Product Hunt</td><td class="status-fail">Not verified</td><td>No launch found</td><td><span class="evidence not-verified">Not verified</span></td></tr>
+        <tr><td>Press / Publications</td><td class="status-warn">Minimal</td><td>Only mention found: Autonomous blog post. No industry press, no TechCrunch, no dealer trade publications.</td><td><span class="evidence observed">Observed</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>Entity presence score: 1/10 <span class="evidence assessment">Assessment</span></h4>
+      <p>AI platforms (ChatGPT, Perplexity, Google Gemini) build brand knowledge from cross-platform signals. Without G2 reviews, Crunchbase profile, Reddit discussions, or press coverage, AI engines have no independent source to validate Memox's claims. <strong>This is the single biggest barrier to AI citation.</strong></p>
+      <p style="margin-top: 0.75rem;"><strong>Recommended immediate actions:</strong></p>
+      <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--stone-600); font-size: 0.9rem;">
+        <li>Claim and complete G2 profile (B2B SaaS essential)</li>
+        <li>Create Crunchbase profile (founding date, team, funding status)</li>
+        <li>Launch on Product Hunt</li>
+        <li>Post case study on r/sales, r/smallbusiness, or relevant subreddits</li>
+        <li>Create YouTube demo/explainer video</li>
+        <li>Pitch to equipment dealer trade publications</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With a complete entity building strategy, we'd map out a 90-day plan to establish Memox across all platforms AI engines reference. Part of the <strong>SiteScore</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM AI READINESS -->
+<section id="platform-ai">
+  <div class="container">
+    <p class="section-label">Section 6</p>
+    <h2>Platform-Specific AI Readiness</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Scoring each AI platform's ability to discover, understand, and cite Memox.</p>
+
+    <div class="score-grid reveal">
+      <div class="score-card">
+        <div class="card-score" style="color: var(--amber-600);">5/10</div>
+        <div class="card-label">ChatGPT</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--amber-600);">5/10</div>
+        <div class="card-label">Perplexity</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--amber-600);">4/10</div>
+        <div class="card-label">Google AI Overviews</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--red-500);">3/10</div>
+        <div class="card-label">Gemini</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--amber-600);">4/10</div>
+        <div class="card-label">Bing Copilot</div>
+      </div>
+    </div>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Platform</th><th>Key Signals</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ChatGPT</strong></td><td>GPTBot allowed, Bing indexed, Wikipedia absent, Reddit absent</td><td class="status-warn">Partial — crawlable but no corroborating sources</td></tr>
+        <tr><td><strong>Perplexity</strong></td><td>PerplexityBot allowed, answer-first structure, G2 absent, Reddit absent</td><td class="status-warn">Partial — good content structure but no social proof sources</td></tr>
+        <tr><td><strong>Google AI Overviews</strong></td><td>Google-Extended allowed, FAQPage schema present, no Knowledge Panel</td><td class="status-warn">Partial — schema is strong but near-zero organic presence</td></tr>
+        <tr><td><strong>Gemini</strong></td><td>No Google Business Profile, no YouTube, sameAs limited to LinkedIn only</td><td class="status-fail">Weak — Gemini relies heavily on Google ecosystem signals</td></tr>
+        <tr><td><strong>Bing Copilot</strong></td><td>Bingbot allowed, no LinkedIn company verification, no GitHub presence</td><td class="status-warn">Partial — accessible but lacks authority signals</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>Brand name collision with "Memox" (Swiss company) <span class="evidence observed">Observed</span></h4>
+      <p>Search results for "Memox" return multiple companies: Memox Innovations AG (Switzerland, meeting spaces), Memox Norge (Norway), MemoXpress (Philippines). This creates entity confusion for AI platforms. <strong>Recommendation:</strong> Always use "Memox.io" or "Memox AI" as the brand identifier. Update sameAs, schema, and all profiles to emphasize "AI sales agent for equipment dealers" as the disambiguating description.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GSC INTELLIGENCE -->
+<section class="alt" id="gsc">
+  <div class="container">
+    <p class="section-label">Deep Dive: GSC Intelligence</p>
+    <h2>Google Search Console Data</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">90-day window (Dec 31, 2025 — Mar 30, 2026). Data from sc-domain:memox.io.</p>
+
+    <div class="score-grid reveal">
+      <div class="score-card">
+        <div class="card-score">21</div>
+        <div class="card-label">Total Clicks</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score">1,870</div>
+        <div class="card-label">Impressions</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score">1.12%</div>
+        <div class="card-label">Avg CTR</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score">39.2</div>
+        <div class="card-label">Avg Position</div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem;">Query Analysis</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Position</th></tr></thead>
+      <tbody>
+        <tr><td>"memox"</td><td>21</td><td>1,009</td><td>2.08%</td><td>7.5</td></tr>
+        <tr><td>"unified customer experience"</td><td>0</td><td>410</td><td>0%</td><td>88.0</td></tr>
+        <tr><td>"what is a unified customer experience"</td><td>0</td><td>69</td><td>0%</td><td>84.9</td></tr>
+        <tr><td>"unified content experience"</td><td>0</td><td>60</td><td>0%</td><td>51.8</td></tr>
+        <tr><td>"unified customer experience platform"</td><td>0</td><td>60</td><td>0%</td><td>79.8</td></tr>
+        <tr><td>"create winning customer experiences..."</td><td>0</td><td>53</td><td>0%</td><td>33.6</td></tr>
+        <tr><td>"unified customer experience management"</td><td>0</td><td>53</td><td>0%</td><td>77.7</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>Legacy pages ranking for irrelevant keywords <span class="evidence observed">Observed</span></h4>
+      <p>Pages from a previous version of the site (<code>/what-is-a-unified-customer-experience/</code>, <code>/ai-for-customer-success-with-memox/</code>) are generating 800+ impressions for "unified customer experience" queries — completely irrelevant to Memox's current positioning as an AI sales agent for equipment dealers. These ghost pages dilute domain relevance signals.</p>
+      <p style="margin-top: 0.5rem;"><strong>Recommendation:</strong> 301-redirect these legacy URLs to relevant current pages or return 410 (Gone). Then request re-crawl via GSC.</p>
+    </div>
+
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>100% branded traffic — zero non-brand discovery <span class="evidence observed">Observed</span></h4>
+      <p>All 21 clicks came from "memox" brand queries. High-value non-brand queries like "AI sales assistant for equipment dealers" (position 84+), "lead generation for equipment dealers" (position 84) generate zero clicks. The site has no content strategy targeting these discovery keywords.</p>
+      <p style="margin-top: 0.5rem;"><strong>Recommendation:</strong> Build content targeting: "AI sales agent for dealers", "speed to lead equipment", "after hours lead response", "AI chat for equipment dealers". The insight articles at /insights/ already target some of these — they need to be crawlable and indexed.</p>
+    </div>
+
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem;">Top Landing Pages</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Page</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Position</th></tr></thead>
+      <tbody>
+        <tr><td>memox.io/ (homepage)</td><td>39</td><td>1,694</td><td>2.3%</td><td>5.5</td></tr>
+        <tr><td>/ai-for-customer-success-with-memox/</td><td>1</td><td>111</td><td>0.9%</td><td>4.6</td></tr>
+        <tr><td>/what-is-a-unified-customer-experience/</td><td>1</td><td>808</td><td>0.12%</td><td>79.0</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Cannibalization detected:</strong> 1 issue flagged by GSC analysis. Multiple pages competing for the same query, splitting click potential. Full cannibalization analysis available in the Deep Dive report.
+    </div>
+  </div>
+</section>
+
+<!-- PRIORITY ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <p class="section-label">Priority Roadmap</p>
+    <h2>Top 10 Fixes by Impact</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Sequenced by dependency order, then impact. No time estimates — effort levels only.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>#</th><th>Fix</th><th>Effort</th><th>Impact</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Remove /blog/ from robots.txt disallow</strong> — unblock content from all crawlers</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>Technical SEO</td></tr>
+        <tr><td>2</td><td><strong>301-redirect legacy pages</strong> — /what-is-a-unified-customer-experience/, /ai-for-customer-success-with-memox/ to current pages</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>GSC Intel</td></tr>
+        <tr><td>3</td><td><strong>Create G2 profile</strong> — claim listing, add description, invite ContainerOne for review</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>Off-Site Entity</td></tr>
+        <tr><td>4</td><td><strong>Create Crunchbase profile</strong> — founding date, team, category, funding status</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>Off-Site Entity</td></tr>
+        <tr><td>5</td><td><strong>Add inline source citations to statistics</strong> — "42hr avg response (source: InsideSales)", "78% choose first responder (source: Lead Connect)"</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>GEO</td></tr>
+        <tr><td>6</td><td><strong>Add canonical tags to all pages</strong> — self-referencing via Next.js metadata</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>Technical SEO</td></tr>
+        <tr><td>7</td><td><strong>Create 2-3 comparison pages</strong> — "Memox vs Answering Service", "Memox vs Conversica", "AI Sales Agent vs BDC"</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>GEO / Content</td></tr>
+        <tr><td>8</td><td><strong>Build off-site presence</strong> — Product Hunt launch, Reddit posts, YouTube demo video, dealer trade publication pitch</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>Off-Site Entity</td></tr>
+        <tr><td>9</td><td><strong>Target non-brand keywords in blog content</strong> — ensure insight articles are optimized for "AI sales agent dealers", "speed to lead equipment", "after hours lead response"</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>Content / SEO</td></tr>
+        <tr><td>10</td><td><strong>Add "Last updated" dates to all content pages</strong> — freshness signal for AI crawlers</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>GEO</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta-final" style="padding: 8rem 0; background: var(--stone-900); text-align: center;">
+  <p style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">Ready to Fix This?</p>
+  <h2 style="color: #fff; font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; margin: 0.75rem 0 1rem;">Let's turn these findings into fixes</h2>
+  <p style="color: var(--stone-300); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.6;">Book a 20-min call and we'll walk through your SiteScore audit findings live — and map out exactly what to tackle first.</p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">Book a 20-min call — we'll walk through your findings live &rarr;</a>
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; No commitment required</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; We come with your audit findings loaded</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; Implementation roadmap included</span>
+  </div>
+</section>
+
+<div class="mobile-cta">
+  <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+</div>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// TOC active tracking
+const tocLinks = document.querySelectorAll('.toc-sidebar a');
+const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const tocObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.toc-sidebar a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+sections.forEach(s => tocObserver.observe(s));
+</script>
+</body>
+</html>

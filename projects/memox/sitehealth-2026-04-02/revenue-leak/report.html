@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Leak Audit Deep Dive — memox.io | Autonomous Technology Inc.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+:root {
+  --stone-50: #fafaf9; --stone-100: #f5f5f4; --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1; --stone-400: #a8a29e; --stone-500: #78716c;
+  --stone-600: #57534e; --stone-700: #44403c; --stone-800: #292524;
+  --stone-900: #1c1917;
+  --amber-400: #fbbf24; --amber-500: #f59e0b; --amber-600: #d97706;
+  --amber-100: #fef3c7;
+  --red-500: #ef4444; --red-100: #fee2e2;
+  --green-500: #22c55e; --green-100: #dcfce7;
+  --blue-500: #3b82f6; --blue-100: #dbeafe;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; color: var(--stone-800); background: var(--stone-50); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif; color: var(--stone-900); }
+.container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.toc-sidebar { position: fixed; top: 2rem; left: 1.5rem; width: 220px; background: rgba(255,255,255,0.75); backdrop-filter: blur(8px); border-radius: 12px; padding: 1.25rem; z-index: 100; border: 1px solid var(--stone-200); max-height: calc(100vh - 4rem); overflow-y: auto; }
+.toc-sidebar h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--stone-500); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
+.toc-sidebar a { display: block; font-size: 0.8rem; color: var(--stone-600); text-decoration: none; padding: 0.35rem 0.6rem; border-radius: 6px; margin-bottom: 2px; transition: all 0.2s; }
+.toc-sidebar a:hover { color: var(--stone-900); background: var(--stone-100); }
+.toc-sidebar a.active { background: var(--amber-500); color: var(--stone-900); font-weight: 600; }
+.toc-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 200; background: var(--stone-900); color: #fff; border: none; border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 1.2rem; cursor: pointer; }
+.score-hero { background: var(--stone-900); padding: 5rem 0 4rem; text-align: center; }
+.score-circle { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; flex-direction: column; border: 4px solid var(--red-500); }
+.score-circle .number { font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1; font-family: 'Source Serif 4', serif; }
+.score-circle .label { font-size: 0.75rem; color: var(--stone-400); text-transform: uppercase; letter-spacing: 0.1em; }
+.score-hero .domain { color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.score-hero h1 { color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; }
+.score-hero .meta { color: var(--stone-400); font-size: 0.875rem; }
+.review-flag { background: var(--amber-100); color: var(--stone-800); padding: 0.75rem 1.5rem; text-align: center; font-size: 0.85rem; border-bottom: 2px solid var(--amber-500); }
+section { padding: 6rem 0; }
+section.alt { background: var(--stone-100); }
+section h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber-600); font-weight: 700; margin-bottom: 0.25rem; }
+.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+.score-card { background: #fff; border-radius: 12px; padding: 2rem 1.25rem; text-align: center; border: 1px solid var(--stone-200); transition: transform 0.2s, box-shadow 0.2s; }
+.score-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.score-card .card-score { font-size: 2rem; font-weight: 700; font-family: 'Source Serif 4', serif; }
+.score-card .card-label { font-size: 0.8rem; color: var(--stone-500); margin-top: 0.25rem; }
+.finding { background: #fff; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid var(--stone-300); color: var(--stone-800); transition: transform 0.2s, box-shadow 0.2s; }
+.finding:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.finding.high { border-left-color: var(--red-500); }
+.finding.medium { border-left-color: var(--amber-500); }
+.finding.low { border-left-color: var(--green-500); }
+.finding .severity { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+.finding .severity.high { color: var(--red-500); }
+.finding .severity.medium { color: var(--amber-600); }
+.finding .severity.low { color: var(--green-500); }
+.finding h4 { font-size: 1rem; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; font-weight: 600; }
+.finding p { font-size: 0.9rem; color: var(--stone-600); }
+.evidence { display: inline-block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; }
+.evidence.observed { background: var(--green-100); color: var(--green-500); }
+.evidence.assessment { background: var(--blue-100); color: var(--blue-500); }
+.audit-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
+.audit-table th { background: var(--stone-900); color: #fff; padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.audit-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--stone-200); }
+.audit-table tr:hover { background: var(--stone-100); }
+.status-pass { color: var(--green-500); font-weight: 600; }
+.status-warn { color: var(--amber-600); font-weight: 600; }
+.status-fail { color: var(--red-500); font-weight: 600; }
+.callout { background: var(--amber-100); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 2rem 0; color: var(--stone-800); font-size: 0.9rem; }
+.callout a { color: var(--amber-600); font-weight: 600; text-decoration: none; }
+.critical-banner { background: var(--red-100); border: 2px solid var(--red-500); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+.critical-banner h3 { color: var(--red-500); font-size: 1.25rem; margin-bottom: 0.5rem; }
+.critical-banner p { color: var(--stone-700); font-size: 0.95rem; }
+.cta-btn { display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center; padding: 1rem 2rem; background: var(--amber-500); color: var(--stone-900); font-weight: 700; font-size: 1.05rem; border-radius: 8px; text-decoration: none; box-shadow: 0 6px 24px rgba(245,158,11,0.35); transition: background 0.2s, transform 0.2s; }
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+.effort { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; }
+.effort.low { background: var(--green-100); color: var(--green-500); }
+.effort.medium { background: var(--amber-100); color: var(--amber-600); }
+.effort.high { background: var(--red-100); color: var(--red-500); }
+.impact { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; background: var(--blue-100); color: var(--blue-500); }
+.mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--amber-500); padding: 0.75rem 1rem; text-align: center; z-index: 100; }
+.mobile-cta a { color: var(--stone-900); font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+.flow-diagram { background: var(--stone-900); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--stone-300); overflow-x: auto; white-space: pre; line-height: 1.4; }
+@media (max-width: 1240px) { .toc-sidebar { display: none; } .toc-toggle { display: block; } .toc-sidebar.open { display: block; top: 0; left: 0; width: 300px; height: 100vh; border-radius: 0; z-index: 300; } }
+@media (max-width: 768px) { .score-hero { padding: 3rem 0 2.5rem; } .score-hero h1 { font-size: 1.75rem; } section { padding: 3rem 0; } .score-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; } .mobile-cta { display: block; } body { padding-bottom: 60px; } }
+@media print { .toc-sidebar, .toc-toggle, .mobile-cta, .review-flag { display: none !important; } section { break-inside: avoid; padding: 2rem 0; } .finding { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<button class="toc-toggle" onclick="document.querySelector('.toc-sidebar').classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
+<nav class="toc-sidebar" id="toc">
+  <h4>Revenue Leak</h4>
+  <a href="#cover">Overview</a>
+  <a href="#executive">Executive Summary</a>
+  <a href="#ga4-config">GA4 Configuration</a>
+  <a href="#tagging">Tagging Implementation</a>
+  <a href="#conversion">Conversion Signals</a>
+  <a href="#attribution">Attribution & UTMs</a>
+  <a href="#consent">Consent & Privacy</a>
+  <a href="#ecosystem">Platform Ecosystem</a>
+  <a href="#roadmap">Priority Roadmap</a>
+  <a href="#cta-final">Next Steps</a>
+</nav>
+
+<div class="review-flag">This report has been queued for human expert review. Final delivery within 3-5 business days.</div>
+
+<section class="score-hero" id="cover">
+  <div class="container">
+    <p class="domain">memox.io &middot; Revenue Leak Audit Deep Dive</p>
+    <div class="score-circle reveal">
+      <span class="number">18</span>
+      <span class="label">out of 100</span>
+    </div>
+    <h1>Revenue Leak Audit</h1>
+    <p class="meta">Autonomous Technology Inc. &middot; April 2, 2026</p>
+  </div>
+</section>
+
+<section id="executive">
+  <div class="container">
+    <p class="section-label">Executive Summary</p>
+    <h2>You're flying blind</h2>
+    <p style="color: var(--stone-600); margin: 1rem 0 2rem; max-width: 680px;">Memox.io has a GA4 property created (430432762) but <strong>no tracking code installed on the website</strong>. All event arrays returned empty. No Google Tag Manager, no Facebook Pixel, no Google Ads conversion tracking. The only analytics infrastructure observed is a Cloudflare Web Analytics allowance in the CSP header and PostHog domains whitelisted but not loading. Every dollar spent driving traffic to this site is unattributable.</p>
+
+    <div class="critical-banner reveal">
+      <h3>CRITICAL: GA4 Property Exists But Is Not Installed</h3>
+      <p>Property ID 430432762 ("MEMOX.io") was created on March 5, 2024 under the Autonomous Technologies account. The property is configured with Etc/GMT timezone and GBP currency. However, no GA4 tracking code (gtag.js or GTM container) was found in the page source. The Content Security Policy does not whitelist google-analytics.com or googletagmanager.com. <strong>Result: 0 events, 0 conversions, 0 traffic data collected over the last 30 days.</strong></p>
+    </div>
+
+    <div class="score-grid reveal">
+      <div class="score-card">
+        <div class="card-score" style="color: var(--red-500);">0/10</div>
+        <div class="card-label">GA4 Config</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--red-500);">1/10</div>
+        <div class="card-label">Tag Implementation</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--red-500);">0/10</div>
+        <div class="card-label">Conversion Tracking</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--red-500);">0/10</div>
+        <div class="card-label">Attribution</div>
+      </div>
+    </div>
+
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">Top 5 Critical Issues</h3>
+    <div class="finding high reveal">
+      <div class="severity high">Critical</div>
+      <h4>GA4 not installed — zero data collection <span class="evidence observed">Observed</span></h4>
+      <p>The GA4 property exists but no tracking code is on the site. No gtag.js, no GTM container, no measurement protocol. All API queries returned empty arrays. This means zero visibility into traffic, conversions, user behavior, or campaign performance.</p>
+    </div>
+    <div class="finding high reveal">
+      <div class="severity high">Critical</div>
+      <h4>No conversion tracking for demo bookings <span class="evidence observed">Observed</span></h4>
+      <p>The primary conversion goal (Calendly demo booking) has no tracking event. Without it, Memox cannot measure CAC, ROAS, or which channels drive demos. Every marketing dollar is unaccountable.</p>
+    </div>
+    <div class="finding high reveal">
+      <div class="severity high">Critical</div>
+      <h4>No ad platform integration <span class="evidence observed">Observed</span></h4>
+      <p>No Facebook Pixel, no Google Ads tag, no LinkedIn Insight Tag found. If Memox runs paid campaigns, conversions are not tracked — ad platforms optimize on zero signal, burning budget.</p>
+    </div>
+    <div class="finding high reveal">
+      <div class="severity high">High Priority</div>
+      <h4>GA4 timezone and currency misconfigured <span class="evidence observed">Observed</span></h4>
+      <p>GA4 property uses Etc/GMT timezone and GBP currency. Memox targets US equipment dealers. This causes date boundaries and revenue reports to misalign with business reality. Must be fixed before any data collection begins.</p>
+    </div>
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>PostHog whitelisted but not loading <span class="evidence observed">Observed</span></h4>
+      <p>Content Security Policy allows us.i.posthog.com and us-assets.i.posthog.com, but no PostHog initialization script was found in the page HTML. Either PostHog is loaded conditionally, loaded via a separate JS bundle not visible in source, or configured but never deployed.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="ga4-config">
+  <div class="container">
+    <p class="section-label">Section A</p>
+    <h2>GA4 Property Configuration</h2>
+    <table class="audit-table reveal">
+      <thead><tr><th>Setting</th><th>Current Value</th><th>Status</th><th>Recommended</th></tr></thead>
+      <tbody>
+        <tr><td>Property Name</td><td>MEMOX.io</td><td class="status-pass">OK</td><td>—</td></tr>
+        <tr><td>Property ID</td><td>430432762</td><td class="status-pass">OK</td><td>—</td></tr>
+        <tr><td>Account</td><td>Autonomous Technologies</td><td class="status-pass">OK</td><td>—</td></tr>
+        <tr><td>Industry</td><td>7 (Technology)</td><td class="status-pass">OK</td><td>—</td></tr>
+        <tr><td>Timezone</td><td class="status-fail">Etc/GMT</td><td class="status-fail">Wrong</td><td>America/Chicago or America/Los_Angeles (match target market)</td></tr>
+        <tr><td>Currency</td><td class="status-fail">GBP</td><td class="status-fail">Wrong</td><td>USD (Memox targets US market, prices in USD)</td></tr>
+        <tr><td>Created</td><td>March 5, 2024</td><td class="status-pass">OK</td><td>—</td></tr>
+        <tr><td>Tracking Code</td><td class="status-fail">NOT INSTALLED</td><td class="status-fail">Critical</td><td>Install GA4 tag via GTM or direct gtag.js</td></tr>
+        <tr><td>Data Collection</td><td class="status-fail">0 events in 30 days</td><td class="status-fail">Critical</td><td>Verify tag fires on all pages</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="tagging">
+  <div class="container">
+    <p class="section-label">Section B</p>
+    <h2>Tagging Implementation Review</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">What tracking infrastructure exists on memox.io.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Platform</th><th>Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Google Tag Manager</td><td class="status-fail">Not found</td><td>No GTM container ID in source</td></tr>
+        <tr><td>GA4 (gtag.js)</td><td class="status-fail">Not found</td><td>No gtag.js or G- measurement ID</td></tr>
+        <tr><td>Facebook/Meta Pixel</td><td class="status-fail">Not found</td><td>No fbq() or pixel ID</td></tr>
+        <tr><td>Google Ads</td><td class="status-fail">Not found</td><td>No conversion labels</td></tr>
+        <tr><td>LinkedIn Insight Tag</td><td class="status-fail">Not found</td><td>No LinkedIn tracking</td></tr>
+        <tr><td>HubSpot</td><td class="status-fail">Not found</td><td>No hs-script or HubSpot tracking</td></tr>
+        <tr><td>PostHog</td><td class="status-warn">CSP only</td><td>Whitelisted in CSP (us.i.posthog.com) but no init script found in HTML</td></tr>
+        <tr><td>Cloudflare Web Analytics</td><td class="status-warn">CSP only</td><td>static.cloudflareinsights.com in CSP; may load via Cloudflare edge injection</td></tr>
+        <tr><td>Calendly Widget</td><td class="status-pass">Present</td><td>assets.calendly.com in CSP, frame-src allows calendly.com</td></tr>
+        <tr><td>Memox Chat Widget</td><td class="status-pass">Present</td><td>chat.memox.io and hub.memox.io in CSP + connect-src</td></tr>
+        <tr><td>Hotjar / Clarity / FullStory</td><td class="status-fail">Not found</td><td>No session recording tools</td></tr>
+        <tr><td>CallRail / Call Tracking</td><td class="status-fail">Not found</td><td>Phone number appears static</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding high reveal">
+      <div class="severity high">Critical</div>
+      <h4>No tag management system <span class="evidence observed">Observed</span></h4>
+      <p>Without GTM or an equivalent tag manager, every tracking change requires a code deployment. This creates a bottleneck where marketing cannot add or modify tracking without developer involvement. <strong>Recommendation:</strong> Install GTM as the foundation — then load GA4, ad pixels, and conversion tracking through GTM.</p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With GTM and GA4 properly configured, we'd build a complete measurement plan: conversion events, engagement tracking, funnel visualization, and automated alerting. Part of the <strong>Revenue Leak Audit</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="conversion">
+  <div class="container">
+    <p class="section-label">Section C</p>
+    <h2>Conversion Signal Audit</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">What should be tracked vs. what is being tracked.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Conversion Event</th><th>Business Value</th><th>Currently Tracked</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>calendly_booking_complete</td><td>Demo booked — primary conversion</td><td class="status-fail">No</td><td><span class="effort high">Critical</span></td></tr>
+        <tr><td>calendly_booking_started</td><td>Calendly widget opened</td><td class="status-fail">No</td><td><span class="effort high">High</span></td></tr>
+        <tr><td>chat_started</td><td>Memox chat widget engaged</td><td class="status-fail">No</td><td><span class="effort high">High</span></td></tr>
+        <tr><td>chat_lead_qualified</td><td>Chat conversation leads to qualified interest</td><td class="status-fail">No</td><td><span class="effort high">High</span></td></tr>
+        <tr><td>phone_call_initiated</td><td>Click-to-call or call tracking</td><td class="status-fail">No</td><td><span class="effort medium">Medium</span></td></tr>
+        <tr><td>pricing_page_view</td><td>Pricing intent signal</td><td class="status-fail">No</td><td><span class="effort medium">Medium</span></td></tr>
+        <tr><td>cta_clicked</td><td>Any CTA button click</td><td class="status-fail">No</td><td><span class="effort medium">Medium</span></td></tr>
+        <tr><td>scroll_depth_75</td><td>Deep engagement signal</td><td class="status-fail">No</td><td><span class="effort low">Low</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding high reveal">
+      <div class="severity high">Critical</div>
+      <h4>Primary conversion (demo booking) is not tracked <span class="evidence assessment">Assessment</span></h4>
+      <p>Memox uses Calendly for demo bookings — the only measurable revenue-generating action on the site. Without a conversion event firing when a booking completes, it's impossible to know: which traffic source drives demos, what the cost per demo is, whether content changes improve conversion, or which pages lead to bookings. This single gap makes all marketing investment unaccountable.</p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With conversion tracking in place, we'd build a full funnel view: landing page → chat/CTA engagement → Calendly open → booking complete, with drop-off rates at every step. Part of the <strong>Revenue Leak Audit</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section id="attribution">
+  <div class="container">
+    <p class="section-label">Section D</p>
+    <h2>Attribution &amp; Campaign Tracking</h2>
+
+    <div class="finding high reveal">
+      <div class="severity high">Critical</div>
+      <h4>Zero attribution infrastructure <span class="evidence observed">Observed</span></h4>
+      <p>With no analytics tag installed, there is no attribution data at all. No source/medium tracking, no campaign parameters, no referral data. If Memox runs outbound campaigns, social posts, or paid ads, there is no way to know which efforts generate pipeline.</p>
+    </div>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>No UTM architecture established <span class="evidence assessment">Assessment</span></h4>
+      <p>No evidence of UTM parameter usage on any external links or campaigns. Before launching any paid or organic campaigns, Memox needs a UTM naming convention. <strong>Recommended format:</strong></p>
+      <p style="margin-top: 0.5rem; font-family: monospace; font-size: 0.8rem; background: var(--stone-100); padding: 0.75rem; border-radius: 6px;">utm_source=[platform]&amp;utm_medium=[channel-type]&amp;utm_campaign=[campaign-name]&amp;utm_content=[variant]</p>
+      <p style="margin-top: 0.5rem;">Example: <code>utm_source=linkedin&amp;utm_medium=organic&amp;utm_campaign=dealer-insights-q2</code></p>
+    </div>
+
+    <div class="callout">
+      <strong>Want the full picture?</strong> With attribution set up correctly, we'd show you exactly which channels and campaigns drive qualified demos, and calculate true CAC by source. Part of the <strong>Revenue Leak Audit</strong> engagement.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="consent">
+  <div class="container">
+    <p class="section-label">Section E</p>
+    <h2>Consent &amp; Privacy Assessment</h2>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>Check</th><th>Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Cookie consent banner</td><td class="status-fail">Not observed</td><td>No cookie consent UI found in page source</td></tr>
+        <tr><td>Google Consent Mode v2</td><td class="status-fail">Not applicable</td><td>No Google tags installed to configure consent for</td></tr>
+        <tr><td>Privacy Policy</td><td class="status-pass">Present</td><td>/privacy linked in footer</td></tr>
+        <tr><td>Terms of Service</td><td class="status-pass">Present</td><td>/terms linked in footer</td></tr>
+        <tr><td>GDPR data collection notice</td><td class="status-warn">Not verified</td><td>Depends on privacy policy content</td></tr>
+        <tr><td>CCPA compliance</td><td class="status-warn">Not verified</td><td>US-targeted site should comply with state privacy laws</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>No cookie consent mechanism <span class="evidence observed">Observed</span></h4>
+      <p>No consent banner or consent management platform (CMP) was detected. While Memox currently has minimal tracking (reducing cookie liability), any future analytics or ad pixel deployment will require consent management for GDPR/CCPA compliance. <strong>Recommendation:</strong> Implement consent before adding any tracking — not after.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ecosystem">
+  <div class="container">
+    <p class="section-label">Section F</p>
+    <h2>Platform Ecosystem</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 1rem;">Current data flow architecture for memox.io.</p>
+
+    <div class="flow-diagram reveal">
+MEMOX.IO — Current Tracking Architecture
+═══════════════════════════════════════════
+
+  Browser (User)
+       │
+       ├──▶ Cloudflare Edge (CDN + WAF)
+       │         └── CF Web Analytics (basic pageviews only)
+       │
+       ├──▶ Calendly (iframe embed)
+       │         └── No callback/webhook to analytics ❌
+       │
+       ├──▶ Memox Chat Widget (chat.memox.io)
+       │         └── Internal — may log to own backend ✅
+       │
+       └──▶ PostHog (CSP whitelisted)
+                 └── Init script NOT found ❌
+
+  GA4 Property 430432762
+       └── Created but NOT receiving data ❌
+
+  Google Tag Manager
+       └── NOT installed ❌
+
+  Ad Platforms (Meta/Google/LinkedIn)
+       └── NOT installed ❌
+    </div>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>Memox chat may be the only data source <span class="evidence assessment">Assessment</span></h4>
+      <p>The Memox chat widget (chat.memox.io, hub.memox.io) likely captures lead data internally. This may be the only conversion tracking in place — through the chat product itself rather than through marketing analytics. However, this data lives in the product backend, not in any analytics platform, making it invisible for marketing attribution.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="roadmap">
+  <div class="container">
+    <p class="section-label">Priority Roadmap</p>
+    <h2>Analytics Implementation Roadmap</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Sequenced by dependency. Each step unlocks the next.</p>
+
+    <table class="audit-table reveal">
+      <thead><tr><th>#</th><th>Fix</th><th>Effort</th><th>Impact</th><th>Depends On</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Fix GA4 timezone (→ America/Chicago) and currency (→ USD)</strong></td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>—</td></tr>
+        <tr><td>2</td><td><strong>Install GTM container on memox.io</strong> — add GTM to CSP and &lt;head&gt;</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>—</td></tr>
+        <tr><td>3</td><td><strong>Deploy GA4 tag via GTM</strong> — start collecting page_view, session_start, user_engagement</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>#2</td></tr>
+        <tr><td>4</td><td><strong>Set up Calendly conversion tracking</strong> — fire calendly_booking_complete event via Calendly webhook + GTM</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>#2, #3</td></tr>
+        <tr><td>5</td><td><strong>Add chat engagement events</strong> — track chat_started, chat_lead_qualified via Memox → GTM dataLayer</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>#2, #3</td></tr>
+        <tr><td>6</td><td><strong>Install consent management</strong> — cookie banner + Google Consent Mode v2</td><td><span class="effort medium">Medium</span></td><td><span class="impact">Medium</span></td><td>#2</td></tr>
+        <tr><td>7</td><td><strong>Build UTM naming convention</strong> — standardize source/medium/campaign for all links</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>#3</td></tr>
+        <tr><td>8</td><td><strong>Confirm PostHog deployment</strong> — verify if PostHog is running or needs activation</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>—</td></tr>
+        <tr><td>9</td><td><strong>Add ad platform pixels (when ready)</strong> — Meta, Google Ads, LinkedIn as campaigns launch</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>#2, #6</td></tr>
+        <tr><td>10</td><td><strong>Mark GA4 key events</strong> — flag calendly_booking_complete and chat_lead_qualified as conversions</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>#4, #5</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="cta-final" style="padding: 8rem 0; background: var(--stone-900); text-align: center;">
+  <p style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">Ready to Fix This?</p>
+  <h2 style="color: #fff; font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; margin: 0.75rem 0 1rem;">Every lead you generate today is untracked</h2>
+  <p style="color: var(--stone-300); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.6;">Book a 20-min call and we'll walk through your Revenue Leak findings live — and map out the analytics implementation that makes every marketing dollar accountable.</p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">Book a 20-min call — let's plug the leaks &rarr;</a>
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; No commitment required</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; We come with your audit findings loaded</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; Implementation roadmap included</span>
+  </div>
+</section>
+
+<div class="mobile-cta"><a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a></div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const tocLinks = document.querySelectorAll('.toc-sidebar a');
+const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const tocObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.toc-sidebar a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+sections.forEach(s => tocObserver.observe(s));
+</script>
+</body>
+</html>

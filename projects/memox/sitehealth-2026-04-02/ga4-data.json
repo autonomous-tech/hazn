@@ -1,0 +1,252 @@
+{
+  "properties": [
+    {
+      "account": "Containerone",
+      "account_id": "accountSummaries/104893170",
+      "property": "Container One - GA4",
+      "property_id": "373350812",
+      "industry": "2",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2023-05-01 15:36:12.779000+00:00"
+    },
+    {
+      "account": "Autonomous Technologies",
+      "account_id": "accountSummaries/106344626",
+      "property": "tahjir.com - GA4",
+      "property_id": "331733869",
+      "industry": "15",
+      "time_zone": "America/Vancouver",
+      "currency": "USD",
+      "create_time": "2022-09-13 08:11:07.786000+00:00"
+    },
+    {
+      "account": "Autonomous Technologies",
+      "account_id": "accountSummaries/106344626",
+      "property": "Autonomous Technologies - GA4",
+      "property_id": "419938871",
+      "industry": "2",
+      "time_zone": "America/Vancouver",
+      "currency": "USD",
+      "create_time": "2023-12-14 08:13:59.480000+00:00"
+    },
+    {
+      "account": "Autonomous Technologies",
+      "account_id": "accountSummaries/106344626",
+      "property": "MEMOX.io",
+      "property_id": "430432762",
+      "industry": "7",
+      "time_zone": "Etc/GMT",
+      "currency": "GBP",
+      "create_time": "2024-03-05 08:50:34.780000+00:00"
+    },
+    {
+      "account": "Autonomous Technologies",
+      "account_id": "accountSummaries/106344626",
+      "property": "Autonomtek.de",
+      "property_id": "449283054",
+      "industry": "15",
+      "time_zone": "Europe/Berlin",
+      "currency": "GBP",
+      "create_time": "2024-07-08 09:05:41.689000+00:00"
+    },
+    {
+      "account": "ATC.Digital",
+      "account_id": "accountSummaries/121785756",
+      "property": "ATC Express - GA4",
+      "property_id": "386566928",
+      "industry": "5",
+      "time_zone": "Asia/Karachi",
+      "currency": "PKR",
+      "create_time": "2023-06-17 06:06:17.184000+00:00"
+    },
+    {
+      "account": "Ali Amin",
+      "account_id": "accountSummaries/179971710",
+      "property": "LitigAI.org",
+      "property_id": "482329534",
+      "industry": "7",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2025-03-17 12:40:16.135000+00:00"
+    },
+    {
+      "account": "TheRepublic",
+      "account_id": "accountSummaries/209050141",
+      "property": "TheRepublicWebsite",
+      "property_id": "288453955",
+      "industry": "0",
+      "time_zone": "Europe/Berlin",
+      "currency": "EUR",
+      "create_time": "2021-10-02 08:01:00.199000+00:00"
+    },
+    {
+      "account": "TheRepublic",
+      "account_id": "accountSummaries/209050141",
+      "property": "NeueMehrheit",
+      "property_id": "425212277",
+      "industry": "18",
+      "time_zone": "Europe/Berlin",
+      "currency": "EUR",
+      "create_time": "2024-01-29 12:11:56.438000+00:00"
+    },
+    {
+      "account": "Autonomoustech",
+      "account_id": "accountSummaries/228211709",
+      "property": "Autonous Tech Homepage",
+      "property_id": "314361433",
+      "industry": "15",
+      "time_zone": "America/Anchorage",
+      "currency": "USD",
+      "create_time": "2022-05-09 07:13:00.239000+00:00"
+    },
+    {
+      "account": "Autonomoustech",
+      "account_id": "accountSummaries/228211709",
+      "property": "Quirki Frogs",
+      "property_id": "321174322",
+      "industry": "15",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2022-06-29 08:58:36.647000+00:00"
+    },
+    {
+      "account": "Autonomoustech",
+      "account_id": "accountSummaries/228211709",
+      "property": "LiberV",
+      "property_id": "404629094",
+      "industry": "16",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2023-08-29 09:47:28.998000+00:00"
+    },
+    {
+      "account": "Hasan Autonomous PK",
+      "account_id": "accountSummaries/252627355",
+      "property": "KWCCI Malir",
+      "property_id": "347323671",
+      "industry": "19",
+      "time_zone": "Asia/Karachi",
+      "currency": "PKR",
+      "create_time": "2022-12-23 07:23:37.668000+00:00"
+    },
+    {
+      "account": "Hasan Autonomous PK",
+      "account_id": "accountSummaries/252627355",
+      "property": "What's The Alternative",
+      "property_id": "382343833",
+      "industry": "18",
+      "time_zone": "Asia/Karachi",
+      "currency": "USD",
+      "create_time": "2023-06-07 07:52:24.933000+00:00"
+    },
+    {
+      "account": "WTA",
+      "account_id": "accountSummaries/272414470",
+      "property": "What's The Alternative",
+      "property_id": "381999451",
+      "industry": "17",
+      "time_zone": "Asia/Karachi",
+      "currency": "USD",
+      "create_time": "2023-06-06 11:43:02.050000+00:00"
+    },
+    {
+      "account": "McCain Institute",
+      "account_id": "accountSummaries/33497646",
+      "property": "Sedona Forum - GA4",
+      "property_id": "317628775",
+      "industry": "8",
+      "time_zone": "America/New_York",
+      "currency": "USD",
+      "create_time": "2022-06-02 16:39:49.376000+00:00"
+    },
+    {
+      "account": "McCain Institute",
+      "account_id": "accountSummaries/33497646",
+      "property": "McCain Institute - GA4",
+      "property_id": "317642836",
+      "industry": "0",
+      "time_zone": "America/New_York",
+      "currency": "USD",
+      "create_time": "2022-06-02 16:38:40.647000+00:00"
+    },
+    {
+      "account": "McCain Institute",
+      "account_id": "accountSummaries/33497646",
+      "property": "Student Alliance - GA4",
+      "property_id": "317656399",
+      "industry": "18",
+      "time_zone": "America/New_York",
+      "currency": "USD",
+      "create_time": "2022-06-02 16:40:04.852000+00:00"
+    },
+    {
+      "account": "McCain Institute",
+      "account_id": "accountSummaries/33497646",
+      "property": "Next Generation Leaders - GA4",
+      "property_id": "317666615",
+      "industry": "16",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2022-06-02 16:39:32.869000+00:00"
+    },
+    {
+      "account": "Aviro",
+      "account_id": "accountSummaries/352447551",
+      "property": "Aviro",
+      "property_id": "485944727",
+      "industry": "7",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2025-04-16 09:09:42.970000+00:00"
+    },
+    {
+      "account": "Talent Edge",
+      "account_id": "accountSummaries/362513600",
+      "property": "Talent Edge",
+      "property_id": "498035063",
+      "industry": "25",
+      "time_zone": "America/Vancouver",
+      "currency": "CAD",
+      "create_time": "2025-07-24 12:33:08.023000+00:00"
+    },
+    {
+      "account": "Boop ",
+      "account_id": "accountSummaries/366480981",
+      "property": "Boop ",
+      "property_id": "502727139",
+      "industry": "26",
+      "time_zone": "Asia/Karachi",
+      "currency": "USD",
+      "create_time": "2025-08-27 05:41:27.935000+00:00"
+    },
+    {
+      "account": "BritePath Medical",
+      "account_id": "accountSummaries/368349062",
+      "property": "BritePath Medical",
+      "property_id": "505007203",
+      "industry": "4",
+      "time_zone": "America/Los_Angeles",
+      "currency": "USD",
+      "create_time": "2025-09-15 12:02:17.597000+00:00"
+    },
+    {
+      "account": "LaneTerralever",
+      "account_id": "accountSummaries/45340018",
+      "property": "LaneTerralever | GA4",
+      "property_id": "390570984",
+      "industry": "2",
+      "time_zone": "America/Phoenix",
+      "currency": "USD",
+      "create_time": "2023-06-27 02:18:16.844000+00:00"
+    }
+  ],
+  "events": [],
+  "conversions": [],
+  "traffic": [],
+  "campaigns": [],
+  "ecommerce": [],
+  "landing_pages": [],
+  "devices": [],
+  "countries": []
+}
