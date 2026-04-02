@@ -1,6 +1,6 @@
 ---
 name: seo-audit
-description: Run a comprehensive SEO audit on any external website. Use when auditing client websites, preparing for sales calls, or delivering SEO reports. Analyzes meta tags, structured data, technical SEO, content, AI search readiness, off-site entity presence, and platform-specific AI readiness. Produces actionable recommendations with evidence labels.
+description: SiteScore — SEO Audit. Run a comprehensive SEO audit on any external website. Use when auditing client websites, preparing for sales calls, or delivering SEO reports. Analyzes meta tags, structured data, technical SEO, content, AI search readiness, off-site entity presence, and platform-specific AI readiness. Produces actionable recommendations with evidence labels.
 allowed-tools: web_fetch, web_search, Bash, Read, Write
 ---
 
@@ -20,7 +20,34 @@ You are an SEO specialist conducting a comprehensive audit of an external websit
 
 ---
 
-## Step 0: Audience — Ask First
+## Step 0: Tier & Brand Intake
+
+Before collecting any data, run this intake. Ask everything in ONE message.
+
+Ask:
+> A few quick questions before I start:
+>
+> 1. **Tier:** Free / Standard / Deep Dive?
+> 2. **Brand:** Who is this report for?
+>    - (a) Autonomous delivery (default)
+>    - (b) Partner white-label — which partner slug?
+>    - (c) End-customer branded — provide: company name, primary colour, CTA URL
+> 3. **Client email** (optional — for report delivery note)
+>
+> [If Deep Dive only — ask these too:]
+> 4. Google Search Console access — property URL or verification token
+> 5. GA4 Property ID (e.g. G-XXXXXXXX)
+> 6. Ahrefs — confirm use of shared Hazn Ahrefs account or provide API key
+> 7. Competitor domains — up to 3 for benchmark (optional but recommended)
+
+After intake:
+- Load brand config from ~/hazn/brands/{slug}.json. Default: ~/hazn/brands/autonomous.json
+- If Deep Dive and GSC/GA4 NOT provided: offer downgrade — "I do not have GSC/GA4 access. Want me to run Standard instead?"
+- Set TIER variable. Proceed to Step 0b (audience routing) then Step 0c.
+
+---
+
+## Step 0b: Audience Routing
 
 **Before collecting any data, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
 
@@ -31,6 +58,32 @@ You are an SEO specialist conducting a comprehensive audit of an external websit
 > 3. 📋 **Both** — Executive summary first, then technical appendix.
 
 Apply the appropriate output mode throughout the report and all findings.
+
+---
+
+## Step 0c: Tier Execution Gate
+
+Based on TIER set in Step 0:
+
+**TIER = Free:**
+- Run Steps 1–2 only (basic HTML fetch and head tag extraction)
+- Output: overall score (0–100), 1 finding shown in full, all other findings as locked rows
+- No roadmap, no before/after, no benchmarks
+- Deliver immediately
+- Use Free Tier report variant (see Step 9)
+
+**TIER = Standard:**
+- Run Steps 1–8c (full audit, all sections)
+- Set human_review_required = true
+- Delivery: 24–48 hours
+- Use full HTML report (Step 9)
+
+**TIER = Deep Dive:**
+- Verify GSC + GA4 + Ahrefs access provided. If missing, offer Standard fallback.
+- Run Steps 1–8c PLUS Step 8d (Ahrefs section below)
+- Set human_review_required = true, call_required = true
+- Delivery: 3–5 business days
+- Use full HTML report with Deep Dive sections populated
 
 ---
 
@@ -340,6 +393,42 @@ Label all findings: `Observed` / `Assessment` / `Not verified`
 
 ---
 
+## Step 8d: Ahrefs Deep Dive Analysis (Deep Dive tier only)
+
+Only run if TIER = Deep Dive AND Ahrefs access confirmed.
+
+### Technical Issues
+Pull Ahrefs Site Audit top issues by category: errors, warnings, notices.
+Map to: broken links, redirect chains, missing meta, duplicate content, slow pages, orphan pages.
+Label each: Observed (from Ahrefs data) or Assessment (interpretation).
+
+### Backlink Profile
+- Domain Rating (DR)
+- Total referring domains + trend (growing or declining)
+- Top 10 referring domains by DR
+- Anchor text distribution (branded vs exact-match vs generic)
+- Toxic/spammy backlinks flagged by Ahrefs
+
+### Keyword Rankings
+- Total ranking keywords by volume bucket: 0-10, 11-100, 100-1k, 1k+
+- Top 20 ranking pages by estimated organic traffic
+- Position distribution: #1-3 / #4-10 / #11-20 / #21-50
+
+### Keyword Gap vs Competitors
+For each competitor domain provided, run keyword gap analysis.
+Surface top 20 keywords competitors rank for that the target domain does not.
+Mark as content opportunities.
+
+### Content Opportunities
+- Pages with high impressions but low CTR (from GSC data)
+- Pages ranking #4-10 (quick win territory)
+- Topic clusters not yet covered
+
+Report these in a dedicated "Deep Dive: Ahrefs Intelligence" section of the HTML report.
+Label all findings: Observed / Assessment / Not verified.
+
+---
+
 ## Output Format
 
 > **Primary deliverable is a standalone HTML report** — see Step 9 for the full HTML generation process, design system, and deployment instructions. The markdown structure below is for internal analysis notes only (or when a quick summary is requested instead of a full HTML report).
@@ -582,6 +671,13 @@ When auditing B2B SaaS websites specifically:
 
 ## Step 9: Generate HTML Report
 
+**Brand config injection:** Load brand config from Step 0. Replace hardcoded design tokens:
+- Use brand_config.primary_color for CTA buttons and accent elements
+- Use brand_config.cta_url for all Calendly links (default: https://calendly.com/rizwan-20/30min)
+- Use brand_config.cta_label for CTA button text
+- Use brand_config.company_name in header/footer (replace "Autonomous")
+- If brand_config.hide_autonomous = true, remove all "Autonomous Technology Inc." mentions
+
 After completing the audit analysis (Steps 1–8), generate a single-file HTML report using the Stone/Amber design system. This is a required deliverable, not optional.
 
 ### Design System — Stone/Amber Palette
@@ -698,6 +794,17 @@ Include all of the following in the HTML output:
   </div>
 </section>
 ```
+
+### Free Tier Report Variant
+
+**Free Tier Report Variant** (when TIER = Free):
+- Cover with overall score (0-100), domain, date
+- Text: "We found [N] issues across [M] categories" — do NOT list the issues
+- One finding shown in full (highest severity): issue name, severity, what it means, how to fix it
+- Remaining findings shown as locked rows using CSS grey bars only
+- Below locked rows: "Unlock [N] more findings — SiteScore Standard from $497"
+- No category score breakdown, no roadmap, no before/after, no benchmarks
+- CTA: "Get the full picture" linking to brand_config.cta_url
 
 ### Sticky Sidebar TOC
 
