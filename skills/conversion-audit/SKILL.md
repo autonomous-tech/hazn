@@ -1,6 +1,6 @@
 ---
 name: conversion-audit
-description: Run a comprehensive landing page conversion audit covering copywriting, SEO, and frontend design. Use when auditing client websites, preparing for sales calls, or delivering value-add reports. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Autonomous Editorial Warmth v2 brand guide (Fraunces + DM Sans, parchment/vermillion palette). Brand tokens in references/brand.md.
+description: Run a comprehensive landing page conversion audit covering copywriting, SEO, and frontend design. Use when auditing client websites, preparing for sales calls, or delivering value-add reports. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Stone/Amber design system (Source Serif 4 + Inter, stone/amber palette). Brand tokens in references/brand.md.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
@@ -207,7 +207,64 @@ After Optimization:
 
 ## Generate HTML Report
 
-Load `assets/template-audit.html` as the base template. Follow `references/brand.md` for styling.
+Generate a single-file HTML report from scratch using the **Stone/Amber design system**. Follow `references/brand.md` for all design tokens. Do NOT use any legacy template — build fresh each time.
+
+### Design System — Stone/Amber Palette
+
+```css
+:root {
+  /* Base palette — Stone */
+  --stone-50: #fafaf9;    --stone-100: #f5f5f4;   --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1;   --stone-400: #a8a29e;   --stone-500: #78716c;
+  --stone-600: #57534e;   --stone-700: #44403c;   --stone-800: #292524;
+  --stone-900: #1c1917;
+
+  /* Accent — Amber */
+  --amber-400: #fbbf24;   --amber-500: #f59e0b;   --amber-600: #d97706;
+
+  /* Severity */
+  --red-500: #ef4444;     --red-100: #fee2e2;
+  --amber-100: #fef3c7;
+  --green-500: #22c55e;   --green-100: #dcfce7;
+  --blue-500: #3b82f6;    --blue-100: #dbeafe;
+}
+```
+
+### Typography
+
+```css
+/* Google Fonts — REQUIRED */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+
+/* Headings: 'Source Serif 4', Georgia, serif */
+/* Body:     'Inter', system-ui, -apple-system, sans-serif */
+```
+
+### CTA Button (MANDATORY)
+
+```css
+.cta-btn {
+  display: block;
+  margin: 0 auto;
+  max-width: 280px;
+  white-space: normal;
+  text-align: center;
+  padding: 1rem 2rem;
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+  transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
+```
+
+All CTAs link to: **`https://calendly.com/rizwan-20/30min`** — no exceptions. No email links. No `autonomoustech.ca/contact`.
+
+### Report Sections
 
 Key sections in the HTML:
 1. **Hero** — Client name, URL, date, conversion goal
@@ -221,26 +278,42 @@ Key sections in the HTML:
 9. **Part 5: Measurement Framework** — Tracking checklist + funnel visualization
 10. **Implementation Roadmap** — Prioritized tables by timeframe
 11. **Conclusion** — Hero-style closing with single biggest win + risk + CVR potential
-12. **Final CTA Section** — Full-width, midnight/dark background. Calendly CTA button + 3 trust signals below it. No other links in this section.
+12. **Final CTA Section** — Full-width, dark background (`var(--stone-900)`). Calendly CTA button + 3 trust signals below it. No other links in this section.
+
+### Micro-Upsell Callout Pattern (end of each section)
+
+```html
+<div class="callout callout--info" style="color: var(--stone-800);">
+  🔍 <strong>Want the full picture?</strong> With analytics access, we'd show you
+  [specific deeper insight]. Part of the <strong>ConversionIQ</strong> engagement.
+  <a href="https://calendly.com/rizwan-20/30min" style="color: var(--amber-600); font-weight: 600;">
+    Book a 20-min call →
+  </a>
+</div>
+```
 
 ### Final CTA Section Spec
 
 The last section of every report must be a full-width dark-background CTA block:
 
 ```html
-<section class="bg-midnight text-center py-20 px-8">
-  <span class="eyebrow">Ready to fix what's costing you conversions?</span>
-  <h2 class="section-headline text-parchment-light mt-4">Your CRO roadmap starts with a 20-min call</h2>
-  <p class="text-prose max-w-xl mx-auto mt-4 mb-8">
+<section style="padding: 8rem 0; background: var(--stone-900); text-align: center;">
+  <p style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">
+    Ready to Fix This?
+  </p>
+  <h2 style="color: #fff; font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; margin: 0.75rem 0 1rem;">
+    Your CRO roadmap starts with a 20-min call
+  </h2>
+  <p style="color: var(--stone-300); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.6;">
     Walk through these findings live. We'll prioritize the fixes that move the needle fastest for your site.
   </p>
   <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">
     Book a 20-min call — we'll walk through the fixes live →
   </a>
-  <div class="trust-signals mt-10">
-    <span>No commitment required</span>
-    <span>Walk away with a prioritized fix list</span>
-    <span>We've improved CVR for 30+ brands</span>
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ No commitment required</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ Walk away with a prioritized fix list</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">✓ We've improved CVR for 30+ brands</span>
   </div>
 </section>
 ```
@@ -389,9 +462,9 @@ Before delivering the final HTML report, verify every item below:
 ### UX & Interactivity
 - [ ] **Scroll reveal** — `IntersectionObserver` fade-in-up on score cards, findings grids, before/after sections (`.reveal` class: `opacity 0→1` + `translateY(28px)→0` at `0.6s ease`)
 - [ ] **Hover states** — all finding cards and score cards have `0.2s` transitions with subtle lift (`translateY(-2px)` + shadow increase)
-- [ ] **Mobile bottom CTA banner** — fixed bottom strip visible on mobile only (`display: none` → `display: flex` at `max-width: 768px`), vermillion CTA button linking to Calendly
+- [ ] **Mobile bottom CTA banner** — fixed bottom strip visible on mobile only (`display: none` → `display: flex` at `max-width: 768px`), amber CTA button linking to Calendly
 - [ ] **Sticky sidebar TOC** — desktop: left sidebar `240px wide`, `position: sticky; top: 2rem`; mobile: hidden off-canvas, toggled by hamburger; frosted glass (`rgba(255,255,255,0.75)` + `backdrop-filter: blur(8px)`)
-- [ ] **TOC active link** — Intersection Observer tracks current section, active link highlighted in vermillion
+- [ ] **TOC active link** — Intersection Observer tracks current section, active link highlighted with amber (`background: var(--amber-500); color: var(--stone-900)`)
 
 ### File & Output
 - [ ] **Single file** — no external dependencies except Google Fonts. All images/screenshots Base64-embedded.
@@ -405,8 +478,8 @@ Before delivering the final HTML report, verify every item below:
 - [ ] **Quantities, not vague claims** — "3 CTAs compete for attention" not "CTAs are unclear"
 
 ### Design Integrity
-- [ ] **Editorial Warmth v2 tokens intact** — Fraunces + DM Sans + JetBrains Mono, parchment/vermillion/midnight palette. No design token changes.
-- [ ] **Dark section text** — any light-background component (`parchment-light`, `white`) inside a dark section must have `color: #1A1A2E` explicitly set to prevent white-on-white
+- [ ] **Stone/Amber tokens intact** — Source Serif 4 + Inter, stone/amber palette. CSS variables only, no old parchment/vermillion/fraunces tokens.
+- [ ] **Dark section text** — any light-background component inside a dark section must have `color: var(--stone-800)` explicitly set to prevent white-on-white
 - [ ] **Share button** — injected from `{client-name}/index.html` in `autonomous-proposals`, present before `</body>`
 
 ---
@@ -440,4 +513,4 @@ Before delivering the final HTML report, verify every item below:
 
 ## Assets
 
-- `assets/template-audit.html` — Base HTML template (example audit - replace placeholders with client info)
+- Reports are generated from scratch using the Stone/Amber design system — no base template file needed.

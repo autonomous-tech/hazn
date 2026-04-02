@@ -1,0 +1,32 @@
+{
+  "slug": "autonomous",
+  "company_name": "Autonomous Technology Inc.",
+  "logo_text": "Autonomous",
+  "logo_url": null,
+  "logo_base64": null,
+  "primary_color": "#1c1917",
+  "accent_color": "#f59e0b",
+  "background_color": "#fafaf9",
+  "cta_url": "https://calendly.com/rizwan-20/30min",
+  "cta_label": "Book a 20-min call →",
+  "domain": "docs.autonomoustech.ca",
+  "hide_autonomous": false,
+  "design_system": "stone-amber",
+  "font_display": "Source Serif 4",
+  "font_body": "Inter",
+  "colors": {
+    "stone_50": "#fafaf9",
+    "stone_100": "#f5f5f4",
+    "stone_200": "#e7e5e3",
+    "stone_300": "#d6d3d1",
+    "stone_400": "#a8a29e",
+    "stone_500": "#78716c",
+    "stone_600": "#57534e",
+    "stone_700": "#44403c",
+    "stone_800": "#292524",
+    "stone_900": "#1c1917",
+    "amber_400": "#fbbf24",
+    "amber_500": "#f59e0b",
+    "amber_600": "#d97706"
+  }
+}
