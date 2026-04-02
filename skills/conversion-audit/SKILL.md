@@ -1,18 +1,72 @@
 ---
-name: conversion-audit
-description: Run a comprehensive landing page conversion audit covering copywriting, SEO, and frontend design. Use when auditing client websites, preparing for sales calls, or delivering value-add reports. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Stone/Amber design system (Source Serif 4 + Inter, stone/amber palette). Brand tokens in references/brand.md.
+name: ConversionIQ — CRO Audit
+description: Run a comprehensive landing page conversion audit covering copywriting, design, and UX/experience. Three tiers (Free / Standard / Deep Dive) with brand config support. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Stone/Amber design system (Source Serif 4 + Inter, stone/amber palette). Brand tokens in references/brand.md.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
-# Conversion Audit
+## Step 0: Tier & Brand Intake
+
+Before collecting any data, ask everything in ONE message:
+
+> A few quick questions before I start:
+>
+> 1. **Tier:** Free / Standard / Deep Dive?
+> 2. **Brand:** Who is this report for?
+>    - (a) Autonomous delivery (default)
+>    - (b) Partner white-label — which partner slug?
+>    - (c) End-customer branded — provide: company name, primary colour, CTA URL
+> 3. **Primary conversion goal:** demo / signup / purchase / other?
+> 4. **Client email** (optional)
+>
+> [Deep Dive only — also ask:]
+> 5. GA4 Property ID (for real funnel data)
+> 6. PostHog access (for session data, if available)
+> 7. 2–3 competitor landing pages to benchmark against
+
+After intake:
+- Load brand config from ~/hazn/brands/{slug}.json. Default: ~/hazn/brands/autonomous.json
+- Standard does NOT require platform access — runs from public page analysis only
+- Deep Dive AND access NOT provided: offer Standard fallback — "Without GA4 access I cannot pull real funnel data. Want me to run Standard instead?"
+- Set TIER variable. Proceed to Step 0b.
+
+---
+
+## Step 0b: Tier Execution Gate
+
+**TIER = Free:**
+- Analyse homepage only: headline + value prop review, CTA audit (count, placement, strength), top 3 conversion blockers flagged, overall conversion score
+- Output: score + 1 finding in full, locked rows for rest
+- Deliver immediately (3–24 hours)
+
+**TIER = Standard:**
+- Run full audit (all existing process steps) from public signals only
+- Three pillars: Copy + Design + UX (remove SEO pillar — SEO is SiteScore)
+- Set human_review_required = true
+- Delivery: 24–48 hours
+
+**TIER = Deep Dive:**
+- Verify GA4 access provided. If missing → offer Standard fallback.
+- Run full Standard audit PLUS Deep Dive additions:
+  - Full funnel drop-off analysis using real GA4 data
+  - Session data review if PostHog available
+  - Competitor landing page benchmarks (web_fetch + screenshot 2-3 competitors)
+  - Full A/B test plan with sequencing by traffic and impact
+  - ROI projection using real traffic data from GA4
+- Load ab-test-setup skill for the A/B plan section
+- Set human_review_required = true, call_required = true
+- Delivery: 3–5 business days
+
+---
+
+# ConversionIQ — CRO Audit
 
 > **When conducted without analytics access: this is a lead gen tool.**
 
-A teaser conversion audit (public signals only) serves a dual purpose: it delivers real, actionable findings AND builds the case for a deeper paid engagement. Every section should make the prospect think "these people already understand my site — imagine what they'd find with full access."
+A free tier conversion audit (public signals only) serves a dual purpose: it delivers real, actionable findings AND builds the case for a deeper paid engagement. Every section should make the prospect think "these people already understand my site — imagine what they'd find with full access."
 
-Generate a comprehensive, branded landing page conversion audit covering three pillars: Copywriting, SEO, and Frontend Design — plus a measurement framework for validating improvements.
+Generate a comprehensive, branded landing page conversion audit covering three pillars: Copywriting, Design, and UX/Experience — plus a measurement framework for validating improvements.
 
-## Step 0: Audience — Ask First
+## Step 0c: Audience — Ask First
 
 **Before anything else, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
 
@@ -63,8 +117,8 @@ Score on a 1-10 scale with justification:
 | Pillar | What to Evaluate |
 |--------|-----------------|
 | **Copywriting** | Headline clarity, value prop, CTA strength, social proof, urgency, guarantee placement, copy length, specificity of claims |
-| **SEO** | Meta title/desc, heading hierarchy, schema markup, Core Web Vitals, mobile optimization, internal linking, keyword targeting |
-| **Frontend Design** | Visual hierarchy, CTA visibility, color contrast, typography, whitespace, mobile responsiveness, load time, brand consistency, premium feel |
+| **Design** | Visual hierarchy, CTA visibility, color contrast, typography, whitespace, brand consistency, premium feel, layout and composition |
+| **UX/Experience** | Mobile responsiveness, page load time, navigation clarity, form UX, scroll depth engagement, interaction feedback, accessibility basics, user flow friction |
 
 ### 4. Identify Issues & Recommendations
 
@@ -81,7 +135,7 @@ Organize all recommendations into a prioritized table:
 
 | Timeframe | Action | Category | Impact | Testable? |
 |-----------|--------|----------|--------|-----------|
-| Immediate | ... | Copy/SEO/Design | Very High/High/Medium | Yes/No |
+| Immediate | ... | Copy/Design/UX | Very High/High/Medium | Yes/No |
 
 ---
 
@@ -207,6 +261,13 @@ After Optimization:
 
 ## Generate HTML Report
 
+**Brand config:** Load from Step 0 brand config.
+- Use brand_config.cta_url for all Calendly links (default: https://calendly.com/rizwan-20/30min)
+- Use brand_config.company_name in header/footer
+- Use brand_config.primary_color for accent elements
+- If brand_config.hide_autonomous = true: remove all "Autonomous Technology Inc." mentions
+Report product name: always use "ConversionIQ" not "Conversion Audit"
+
 Generate a single-file HTML report from scratch using the **Stone/Amber design system**. Follow `references/brand.md` for all design tokens. Do NOT use any legacy template — build fresh each time.
 
 ### Design System — Stone/Amber Palette
@@ -268,12 +329,12 @@ All CTAs link to: **`https://calendly.com/rizwan-20/30min`** — no exceptions. 
 
 Key sections in the HTML:
 1. **Hero** — Client name, URL, date, conversion goal
-2. **Overall Scores** — 4 score blocks (Copy, SEO, Design, Overall)
+2. **Overall Scores** — 4 score blocks (Copy, Design, UX, Overall)
 3. **CVR Projections** — 3-column: Current → Quick Wins → Full Redesign
 4. **Top 5 Quick Wins** — Numbered cards with before/after comparisons
 5. **Part 1: Copywriting Audit** — Strengths (green cards) + Issues (red cards with before/after)
-6. **Part 2: SEO Audit** — Technical status table + critical issues
-7. **Part 3: Frontend Design Audit** — Design direction options + specific issues
+6. **Part 2: Design Audit** — Visual hierarchy, layout, CTA visibility + specific issues
+7. **Part 3: UX/Experience Audit** — Mobile responsiveness, user flow, interaction friction + specific issues
 8. **Part 4: A/B Testing Roadmap** — Prioritized experiments with hypotheses
 9. **Part 5: Measurement Framework** — Tracking checklist + funnel visualization
 10. **Implementation Roadmap** — Prioritized tables by timeframe
@@ -329,9 +390,43 @@ No `autonomoustech.ca/contact`, no email links, no generic contact forms.
 
 ---
 
+## Deep Dive Additions (run after standard audit when TIER = Deep Dive)
+
+### Real Funnel Analysis
+Using GA4 data provided:
+- Map the actual funnel: landing page → key interaction → conversion event
+- Show real drop-off % at each step (not benchmark estimates)
+- Identify biggest drop-off point — this becomes Priority #1 fix
+
+### Session Data Review (if PostHog available)
+- Review session recordings for the top 3 pages by traffic
+- Document: where do users scroll to? where do they drop off? what do they click that leads nowhere?
+- Surface 3–5 behavioural findings not visible from page analysis alone
+
+### Competitor Benchmarks
+For each competitor URL provided:
+- Fetch page via web_fetch
+- Capture screenshot via browser tool
+- Compare: headline strength, CTA visibility, social proof placement, page length, trust signals
+- Output: side-by-side comparison table with ConversionIQ findings in context
+
+### A/B Test Plan
+Load ab-test-setup skill.
+Build full A/B test plan:
+- Tests sequenced by: (1) traffic available, (2) estimated impact, (3) implementation effort
+- Each test: hypothesis, variant description, success metric, traffic requirement, priority
+
+### ROI Projection
+Using real GA4 traffic data:
+- Current monthly visitors + current CVR = current conversions
+- Apply projected CVR improvements from audit findings
+- Show: if we fix the top 3 issues → estimated uplift in conversions → revenue impact at average deal value
+
+---
+
 ## Checkpoints (Human-in-Loop)
 
-**CHECKPOINT 1:** After scoring all three pillars
+**CHECKPOINT 1:** After scoring all three pillars (Copywriting, Design, UX/Experience)
 - Present scores and top 3 issues per pillar
 - Ask: "Do these priorities align with your goals? Any areas to emphasize?"
 
@@ -345,19 +440,19 @@ No `autonomoustech.ca/contact`, no email links, no generic contact forms.
 
 ---
 
-## Teaser Mode (Public Signals Only)
+## Free Tier (Public Signals Only)
 
-When the audit is conducted **without analytics access** (GA4, GSC, PostHog, Hotjar, or platform data not provided), the report is a **teaser** and MUST include:
+When the audit is conducted **without analytics access** (GA4, GSC, PostHog, Hotjar, or platform data not provided), the report is a **free tier** report and MUST include:
 
-### 1. Teaser Header Banner (mandatory, top of `<body>`)
+### 1. Free Tier Header Banner (mandatory, top of `<body>`)
 
 A slim informational banner immediately before the cover section. **Context-setting only — no CTA button.** The CTA lives at the end of the report where it has been earned by the content.
 
 ```html
-<div class="teaser-header-banner">
-  <div class="teaser-header-banner__inner">
-    <div class="teaser-header-banner__eyebrow">📊 Teaser Report — Public Signals Only</div>
-    <p class="teaser-header-banner__body">
+<div class="free-tier-header-banner">
+  <div class="free-tier-header-banner__inner">
+    <div class="free-tier-header-banner__eyebrow">📊 Free Tier Report — Public Signals Only</div>
+    <p class="free-tier-header-banner__body">
       This report was built from publicly available data only. With access to <strong>GA4, Google Search Console, 
       PostHog</strong> (or whatever you use), this analysis can be dramatically more powerful.
     </p>
@@ -365,7 +460,7 @@ A slim informational banner immediately before the cover section. **Context-sett
 </div>
 ```
 
-Style: dark (`#1c1917`) background, `3px solid` amber bottom border. No CTA button in the banner.
+Style: dark (`#1c1917`) background, `3px solid` amber bottom border. No CTA button in the banner. CSS classes use `free-tier-header-banner` prefix.
 
 ### 2. Methodology Disclaimer Section
 
@@ -383,7 +478,7 @@ At the end of each audit track section, include a brief upsell callout:
 <div class="upsell-callout">
   <span class="upsell-callout__icon">🔒</span>
   <div>
-    <strong>Want to go deeper on [MarTech / SEO / CRO / Copy]?</strong>
+    <strong>Want to go deeper on [Design / UX / CRO / Copy]?</strong>
     With GA4 + GSC access, we can show you exactly where users drop off, which pages are cannibalizing each other, 
     and what your top converting traffic sources actually are.
     <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call →</a>
@@ -393,7 +488,7 @@ At the end of each audit track section, include a brief upsell callout:
 
 ### 4. Sticky TOC Sidebar
 
-All audit reports (teaser or full) must include a sticky sidebar Table of Contents:
+All audit reports (free tier or full) must include a sticky sidebar Table of Contents:
 - Desktop (≥1024px): left sidebar, `240px` wide, `position: sticky; top: 2rem`
 - Mobile: hidden off-canvas, toggled by hamburger button
 - Frosted glass: `background: rgba(255,255,255,0.75); backdrop-filter: blur(8px)`
@@ -402,7 +497,7 @@ All audit reports (teaser or full) must include a sticky sidebar Table of Conten
 
 ### 5. Caveat Language for Estimates
 
-In teaser mode, all revenue/conversion estimates **must** use directional language:
+In free tier mode, all revenue/conversion estimates **must** use directional language:
 - ❌ "This will increase revenue by $50K–$200K"
 - ✅ "Based on industry benchmarks for comparable B2B agencies, this could represent significant revenue impact — exact numbers require your actual traffic and close rate data"
 - ❌ "+15–25% contact page visits"
@@ -414,9 +509,9 @@ In teaser mode, all revenue/conversion estimates **must** use directional langua
 
 After generating the report HTML:
 
-1. **Save** to `~/autonomous-proposals/audits/{client-slug}-conversion-audit-{date}.html`
+1. **Save** to `~/autonomous-proposals/audits/{client-slug}-conversioniq-{date}.html`
 2. **Commit and push** to `https://github.com/autonomous-tech/autonomous-proposals` (main branch)
-3. **Cloudflare Pages auto-deploys** to `https://docs.autonomoustech.ca/audits/{client-slug}-conversion-audit-{date}.html`
+3. **Cloudflare Pages auto-deploys** to `https://docs.autonomoustech.ca/audits/{client-slug}-conversioniq-{date}.html`
 4. **Use the SHARE button** (auto-injected by GitHub Actions) to generate a 30-day shareable link via `share.autonomoustech.ca`
 5. **Share the link with the client** — no login required
 
@@ -424,7 +519,7 @@ After generating the report HTML:
 # Full deployment flow
 CLIENT_SLUG="acme-corp"
 DATE=$(date +%Y-%m-%d)
-FILENAME="${CLIENT_SLUG}-conversion-audit-${DATE}.html"
+FILENAME="${CLIENT_SLUG}-conversioniq-${DATE}.html"
 
 # 1. Write the file
 # (agent writes HTML to this path)
@@ -432,7 +527,7 @@ FILENAME="${CLIENT_SLUG}-conversion-audit-${DATE}.html"
 # 2. Commit and push
 cd ~/autonomous-proposals
 git add "audits/${FILENAME}"
-git commit -m "Agent Hazn: Conversion Audit for ${CLIENT_SLUG} (${DATE})"
+git commit -m "Agent Hazn: ConversionIQ for ${CLIENT_SLUG} (${DATE})"
 git push origin main
 
 # 3. Cloudflare Pages deploys automatically
