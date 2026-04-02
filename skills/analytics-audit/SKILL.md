@@ -1,19 +1,68 @@
 ---
-name: GA4 & Site Inspection Audit
+name: Revenue Leak Audit — Attribution & Analytics
 description: >
   This skill should be used when the user asks to "audit a website", "audit GA4", "inspect tracking",
   "check analytics setup", "review tags", "audit a Shopify store", "check GA4 configuration",
-  "run an analytics audit", "evaluate GA4 setup", or wants to perform Phase 1 of a MarTech audit.
+  "run an analytics audit", "evaluate GA4 setup", "run a revenue leak audit", "check attribution",
+  or wants to perform Phase 1 of a MarTech audit.
   It guides the complete GA4 property assessment and live site tracking code inspection, with
   Shopify-specific checks for Web Pixels Manager and Trekkie S2S configurations.
 version: 1.0.0
 ---
 
-# GA4 & Site Inspection Audit — Phase 1
+## Step 0: Tier & Brand Intake
 
-Run a comprehensive GA4 property audit and live site tracking inspection. This is Phase 1 of the full MarTech & Attribution audit.
+Before collecting any data, ask everything in ONE message:
 
-## Step 0: Audience — Ask First
+> A few quick questions before I start:
+>
+> 1. **Tier:** Free / Standard / Deep Dive?
+> 2. **Brand:** Who is this report for?
+>    - (a) Autonomous delivery (default)
+>    - (b) Partner white-label — which partner slug?
+>    - (c) End-customer branded — provide: company name, primary colour, CTA URL
+> 3. **Client email** (optional)
+>
+> [Deep Dive only — also ask:]
+> 4. GA4 Property ID (e.g. G-XXXXXXXX) + admin access confirmation
+> 5. PostHog Project ID + API key (if applicable)
+> 6. Active ad platforms: Google Ads / Meta / LinkedIn / other?
+> 7. Competitor domains — up to 3 (optional)
+
+After intake:
+- Load brand config from ~/hazn/brands/{slug}.json. Default: ~/hazn/brands/autonomous.json
+- TIER = Standard: Standard does NOT require platform access. Run from public signals + observable tracking calls only.
+- TIER = Deep Dive AND access NOT provided: offer downgrade — "Without GA4 admin access I cannot run a Deep Dive — I would be working with the same data as Standard. Want me to run Standard instead?"
+- Set TIER variable. Proceed to Step 0b.
+
+---
+
+## Step 0b: Tier Execution Gate
+
+**TIER = Free:**
+- Run surface check only: GA4 presence confirmed or flagged, basic conversion event check, top 3 attribution gaps, overall measurement health score
+- Output: score + 3 findings flagged (no detail), 1 finding in full, locked rows for rest
+- Deliver immediately (3–24 hours)
+
+**TIER = Standard:**
+- Run Phase 1 (this skill file) — public signals only, NO API calls, NO platform access required
+- Reframe all deliverable names using "Revenue Leak" language (see renaming list below)
+- Set human_review_required = true
+- Delivery: 24–48 hours
+
+**TIER = Deep Dive:**
+- Verify GA4 admin access provided. If missing → offer Standard fallback.
+- Run Phase 1 (this file) + Phase 2 (analytics-audit-martech/SKILL.md)
+- Set human_review_required = true, call_required = true
+- Delivery: 3–5 business days
+
+---
+
+# Revenue Leak Audit — Phase 1
+
+Run a comprehensive attribution & analytics audit and live site tracking inspection. This is Phase 1 of the full Revenue Leak Audit.
+
+## Step 0c: Audience — Ask First
 
 **Before collecting any data, ask the audience question.** Read `~/hazn/skills/references/audience-routing.md` for the full routing spec. Then ask:
 
@@ -31,9 +80,9 @@ Apply the appropriate output mode throughout the report and all findings.
 
 Before starting, confirm with the user:
 1. **Site URL** — the Shopify store domain (e.g., `your-client.com`)
-2. **GA4 Property ID** — numeric ID (e.g., `{GA4_PROPERTY_ID}`)
+2. **GA4 Property ID** — numeric ID (e.g., `{GA4_PROPERTY_ID}`) [Deep Dive only]
 3. **Output directory** — where to save data and report (default: `.hazn/outputs/analytics-audit/`)
-4. **OAuth credentials** — at `~/.config/ga4-audit/credentials.json` for GA4 API access
+4. **OAuth credentials** — at `~/.config/ga4-audit/credentials.json` for GA4 API access [Deep Dive only]
 
 ## Step 1: Collect GA4 Data via API
 
@@ -102,7 +151,7 @@ Launch the analytics-inspector agent with:
 
 If the analytics-inspector agent is not available, manually run `curl -sL <URL>` and parse the HTML for the items listed in the extraction checklist above.
 
-## Step 3: Analyze GA4 Property Configuration
+## Step 3: Ad Spend Accountability Review
 
 From the collected data, assess:
 
@@ -132,7 +181,7 @@ For each key event:
 - `form_submit` enhanced measurement without filtering to meaningful forms
 - Page views or scrolls marked as conversions
 
-### Traffic & Attribution Quality
+### Budget Leakage Analysis
 - What % of sessions have `(not set)` campaign? (>10% = attribution gap)
 - What % have `(not set)` source/medium? (>5% = tracking gap)
 - Is there source fragmentation? (Same platform in 3+ source/medium variants = UTM chaos)
@@ -150,13 +199,13 @@ Generate the initial audit report sections:
 
 | Section | Title | Content |
 |---------|-------|---------|
-| A | Property Configuration Assessment | Settings table, timezone check, issues |
+| A | Ad Spend Accountability Review | Settings table, timezone check, issues |
 | B | Tagging Implementation Review | Tag architecture, script inventory, gtag config, pixel/cookie table |
-| C | Event Tracking Completeness | Event inventory table, funnel analysis, missing events |
+| C | Conversion Signal Audit | Event inventory table, funnel analysis, missing events |
 | D | Conversion Setup & Accuracy | Key events table, inflation analysis, purchase tracking |
 | E | Google Ads Integration Health | Ads config, campaign performance, keyword data, issues |
-| F | Data Quality Assessment | Attribution quality, UTM hygiene, source fragmentation, geo/device |
-| G | Gap Analysis & Recommendations | Priority 1-4 recommendations with specific actions |
+| F | Campaign Credit Accuracy Check | Attribution quality, UTM hygiene, source fragmentation, geo/device |
+| G | Measurement Gap Report | Priority 1-4 recommendations with specific actions |
 | H | Consent & Privacy Assessment | Consent mode config, compliance status |
 | I | Platform Ecosystem Summary | ASCII diagram of all tracking systems and data flows |
 | J | Benchmarks & KPIs | 30-day metrics table vs e-commerce benchmarks |

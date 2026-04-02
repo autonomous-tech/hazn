@@ -8,6 +8,19 @@ description: >
 version: 1.0.0
 ---
 
+## Brand Config Injection
+
+Before generating the HTML report, load brand config from Step 0:
+- Use brand_config.company_name in header/footer (replace "Autonomous")
+- Use brand_config.cta_url for all Calendly links (default: https://calendly.com/rizwan-20/30min)
+- Use brand_config.cta_label for CTA button text
+- Use brand_config.primary_color for accent elements
+- If brand_config.hide_autonomous = true: remove all "Autonomous Technology Inc." mentions
+
+Report product name: always use "Revenue Leak Audit" not "Analytics Audit" or "GA4 Audit"
+
+---
+
 # Client Report HTML Generator
 
 Transform the markdown audit report and JSON data into a polished, single-file HTML client report. This is the final deliverable — a curated executive presentation, not a 1:1 dump of the markdown.

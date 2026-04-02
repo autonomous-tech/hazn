@@ -9,6 +9,14 @@ description: >
 version: 1.0.0
 ---
 
+## Deep Dive Only
+
+This skill runs ONLY when TIER = Deep Dive AND GA4 admin access has been confirmed in Step 0 of analytics-audit/SKILL.md.
+
+Do not run this skill for Standard or Free tier requests.
+
+---
+
 # MarTech & Attribution Audit — Phase 2
 
 Expand a Phase 1 GA4 audit into a comprehensive MarTech & Attribution assessment. This produces sections K-P of the full audit report. Steps 5-11 below continue from the GA4 & Site Inspection Audit skill (Steps 1-4).
