@@ -16,6 +16,7 @@
   --red-500: #ef4444; --red-100: #fee2e2;
   --green-500: #22c55e; --green-100: #dcfce7;
   --blue-500: #3b82f6; --blue-100: #dbeafe;
+  --orange-500: #f97316; --orange-100: #fff7ed;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, sans-serif; color: var(--stone-800); background: var(--stone-50); line-height: 1.6; -webkit-font-smoothing: antialiased; }
@@ -30,22 +31,23 @@ h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif; color: var(--sto
 .toc-sidebar a.active { background: var(--amber-500); color: var(--stone-900); font-weight: 600; }
 .toc-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 200; background: var(--stone-900); color: #fff; border: none; border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 1.2rem; cursor: pointer; }
 .score-hero { background: var(--stone-900); padding: 5rem 0 4rem; text-align: center; }
-.score-circle { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; flex-direction: column; border: 4px solid var(--red-500); }
+.score-circle { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; flex-direction: column; border: 4px solid var(--amber-500); }
 .score-circle .number { font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1; font-family: 'Source Serif 4', serif; }
 .score-circle .label { font-size: 0.75rem; color: var(--stone-400); text-transform: uppercase; letter-spacing: 0.1em; }
 .score-hero .domain { color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
 .score-hero h1 { color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; }
 .score-hero .meta { color: var(--stone-400); font-size: 0.875rem; }
+.score-correction { background: var(--green-100); color: var(--stone-800); padding: 0.75rem 1.5rem; text-align: center; font-size: 0.85rem; border-bottom: 2px solid var(--green-500); }
 .review-flag { background: var(--amber-100); color: var(--stone-800); padding: 0.75rem 1.5rem; text-align: center; font-size: 0.85rem; border-bottom: 2px solid var(--amber-500); }
 section { padding: 6rem 0; }
 section.alt { background: var(--stone-100); }
 section h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
 section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber-600); font-weight: 700; margin-bottom: 0.25rem; }
-.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
 .score-card { background: #fff; border-radius: 12px; padding: 2rem 1.25rem; text-align: center; border: 1px solid var(--stone-200); transition: transform 0.2s, box-shadow 0.2s; }
 .score-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
 .score-card .card-score { font-size: 2rem; font-weight: 700; font-family: 'Source Serif 4', serif; }
-.score-card .card-label { font-size: 0.8rem; color: var(--stone-500); margin-top: 0.25rem; }
+.score-card .card-label { font-size: 0.75rem; color: var(--stone-500); margin-top: 0.25rem; }
 .finding { background: #fff; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid var(--stone-300); color: var(--stone-800); transition: transform 0.2s, box-shadow 0.2s; }
 .finding:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
 .finding.high { border-left-color: var(--red-500); }
@@ -69,8 +71,8 @@ section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-sp
 .status-fail { color: var(--red-500); font-weight: 600; }
 .callout { background: var(--amber-100); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 2rem 0; color: var(--stone-800); font-size: 0.9rem; }
 .callout a { color: var(--amber-600); font-weight: 600; text-decoration: none; }
-.critical-banner { background: var(--red-100); border: 2px solid var(--red-500); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
-.critical-banner h3 { color: var(--red-500); font-size: 1.25rem; margin-bottom: 0.5rem; }
+.critical-banner { background: var(--amber-100); border: 2px solid var(--amber-500); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+.critical-banner h3 { color: var(--amber-600); font-size: 1.25rem; margin-bottom: 0.5rem; }
 .critical-banner p { color: var(--stone-700); font-size: 0.95rem; }
 .cta-btn { display: block; margin: 0 auto; max-width: 280px; white-space: normal; text-align: center; padding: 1rem 2rem; background: var(--amber-500); color: var(--stone-900); font-weight: 700; font-size: 1.05rem; border-radius: 8px; text-decoration: none; box-shadow: 0 6px 24px rgba(245,158,11,0.35); transition: background 0.2s, transform 0.2s; }
 .cta-btn:hover { background: var(--amber-600); transform: translateY(-2px); }
@@ -82,9 +84,25 @@ section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-sp
 .mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--amber-500); padding: 0.75rem 1rem; text-align: center; z-index: 100; }
 .mobile-cta a { color: var(--stone-900); font-weight: 700; text-decoration: none; font-size: 0.9rem; }
 .flow-diagram { background: var(--stone-900); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--stone-300); overflow-x: auto; white-space: pre; line-height: 1.4; }
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.before-after > div { border-radius: 10px; padding: 1.25rem; font-size: 0.85rem; }
+.before-after .before { background: var(--red-100); border: 1px solid #fca5a5; }
+.before-after .after { background: var(--green-100); border: 1px solid #86efac; }
+.before-after h5 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
+.before-after .before h5 { color: var(--red-500); }
+.before-after .after h5 { color: var(--green-500); }
+.before-after code { display: block; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; word-break: break-all; }
+.dau-chart { display: flex; align-items: flex-end; gap: 3px; height: 100px; margin: 1.5rem 0; padding: 0.5rem 0; }
+.dau-bar { flex: 1; background: var(--amber-500); border-radius: 3px 3px 0 0; min-width: 8px; transition: opacity 0.2s; position: relative; }
+.dau-bar:hover { opacity: 0.8; }
+.dau-bar:hover::after { content: attr(data-label); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--stone-900); color: #fff; font-size: 0.65rem; padding: 0.2rem 0.4rem; border-radius: 4px; white-space: nowrap; }
+.metric-row { display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap; }
+.metric-box { flex: 1; min-width: 140px; background: #fff; border-radius: 10px; padding: 1.25rem; border: 1px solid var(--stone-200); }
+.metric-box .val { font-size: 1.75rem; font-weight: 700; font-family: 'Source Serif 4', serif; color: var(--stone-900); }
+.metric-box .lbl { font-size: 0.75rem; color: var(--stone-500); margin-top: 0.15rem; }
 @media (max-width: 1240px) { .toc-sidebar { display: none; } .toc-toggle { display: block; } .toc-sidebar.open { display: block; top: 0; left: 0; width: 300px; height: 100vh; border-radius: 0; z-index: 300; } }
-@media (max-width: 768px) { .score-hero { padding: 3rem 0 2.5rem; } .score-hero h1 { font-size: 1.75rem; } section { padding: 3rem 0; } .score-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; } .mobile-cta { display: block; } body { padding-bottom: 60px; } }
-@media print { .toc-sidebar, .toc-toggle, .mobile-cta, .review-flag { display: none !important; } section { break-inside: avoid; padding: 2rem 0; } .finding { break-inside: avoid; } }
+@media (max-width: 768px) { .score-hero { padding: 3rem 0 2.5rem; } .score-hero h1 { font-size: 1.75rem; } section { padding: 3rem 0; } .score-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; } .mobile-cta { display: block; } body { padding-bottom: 60px; } .before-after { grid-template-columns: 1fr; } }
+@media print { .toc-sidebar, .toc-toggle, .mobile-cta, .review-flag, .score-correction { display: none !important; } section { break-inside: avoid; padding: 2rem 0; } .finding { break-inside: avoid; } }
 </style>
 </head>
 <body>
@@ -93,143 +111,229 @@ section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-sp
   <h4>Revenue Leak</h4>
   <a href="#cover">Overview</a>
   <a href="#executive">Executive Summary</a>
-  <a href="#ga4-config">GA4 Configuration</a>
-  <a href="#tagging">Tagging Implementation</a>
+  <a href="#traffic">Traffic &amp; DAU</a>
+  <a href="#events">Event Inventory</a>
   <a href="#conversion">Conversion Signals</a>
-  <a href="#attribution">Attribution & UTMs</a>
-  <a href="#consent">Consent & Privacy</a>
+  <a href="#attribution">Attribution</a>
+  <a href="#dashboards">Dashboards &amp; Insights</a>
+  <a href="#consent">Consent &amp; Privacy</a>
   <a href="#ecosystem">Platform Ecosystem</a>
   <a href="#roadmap">Priority Roadmap</a>
   <a href="#cta-final">Next Steps</a>
 </nav>
 
+<div class="score-correction">Score corrected: 18 &rarr; 47. Previous audit did not detect PostHog (loaded via JS bundle, not visible in HTML source). Re-audited with live PostHog API data.</div>
 <div class="review-flag">This report has been queued for human expert review. Final delivery within 3-5 business days.</div>
 
 <section class="score-hero" id="cover">
   <div class="container">
     <p class="domain">memox.io &middot; Revenue Leak Audit Deep Dive</p>
     <div class="score-circle reveal">
-      <span class="number">18</span>
+      <span class="number">47</span>
       <span class="label">out of 100</span>
     </div>
     <h1>Revenue Leak Audit</h1>
-    <p class="meta">Autonomous Technology Inc. &middot; April 2, 2026</p>
+    <p class="meta">Autonomous Technology Inc. &middot; April 2, 2026 &middot; PostHog Project #232936</p>
   </div>
 </section>
 
 <section id="executive">
   <div class="container">
     <p class="section-label">Executive Summary</p>
-    <h2>You're flying blind</h2>
-    <p style="color: var(--stone-600); margin: 1rem 0 2rem; max-width: 680px;">Memox.io has a GA4 property created (430432762) but <strong>no tracking code installed on the website</strong>. All event arrays returned empty. No Google Tag Manager, no Facebook Pixel, no Google Ads conversion tracking. The only analytics infrastructure observed is a Cloudflare Web Analytics allowance in the CSP header and PostHog domains whitelisted but not loading. Every dollar spent driving traffic to this site is unattributable.</p>
+    <h2>Foundation exists &mdash; attribution doesn't</h2>
+    <p style="color: var(--stone-600); margin: 1rem 0 2rem; max-width: 680px;">PostHog is actively installed on memox.io and collecting data. The team has configured <strong>8 custom events</strong>, <strong>4 conversion actions</strong>, and <strong>2 dashboards with 17 insights</strong> including DAU, WAU, retention, and a pageview funnel. This is a solid measurement foundation. However, the demo booking funnel is incomplete (click tracked, completion not), there are no ad platform pixels, no UTM strategy, and no consent mechanism. The result: Memox can see <em>what</em> visitors do, but cannot attribute <em>why</em> they came or measure marketing ROI.</p>
 
     <div class="critical-banner reveal">
-      <h3>CRITICAL: GA4 Property Exists But Is Not Installed</h3>
-      <p>Property ID 430432762 ("MEMOX.io") was created on March 5, 2024 under the Autonomous Technologies account. The property is configured with Etc/GMT timezone and GBP currency. However, no GA4 tracking code (gtag.js or GTM container) was found in the page source. The Content Security Policy does not whitelist google-analytics.com or googletagmanager.com. <strong>Result: 0 events, 0 conversions, 0 traffic data collected over the last 30 days.</strong></p>
+      <h3>KEY: Demo Booking Completion Is Not Tracked</h3>
+      <p>PostHog tracks <code>clicked_book_demo</code> and <code>calendly_opened</code> &mdash; but there is no event for when a visitor actually <strong>completes</strong> a Calendly booking. This means Memox can see intent but cannot measure actual conversions. Every funnel, every attribution model, every ROI calculation depends on this one missing event.</p>
     </div>
 
     <div class="score-grid reveal">
       <div class="score-card">
-        <div class="card-score" style="color: var(--red-500);">0/10</div>
-        <div class="card-label">GA4 Config</div>
+        <div class="card-score" style="color: var(--green-500);">18<span style="font-size:0.9rem;color:var(--stone-400);">/25</span></div>
+        <div class="card-label">Event Tracking</div>
       </div>
       <div class="score-card">
-        <div class="card-score" style="color: var(--red-500);">1/10</div>
-        <div class="card-label">Tag Implementation</div>
+        <div class="card-score" style="color: var(--amber-600);">12<span style="font-size:0.9rem;color:var(--stone-400);">/25</span></div>
+        <div class="card-label">Conversion Setup</div>
       </div>
       <div class="score-card">
-        <div class="card-score" style="color: var(--red-500);">0/10</div>
-        <div class="card-label">Conversion Tracking</div>
-      </div>
-      <div class="score-card">
-        <div class="card-score" style="color: var(--red-500);">0/10</div>
+        <div class="card-score" style="color: var(--red-500);">5<span style="font-size:0.9rem;color:var(--stone-400);">/20</span></div>
         <div class="card-label">Attribution</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--amber-600);">8<span style="font-size:0.9rem;color:var(--stone-400);">/15</span></div>
+        <div class="card-label">Data Quality</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--red-500);">2<span style="font-size:0.9rem;color:var(--stone-400);">/10</span></div>
+        <div class="card-label">Consent</div>
+      </div>
+      <div class="score-card">
+        <div class="card-score" style="color: var(--green-500);">4<span style="font-size:0.9rem;color:var(--stone-400);">/5</span></div>
+        <div class="card-label">Dashboards</div>
       </div>
     </div>
 
-    <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">Top 5 Critical Issues</h3>
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.2rem;">Top 5 Findings</h3>
     <div class="finding high reveal">
       <div class="severity high">Critical</div>
-      <h4>GA4 not installed — zero data collection <span class="evidence observed">Observed</span></h4>
-      <p>The GA4 property exists but no tracking code is on the site. No gtag.js, no GTM container, no measurement protocol. All API queries returned empty arrays. This means zero visibility into traffic, conversions, user behavior, or campaign performance.</p>
-    </div>
-    <div class="finding high reveal">
-      <div class="severity high">Critical</div>
-      <h4>No conversion tracking for demo bookings <span class="evidence observed">Observed</span></h4>
-      <p>The primary conversion goal (Calendly demo booking) has no tracking event. Without it, Memox cannot measure CAC, ROAS, or which channels drive demos. Every marketing dollar is unaccountable.</p>
+      <h4>Calendly booking completion not tracked <span class="evidence observed">PostHog API</span></h4>
+      <p><code>calendly_opened</code> and <code>clicked_book_demo</code> fire when visitors click the demo CTA, but no event fires when they actually complete the Calendly form. Without this, Memox cannot calculate conversion rate, CAC, or attribute demos to traffic sources. This is the single highest-impact gap.</p>
     </div>
     <div class="finding high reveal">
       <div class="severity high">Critical</div>
       <h4>No ad platform integration <span class="evidence observed">Observed</span></h4>
-      <p>No Facebook Pixel, no Google Ads tag, no LinkedIn Insight Tag found. If Memox runs paid campaigns, conversions are not tracked — ad platforms optimize on zero signal, burning budget.</p>
-    </div>
-    <div class="finding high reveal">
-      <div class="severity high">High Priority</div>
-      <h4>GA4 timezone and currency misconfigured <span class="evidence observed">Observed</span></h4>
-      <p>GA4 property uses Etc/GMT timezone and GBP currency. Memox targets US equipment dealers. This causes date boundaries and revenue reports to misalign with business reality. Must be fixed before any data collection begins.</p>
+      <p>No Facebook Pixel, Google Ads tag, or LinkedIn Insight Tag found. If Memox runs or plans paid campaigns, conversions cannot be reported back to ad platforms for optimization. Ad spend would optimize on zero signal.</p>
     </div>
     <div class="finding medium reveal">
       <div class="severity medium">Medium Priority</div>
-      <h4>PostHog whitelisted but not loading <span class="evidence observed">Observed</span></h4>
-      <p>Content Security Policy allows us.i.posthog.com and us-assets.i.posthog.com, but no PostHog initialization script was found in the page HTML. Either PostHog is loaded conditionally, loaded via a separate JS bundle not visible in source, or configured but never deployed.</p>
+      <h4>No UTM naming convention or campaign tracking <span class="evidence assessment">Assessment</span></h4>
+      <p>PostHog automatically captures UTM parameters, but without a documented naming convention, campaign attribution will fragment. Links shared on LinkedIn, email, or partner channels need consistent UTMs to produce actionable source/medium reports.</p>
+    </div>
+    <div class="finding medium reveal">
+      <div class="severity medium">Medium Priority</div>
+      <h4>No cookie consent mechanism <span class="evidence observed">Observed</span></h4>
+      <p>No consent banner or CMP detected. PostHog sets cookies by default. For GDPR/CCPA compliance (especially with US equipment dealer prospects), a consent mechanism is needed. PostHog supports cookieless mode as an intermediate solution.</p>
+    </div>
+    <div class="finding low reveal">
+      <div class="severity low">Positive</div>
+      <h4>Strong engagement event coverage <span class="evidence observed">PostHog API</span></h4>
+      <p>The team has instrumented 8 custom events covering chat engagement, pricing interactions, scroll depth, section visibility, and CTA clicks. This is above average for an early-stage B2B SaaS and provides a solid behavioral analytics foundation.</p>
     </div>
   </div>
 </section>
 
-<section class="alt" id="ga4-config">
+<section class="alt" id="traffic">
   <div class="container">
     <p class="section-label">Section A</p>
-    <h2>GA4 Property Configuration</h2>
-    <table class="audit-table reveal">
-      <thead><tr><th>Setting</th><th>Current Value</th><th>Status</th><th>Recommended</th></tr></thead>
-      <tbody>
-        <tr><td>Property Name</td><td>MEMOX.io</td><td class="status-pass">OK</td><td>—</td></tr>
-        <tr><td>Property ID</td><td>430432762</td><td class="status-pass">OK</td><td>—</td></tr>
-        <tr><td>Account</td><td>Autonomous Technologies</td><td class="status-pass">OK</td><td>—</td></tr>
-        <tr><td>Industry</td><td>7 (Technology)</td><td class="status-pass">OK</td><td>—</td></tr>
-        <tr><td>Timezone</td><td class="status-fail">Etc/GMT</td><td class="status-fail">Wrong</td><td>America/Chicago or America/Los_Angeles (match target market)</td></tr>
-        <tr><td>Currency</td><td class="status-fail">GBP</td><td class="status-fail">Wrong</td><td>USD (Memox targets US market, prices in USD)</td></tr>
-        <tr><td>Created</td><td>March 5, 2024</td><td class="status-pass">OK</td><td>—</td></tr>
-        <tr><td>Tracking Code</td><td class="status-fail">NOT INSTALLED</td><td class="status-fail">Critical</td><td>Install GA4 tag via GTM or direct gtag.js</td></tr>
-        <tr><td>Data Collection</td><td class="status-fail">0 events in 30 days</td><td class="status-fail">Critical</td><td>Verify tag fires on all pages</td></tr>
-      </tbody>
-    </table>
+    <h2>Traffic &amp; Daily Active Users</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 1.5rem;">Live data from PostHog &mdash; last 30 days (March 3 &ndash; April 2, 2026).</p>
+
+    <div class="metric-row reveal">
+      <div class="metric-box">
+        <div class="val">126</div>
+        <div class="lbl">Total DAU events (30d)</div>
+      </div>
+      <div class="metric-box">
+        <div class="val">4.1</div>
+        <div class="lbl">Avg daily unique visitors</div>
+      </div>
+      <div class="metric-box">
+        <div class="val">16</div>
+        <div class="lbl">Peak DAU (Mar 24)</div>
+      </div>
+      <div class="metric-box">
+        <div class="val">0</div>
+        <div class="lbl">Lowest DAU (Mar 23)</div>
+      </div>
+    </div>
+
+    <h4 style="font-family: 'Inter', sans-serif; font-size: 0.85rem; margin: 1.5rem 0 0.5rem; color: var(--stone-600);">Daily Active Users &mdash; Last 30 Days</h4>
+    <div class="dau-chart reveal">
+      <div class="dau-bar" style="height:18.75%" data-label="Mar 3: 3"></div>
+      <div class="dau-bar" style="height:25%" data-label="Mar 4: 4"></div>
+      <div class="dau-bar" style="height:12.5%" data-label="Mar 5: 2"></div>
+      <div class="dau-bar" style="height:31.25%" data-label="Mar 6: 5"></div>
+      <div class="dau-bar" style="height:6.25%" data-label="Mar 7: 1"></div>
+      <div class="dau-bar" style="height:25%" data-label="Mar 8: 4"></div>
+      <div class="dau-bar" style="height:12.5%" data-label="Mar 9: 2"></div>
+      <div class="dau-bar" style="height:12.5%" data-label="Mar 10: 2"></div>
+      <div class="dau-bar" style="height:18.75%" data-label="Mar 11: 3"></div>
+      <div class="dau-bar" style="height:37.5%" data-label="Mar 12: 6"></div>
+      <div class="dau-bar" style="height:25%" data-label="Mar 13: 4"></div>
+      <div class="dau-bar" style="height:25%" data-label="Mar 14: 4"></div>
+      <div class="dau-bar" style="height:6.25%" data-label="Mar 15: 1"></div>
+      <div class="dau-bar" style="height:12.5%" data-label="Mar 16: 2"></div>
+      <div class="dau-bar" style="height:6.25%" data-label="Mar 17: 1"></div>
+      <div class="dau-bar" style="height:6.25%" data-label="Mar 18: 1"></div>
+      <div class="dau-bar" style="height:18.75%" data-label="Mar 19: 3"></div>
+      <div class="dau-bar" style="height:37.5%" data-label="Mar 20: 6"></div>
+      <div class="dau-bar" style="height:6.25%" data-label="Mar 21: 1"></div>
+      <div class="dau-bar" style="height:12.5%" data-label="Mar 22: 2"></div>
+      <div class="dau-bar" style="height:2%" data-label="Mar 23: 0"></div>
+      <div class="dau-bar" style="height:100%" data-label="Mar 24: 16"></div>
+      <div class="dau-bar" style="height:37.5%" data-label="Mar 25: 6"></div>
+      <div class="dau-bar" style="height:62.5%" data-label="Mar 26: 10"></div>
+      <div class="dau-bar" style="height:50%" data-label="Mar 27: 8"></div>
+      <div class="dau-bar" style="height:18.75%" data-label="Mar 28: 3"></div>
+      <div class="dau-bar" style="height:37.5%" data-label="Mar 29: 6"></div>
+      <div class="dau-bar" style="height:62.5%" data-label="Mar 30: 10"></div>
+      <div class="dau-bar" style="height:25%" data-label="Mar 31: 4"></div>
+      <div class="dau-bar" style="height:18.75%" data-label="Apr 1: 3"></div>
+      <div class="dau-bar" style="height:18.75%" data-label="Apr 2: 3"></div>
+    </div>
+    <p style="font-size:0.75rem;color:var(--stone-400);text-align:center;">Source: PostHog DAU insight (8raQlrLQ) &middot; Hover bars for daily values</p>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Observation</div>
+      <h4>Traffic spike Mar 24&ndash;30: 5&times; normal volume <span class="evidence observed">PostHog API</span></h4>
+      <p>DAU jumped from an average of ~3/day to 16 on March 24, sustaining elevated levels through March 30. This suggests a campaign, press mention, or Product Hunt activity. Without UTM attribution, the source of this spike is unknown &mdash; a clear example of the revenue leak: traffic arrived, but Memox cannot tell where it came from or whether it converted.</p>
+    </div>
   </div>
 </section>
 
-<section id="tagging">
+<section id="events">
   <div class="container">
     <p class="section-label">Section B</p>
-    <h2>Tagging Implementation Review</h2>
-    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">What tracking infrastructure exists on memox.io.</p>
+    <h2>Event Inventory</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">14 events tracked in PostHog &mdash; 6 system, 8 custom.</p>
 
     <table class="audit-table reveal">
-      <thead><tr><th>Platform</th><th>Status</th><th>Detail</th></tr></thead>
+      <thead><tr><th>Event</th><th>Type</th><th>Last Seen</th><th>Status</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Google Tag Manager</td><td class="status-fail">Not found</td><td>No GTM container ID in source</td></tr>
-        <tr><td>GA4 (gtag.js)</td><td class="status-fail">Not found</td><td>No gtag.js or G- measurement ID</td></tr>
-        <tr><td>Facebook/Meta Pixel</td><td class="status-fail">Not found</td><td>No fbq() or pixel ID</td></tr>
-        <tr><td>Google Ads</td><td class="status-fail">Not found</td><td>No conversion labels</td></tr>
-        <tr><td>LinkedIn Insight Tag</td><td class="status-fail">Not found</td><td>No LinkedIn tracking</td></tr>
-        <tr><td>HubSpot</td><td class="status-fail">Not found</td><td>No hs-script or HubSpot tracking</td></tr>
-        <tr><td>PostHog</td><td class="status-warn">CSP only</td><td>Whitelisted in CSP (us.i.posthog.com) but no init script found in HTML</td></tr>
-        <tr><td>Cloudflare Web Analytics</td><td class="status-warn">CSP only</td><td>static.cloudflareinsights.com in CSP; may load via Cloudflare edge injection</td></tr>
-        <tr><td>Calendly Widget</td><td class="status-pass">Present</td><td>assets.calendly.com in CSP, frame-src allows calendly.com</td></tr>
-        <tr><td>Memox Chat Widget</td><td class="status-pass">Present</td><td>chat.memox.io and hub.memox.io in CSP + connect-src</td></tr>
-        <tr><td>Hotjar / Clarity / FullStory</td><td class="status-fail">Not found</td><td>No session recording tools</td></tr>
-        <tr><td>CallRail / Call Tracking</td><td class="status-fail">Not found</td><td>Phone number appears static</td></tr>
+        <tr><td><code>$pageview</code></td><td>System</td><td>Apr 2</td><td class="status-pass">Active</td><td>Page loads tracked across all pages</td></tr>
+        <tr><td><code>$pageleave</code></td><td>System</td><td>Apr 2</td><td class="status-pass">Active</td><td>Page exit tracked (time-on-page calculation)</td></tr>
+        <tr><td><code>$autocapture</code></td><td>System</td><td>Apr 2</td><td class="status-pass">Active</td><td>All clicks, inputs, form submissions auto-captured</td></tr>
+        <tr><td><code>chat_started</code></td><td>Custom</td><td>Apr 2</td><td class="status-pass">Active</td><td>Memox chat widget engagement</td></tr>
+        <tr><td><code>pricing_toggle</code></td><td>Custom</td><td>Apr 2</td><td class="status-pass">Active</td><td>Monthly/annual pricing switch</td></tr>
+        <tr><td><code>scroll_depth</code></td><td>Custom</td><td>Apr 2</td><td class="status-pass">Active</td><td>Scroll milestones tracked</td></tr>
+        <tr><td><code>section_viewed</code></td><td>Custom</td><td>Apr 2</td><td class="status-pass">Active</td><td>Viewport visibility of page sections</td></tr>
+        <tr><td><code>calendly_opened</code></td><td>Custom</td><td>Mar 31</td><td class="status-pass">Active</td><td>Calendly widget opened</td></tr>
+        <tr><td><code>clicked_book_demo</code></td><td>Custom</td><td>Mar 31</td><td class="status-pass">Active</td><td>Demo CTA button clicked</td></tr>
+        <tr><td><code>cta_click</code></td><td>Custom</td><td>Mar 31</td><td class="status-pass">Active</td><td>General CTA clicks</td></tr>
+        <tr><td><code>pricing_cta_clicked</code></td><td>Custom</td><td>Mar 30</td><td class="status-pass">Active</td><td>Pricing page CTA clicks</td></tr>
+        <tr><td><code>$dead_click</code></td><td>System</td><td>Mar 31</td><td class="status-pass">Active</td><td>UX: clicks on non-interactive elements</td></tr>
+        <tr><td><code>$rageclick</code></td><td>System</td><td>Feb 19</td><td class="status-warn">Stale</td><td>UX: rapid repeated clicks (frustration signal)</td></tr>
+        <tr><td><code>$web_vitals</code></td><td>System</td><td>Dec 1, 2025</td><td class="status-fail">Stopped</td><td>Core Web Vitals collection stopped 4 months ago</td></tr>
       </tbody>
     </table>
 
-    <div class="finding high reveal">
-      <div class="severity high">Critical</div>
-      <h4>No tag management system <span class="evidence observed">Observed</span></h4>
-      <p>Without GTM or an equivalent tag manager, every tracking change requires a code deployment. This creates a bottleneck where marketing cannot add or modify tracking without developer involvement. <strong>Recommendation:</strong> Install GTM as the foundation — then load GA4, ad pixels, and conversion tracking through GTM.</p>
-    </div>
+    <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem;">Missing Events for B2B SaaS Best Practice</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Missing Event</th><th>Business Value</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><code>calendly_booking_complete</code></td><td>Actual demo booking &mdash; primary conversion</td><td><span class="effort high">Critical</span></td></tr>
+        <tr><td><code>form_submitted</code></td><td>Contact/inquiry form completions</td><td><span class="effort high">High</span></td></tr>
+        <tr><td><code>phone_click</code></td><td>Click-to-call tracking</td><td><span class="effort medium">Medium</span></td></tr>
+        <tr><td><code>video_played</code></td><td>Product video engagement (if added)</td><td><span class="effort low">Low</span></td></tr>
+        <tr><td><code>case_study_viewed</code></td><td>Social proof engagement tracking</td><td><span class="effort low">Low</span></td></tr>
+      </tbody>
+    </table>
 
-    <div class="callout">
-      <strong>Want the full picture?</strong> With GTM and GA4 properly configured, we'd build a complete measurement plan: conversion events, engagement tracking, funnel visualization, and automated alerting. Part of the <strong>Revenue Leak Audit</strong> engagement.
-      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    <div class="before-after reveal">
+      <div class="before">
+        <h5>Current: Partial Funnel</h5>
+        <code>$pageview
+  &darr;
+cta_click / clicked_book_demo
+  &darr;
+calendly_opened
+  &darr;
+??? (no completion event)</code>
+      </div>
+      <div class="after">
+        <h5>Recommended: Complete Funnel</h5>
+        <code>$pageview
+  &darr;
+cta_click / clicked_book_demo
+  &darr;
+calendly_opened
+  &darr;
+calendly_booking_complete  &larr; NEW
+  &darr;
+demo_completed             &larr; NEW (webhook)</code>
+      </div>
     </div>
   </div>
 </section>
@@ -238,31 +342,37 @@ section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-sp
   <div class="container">
     <p class="section-label">Section C</p>
     <h2>Conversion Signal Audit</h2>
-    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">What should be tracked vs. what is being tracked.</p>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">4 PostHog Actions defined for conversion tracking.</p>
 
     <table class="audit-table reveal">
-      <thead><tr><th>Conversion Event</th><th>Business Value</th><th>Currently Tracked</th><th>Priority</th></tr></thead>
+      <thead><tr><th>Action</th><th>Trigger</th><th>Status</th><th>Assessment</th></tr></thead>
       <tbody>
-        <tr><td>calendly_booking_complete</td><td>Demo booked — primary conversion</td><td class="status-fail">No</td><td><span class="effort high">Critical</span></td></tr>
-        <tr><td>calendly_booking_started</td><td>Calendly widget opened</td><td class="status-fail">No</td><td><span class="effort high">High</span></td></tr>
-        <tr><td>chat_started</td><td>Memox chat widget engaged</td><td class="status-fail">No</td><td><span class="effort high">High</span></td></tr>
-        <tr><td>chat_lead_qualified</td><td>Chat conversation leads to qualified interest</td><td class="status-fail">No</td><td><span class="effort high">High</span></td></tr>
-        <tr><td>phone_call_initiated</td><td>Click-to-call or call tracking</td><td class="status-fail">No</td><td><span class="effort medium">Medium</span></td></tr>
-        <tr><td>pricing_page_view</td><td>Pricing intent signal</td><td class="status-fail">No</td><td><span class="effort medium">Medium</span></td></tr>
-        <tr><td>cta_clicked</td><td>Any CTA button click</td><td class="status-fail">No</td><td><span class="effort medium">Medium</span></td></tr>
-        <tr><td>scroll_depth_75</td><td>Deep engagement signal</td><td class="status-fail">No</td><td><span class="effort low">Low</span></td></tr>
+        <tr><td><strong>Click Demo</strong></td><td>Autocapture on <code>#demo-btn</code></td><td class="status-pass">Good</td><td>Tracks demo button clicks &mdash; top-of-funnel conversion signal</td></tr>
+        <tr><td><strong>Open Chatbot</strong></td><td>Autocapture on <code>.home &gt; button</code></td><td class="status-pass">Good</td><td>Tracks chat widget open &mdash; engagement signal</td></tr>
+        <tr><td><strong>Message send to chatbot</strong></td><td>Autocapture on <code>button[title="Send"]</code></td><td class="status-pass">Good</td><td>Tracks actual chat messages &mdash; deeper engagement</td></tr>
+        <tr><td><strong>Clicked Submit</strong></td><td>Autocapture on <code>.clearfix &gt; div &gt; button</code></td><td class="status-warn">Check</td><td>Appointment submission &mdash; verify selector still matches</td></tr>
       </tbody>
     </table>
 
     <div class="finding high reveal">
-      <div class="severity high">Critical</div>
-      <h4>Primary conversion (demo booking) is not tracked <span class="evidence assessment">Assessment</span></h4>
-      <p>Memox uses Calendly for demo bookings — the only measurable revenue-generating action on the site. Without a conversion event firing when a booking completes, it's impossible to know: which traffic source drives demos, what the cost per demo is, whether content changes improve conversion, or which pages lead to bookings. This single gap makes all marketing investment unaccountable.</p>
+      <div class="severity high">Critical Gap</div>
+      <h4>No Calendly completion event <span class="evidence observed">PostHog API</span></h4>
+      <p>The funnel captures intent (<code>clicked_book_demo</code> &rarr; <code>calendly_opened</code>) but not the outcome. To close this gap, implement one of:</p>
+      <p style="margin-top: 0.75rem;"><strong>Option A (recommended):</strong> Listen for the Calendly <code>calendly.event_scheduled</code> postMessage event in the parent window and fire a PostHog event:<br>
+      <code style="display:block;background:var(--stone-100);padding:0.75rem;border-radius:6px;margin-top:0.5rem;font-size:0.8rem;">window.addEventListener('message', (e) => {
+  if (e.data.event === 'calendly.event_scheduled') {
+    posthog.capture('calendly_booking_complete', {
+      invitee_uri: e.data.payload?.invitee?.uri
+    });
+  }
+});</code></p>
+      <p style="margin-top: 0.75rem;"><strong>Option B:</strong> Use Calendly webhooks to send a server-side event to PostHog via the Capture API.</p>
     </div>
 
-    <div class="callout">
-      <strong>Want the full picture?</strong> With conversion tracking in place, we'd build a full funnel view: landing page → chat/CTA engagement → Calendly open → booking complete, with drop-off rates at every step. Part of the <strong>Revenue Leak Audit</strong> engagement.
-      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    <div class="finding medium reveal">
+      <div class="severity medium">Recommendation</div>
+      <h4>Define a PostHog "Key Conversion" action for demo bookings</h4>
+      <p>Once <code>calendly_booking_complete</code> is firing, create a PostHog Action combining the full funnel: CTA click &rarr; Calendly open &rarr; booking complete. This enables funnel analysis with drop-off rates at each step, directly in the PostHog UI.</p>
     </div>
   </div>
 </section>
@@ -273,125 +383,230 @@ section .section-label { font-size: 0.7rem; text-transform: uppercase; letter-sp
     <h2>Attribution &amp; Campaign Tracking</h2>
 
     <div class="finding high reveal">
-      <div class="severity high">Critical</div>
-      <h4>Zero attribution infrastructure <span class="evidence observed">Observed</span></h4>
-      <p>With no analytics tag installed, there is no attribution data at all. No source/medium tracking, no campaign parameters, no referral data. If Memox runs outbound campaigns, social posts, or paid ads, there is no way to know which efforts generate pipeline.</p>
+      <div class="severity high">Critical Gap</div>
+      <h4>No UTM naming convention &mdash; Mar 24 spike is unattributable <span class="evidence assessment">Assessment</span></h4>
+      <p>PostHog automatically captures <code>$initial_utm_source</code>, <code>$initial_utm_medium</code>, <code>$initial_utm_campaign</code> on person profiles. But without standardized UTMs on outbound links, this data is empty. The March 24 traffic spike (16 DAU, 5&times; average) cannot be attributed to any channel or campaign.</p>
+    </div>
+
+    <div class="before-after reveal">
+      <div class="before">
+        <h5>Current: No UTMs</h5>
+        <code>memox.io
+memox.io
+memox.io
+(all traffic looks the same)</code>
+      </div>
+      <div class="after">
+        <h5>Recommended: Standardized UTMs</h5>
+        <code>memox.io?utm_source=linkedin
+  &amp;utm_medium=organic
+  &amp;utm_campaign=dealer-insights-q2
+  &amp;utm_content=carousel-v1
+
+memox.io?utm_source=email
+  &amp;utm_medium=newsletter
+  &amp;utm_campaign=product-update-apr26</code>
+      </div>
     </div>
 
     <div class="finding medium reveal">
       <div class="severity medium">Medium Priority</div>
-      <h4>No UTM architecture established <span class="evidence assessment">Assessment</span></h4>
-      <p>No evidence of UTM parameter usage on any external links or campaigns. Before launching any paid or organic campaigns, Memox needs a UTM naming convention. <strong>Recommended format:</strong></p>
-      <p style="margin-top: 0.5rem; font-family: monospace; font-size: 0.8rem; background: var(--stone-100); padding: 0.75rem; border-radius: 6px;">utm_source=[platform]&amp;utm_medium=[channel-type]&amp;utm_campaign=[campaign-name]&amp;utm_content=[variant]</p>
-      <p style="margin-top: 0.5rem;">Example: <code>utm_source=linkedin&amp;utm_medium=organic&amp;utm_campaign=dealer-insights-q2</code></p>
+      <h4>No ad platform pixels installed <span class="evidence observed">Observed</span></h4>
+      <p>No Meta Pixel, Google Ads tag, or LinkedIn Insight Tag found on the site. When Memox is ready to run paid campaigns, these pixels must be installed and firing conversion events back to each platform. PostHog can coexist with these &mdash; they serve different purposes (behavioral analytics vs. ad optimization).</p>
     </div>
 
-    <div class="callout">
-      <strong>Want the full picture?</strong> With attribution set up correctly, we'd show you exactly which channels and campaigns drive qualified demos, and calculate true CAC by source. Part of the <strong>Revenue Leak Audit</strong> engagement.
-      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    <div class="finding low reveal">
+      <div class="severity low">Positive</div>
+      <h4>PostHog referrer tracking is active <span class="evidence observed">PostHog API</span></h4>
+      <p>The "Referring domain (last 14 days)" insight exists on the web analytics dashboard. PostHog automatically captures <code>$referrer</code> and <code>$referring_domain</code> on every pageview. This provides basic source attribution even without UTMs &mdash; Memox can see traffic from Google, LinkedIn, direct, etc.</p>
     </div>
   </div>
 </section>
 
-<section class="alt" id="consent">
+<section class="alt" id="dashboards">
   <div class="container">
     <p class="section-label">Section E</p>
+    <h2>Dashboards &amp; Insights</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">2 dashboards with 17 saved insights.</p>
+
+    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Dashboard #594178: Web Analytics</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Insight</th><th>Type</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Daily active users (DAUs)</td><td>Trend</td><td class="status-pass">Good &mdash; daily traffic monitoring</td></tr>
+        <tr><td>Weekly active users (WAUs)</td><td>Trend</td><td class="status-pass">Good &mdash; weekly engagement view</td></tr>
+        <tr><td>Retention</td><td>Retention</td><td class="status-pass">Good &mdash; tracks returning visitors</td></tr>
+        <tr><td>Growth accounting</td><td>Lifecycle</td><td class="status-pass">Excellent &mdash; new/returning/resurrected/dormant</td></tr>
+        <tr><td>Referring domain (last 14 days)</td><td>Trend</td><td class="status-pass">Good &mdash; basic source attribution</td></tr>
+        <tr><td>Pageview funnel, by browser</td><td>Funnel</td><td class="status-warn">Partial &mdash; needs conversion step added</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size: 1.1rem; margin: 2rem 0 1rem;">Dashboard #787642: AI Observability</h3>
+    <table class="audit-table reveal">
+      <thead><tr><th>Insight</th><th>Type</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Traces</td><td>Trend</td><td class="status-pass">LLM call monitoring</td></tr>
+        <tr><td>Generative AI users</td><td>Trend</td><td class="status-pass">Chat product usage</td></tr>
+        <tr><td>Total cost (USD)</td><td>Trend</td><td class="status-pass">AI spend tracking</td></tr>
+        <tr><td>Cost per user (USD)</td><td>Trend</td><td class="status-pass">Unit economics</td></tr>
+        <tr><td>Cost by model (USD)</td><td>Trend</td><td class="status-pass">Model cost breakdown</td></tr>
+        <tr><td>Generation calls</td><td>Trend</td><td class="status-pass">API volume</td></tr>
+        <tr><td>AI Errors</td><td>Trend</td><td class="status-pass">Error rate monitoring</td></tr>
+        <tr><td>Generation latency by model</td><td>Trend</td><td class="status-pass">Performance monitoring</td></tr>
+        <tr><td>Generations by HTTP status</td><td>Trend</td><td class="status-pass">Reliability monitoring</td></tr>
+      </tbody>
+    </table>
+
+    <div class="finding low reveal">
+      <div class="severity low">Positive</div>
+      <h4>AI observability dashboard is production-grade <span class="evidence observed">PostHog API</span></h4>
+      <p>The AI observability dashboard tracks LLM traces, costs, latency, errors, and per-model economics. This is well above average for an early-stage company and shows sophisticated PostHog usage on the product side. The marketing analytics side should match this level of rigor.</p>
+    </div>
+
+    <div class="finding medium reveal">
+      <div class="severity medium">Recommendation</div>
+      <h4>Create a dedicated "Marketing Funnel" dashboard</h4>
+      <p>Build a new PostHog dashboard with these insights:</p>
+      <ul style="font-size: 0.9rem; color: var(--stone-600); margin: 0.5rem 0 0 1.5rem;">
+        <li><strong>Demo Booking Funnel:</strong> $pageview &rarr; clicked_book_demo &rarr; calendly_opened &rarr; calendly_booking_complete</li>
+        <li><strong>Traffic by Source:</strong> Pageviews broken down by $referring_domain</li>
+        <li><strong>CTA Heatmap:</strong> cta_click broken down by $current_url</li>
+        <li><strong>Chat-to-Demo Correlation:</strong> Users who chatted then booked vs. direct bookers</li>
+        <li><strong>Pricing Page Conversion:</strong> pricing_toggle &rarr; pricing_cta_clicked &rarr; calendly_opened</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="consent">
+  <div class="container">
+    <p class="section-label">Section F</p>
     <h2>Consent &amp; Privacy Assessment</h2>
 
     <table class="audit-table reveal">
       <thead><tr><th>Check</th><th>Status</th><th>Detail</th></tr></thead>
       <tbody>
-        <tr><td>Cookie consent banner</td><td class="status-fail">Not observed</td><td>No cookie consent UI found in page source</td></tr>
-        <tr><td>Google Consent Mode v2</td><td class="status-fail">Not applicable</td><td>No Google tags installed to configure consent for</td></tr>
+        <tr><td>Cookie consent banner</td><td class="status-fail">Not observed</td><td>No consent UI found on site</td></tr>
+        <tr><td>PostHog cookie mode</td><td class="status-warn">Unknown</td><td>Default PostHog sets cookies; cookieless mode not confirmed</td></tr>
         <tr><td>Privacy Policy</td><td class="status-pass">Present</td><td>/privacy linked in footer</td></tr>
         <tr><td>Terms of Service</td><td class="status-pass">Present</td><td>/terms linked in footer</td></tr>
-        <tr><td>GDPR data collection notice</td><td class="status-warn">Not verified</td><td>Depends on privacy policy content</td></tr>
-        <tr><td>CCPA compliance</td><td class="status-warn">Not verified</td><td>US-targeted site should comply with state privacy laws</td></tr>
+        <tr><td>PostHog in privacy policy</td><td class="status-warn">Not verified</td><td>Privacy policy should disclose PostHog data collection</td></tr>
       </tbody>
     </table>
 
     <div class="finding medium reveal">
       <div class="severity medium">Medium Priority</div>
-      <h4>No cookie consent mechanism <span class="evidence observed">Observed</span></h4>
-      <p>No consent banner or consent management platform (CMP) was detected. While Memox currently has minimal tracking (reducing cookie liability), any future analytics or ad pixel deployment will require consent management for GDPR/CCPA compliance. <strong>Recommendation:</strong> Implement consent before adding any tracking — not after.</p>
+      <h4>Enable PostHog cookieless mode as immediate step</h4>
+      <p>PostHog supports a <code>persistence: 'memory'</code> configuration that avoids setting cookies entirely. This eliminates the need for a cookie consent banner for analytics while still capturing all events. For a B2B SaaS targeting US equipment dealers, this is a pragmatic compliance approach:</p>
+      <code style="display:block;background:var(--stone-100);padding:0.75rem;border-radius:6px;margin-top:0.5rem;font-size:0.8rem;">posthog.init('phc_tqW3wuoSEKKiO5AHl3UqQzxtSZ4ZowsIYyJEF1yz2M0', {
+  api_host: 'https://us.i.posthog.com',
+  persistence: 'memory',           // no cookies
+  capture_pageview: true,
+  capture_pageleave: true,
+  autocapture: true
+});</code>
     </div>
   </div>
 </section>
 
-<section id="ecosystem">
+<section class="alt" id="ecosystem">
   <div class="container">
-    <p class="section-label">Section F</p>
+    <p class="section-label">Section G</p>
     <h2>Platform Ecosystem</h2>
-    <p style="color: var(--stone-600); margin: 0.5rem 0 1rem;">Current data flow architecture for memox.io.</p>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 1rem;">Actual data flow architecture based on PostHog API data.</p>
 
     <div class="flow-diagram reveal">
-MEMOX.IO — Current Tracking Architecture
-═══════════════════════════════════════════
+MEMOX.IO — Actual Tracking Architecture (PostHog Verified)
+═══════════════════════════════════════════════════════════
 
-  Browser (User)
+  Browser (User Visit)
        │
-       ├──▶ Cloudflare Edge (CDN + WAF)
-       │         └── CF Web Analytics (basic pageviews only)
+       ├──▶ PostHog JS SDK (via Next.js bundle)
+       │         ├── $pageview, $pageleave, $autocapture     ✅ Active
+       │         ├── chat_started, scroll_depth               ✅ Active
+       │         ├── section_viewed, pricing_toggle            ✅ Active
+       │         ├── calendly_opened, clicked_book_demo        ✅ Active
+       │         ├── cta_click, pricing_cta_clicked            ✅ Active
+       │         ├── $dead_click, $rageclick                   ✅ UX signals
+       │         └── $web_vitals                               ❌ Stopped Dec 2025
        │
        ├──▶ Calendly (iframe embed)
-       │         └── No callback/webhook to analytics ❌
+       │         ├── calendly_opened fires on widget open      ✅
+       │         └── No completion callback                    ❌ KEY GAP
        │
        ├──▶ Memox Chat Widget (chat.memox.io)
-       │         └── Internal — may log to own backend ✅
+       │         ├── chat_started fires on open                ✅
+       │         └── Message tracking via Action               ✅
        │
-       └──▶ PostHog (CSP whitelisted)
-                 └── Init script NOT found ❌
+       └──▶ Cloudflare Edge
+                 └── CF Web Analytics (basic, separate)        ⚠️
 
-  GA4 Property 430432762
-       └── Created but NOT receiving data ❌
+  PostHog Cloud (Project #232936 "Memox")
+       ├── Dashboard: Web Analytics (6 insights)               ✅
+       ├── Dashboard: AI Observability (9 insights)            ✅
+       ├── Actions: 4 conversion actions defined               ✅
+       └── Feature Flags: 0 configured                         ⚠️
 
-  Google Tag Manager
-       └── NOT installed ❌
-
-  Ad Platforms (Meta/Google/LinkedIn)
-       └── NOT installed ❌
+  NOT INSTALLED
+       ├── Google Tag Manager                                  ❌
+       ├── GA4 (property 430432762 exists, not deployed)       ❌
+       ├── Meta / Facebook Pixel                               ❌
+       ├── Google Ads conversion tag                           ❌
+       ├── LinkedIn Insight Tag                                ❌
+       └── Session replay (Hotjar/Clarity/FullStory)           ❌
+           (PostHog has built-in session replay — check if enabled)
     </div>
 
-    <div class="finding medium reveal">
-      <div class="severity medium">Medium Priority</div>
-      <h4>Memox chat may be the only data source <span class="evidence assessment">Assessment</span></h4>
-      <p>The Memox chat widget (chat.memox.io, hub.memox.io) likely captures lead data internally. This may be the only conversion tracking in place — through the chat product itself rather than through marketing analytics. However, this data lives in the product backend, not in any analytics platform, making it invisible for marketing attribution.</p>
+    <div class="finding low reveal">
+      <div class="severity low">Recommendation</div>
+      <h4>Enable PostHog Session Replay</h4>
+      <p>PostHog includes built-in session replay (recordings). If not already enabled, this replaces the need for Hotjar or Clarity. Enable in PostHog project settings or via the SDK config: <code>session_recording: { maskAllInputs: true }</code>.</p>
     </div>
   </div>
 </section>
 
-<section class="alt" id="roadmap">
+<section id="roadmap">
   <div class="container">
     <p class="section-label">Priority Roadmap</p>
-    <h2>Analytics Implementation Roadmap</h2>
-    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Sequenced by dependency. Each step unlocks the next.</p>
+    <h2>PostHog-Native Implementation Plan</h2>
+    <p style="color: var(--stone-600); margin: 0.5rem 0 2rem;">Sequenced by impact. All recommendations are PostHog-native &mdash; no new platforms needed.</p>
 
     <table class="audit-table reveal">
-      <thead><tr><th>#</th><th>Fix</th><th>Effort</th><th>Impact</th><th>Depends On</th></tr></thead>
+      <thead><tr><th>#</th><th>Fix</th><th>Effort</th><th>Impact</th><th>Score Lift</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td><strong>Fix GA4 timezone (→ America/Chicago) and currency (→ USD)</strong></td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>—</td></tr>
-        <tr><td>2</td><td><strong>Install GTM container on memox.io</strong> — add GTM to CSP and &lt;head&gt;</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>—</td></tr>
-        <tr><td>3</td><td><strong>Deploy GA4 tag via GTM</strong> — start collecting page_view, session_start, user_engagement</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>#2</td></tr>
-        <tr><td>4</td><td><strong>Set up Calendly conversion tracking</strong> — fire calendly_booking_complete event via Calendly webhook + GTM</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>#2, #3</td></tr>
-        <tr><td>5</td><td><strong>Add chat engagement events</strong> — track chat_started, chat_lead_qualified via Memox → GTM dataLayer</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>#2, #3</td></tr>
-        <tr><td>6</td><td><strong>Install consent management</strong> — cookie banner + Google Consent Mode v2</td><td><span class="effort medium">Medium</span></td><td><span class="impact">Medium</span></td><td>#2</td></tr>
-        <tr><td>7</td><td><strong>Build UTM naming convention</strong> — standardize source/medium/campaign for all links</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>#3</td></tr>
-        <tr><td>8</td><td><strong>Confirm PostHog deployment</strong> — verify if PostHog is running or needs activation</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>—</td></tr>
-        <tr><td>9</td><td><strong>Add ad platform pixels (when ready)</strong> — Meta, Google Ads, LinkedIn as campaigns launch</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>#2, #6</td></tr>
-        <tr><td>10</td><td><strong>Mark GA4 key events</strong> — flag calendly_booking_complete and chat_lead_qualified as conversions</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>#4, #5</td></tr>
+        <tr><td>1</td><td><strong>Add <code>calendly_booking_complete</code> event</strong> &mdash; listen for Calendly postMessage and fire PostHog capture</td><td><span class="effort low">Low</span></td><td><span class="impact">Critical</span></td><td>+8 pts</td></tr>
+        <tr><td>2</td><td><strong>Build UTM naming convention</strong> &mdash; document and apply to all outbound links (LinkedIn, email, partner)</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>+7 pts</td></tr>
+        <tr><td>3</td><td><strong>Create "Marketing Funnel" dashboard</strong> &mdash; demo funnel + source attribution + CTA heatmap</td><td><span class="effort low">Low</span></td><td><span class="impact">High</span></td><td>+3 pts</td></tr>
+        <tr><td>4</td><td><strong>Enable PostHog Session Replay</strong> &mdash; watch real user sessions to validate funnel</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>+2 pts</td></tr>
+        <tr><td>5</td><td><strong>Set PostHog timezone to America/Chicago</strong> &mdash; align daily reports with US business hours</td><td><span class="effort low">Low</span></td><td><span class="impact">Low</span></td><td>+1 pt</td></tr>
+        <tr><td>6</td><td><strong>Enable cookieless mode</strong> &mdash; set <code>persistence: 'memory'</code> for GDPR/CCPA compliance</td><td><span class="effort low">Low</span></td><td><span class="impact">Medium</span></td><td>+4 pts</td></tr>
+        <tr><td>7</td><td><strong>Re-enable $web_vitals collection</strong> &mdash; Core Web Vitals stopped Dec 2025</td><td><span class="effort low">Low</span></td><td><span class="impact">Low</span></td><td>+1 pt</td></tr>
+        <tr><td>8</td><td><strong>Set up PostHog Feature Flags</strong> &mdash; enable A/B testing for CTA copy, pricing display</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>+3 pts</td></tr>
+        <tr><td>9</td><td><strong>Add person identification</strong> &mdash; identify users when they book a demo or chat, linking anonymous → known</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>+5 pts</td></tr>
+        <tr><td>10</td><td><strong>Install ad platform pixels (when campaigns launch)</strong> &mdash; Meta, Google Ads, LinkedIn</td><td><span class="effort medium">Medium</span></td><td><span class="impact">High</span></td><td>+6 pts</td></tr>
       </tbody>
     </table>
+
+    <div class="callout">
+      <strong>Projected score after fixes 1&ndash;7:</strong> 47 &rarr; <strong>73/100</strong>. All are low-effort, PostHog-native changes requiring no new platforms. Fixes 1&ndash;3 alone (Calendly completion + UTMs + dashboard) take the score to <strong>65/100</strong> and make the demo booking funnel fully measurable.
+    </div>
+
+    <div class="callout">
+      <strong>Want help implementing?</strong> We can build the Calendly completion event, UTM convention, and marketing dashboard in a single working session.
+      <a href="https://calendly.com/rizwan-20/30min">Book a 20-min call &rarr;</a>
+    </div>
   </div>
 </section>
 
 <section id="cta-final" style="padding: 8rem 0; background: var(--stone-900); text-align: center;">
-  <p style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">Ready to Fix This?</p>
-  <h2 style="color: #fff; font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; margin: 0.75rem 0 1rem;">Every lead you generate today is untracked</h2>
-  <p style="color: var(--stone-300); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.6;">Book a 20-min call and we'll walk through your Revenue Leak findings live — and map out the analytics implementation that makes every marketing dollar accountable.</p>
-  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">Book a 20-min call — let's plug the leaks &rarr;</a>
+  <p style="color: var(--amber-400); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">Ready to Close the Gap?</p>
+  <h2 style="color: #fff; font-family: 'Source Serif 4', Georgia, serif; font-size: 2rem; margin: 0.75rem 0 1rem;">You can see intent &mdash; but not outcomes</h2>
+  <p style="color: var(--stone-300); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.6;">PostHog shows you who clicks the demo button. But you can't see who actually books, where they came from, or what convinced them. Three low-effort changes close this gap entirely.</p>
+  <a href="https://calendly.com/rizwan-20/30min" class="cta-btn">Book a 20-min call &mdash; let's close the funnel &rarr;</a>
   <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
-    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; No commitment required</span>
-    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; We come with your audit findings loaded</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; PostHog-native fixes only</span>
+    <span style="color: var(--stone-400); font-size: 0.875rem;">&check; No new platforms needed</span>
     <span style="color: var(--stone-400); font-size: 0.875rem;">&check; Implementation roadmap included</span>
   </div>
 </section>

@@ -1,0 +1,93 @@
+{
+  "collected_at": "2026-04-02T18:15:00Z",
+  "source": "PostHog API (app.posthog.com)",
+  "project": {
+    "id": 232936,
+    "name": "Memox",
+    "api_token": "phc_tqW3wuoSEKKiO5AHl3UqQzxtSZ4ZowsIYyJEF1yz2M0",
+    "timezone": "UTC",
+    "ingested_event": true,
+    "is_demo": false,
+    "onboarding_completed": { "web_analytics": true }
+  },
+  "other_projects": [
+    { "id": 246007, "name": "Platform", "onboarding": { "product_analytics": true } },
+    { "id": 259259, "name": "Memox Platform", "onboarding": { "web_analytics": true } }
+  ],
+  "event_definitions": {
+    "count": 14,
+    "events": [
+      { "name": "$autocapture", "last_seen": "2026-04-02T17:58:19Z", "type": "system" },
+      { "name": "$pageview", "last_seen": "2026-04-02T17:58:06Z", "type": "system" },
+      { "name": "$pageleave", "last_seen": "2026-04-02T18:09:34Z", "type": "system" },
+      { "name": "$dead_click", "last_seen": "2026-03-31T00:22:25Z", "type": "system" },
+      { "name": "$rageclick", "last_seen": "2026-02-19T09:53:15Z", "type": "system" },
+      { "name": "$web_vitals", "last_seen": "2025-12-01T08:09:40Z", "type": "system" },
+      { "name": "chat_started", "last_seen": "2026-04-02T17:58:27Z", "type": "custom" },
+      { "name": "pricing_toggle", "last_seen": "2026-04-02T17:58:19Z", "type": "custom" },
+      { "name": "scroll_depth", "last_seen": "2026-04-02T17:58:29Z", "type": "custom" },
+      { "name": "section_viewed", "last_seen": "2026-04-02T18:08:19Z", "type": "custom" },
+      { "name": "calendly_opened", "last_seen": "2026-03-31T00:21:39Z", "type": "custom" },
+      { "name": "clicked_book_demo", "last_seen": "2026-03-31T00:22:17Z", "type": "custom" },
+      { "name": "cta_click", "last_seen": "2026-03-31T00:21:39Z", "type": "custom" },
+      { "name": "pricing_cta_clicked", "last_seen": "2026-03-30T14:49:19Z", "type": "custom" }
+    ]
+  },
+  "actions": {
+    "count": 4,
+    "actions": [
+      { "id": 216654, "name": "Open Chatbot", "selector": ".home > button", "url": "memox.io" },
+      { "id": 216652, "name": "Message send to chatbot", "selector": "button[title='Send']", "url": "memox.io" },
+      { "id": 214811, "name": "Clicked Submit", "description": "Action to submit details for appointment" },
+      { "id": 214807, "name": "Click Demo", "description": "Actions triggered after clicking Demo button", "selector": "#demo-btn" }
+    ]
+  },
+  "insights": {
+    "count": 17,
+    "dashboard_594178_web_analytics": [
+      { "short_id": "8raQlrLQ", "name": "Daily active users (DAUs)", "type": "TrendsQuery" },
+      { "short_id": "83K4rDch", "name": "Weekly active users (WAUs)", "type": "TrendsQuery" },
+      { "short_id": "o5nMKQfZ", "name": "Retention", "type": "RetentionQuery" },
+      { "short_id": "FzF1jsCJ", "name": "Growth accounting", "type": "LifecycleQuery" },
+      { "short_id": "fzdLShvF", "name": "Referring domain (last 14 days)", "type": "TrendsQuery" },
+      { "short_id": "Lbj22QAt", "name": "Pageview funnel, by browser", "type": "FunnelsQuery" }
+    ],
+    "dashboard_787642_ai_observability": [
+      { "short_id": "T1HRrxd0", "name": "Traces", "type": "TrendsQuery" },
+      { "short_id": "BPx7QiwU", "name": "Generative AI users", "type": "TrendsQuery" },
+      { "short_id": "wz6tUusC", "name": "Total cost (USD)", "type": "TrendsQuery" },
+      { "short_id": "BtWbfm45", "name": "Cost per user (USD)", "type": "TrendsQuery" },
+      { "short_id": "2NeXnrSn", "name": "Cost by model (USD)", "type": "TrendsQuery" },
+      { "short_id": "GWIgUBEI", "name": "Generation calls", "type": "TrendsQuery" },
+      { "short_id": "wopB82kB", "name": "AI Errors", "type": "TrendsQuery" },
+      { "short_id": "12EJQGTJ", "name": "Generation latency by model (median)", "type": "TrendsQuery" },
+      { "short_id": "2cU2Ah8K", "name": "Generations by HTTP status", "type": "TrendsQuery" }
+    ],
+    "unsaved": [
+      { "short_id": "WFzqcmEL", "name": "(unnamed)", "type": "TrendsQuery" },
+      { "short_id": "kG5rSFip", "name": "(unnamed)", "type": "FunnelsQuery" }
+    ]
+  },
+  "dau_30d": {
+    "labels": ["3-Mar","4-Mar","5-Mar","6-Mar","7-Mar","8-Mar","9-Mar","10-Mar","11-Mar","12-Mar","13-Mar","14-Mar","15-Mar","16-Mar","17-Mar","18-Mar","19-Mar","20-Mar","21-Mar","22-Mar","23-Mar","24-Mar","25-Mar","26-Mar","27-Mar","28-Mar","29-Mar","30-Mar","31-Mar","1-Apr","2-Apr"],
+    "data": [3,4,2,5,1,4,2,2,3,6,4,4,1,2,1,1,3,6,1,2,0,16,6,10,8,3,6,10,4,3,3],
+    "total_dau_events": 126,
+    "avg_dau": 4.1,
+    "peak_dau": 16,
+    "peak_date": "2026-03-24"
+  },
+  "feature_flags": { "count": 0, "results": [] },
+  "audit_assessment": {
+    "overall_score": 47,
+    "previous_score": 18,
+    "previous_score_reason": "Assumed zero analytics — PostHog was not detected in HTML source inspection",
+    "scoring": {
+      "event_tracking": { "score": 18, "max": 25, "notes": "14 events, 8 custom, missing calendly completion" },
+      "conversion_setup": { "score": 12, "max": 25, "notes": "4 actions, 1 funnel, no completion tracking" },
+      "attribution": { "score": 5, "max": 20, "notes": "Auto referrer only, no UTM strategy, no ad pixels" },
+      "data_quality": { "score": 8, "max": 15, "notes": "Active collection, $web_vitals stopped Dec 2025" },
+      "consent_privacy": { "score": 2, "max": 10, "notes": "Privacy policy only, no consent banner" },
+      "dashboards": { "score": 4, "max": 5, "notes": "2 dashboards, 17 insights, retention + funnel" }
+    }
+  }
+}
