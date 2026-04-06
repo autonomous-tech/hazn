@@ -2,6 +2,8 @@
 name: seo-audit
 description: SiteScore — SEO Audit. Run a comprehensive SEO audit on any external website. Use when auditing client websites, preparing for sales calls, or delivering SEO reports. Analyzes meta tags, structured data, technical SEO, content, AI search readiness, off-site entity presence, and platform-specific AI readiness. Produces actionable recommendations with evidence labels.
 allowed-tools: web_fetch, web_search, Bash, Read, Write
+template: ~/hazn/skills/shared/report-template.html
+reference-report: ~/autonomous-proposals/audits/lt-agency-sitehealth-2026-04-03/sitescore/index.html
 ---
 
 # Website SEO Audit
@@ -915,6 +917,24 @@ Every HTML report must include a sticky sidebar TOC on desktop (≥1024px):
 - Active link: amber highlight (`background: var(--amber-500); color: var(--stone-900)`)
 - Mobile: hidden off-canvas, toggled by hamburger button
 - Intersection Observer tracks active section
+
+### MANDATORY: Use Shared Template
+
+**All HTML reports MUST use the shared template structure:**
+
+Reference files:
+- Template: `~/hazn/skills/shared/report-template.html`
+- Example report: `~/autonomous-proposals/audits/lt-agency-sitehealth-2026-04-03/sitescore/index.html`
+
+Required elements (see template):
+1. Two-column layout (sidebar TOC + main content)
+2. Frosted glass sidebar with `backdrop-filter: blur(8px)`
+3. Scroll reveal animations with IntersectionObserver
+4. Score cards with `.score-card` class (initially `opacity: 0; transform: translateY(28px)`)
+5. Finding cards with severity badges (.critical, .high, .medium, .low)
+6. Before/after blocks using `.before-block` and `.after-block`
+7. Data tables with `.data-table` class
+8. Mobile responsive (sidebar hidden <1024px)
 
 ---
 

@@ -8,6 +8,8 @@ description: >
   It guides the complete GA4 property assessment and live site tracking code inspection, with
   Shopify-specific checks for Web Pixels Manager and Trekkie S2S configurations.
 version: 1.0.0
+template: ~/hazn/skills/shared/report-template.html
+reference-report: ~/autonomous-proposals/audits/lt-agency-sitehealth-2026-04-03/revenue-leak/index.html
 ---
 
 ## Step 0: Pre-Flight Credential Check

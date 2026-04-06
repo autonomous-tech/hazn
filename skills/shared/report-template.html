@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{REPORT_TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+/* === STONE/AMBER DESIGN SYSTEM === */
+/* All audit reports MUST use this exact CSS structure */
+
+:root {
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e3;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-600: #57534e;
+  --stone-700: #44403c;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --red-500: #ef4444;
+  --red-100: #fee2e2;
+  --amber-100: #fef3c7;
+  --green-500: #22c55e;
+  --green-100: #dcfce7;
+  --blue-500: #3b82f6;
+  --blue-100: #dbeafe;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--stone-50);
+  color: var(--stone-800);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Source Serif 4', Georgia, serif;
+  color: var(--stone-900);
+  line-height: 1.2;
+}
+
+/* === MANDATORY: TWO-COLUMN LAYOUT === */
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* === MANDATORY: SIDEBAR TOC === */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid var(--stone-200);
+  padding: 2rem 1rem;
+  z-index: 100;
+}
+
+.sidebar-logo {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--stone-900);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--stone-200);
+}
+
+.sidebar-logo span {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: var(--stone-500);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+.toc-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--stone-400);
+  margin-bottom: 0.75rem;
+}
+
+.toc-list { list-style: none; }
+.toc-list li { margin-bottom: 0.15rem; }
+
+.toc-list a {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--stone-500);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.toc-list a:hover {
+  background: var(--stone-100);
+  color: var(--stone-800);
+}
+
+.toc-list a.active {
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-weight: 600;
+}
+
+/* === MANDATORY: MAIN CONTENT === */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+/* === MANDATORY: HERO SECTION === */
+.hero {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--stone-200);
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--amber-500);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: var(--stone-900);
+}
+
+.hero-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.hero-meta-item {
+  font-size: 0.8rem;
+  color: var(--stone-500);
+}
+
+.hero-meta-item strong {
+  color: var(--stone-700);
+  font-weight: 600;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--amber-100);
+  color: var(--stone-800);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 99px;
+  border: 1px solid var(--amber-400);
+  margin-top: 1.25rem;
+}
+
+/* === MANDATORY: SECTION HEADERS === */
+.section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--stone-200);
+}
+
+.section:last-of-type { border-bottom: none; }
+
+.section-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--amber-500);
+  margin-bottom: 0.5rem;
+}
+
+.section h2 {
+  font-size: 1.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-desc {
+  color: var(--stone-500);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  max-width: 680px;
+}
+
+/* === MANDATORY: SCORE GRID === */
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.score-card {
+  background: white;
+  border: 1px solid var(--stone-200);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.2s;
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.score-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.score-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.score-number {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.score-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stone-500);
+  margin-bottom: 0.5rem;
+}
+
+.score-status {
+  font-size: 0.75rem;
+  color: var(--stone-500);
+}
+
+.score-card.red .score-number { color: var(--red-500); }
+.score-card.amber .score-number { color: var(--amber-600); }
+.score-card.green .score-number { color: var(--green-500); }
+.score-card.overall { background: var(--stone-900); border-color: var(--stone-900); }
+.score-card.overall .score-number { color: var(--amber-400); }
+.score-card.overall .score-label { color: var(--stone-400); }
+.score-card.overall .score-status { color: var(--stone-400); }
+
+/* === MANDATORY: FINDING CARDS === */
+.finding-card {
+  background: white;
+  border: 1px solid var(--stone-200);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: all 0.2s;
+}
+
+.finding-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.finding-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+}
+
+.finding-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.finding-number {
+  background: var(--amber-500);
+  color: var(--stone-900);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.finding-severity {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 99px;
+}
+
+.finding-severity.critical { background: var(--red-100); color: var(--red-500); }
+.finding-severity.high { background: var(--amber-100); color: var(--amber-600); }
+.finding-severity.medium { background: var(--blue-100); color: var(--blue-500); }
+.finding-severity.low { background: var(--green-100); color: var(--green-500); }
+
+.finding-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.finding-meta {
+  font-size: 0.8rem;
+  color: var(--stone-500);
+  margin-bottom: 1.25rem;
+}
+
+.finding-body h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--stone-700);
+}
+
+.finding-body p {
+  color: var(--stone-600);
+  margin-bottom: 1rem;
+}
+
+.finding-body code {
+  background: var(--stone-100);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.finding-body pre {
+  background: var(--stone-900);
+  color: var(--stone-100);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  margin: 1rem 0;
+}
+
+.finding-body pre code {
+  background: none;
+  padding: 0;
+}
+
+.finding-effort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--stone-500);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--stone-200);
+}
+
+/* === MANDATORY: BEFORE/AFTER BLOCKS === */
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.before-block, .after-block {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.before-block {
+  background: var(--red-100);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.after-block {
+  background: var(--green-100);
+  border: 1px solid rgba(34,197,94,0.3);
+}
+
+.before-block h5, .after-block h5 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.before-block h5 { color: var(--red-500); }
+.after-block h5 { color: var(--green-500); }
+
+/* === MANDATORY: TABLES === */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: var(--stone-100);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--stone-200);
+}
+
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--stone-200);
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+.data-table tr:hover td { background: var(--stone-50); }
+
+/* === MANDATORY: MOBILE RESPONSIVE === */
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+  .main-content {
+    padding: 0 1.5rem 3rem;
+  }
+  .score-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .before-after {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 2rem; }
+  .score-grid { grid-template-columns: 1fr; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <!-- MANDATORY: SIDEBAR TOC -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      {{REPORT_TYPE}}
+      <span>{{CLIENT_NAME}} • {{DATE}}</span>
+    </div>
+    <p class="toc-title">Contents</p>
+    <ul class="toc-list">
+      {{TOC_ITEMS}}
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    {{CONTENT}}
+  </main>
+</div>
+
+<!-- MANDATORY: SCROLL REVEAL -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('revealed');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.score-card, .finding-card, .cvr-col').forEach(el => {
+    observer.observe(el);
+  });
+
+  // TOC active state
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const sections = document.querySelectorAll('.section');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    tocLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

@@ -5,6 +5,8 @@ author: Tommy Geoco
 homepage: https://audit.uxtools.co
 logo: logo-light.png
 logoDark: logo-dark.png
+template: ~/hazn/skills/shared/report-template.html
+reference-report: ~/autonomous-proposals/audits/lt-agency-sitehealth-2026-04-03/ux-ui/index.html
 ---
 
 # UI Audit Skill

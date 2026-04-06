@@ -2,6 +2,8 @@
 name: ConversionIQ — CRO Audit
 description: Run a comprehensive landing page conversion audit covering copywriting, design, and UX/experience. Three tiers (Free / Standard / Deep Dive) with brand config support. Generates a branded HTML audit report with scores, before/after recommendations, implementation roadmap, CVR projections, and A/B testing opportunities. Styled with Stone/Amber design system (Source Serif 4 + Inter, stone/amber palette). Brand tokens in references/brand.md.
 allowed-tools: Read, Grep, Glob, Edit, Write, Bash
+template: ~/hazn/skills/shared/report-template.html
+reference-report: ~/autonomous-proposals/audits/lt-agency-sitehealth-2026-04-03/conversioniq/index.html
 ---
 
 ## Step 0: Pre-Flight Credential Check
