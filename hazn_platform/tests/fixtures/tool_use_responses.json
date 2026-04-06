@@ -1,0 +1,30 @@
+[
+  {
+    "type": "tool_use",
+    "id": "toolu_01HqX7gK9mNvR3pL5sWtYz8a",
+    "name": "load_context",
+    "input": {
+      "agent_id": "agent-seo-specialist--client-acme-corp",
+      "l3_client_id": "550e8400-e29b-41d4-a716-446655440000",
+      "l2_agency_id": "660e8400-e29b-41d4-a716-446655440001"
+    }
+  },
+  {
+    "type": "tool_use",
+    "id": "toolu_02JkM8nL4qPsT6uX9wVzAb3c",
+    "name": "search_archival",
+    "input": {
+      "query": "previous SEO audit findings for acme-corp.com",
+      "agent_id": "agent-seo-specialist--client-acme-corp"
+    }
+  },
+  {
+    "type": "tool_use",
+    "id": "toolu_03RtN9oP5rQuU7vY0xWaBC4d",
+    "name": "get_analytics_data",
+    "input": {
+      "domain": "acme-corp.com",
+      "date_range": "2025-12-01/2026-02-28"
+    }
+  }
+]

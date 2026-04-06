@@ -1,0 +1,47 @@
+name: analytics-teaser
+description: Zero-access prospect teaser report — covers performance, MarTech, SEO, Copy, UX, and CRO with service upsell gates. No GA4/GSC access required.
+trigger: /hazn-analytics-teaser
+
+phases:
+  - id: setup
+    name: Setup & Scope
+    actions:
+      - Parse site URL, optional company name, optional Calendly URL
+      - Normalize URL (add https:// if missing)
+      - Extract domain from URL
+      - Create .hazn/outputs/analytics-teaser/<domain>/screenshots/ directory
+      - Confirm scope with user
+
+  - id: data-collection
+    name: Data Collection
+    depends_on: [setup]
+    parallel_tracks: [site_inspection, pagespeed, public_data, playwright]
+    agents: [analytics-inspector, analytics-teaser-collector]
+    scripts:
+      - pagespeed_collector.py <URL> .hazn/outputs/analytics-teaser/<domain>/pagespeed.json
+      - teaser_collector.py <URL> .hazn/outputs/analytics-teaser/<domain>/teaser_data.json
+    note: >
+      Run all 4 collection tasks in parallel:
+      1. analytics-inspector agent → site_inspection.json
+      2. pagespeed_collector.py → pagespeed.json
+      3. teaser_collector.py → teaser_data.json
+      4. analytics-teaser-collector agent → playwright_data.json + screenshots
+
+  - id: report-generation
+    name: Report Generation
+    depends_on: [data-collection]
+    agent: analytics-teaser-writer
+    skills: [analytics-teaser-report]
+    references: [.hazn/skills/analytics-audit/references/teaser-template.md]
+    outputs: [.hazn/outputs/analytics-teaser/<domain>/index.html]
+
+  - id: verification
+    name: Verification
+    depends_on: [report-generation]
+    actions:
+      - Check output file exists and size
+      - Visual verification at 3 viewport sizes (1440px, 768px, 375px)
+      - Content verification (scores, findings, gates, CTAs)
+      - Close browser
+
+estimated_duration: "30-60 minutes"

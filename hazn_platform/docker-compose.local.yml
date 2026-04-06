@@ -1,0 +1,162 @@
+volumes:
+  hazn_platform_local_postgres_data: {}
+  hazn_platform_local_postgres_data_backups: {}
+  hazn_platform_local_redis_data: {}
+  letta_data: {}
+  vault_data: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: hazn_platform_local_django
+    container_name: hazn_platform_local_django
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    volumes:
+      - /app/.venv
+      - .:/app:z
+      - ./.vault-approle:/app/.vault-approle:ro
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - '8000:8000'
+    command: /start
+
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: hazn_platform_local_postgres
+    volumes:
+      - hazn_platform_local_postgres_data:/var/lib/postgresql/data
+      - hazn_platform_local_postgres_data_backups:/backups
+      - ./scripts/create-letta-db.sh:/docker-entrypoint-initdb.d/create-letta-db.sh:ro
+    env_file:
+      - ./.envs/.local/.postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-debug}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  letta:
+    image: letta/letta:latest
+    container_name: hazn_platform_local_letta
+    ports:
+      - "8283:8283"
+    environment:
+      - LETTA_PG_URI=postgresql://debug:debug@postgres:5432/letta
+      - LETTA_SERVER_PASSWORD=letta
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    env_file:
+      - ./.envs/.local/.letta
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - letta_data:/root/.letta
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8283/v1/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  vault:
+    image: hashicorp/vault:1.18
+    container_name: hazn_platform_local_vault
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_ADDR: "http://0.0.0.0:8200"
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - vault_data:/vault/file
+      - ./vault/config.hcl:/vault/config/config.hcl:ro
+    command: vault server -config=/vault/config/config.hcl
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://localhost:8200/v1/sys/health 2>&1 || wget --spider --quiet http://localhost:8200/v1/sys/seal-status 2>&1 || exit 0"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  mailpit:
+    image: docker.io/axllent/mailpit:latest
+    container_name: hazn_platform_local_mailpit
+    ports:
+      - "8025:8025"
+
+  redis:
+    image: docker.io/redis:7.2
+    container_name: hazn_platform_local_redis
+    volumes:
+      - hazn_platform_local_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  celeryworker:
+    <<: *django
+    image: hazn_platform_local_celeryworker
+    container_name: hazn_platform_local_celeryworker
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: hazn_platform_local_celerybeat
+    container_name: hazn_platform_local_celerybeat
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: hazn_platform_local_flower
+    container_name: hazn_platform_local_flower
+    ports:
+      - '5559:5555'
+    command: /start-flower
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./compose/local/node/Dockerfile
+    image: hazn_platform_local_frontend
+    container_name: hazn_platform_local_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - DJANGO_API_URL=http://django:8000
+    depends_on:
+      - django

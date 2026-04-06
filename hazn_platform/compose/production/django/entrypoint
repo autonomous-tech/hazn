@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+if [ -z "${POSTGRES_USER}" ]; then
+    base_postgres_image_default_user='postgres'
+    export POSTGRES_USER="${base_postgres_image_default_user}"
+fi
+export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+
+wait-for-it "${POSTGRES_HOST}:${POSTGRES_PORT}" -t 30
+
+>&2 echo 'PostgreSQL is available'
+
+# Source Vault AppRole credentials from mounted file
+APPROLE_FILE="/app/.vault-approle"
+if [ -f "$APPROLE_FILE" ]; then
+    # Determine service type from SERVICE_ROLE env var (default: DJANGO)
+    SERVICE_ROLE="${SERVICE_ROLE:-DJANGO}"
+    ROLE_ID_KEY="${SERVICE_ROLE}_ROLE_ID"
+    SECRET_ID_KEY="${SERVICE_ROLE}_SECRET_ID"
+    while IFS='=' read -r key value; do
+        if [ "$key" = "$ROLE_ID_KEY" ]; then
+            export VAULT_ROLE_ID="$value"
+        elif [ "$key" = "$SECRET_ID_KEY" ]; then
+            export VAULT_SECRET_ID="$value"
+        fi
+    done < "$APPROLE_FILE"
+    >&2 echo "Vault AppRole credentials loaded for ${SERVICE_ROLE}"
+else
+    >&2 echo "WARNING: ${APPROLE_FILE} not found -- Vault operations will fail"
+fi
+
+exec "$@"

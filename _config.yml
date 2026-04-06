@@ -1,0 +1,14 @@
+exclude:
+  - agents/
+  - skills/
+  - workflows/
+  - scripts/
+  - src/
+  - bin/
+  - tests/
+  - projects/
+  - templates/
+  - docs/
+  - "*.json"
+  - "*.ts"
+  - node_modules/

@@ -1,0 +1,30 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+DATABASE_URL=postgres://debug:debug@postgres:5432/hazn_platform
+IPYTHONDIR=/app/.ipython
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+
+# Flower
+CELERY_FLOWER_USER=debug
+CELERY_FLOWER_PASSWORD=debug
+
+# Vault
+# ------------------------------------------------------------------------------
+VAULT_ADDR=http://vault:8200
+
+# Letta
+# ------------------------------------------------------------------------------
+LETTA_BASE_URL=http://letta:8283
+LETTA_SERVER_PASSWORD=letta
+
+# Langfuse (external -- connection config only)
+# ------------------------------------------------------------------------------
+LANGFUSE_PUBLIC_KEY=placeholder
+LANGFUSE_SECRET_KEY=placeholder
+LANGFUSE_HOST=https://langfuse.example.com

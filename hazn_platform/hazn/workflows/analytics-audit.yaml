@@ -1,0 +1,42 @@
+name: Analytics Audit
+description: Comprehensive SEO & analytics audit — collects GA4, Search Console, and PageSpeed data, analyzes performance, and produces a branded HTML report.
+trigger: manual
+estimated_duration: "15-30 min"
+deliverables:
+  - analytics-audit-report
+
+phases:
+  - id: data-collection
+    name: Data Collection
+    agent: data-collector
+    tools:
+      - collect_ga4_data
+      - collect_gsc_data
+      - collect_pagespeed_data
+    outputs:
+      - ga4_data
+      - gsc_data
+      - pagespeed_data
+
+  - id: analysis
+    name: Analysis & Insights
+    agent: seo-analyst
+    depends_on:
+      - data-collection
+    tools:
+      - search_memory
+      - load_context
+    outputs:
+      - analysis_report
+
+  - id: delivery
+    name: Report Delivery
+    agent: report-writer
+    depends_on:
+      - analysis
+    outputs:
+      - branded_html_report
+
+checkpoints:
+  - after: data-collection
+    message: "Data collection complete — review raw metrics before analysis begins."
