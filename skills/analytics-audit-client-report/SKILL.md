@@ -80,9 +80,33 @@ Write a single `.hazn/outputs/analytics-audit/client-report/index.html` file wit
 - **Image references** to `images/` subdirectory (hero, section backgrounds)
 - **Print-friendly** — hide ToC and reduce margins for print media
 
+### White-Label Branding (Optional)
+
+Before applying the design system below, check if `brand-profile.md` exists in the current working directory. If it does:
+
+1. **Read the file** — it contains YAML frontmatter with the client's brand identity (colors, fonts, logo, brand name) and markdown body (tone, visual style).
+2. **Override the Stone/Amber palette** with the client's colors:
+   - `colors.background` → replaces `--stone-50` (light bg) or `--stone-900` (dark bg) depending on `theme`
+   - `colors.primary` → replaces `--amber-500` as the primary accent (CTAs, active states, highlights)
+   - `colors.secondary` → replaces `--amber-600` as the hover/emphasis accent
+   - `colors.text` → replaces `--stone-800` as body text color
+   - `colors.accent` → replaces `--amber-400` for lighter accent uses
+   - Keep `--stone-*` for structural grays (borders, subtle backgrounds) — only replace the amber accent and primary text colors
+3. **Override typography:**
+   - `typography.heading` → replaces 'Source Serif 4' for all headings
+   - `typography.body` → replaces 'Inter' for all body text
+   - Update the Google Fonts `@import` URL to load the client's fonts instead
+4. **Override branding elements:**
+   - Use `brand_name` in the report title and footer instead of "Autonomous Technologies"
+   - If `logo_url` is available, add a logo to the report header
+5. **Keep severity colors unchanged** — `--red-500`, `--green-500`, `--blue-500` and their `-100` variants are functional indicators, not brand colors.
+6. **Adapt the CTA button** (`.cta-btn`): replace `--amber-500` background with `colors.primary`, and adjust text color for contrast.
+
+If `brand-profile.md` does not exist, use the Stone/Amber palette and typography below as-is.
+
 ### Design System
 
-Use the **Stone/Amber palette** and typography below. These tokens are canonical — do not substitute or abbreviate.
+Use the **Stone/Amber palette** and typography below as defaults. These tokens are canonical — but if you loaded a `brand-profile.md` in the previous step, override the accent colors and typography with the client's brand identity while keeping structural grays (stone-*) intact.
 
 ```css
 :root {
