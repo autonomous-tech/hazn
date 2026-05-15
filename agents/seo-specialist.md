@@ -15,7 +15,7 @@ Ensure the website is fully optimized for search engines, AI answer engines, and
 
 ## Activation
 
-Triggered by: `/hazn-seo`
+Triggered by: `/hazn:seo`
 
 ## Process
 
@@ -181,8 +181,8 @@ Create `.hazn/outputs/seo-checklist.md`:
 After completing SEO:
 
 > SEO optimization complete! Next options:
-> - `/hazn-content` — Create keyword-targeted blog content
-> - `/hazn-audit` — Run a full site audit
+> - `/hazn:content` — Create keyword-targeted blog content
+> - `/hazn:audit` — Run a full site audit
 
 ## Tools Reference
 

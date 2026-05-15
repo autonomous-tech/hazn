@@ -6,7 +6,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## Strategist
 
-**Trigger:** `/hazn-strategy`  
+**Trigger:** `/hazn:strategy`  
 **Used in:** website, ngo-website, blog (implicitly), landing (skipped)  
 **Skills:** `b2b-marketing-ux`, `b2b-ux-reference` (B2B track); `ngo-web-design` (NGO track)
 
@@ -22,7 +22,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 **Output:** `.hazn/outputs/strategy.md` containing: positioning statement, ICP (primary/secondary/anti-persona), value proposition, competitive landscape table, conversion strategy, content requirements, success metrics.
 
 **Caveats:**
-- Will redirect to `/hazn-ngo` if org type is NGO — this is correct behavior, not a bug.
+- Will redirect to `/hazn:ngo` if org type is NGO — this is correct behavior, not a bug.
 - Discovery is interactive (asks questions one at a time). Batch all client info upfront to speed this up.
 - "Vague differentiation" will be challenged. If the client hasn't thought this through, strategy phase takes longer.
 
@@ -30,7 +30,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## UX Architect
 
-**Trigger:** `/hazn-ux`  
+**Trigger:** `/hazn:ux`  
 **Used in:** website, ngo-website, landing  
 **Skills:** `b2b-marketing-ux`, `b2b-ux-reference` (B2B); `ngo-web-design` (NGO)
 
@@ -51,7 +51,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## Copywriter
 
-**Trigger:** `/hazn-copy`  
+**Trigger:** `/hazn:copy`  
 **Used in:** website, ngo-website, landing  
 **Skills:** `b2b-website-copywriter`, `landing-page-copywriter` (B2B); `ngo-web-design` (NGO)
 
@@ -73,7 +73,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## Wireframer
 
-**Trigger:** `/hazn-wireframe`  
+**Trigger:** `/hazn:wireframe`  
 **Used in:** website, ngo-website (optional in both)  
 **Skills:** `b2b-wireframe`
 
@@ -95,7 +95,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## Developer
 
-**Trigger:** `/hazn-dev`  
+**Trigger:** `/hazn:dev`  
 **Used in:** website, ngo-website, landing  
 **Skills:** `payload-nextjs-stack` (Next.js track); `wordpress-generatepress` (WordPress track)
 
@@ -145,7 +145,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## SEO Specialist
 
-**Trigger:** `/hazn-seo`  
+**Trigger:** `/hazn:seo`  
 **Used in:** website, ngo-website, blog  
 **Skills:** `seo-optimizer`, `seo-audit`, `entity-knowledge-graph`
 
@@ -167,7 +167,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## Content Writer
 
-**Trigger:** `/hazn-content` or `/hazn-blog`  
+**Trigger:** `/hazn:content` or `/hazn-blog`  
 **Used in:** blog, website (post-launch phase)  
 **Skills:** `seo-blog-writer`, `keyword-research`
 
@@ -190,7 +190,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 ## Auditor
 
-**Trigger:** `/hazn-audit`  
+**Trigger:** `/hazn:audit`  
 **Used in:** audit, ngo-website (accessibility gate)  
 **Skills:** `conversion-audit`, `website-audit`, `ui-audit`
 

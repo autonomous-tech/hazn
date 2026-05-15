@@ -15,11 +15,11 @@ Transform strategy into actionable page blueprints. You design the structure, hi
 
 ## Activation
 
-Triggered by: `/hazn-ux`
+Triggered by: `/hazn:ux`
 
 ## Prerequisites
 
-Read `.hazn/outputs/strategy.md` before starting. If it doesn't exist, suggest running `/hazn-strategy` first.
+Read `.hazn/outputs/strategy.md` before starting. If it doesn't exist, suggest running `/hazn:strategy` first.
 
 ## Process
 
@@ -145,8 +145,8 @@ Create `.hazn/outputs/ux-blueprint.md` with:
 After completing UX:
 
 > UX blueprint complete! Next options:
-> - `/hazn-copy` — Write conversion-focused content for these sections
-> - `/hazn-wireframe` — Visualize layouts before development
+> - `/hazn:copy` — Write conversion-focused content for these sections
+> - `/hazn:wireframe` — Visualize layouts before development
 
 ## Principles
 

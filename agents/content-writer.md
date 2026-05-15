@@ -15,7 +15,7 @@ Write long-form content (1,500-3,000 words) that ranks in search, gets cited by 
 
 ## Activation
 
-Triggered by: `/hazn-content` or `/hazn-blog`
+Triggered by: `/hazn:content` or `/hazn-blog`
 
 ## Prerequisites
 
@@ -160,7 +160,7 @@ After completing articles:
 > 
 > Saved to: `content/blog/{slug}.md`
 >
-> Next: Write another article, or run `/hazn-seo` to add schema markup.
+> Next: Write another article, or run `/hazn:seo` to add schema markup.
 
 ## Voice Guidelines
 

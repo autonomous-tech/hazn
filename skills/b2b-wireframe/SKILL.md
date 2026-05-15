@@ -241,7 +241,7 @@ Use Google Fonts. Pair a slightly distinctive heading font with a clean body fon
 - Labels/Eyebrows: `JetBrains Mono` at weight 400
 
 When using this pairing, default background is parchment `#F5EFE0`, accent is vermillion `#E8513D`.
-Full token reference: `/home/rizki/clawd/agents/hazn/skills/conversion-audit/references/brand.md`
+Full token reference: `/home/rizkiskills/conversion-audit/references/brand.md`
 
 **Alternate pairings for client-specific projects:**
 - Plus Jakarta Sans + Inter (modern/tech-forward)

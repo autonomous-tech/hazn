@@ -6,49 +6,49 @@ AI-driven website development framework for B2B, NGO, and institutional websites
 
 | Organisation type | Use this command |
 |------------------|-----------------|
-| B2B / commercial / agency | `/hazn-website` |
-| NGO / association / political org / international institution | `/hazn-ngo` |
-| Site audit (any type) | `/hazn-audit` |
-| Blog content pipeline | `/hazn-content` |
+| B2B / commercial / agency | `/hazn:website` |
+| NGO / association / political org / international institution | `/hazn:ngo` |
+| Site audit (any type) | `/hazn:audit` |
+| Blog content pipeline | `/hazn:content` |
 
-> **Never use `/hazn-website` for an NGO.** The goals, IA, compliance requirements, and tone are fundamentally different. Use `/hazn-ngo`.
+> **Never use `/hazn:website` for an NGO.** The goals, IA, compliance requirements, and tone are fundamentally different. Use `/hazn:ngo`.
 
 ## Quick Commands
 
 | Command | Description |
 |---------|-------------|
-| `/hazn-help` | Contextual guidance on what to do next |
-| `/hazn-website` | Full B2B/commercial website build |
-| `/hazn-ngo` | NGO / association / institutional website build |
-| `/hazn-audit` | Comprehensive site audit |
-| `/hazn-strategy` | Define positioning and goals |
-| `/hazn-ux` | Create page blueprints |
-| `/hazn-copy` | Write content |
-| `/hazn-wireframe` | Visual layout validation |
-| `/hazn-dev` | Build (Next.js + Payload CMS, or WordPress + GeneratePress) |
-| `/hazn-seo` | Technical SEO optimization |
-| `/hazn-content` | Blog content pipeline |
+| `/hazn:help` | Contextual guidance on what to do next |
+| `/hazn:website` | Full B2B/commercial website build |
+| `/hazn:ngo` | NGO / association / institutional website build |
+| `/hazn:audit` | Comprehensive site audit |
+| `/hazn:strategy` | Define positioning and goals |
+| `/hazn:ux` | Create page blueprints |
+| `/hazn:copy` | Write content |
+| `/hazn:wireframe` | Visual layout validation |
+| `/hazn:dev` | Build (Next.js + Payload CMS, or WordPress + GeneratePress) |
+| `/hazn:seo` | Technical SEO optimization |
+| `/hazn:content` | Blog content pipeline |
 
 ## Workflows
 
 ### B2B / Commercial Website
 ```
-/hazn-strategy → /hazn-ux → /hazn-copy → /hazn-wireframe → /hazn-dev → /hazn-seo
+/hazn:strategy → /hazn:ux → /hazn:copy → /hazn:wireframe → /hazn:dev → /hazn:seo
 ```
 
 ### NGO / Association / Institutional Website
 ```
-/hazn-ngo → (strategy + compliance) → /hazn-ux → /hazn-wireframe → /hazn-dev → accessibility audit → /hazn-seo
+/hazn:ngo → (strategy + compliance) → /hazn:ux → /hazn:wireframe → /hazn:dev → accessibility audit → /hazn:seo
 ```
 
 ### Quick Landing Page
 ```
-/hazn-strategy → /hazn-dev
+/hazn:strategy → /hazn:dev
 ```
 
 ### Site Audit
 ```
-/hazn-audit
+/hazn:audit
 ```
 
 ## Agents
@@ -79,7 +79,7 @@ AI-driven website development framework for B2B, NGO, and institutional websites
 
 ## Tips
 
-- Run `/hazn-help` anytime for guidance
+- Run `/hazn:help` anytime for guidance
 - Outputs from each phase feed into the next
 - Skip phases if you have existing assets
 - Agents will ask clarifying questions — answer thoroughly

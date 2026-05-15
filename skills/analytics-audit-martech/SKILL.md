@@ -1,5 +1,5 @@
 ---
-name: MarTech & Attribution Audit
+name: analytics-audit-martech
 description: >
   This skill should be used when the user asks to "audit attribution", "analyze martech stack",
   "evaluate CDP", "audit ad platform integration", "check server-side tracking",

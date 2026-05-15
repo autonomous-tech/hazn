@@ -6,36 +6,36 @@ AI-driven marketing website development framework.
 
 > **Two command systems:**
 > - **Chat** (WhatsApp/Telegram/Signal): `/website`, `/audit`, `/landing`, `/content`, `/email`, `/case-study`, `/optimize`, `/ngo`
-> - **Claude Code slash commands**: `/hazn-website`, `/hazn-audit`, `/hazn-landing` etc. (register via `.claude/commands/`)
+> - **Claude Code slash commands**: `/hazn:website`, `/hazn:audit`, `/hazn:landing` etc. (register via `.claude/commands/`)
 
 | Command | Description |
 |---------|-------------|
-| `/hazn-help` | Contextual guidance on what to do next |
-| `/hazn-website` | Full website build workflow |
-| `/hazn-audit` | Comprehensive site audit |
-| `/hazn-strategy` | Define positioning and goals |
-| `/hazn-ux` | Create page blueprints |
-| `/hazn-copy` | Write conversion-focused content |
-| `/hazn-wireframe` | Visual layout validation |
-| `/hazn-dev` | Build with Next.js + Payload CMS |
-| `/hazn-seo` | Technical SEO optimization |
-| `/hazn-content` | Blog content pipeline |
+| `/hazn:help` | Contextual guidance on what to do next |
+| `/hazn:website` | Full website build workflow |
+| `/hazn:audit` | Comprehensive site audit |
+| `/hazn:strategy` | Define positioning and goals |
+| `/hazn:ux` | Create page blueprints |
+| `/hazn:copy` | Write conversion-focused content |
+| `/hazn:wireframe` | Visual layout validation |
+| `/hazn:dev` | Build with Next.js + Payload CMS |
+| `/hazn:seo` | Technical SEO optimization |
+| `/hazn:content` | Blog content pipeline |
 
 ## Workflows
 
 ### Full Website Build
 ```
-/hazn-strategy → /hazn-ux → /hazn-copy → /hazn-wireframe → /hazn-dev → /hazn-seo
+/hazn:strategy → /hazn:ux → /hazn:copy → /hazn:wireframe → /hazn:dev → /hazn:seo
 ```
 
 ### Quick Landing Page
 ```
-/hazn-strategy → /hazn-dev
+/hazn:strategy → /hazn:dev
 ```
 
 ### Site Audit
 ```
-/hazn-audit
+/hazn:audit
 ```
 
 ## Agents (18 sub-agents)
@@ -92,7 +92,7 @@ hazn/
 
 ## Tips
 
-- Run `/hazn-help` anytime for guidance
+- Run `/hazn:help` anytime for guidance
 - Outputs from each phase feed into the next
 - Skip phases if you have existing assets
 - Agents will ask clarifying questions — answer thoroughly

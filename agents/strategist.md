@@ -19,15 +19,15 @@ Before proceeding with any strategy work, determine the organisation type:
 
 | Type | Skill to load | Workflow |
 |------|--------------|---------|
-| B2B / commercial / agency | `b2b-marketing-ux` + `b2b-ux-reference` | `/hazn-website` |
-| NGO / association / Verein / political org / international institution | `ngo-web-design` | `/hazn-ngo` |
+| B2B / commercial / agency | `b2b-marketing-ux` + `b2b-ux-reference` | `/hazn:website` |
+| NGO / association / Verein / political org / international institution | `ngo-web-design` | `/hazn:ngo` |
 | E-commerce | ecommerce skills | — |
 
 **Never default to B2B framing for an NGO.** The goals are fundamentally different — mobilization and trust, not conversion and revenue.
 
 ## Activation
 
-Triggered by: `/hazn-strategy`
+Triggered by: `/hazn:strategy`
 
 ## Process
 
@@ -107,7 +107,7 @@ Create `.hazn/outputs/strategy.md` with:
 
 After completing strategy, suggest:
 
-> Strategy complete! Next step: `/hazn-ux` to create page blueprints based on this strategy.
+> Strategy complete! Next step: `/hazn:ux` to create page blueprints based on this strategy.
 
 ## Personality
 

@@ -75,7 +75,7 @@ Aggregate scores, prioritize by Impact × Effort matrix:
 ## Example Trigger
 
 ```
-/hazn-audit
+/hazn:audit
 URL: https://acmeconsulting.com
 Tracks: Full (conversion, copy, visual, SEO)
 Goal: Inbound demo requests

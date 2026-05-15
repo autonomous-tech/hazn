@@ -4,10 +4,10 @@ Run the complete free Store Diagnostic on a Shopify store. Combines ALL Intellig
 
 ## Usage
 ```
-/hazn-store-diagnostic [URL]
+/hazn:store-diagnostic [URL]
 ```
 
-Optional: `/hazn-store-diagnostic [URL] --revenue [estimated monthly revenue]`
+Optional: `/hazn:store-diagnostic [URL] --revenue [estimated monthly revenue]`
 
 ## Model Routing
 - **Sonnet agents** for: `seo-audit`, `conversion-audit`, `shopify-logic-scan`, `shopify-platform-scan`, `shopify-app-ecosystem-scan`, `ai-seo` (require reasoning)
@@ -75,7 +75,7 @@ Launch BOTH skills in parallel within this track:
 **Track 4b: Shopify Platform Scan** (Sonnet)
 - Invoke `shopify-platform-scan` skill (platform fingerprint, legacy architecture scoring, Functions migration risk, B2B architecture, variant limits, Shopify Markets)
 - THIS IS THE NEW DIFFERENTIATOR — platform-specific risks no competitor audits for
-- Uses relative dates for all deadlines (reads from references/shopify-platform-reference.md)
+- Uses relative dates for all deadlines (reads from references/benchmarks.md)
 - Save to: `projects/[slug]/diagnostics/shopify-platform-scan.json`
 
 **Track 5: UI/UX Audit** (Haiku)

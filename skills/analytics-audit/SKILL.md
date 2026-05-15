@@ -1,5 +1,5 @@
 ---
-name: Revenue Leak Audit — Attribution & Analytics
+name: analytics-audit
 description: >
   This skill should be used when the user asks to "audit a website", "audit GA4", "inspect tracking",
   "check analytics setup", "review tags", "audit a Shopify store", "check GA4 configuration",
@@ -11,6 +11,8 @@ version: 1.0.0
 template: ~/hazn/skills/shared/report-template.html
 reference-report: ~/autonomous-proposals/audits/lt-agency-sitehealth-2026-04-03/revenue-leak/index.html
 ---
+
+# Revenue Leak Audit — Attribution & Analytics
 
 ## Step 0: Pre-Flight Credential Check
 

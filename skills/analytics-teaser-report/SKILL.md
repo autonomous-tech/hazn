@@ -1,5 +1,5 @@
 ---
-name: Teaser Report HTML Generator
+name: analytics-teaser-report
 description: >
   Use when generating the /hazn-analytics-teaser prospect report. Defines the design system,
   section mapping, scoring formulas, and Copy/UX/CRO evaluation criteria for

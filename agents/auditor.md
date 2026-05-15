@@ -15,7 +15,7 @@ Analyze existing websites and produce actionable audit reports. Identify what's 
 
 ## Activation
 
-Triggered by: `/hazn-audit`
+Triggered by: `/hazn:audit`
 
 ## Process
 
@@ -157,7 +157,7 @@ After completing audit:
 > 2. [Issue 2]
 > 3. [Issue 3]
 >
-> Ready to fix these? Run `/hazn-strategy` to rebuild from foundations, or `/hazn-dev` to implement fixes directly.
+> Ready to fix these? Run `/hazn:strategy` to rebuild from foundations, or `/hazn:dev` to implement fixes directly.
 
 ## Scoring Guide
 

@@ -9,9 +9,9 @@
 - Testing a new service or positioning before committing to a full site build
 
 **NOT for:**
-- Multi-page websites → use `/hazn-website`
-- Situations where the offer, audience, or positioning are unclear — run `/hazn-strategy` first
-- NGO or institutional landing pages with compliance requirements → use `/hazn-ngo`
+- Multi-page websites → use `/hazn:website`
+- Situations where the offer, audience, or positioning are unclear — run `/hazn:strategy` first
+- NGO or institutional landing pages with compliance requirements → use `/hazn:ngo`
 
 ## Requirements
 
@@ -52,7 +52,7 @@ Single page component, responsive design, form handling (if needed), basic SEO m
 - This workflow intentionally skips wireframes and keyword research. If stakeholder approval is needed before build, add a wireframe step manually — it takes 30 minutes and prevents costly dev revisions.
 - Form handling is scaffolded, not production-wired. The developer builds the form component; connecting it to HubSpot, Mailchimp, or a custom API requires explicit instruction.
 - No QA gate is built into this workflow. If the page is going to paid traffic, run a manual browser check (mobile + desktop) before activating campaigns.
-- SEO is minimal — basic meta tags only. If this page needs to rank, escalate to `/hazn-website` for a full SEO pass.
+- SEO is minimal — basic meta tags only. If this page needs to rank, escalate to `/hazn:website` for a full SEO pass.
 - Speed is the point. If the brief is incomplete or the offer is unclear, don't guess — ask before building.
 
 ## Outputs
@@ -70,7 +70,7 @@ app/
 ## Example Trigger
 
 ```
-/hazn-landing
+/hazn:landing
 Offer: Free 30-minute audit call for SaaS companies
 Audience: Founders and VPs of Sales at Series A SaaS (10–50 employees)
 Action: Book a call via Calendly

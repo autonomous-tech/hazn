@@ -532,7 +532,7 @@ curl -X GET "https://{STORE}.myshopify.com/admin/api/2024-01/fulfillment_service
 
 ```
 # Start browser
-browser action=start profile=clawd
+browser action=start profile=hazn
 
 # === HOMEPAGE ===
 # Desktop
@@ -586,11 +586,11 @@ browser action=screenshot fullPage=true  # → checkout-mobile.png
 
 ```bash
 # Create assets folder for this audit
-mkdir -p ~/clawd/landing-pages/audits/{store-name}-assets/
+mkdir -p ~/hazn/landing-pages/audits/{store-name}-assets/
 
 # Copy screenshots
-cp /home/rizki/.clawdbot/media/browser/*.jpg ~/clawd/landing-pages/audits/{store-name}-assets/
-cp /home/rizki/.clawdbot/media/browser/*.png ~/clawd/landing-pages/audits/{store-name}-assets/
+cp ~/.hazn/media/browser/*.jpg ~/hazn/landing-pages/audits/{store-name}-assets/
+cp ~/.hazn/media/browser/*.png ~/hazn/landing-pages/audits/{store-name}-assets/
 ```
 
 #### Display in Report: Desktop + Mobile Side-by-Side
@@ -1050,11 +1050,11 @@ Every audit section MUST include:
 
 ```bash
 # Save to autonomous-proposals repo
-mkdir -p ~/clawd/autonomous-proposals/audits
-# Write report to ~/clawd/autonomous-proposals/audits/{store-name}-cro-audit-{date}.html
+mkdir -p ~/hazn/autonomous-proposals/audits
+# Write report to ~/hazn/autonomous-proposals/audits/{store-name}-cro-audit-{date}.html
 
 # Deploy
-cd ~/clawd/autonomous-proposals
+cd ~/hazn/autonomous-proposals
 git add audits/
 git commit -m "Add {store-name} CRO audit report"
 git pull --rebase origin main && git push origin main

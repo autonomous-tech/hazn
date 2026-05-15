@@ -9,7 +9,7 @@
 - Any organization where the primary goals are transparency, member engagement, donation, or public education — not revenue
 
 **NOT for:**
-- B2B/commercial agencies, SaaS, or productized service businesses → use `/hazn-website`
+- B2B/commercial agencies, SaaS, or productized service businesses → use `/hazn:website`
 - E-commerce or membership-gated platforms requiring custom business logic
 
 ## Requirements
@@ -111,7 +111,7 @@ projects/{client}/
 ## Example Trigger
 
 ```
-/hazn-ngo
+/hazn:ngo
 Organisation: Demokratie Jetzt e.V.
 Legal form: eingetragener Verein (e.V.), Germany
 Mission: Political education and civic participation

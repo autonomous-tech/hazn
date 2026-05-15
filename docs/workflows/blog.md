@@ -10,9 +10,9 @@
 - Writing content that will get cited by AI answer engines (ChatGPT, Perplexity, Google AI Overviews)
 
 **NOT for:**
-- Landing page copy → use `/hazn-landing` or `/hazn-copy`
+- Landing page copy → use `/hazn:landing` or `/hazn:copy`
 - One-off short-form content (social, email snippets)
-- Content that needs brand voice calibration from scratch — run `/hazn-strategy` first
+- Content that needs brand voice calibration from scratch — run `/hazn:strategy` first
 
 ## Requirements
 
@@ -88,7 +88,7 @@ category: ""
 ## Example Trigger
 
 ```
-/hazn-content
+/hazn:content
 Site: acmeconsulting.com
 Topics: B2B sales training, SaaS sales process, enterprise sales cycles
 Audience: VP Sales at SaaS companies (50–500 employees)

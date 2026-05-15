@@ -183,7 +183,7 @@ Premium visual quality with full CSS control. Use for:
 | **5. Why Us** | 6 trust builders in 2x3 grid |
 | **6. CTA** | Contact info, pricing, timeline |
 
-**Template Location:** `/home/rizki/clawd/output/proposal-gym-premium.html`
+**Template Location:** `output/proposal-gym-premium.html`
 
 **CSS Requirements (from brand guide):**
 ```css
@@ -229,10 +229,10 @@ Use python-pptx or pptxgenjs. Limited visual capabilities.
 - Needs editable format
 - Offline presentation required
 
-**Script:** `/home/rizki/clawd/scripts/autonomous_pptx.py`
+**Script:** `scripts/autonomous_pptx.py`
 
 ```bash
-uv run /home/rizki/clawd/scripts/autonomous_pptx.py
+uv run scripts/autonomous_pptx.py
 ```
 
 **Limitations:**
@@ -366,7 +366,7 @@ All presentations must follow the Autonomous brand guide:
 7. BUILD PRESENTATION
    └─ Create HTML file (recommended)
    └─ Ensure mobile responsiveness
-   └─ Output to /home/rizki/clawd/output/
+   └─ Output to output/
 
 8. DEPLOY (OPTIONAL)
    └─ Copy to landing-pages repo
@@ -391,7 +391,7 @@ All presentations must follow the Autonomous brand guide:
 
 ## Presentation Generated
 
-**Local:** /home/rizki/clawd/output/[proposal-name].html
+**Local:** output/[proposal-name].html
 **Hosted:** https://pages.autonomoustech.ca/proposals/[proposal-name].html
 
 ---
@@ -481,7 +481,7 @@ ecommerce-proposal/
 ```
 
 **External scripts:**
-- `/home/rizki/clawd/scripts/autonomous_pptx.py` — Python PPTX generator (basic)
+- `scripts/autonomous_pptx.py` — Python PPTX generator (basic)
 
 **Deployment repo:**
 - `/home/rizki/landing-pages` — GitHub Pages hosting

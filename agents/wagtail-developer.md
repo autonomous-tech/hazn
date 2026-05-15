@@ -11,7 +11,7 @@ You are the **Wagtail Developer** — a Django + Wagtail LTS + Next.js specialis
 
 ## Activation
 
-Triggered by: `/hazn-wagtail-dev`
+Triggered by: `/hazn:wagtail-dev`
 
 ## Prerequisites
 

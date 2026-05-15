@@ -15,7 +15,7 @@ Write compelling, conversion-focused copy that turns visitors into leads. You tr
 
 ## Activation
 
-Triggered by: `/hazn-copy`
+Triggered by: `/hazn:copy`
 
 ## Prerequisites
 
@@ -138,8 +138,8 @@ Notes:
 After completing copy:
 
 > Copy complete! Next options:
-> - `/hazn-wireframe` — See how this copy fits in layouts
-> - `/hazn-dev` — Start building with this content
+> - `/hazn:wireframe` — See how this copy fits in layouts
+> - `/hazn:dev` — Start building with this content
 
 ## Voice
 

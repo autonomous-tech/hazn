@@ -9,8 +9,8 @@
 - Client needs a full content strategy, not just a template dropped into code
 
 **NOT for:**
-- NGOs, associations, political orgs, or international institutions → use `/hazn-ngo` instead
-- Single landing pages (no strategy needed) → use `/hazn-landing`
+- NGOs, associations, political orgs, or international institutions → use `/hazn:ngo` instead
+- Single landing pages (no strategy needed) → use `/hazn:landing`
 - E-commerce sites
 
 ## Requirements
@@ -24,7 +24,7 @@
 
 ### Phase 0 — Organisation Type Check (~5 minutes)
 **Agent:** Strategist  
-Confirm this is a B2B/commercial project. If NGO/institutional, redirect to `/hazn-ngo` immediately.
+Confirm this is a B2B/commercial project. If NGO/institutional, redirect to `/hazn:ngo` immediately.
 
 ### Phase 1 — Strategy (~1–3 hours)
 **Agent:** Strategist  
@@ -115,7 +115,7 @@ content/
 ## Example Trigger
 
 ```
-/hazn-website
+/hazn:website
 Client: Acme Consulting
 What they do: B2B sales training for SaaS companies
 Goal: Inbound demo requests

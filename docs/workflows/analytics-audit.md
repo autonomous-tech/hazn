@@ -13,7 +13,7 @@
 **NOT for:**
 - Prospects with no credentials — use `/hazn-analytics-teaser` instead
 - Sites with no GA4 or Google Analytics implementation at all
-- Quick visual/UX audits → use `/hazn-audit`
+- Quick visual/UX audits → use `/hazn:audit`
 
 ## Requirements
 

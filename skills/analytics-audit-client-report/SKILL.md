@@ -1,5 +1,5 @@
 ---
-name: Client Report HTML Generator
+name: analytics-audit-client-report
 description: >
   Use when asked to "create the client report", "generate HTML report",
   "build the presentation", "create client-facing deliverable", or when

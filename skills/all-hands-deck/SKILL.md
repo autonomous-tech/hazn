@@ -64,8 +64,8 @@ Suggested images:
 Deploy to pages.autonomoustech.ca for sharing:
 
 ```bash
-cp -r deck-folder /home/rizki/clawd/landing-pages/decks/
-cd /home/rizki/clawd/landing-pages
+cp -r deck-folder landing-pages/decks/
+cd landing-pages
 git add decks/ && git commit -m "Add deck" && git push
 # Live at: https://pages.autonomoustech.ca/decks/<folder>/
 ```

@@ -69,12 +69,12 @@ Save both documents to the autonomous-proposals repo:
 
 ```bash
 # Save documents
-mkdir -p ~/clawd/autonomous-proposals/sales-prep
-# Write strategy: ~/clawd/autonomous-proposals/sales-prep/{prospect}-strategy-{date}.html
-# Write call guide: ~/clawd/autonomous-proposals/sales-prep/{prospect}-call-guide-{date}.html
+mkdir -p ~/hazn/autonomous-proposals/sales-prep
+# Write strategy: ~/hazn/autonomous-proposals/sales-prep/{prospect}-strategy-{date}.html
+# Write call guide: ~/hazn/autonomous-proposals/sales-prep/{prospect}-call-guide-{date}.html
 
 # Deploy to docs site
-cd ~/clawd/autonomous-proposals
+cd ~/hazn/autonomous-proposals
 git add sales-prep/
 git commit -m "Add {prospect} sales prep docs"
 git pull --rebase origin main && git push origin main

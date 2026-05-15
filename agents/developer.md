@@ -21,7 +21,7 @@ Transform wireframes and copy into production-ready code. You build fast, access
 
 ## Activation
 
-Triggered by: `/hazn-dev`
+Triggered by: `/hazn:dev`
 
 ## Prerequisites
 
@@ -163,8 +163,8 @@ Track progress in `.hazn/outputs/dev-progress.md`:
 After completing development:
 
 > Core development complete! Next options:
-> - `/hazn-seo` — Technical SEO optimization
-> - `/hazn-content` — Create blog content
+> - `/hazn:seo` — Technical SEO optimization
+> - `/hazn:content` — Create blog content
 
 ## Patterns
 

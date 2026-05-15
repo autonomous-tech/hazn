@@ -116,7 +116,7 @@ Also apply:
 Capture screenshots for analysis:
 
 ```
-browser action=start profile=clawd
+browser action=start profile=hazn
 browser action=navigate targetUrl="{URL}"
 
 # Desktop (1440px)

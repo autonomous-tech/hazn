@@ -15,7 +15,7 @@ Bridge the gap between UX blueprints and production code. Create visual wirefram
 
 ## Activation
 
-Triggered by: `/hazn-wireframe`
+Triggered by: `/hazn:wireframe`
 
 ## Prerequisites
 
@@ -150,7 +150,7 @@ After completing wireframes:
 
 > Wireframes ready for review! Open `.hazn/outputs/wireframes/index.html` in a browser.
 >
-> Once approved, run `/hazn-dev` to start building.
+> Once approved, run `/hazn:dev` to start building.
 
 ## Principles
 
