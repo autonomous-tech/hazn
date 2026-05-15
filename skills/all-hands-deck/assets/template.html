@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>January All Hands 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pathway+Extreme:wght@400;500&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --deep-blue: #151795;
+            --blue: #006aff;
+            --cyan: #00d5ff;
+            --purple: #8c18c5;
+            --bright-purple: #b42aff;
+            --dark: #0a0a12;
+            --white: #ffffff;
+            --gray: #a0a0b0;
+            --light-gray: #d0d0dd;
+        }
+        
+        body {
+            font-family: 'Pathway Extreme', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.5;
+        }
+        
+        @page { size: 1280px 720px landscape; margin: 0; }
+        
+        .slide {
+            width: 1280px;
+            height: 720px;
+            padding: 50px 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            page-break-after: always;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .slide::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        .slide > * { position: relative; z-index: 1; }
+        
+        .overlay-dark::before { background: rgba(10,10,18,0.75); }
+        .overlay-medium::before { background: rgba(10,10,18,0.5); }
+        .overlay-gradient::before { background: linear-gradient(135deg, rgba(10,10,18,0.9) 0%, rgba(10,10,18,0.5) 100%); }
+        
+        .bg-dark { background: linear-gradient(135deg, #0a0a12 0%, #12122a 100%); }
+        .bg-blue { background: linear-gradient(135deg, var(--deep-blue) 0%, #0a0a20 100%); }
+        .bg-purple { background: linear-gradient(135deg, #1a0a2a 0%, var(--purple) 50%, #0a0a20 100%); }
+        .bg-gradient { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--purple) 100%); }
+        .bg-energy { background: linear-gradient(135deg, #0a1520 0%, #102030 100%); }
+        
+        h1 { 
+            font-family: 'Outfit', sans-serif;
+            font-size: 64px; 
+            font-weight: 700; 
+            letter-spacing: -1px; 
+            line-height: 1.1; 
+            margin-bottom: 20px; 
+        }
+        h2 { 
+            font-family: 'Outfit', sans-serif;
+            font-size: 42px; 
+            font-weight: 600; 
+            letter-spacing: -0.5px; 
+            line-height: 1.2; 
+            margin-bottom: 24px; 
+        }
+        h3 { 
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px; 
+            font-weight: 500; 
+            margin-bottom: 12px; 
+            color: var(--gray); 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+        }
+        p { 
+            font-family: 'Pathway Extreme', sans-serif;
+            font-size: 22px; 
+            color: var(--light-gray); 
+            max-width: 800px; 
+            font-weight: 400;
+        }
+        
+        .highlight { color: var(--cyan); }
+        .highlight-blue { color: var(--blue); }
+        .highlight-purple { color: var(--bright-purple); }
+        .highlight-green { color: #66bb6a; }
+        
+        ul { list-style: none; font-size: 22px; font-family: 'Pathway Extreme', sans-serif; }
+        ul li { padding: 10px 0 10px 36px; position: relative; color: var(--light-gray); }
+        ul li::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; }
+        ul.purple li::before { background: var(--bright-purple); }
+        ul.green li::before { background: #66bb6a; }
+        ul.blue li::before { background: var(--blue); }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 30px; }
+        
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 16px; 
+            padding: 28px; 
+            backdrop-filter: blur(10px); 
+        }
+        .card h4 { 
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px; 
+            font-weight: 600; 
+            margin-bottom: 10px; 
+        }
+        .card p { font-size: 16px; color: var(--gray); }
+        .status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 12px; }
+        .status-live { background: rgba(102,187,106,0.2); color: #66bb6a; }
+        .status-building { background: rgba(0,213,255,0.2); color: var(--cyan); }
+        .status-active { background: rgba(0,106,255,0.2); color: var(--blue); }
+        
+        .slide-number { position: absolute; bottom: 30px; right: 50px; font-size: 14px; color: #404060; font-weight: 600; }
+        .corner-accent { position: absolute; top: 30px; right: 50px; font-size: 12px; color: #505070; text-transform: uppercase; letter-spacing: 2px; font-family: 'Outfit', sans-serif; }
+        .divider { width: 60px; height: 4px; background: linear-gradient(90deg, var(--blue), var(--cyan)); margin: 20px 0; border-radius: 2px; }
+        
+        .logo { position: absolute; top: 30px; left: 50px; height: 40px; opacity: 0.9; }
+        
+        .big-number { 
+            font-family: 'Outfit', sans-serif;
+            font-size: 140px; 
+            font-weight: 800; 
+            line-height: 1; 
+            background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text; 
+        }
+        
+        .priorities { counter-reset: priority; }
+        .priorities li { padding: 14px 16px 14px 56px; font-size: 24px; }
+        .priorities li::before { 
+            content: counter(priority); 
+            counter-increment: priority; 
+            width: 36px; 
+            height: 36px; 
+            background: linear-gradient(135deg, var(--blue), var(--cyan)); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700; 
+            font-size: 18px; 
+            color: var(--dark); 
+        }
+        
+        .checklist li::before { 
+            content: "✓"; 
+            width: 26px; 
+            height: 26px; 
+            background: linear-gradient(135deg, var(--blue), var(--cyan)); 
+            border-radius: 6px; 
+            font-size: 14px; 
+            color: var(--dark); 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        
+        .icon-row { display: flex; gap: 50px; margin-top: 30px; }
+        .icon-item { text-align: center; }
+        .icon-item .icon { font-size: 48px; margin-bottom: 12px; }
+        .icon-item p { font-size: 16px; color: var(--gray); }
+        
+        .tagline {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 500;
+            background: linear-gradient(90deg, var(--cyan), var(--bright-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .slide { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide overlay-gradient" style="background-image: url('deck-images/hero.png');">
+    <img src="deck-images/logo-transparent.png" class="logo" alt="FAST">
+    <h3>January 2026</h3>
+    <h1>All Hands</h1>
+    <div class="divider"></div>
+    <p class="tagline">Use AI, and build with AI!</p>
+    <div class="slide-number">01</div>
+</div>
+
+<!-- SLIDE 2: Where We Are -->
+<div class="slide overlay-dark" style="background-image: url('deck-images/growth.png');">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">State of Play</div>
+    <h3>Where We Stand</h3>
+    <h2><span class="highlight">Cash Flow Positive</span></h2>
+    <ul class="blue">
+        <li>Solid financial foundation</li>
+        <li>Leaner, stronger team</li>
+        <li>5 months to hit stretch goals</li>
+    </ul>
+    <p style="margin-top: 30px; color: var(--white); font-size: 24px;">The foundation is strong. Now we build.</p>
+    <div class="slide-number">02</div>
+</div>
+
+<!-- SLIDE 3: Team -->
+<div class="slide bg-dark">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Team</div>
+    <h3>Leaner & Stronger</h3>
+    <h2>We Restructured</h2>
+    <ul class="purple">
+        <li>Focused on high performers</li>
+        <li>Automated what we could</li>
+        <li>Protected the culture</li>
+    </ul>
+    <p style="margin-top: 30px; font-size: 26px;"><span class="highlight">You're here because we believe in you.</span></p>
+    <div class="slide-number">03</div>
+</div>
+
+<!-- SLIDE 4: The Opportunity (no distracting bg) -->
+<div class="slide bg-gradient">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">The Moment</div>
+    <h3>Why Now</h3>
+    <h2>AI Is Rewriting <span class="highlight">Everything</span></h2>
+    <ul>
+        <li>Every industry is being disrupted</li>
+        <li>Those who adapt fast, win</li>
+        <li>We're already ahead of most</li>
+    </ul>
+    <p style="margin-top: 30px; font-size: 24px; color: var(--white);">This is the moment to <span class="highlight">lean in</span>.</p>
+    <div class="slide-number">04</div>
+</div>
+
+<!-- SLIDE 5: The Bet -->
+<div class="slide bg-blue">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Strategy</div>
+    <h3>Our Bet</h3>
+    <h1>AI is the<br><span class="highlight">Lever</span></h1>
+    <p style="font-size: 26px; margin-top: 20px; color: var(--white);">We're not just using AI.<br>We're <strong>building</strong> AI products.</p>
+    <div class="slide-number">05</div>
+</div>
+
+<!-- SLIDE 6: AI Portfolio -->
+<div class="slide bg-dark">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Products</div>
+    <h3>The AI Portfolio</h3>
+    <h2>What We're Building</h2>
+    <div class="grid-4">
+        <div class="card">
+            <h4>Memox.io</h4>
+            <p>AI customer support & lead conversion</p>
+            <span class="status status-live">● Live</span>
+        </div>
+        <div class="card">
+            <h4>Clawd-Cloud</h4>
+            <p>Managed AI assistant hosting</p>
+            <span class="status status-building">● Building</span>
+        </div>
+        <div class="card">
+            <h4>Agent-Rahnuma</h4>
+            <p>Internal AI automation agents</p>
+            <span class="status status-active">● Active</span>
+        </div>
+        <div class="card">
+            <h4>Automated Sales</h4>
+            <p>AI-driven outbound & leads</p>
+            <span class="status status-building">● Building</span>
+        </div>
+    </div>
+    <div class="slide-number">06</div>
+</div>
+
+<!-- SLIDE 7: Core Business -->
+<div class="slide bg-blue">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Core</div>
+    <h3>The Engine</h3>
+    <h2>Existing Clients Keep Us Strong</h2>
+    <div class="grid-2">
+        <div>
+            <h4 style="font-size: 18px; color: var(--gray); margin-bottom: 16px; font-family: 'Outfit', sans-serif;">💰 CASH FLOW POSITIVE</h4>
+            <ul class="blue">
+                <li>Kevin, Givery — delivering value</li>
+                <li>Stable revenue foundation</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="font-size: 18px; color: var(--gray); margin-bottom: 16px; font-family: 'Outfit', sans-serif;">🚀 TIME TO ACCELERATE</h4>
+            <ul class="purple">
+                <li>LinkedIn campaigns</li>
+                <li>Content & landing pages</li>
+                <li>Distribution & growth</li>
+            </ul>
+        </div>
+    </div>
+    <p style="margin-top: 30px; font-size: 22px; color: var(--white);">Stable base. Now we <span class="highlight">grow</span>.</p>
+    <div class="slide-number">07</div>
+</div>
+
+<!-- SLIDE 8: Target -->
+<div class="slide overlay-dark" style="background-image: url('deck-images/target.png');">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Goal</div>
+    <h3>Q2 Target</h3>
+    <div class="big-number">1-2</div>
+    <h2 style="margin-top: 10px;">Martech Clients</h2>
+    <p style="font-size: 24px; color: var(--white);">Through our own campaigns.<br>We eat our own cooking.</p>
+    <div class="slide-number">08</div>
+</div>
+
+<!-- SLIDE 9: Level Up -->
+<div class="slide bg-dark">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Culture</div>
+    <h3>Real Talk</h3>
+    <h2>Where We Can Level Up</h2>
+    <div class="grid-2">
+        <div class="card" style="border-color: rgba(180,42,255,0.3);">
+            <h4 style="color: var(--bright-purple);">⚠️ Watch Out For</h4>
+            <ul style="font-size: 18px;">
+                <li>Busy ≠ productive</li>
+                <li>Skipping the details</li>
+                <li>Shallow, scattered work</li>
+            </ul>
+        </div>
+        <div class="card" style="border-color: rgba(0,213,255,0.3);">
+            <h4 style="color: var(--cyan);">✓ Aim For</h4>
+            <ul class="blue" style="font-size: 18px;">
+                <li>Deep, focused work</li>
+                <li>Check twice, ship once</li>
+                <li>Ownership & care</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-number">09</div>
+</div>
+
+<!-- SLIDE 10: AI Advantage -->
+<div class="slide bg-gradient">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Opportunity</div>
+    <h3>The AI Advantage</h3>
+    <h1>Learn AI =<br><span class="highlight">10x Yourself</span></h1>
+    <ul class="blue" style="margin-top: 20px;">
+        <li>Automate the boring stuff</li>
+        <li>Move faster than ever</li>
+        <li>Punch above your weight</li>
+    </ul>
+    <div class="slide-number">10</div>
+</div>
+
+<!-- SLIDE 11: Quality + Fun -->
+<div class="slide bg-blue">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">The Bar</div>
+    <h3>What Great Looks Like</h3>
+    <h2><span class="highlight">Quality</span> + <span class="highlight-purple">Fun</span></h2>
+    <p style="font-size: 24px; margin-bottom: 20px; color: var(--white);">Building Clawd-Cloud. Building Rahnuma. Building landing pages.</p>
+    <div class="icon-row">
+        <div class="icon-item">
+            <div class="icon">🎯</div>
+            <p>Rigorous</p>
+        </div>
+        <div class="icon-item">
+            <div class="icon">✨</div>
+            <p>Detailed</p>
+        </div>
+        <div class="icon-item">
+            <div class="icon">🔥</div>
+            <p>Fun</p>
+        </div>
+    </div>
+    <p style="margin-top: 30px; font-size: 24px; color: var(--white);"><strong class="highlight">Both. Not either/or.</strong></p>
+    <div class="slide-number">11</div>
+</div>
+
+<!-- SLIDE 12: Two Modes -->
+<div class="slide bg-dark">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Modes</div>
+    <h3>Two Modes</h3>
+    <h2>Know Which You're In</h2>
+    <div class="grid-2">
+        <div class="card" style="border-color: rgba(180,42,255,0.3);">
+            <h4 style="color: var(--bright-purple);">🎯 Client Work</h4>
+            <p style="font-size: 18px; color: var(--light-gray);">Professional. No mistakes.<br>Check twice. Quality non-negotiable.</p>
+        </div>
+        <div class="card" style="border-color: rgba(0,213,255,0.3);">
+            <h4 style="color: var(--cyan);">🚀 AI & Experiments</h4>
+            <p style="font-size: 18px; color: var(--light-gray);">Play. Build. Learn fast.<br>Fail forward. Have fun.</p>
+        </div>
+    </div>
+    <div class="slide-number">12</div>
+</div>
+
+<!-- SLIDE 13: Next 90 Days -->
+<div class="slide bg-gradient">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Priorities</div>
+    <h3>Next 90 Days</h3>
+    <h2>5 Priorities</h2>
+    <ul class="priorities">
+        <li><strong>Focus</strong> — Do fewer things better</li>
+        <li><strong>Learn AI</strong> — Everyone. No exceptions.</li>
+        <li><strong>Hustle</strong> — Effort matters</li>
+        <li><strong>Execute</strong> — Ship, don't just plan</li>
+        <li><strong>Have Fun</strong> — Build cool shit</li>
+    </ul>
+    <div class="slide-number">13</div>
+</div>
+
+<!-- SLIDE 14: Scoreboard -->
+<div class="slide bg-dark">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Success</div>
+    <h3>Scoreboard</h3>
+    <h2>What Winning Looks Like</h2>
+    <ul class="checklist">
+        <li>1-2 martech clients from our campaigns</li>
+        <li>Everyone builds something with AI</li>
+        <li>Internal AI demos to the team</li>
+        <li>Zero sloppy mistakes on client work</li>
+        <li>Energy high. Work good. People proud.</li>
+    </ul>
+    <div class="slide-number">14</div>
+</div>
+
+<!-- SLIDE 15: Shoutouts -->
+<div class="slide overlay-dark" style="background-image: url('deck-images/team.png');">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Recognition</div>
+    <h3>Shoutouts</h3>
+    <h2>Stepping Up 🌟</h2>
+    <div class="grid-4" style="margin-top: 20px;">
+        <div class="card" style="border-color: rgba(0,213,255,0.3); padding: 20px;">
+            <h4 style="color: var(--cyan); font-size: 20px;">Musfirah</h4>
+            <p style="color: var(--white); font-size: 14px;">Stepped up big. WordPress, landing pages, email marketing — picked up everything. Amazing.</p>
+        </div>
+        <div class="card" style="border-color: rgba(180,42,255,0.3); padding: 20px;">
+            <h4 style="color: var(--bright-purple); font-size: 20px;">Amjad</h4>
+            <p style="color: var(--white); font-size: 14px;">Flexible. Learning fast. Deep work and quick projects. Killing it.</p>
+        </div>
+        <div class="card" style="border-color: rgba(0,106,255,0.3); padding: 20px;">
+            <h4 style="color: var(--blue); font-size: 20px;">Shahzad</h4>
+            <p style="color: var(--white); font-size: 14px;">Really taken over his role. Having fun, motivated — love the effort and ownership.</p>
+        </div>
+        <div class="card" style="border-color: rgba(102,187,106,0.3); padding: 20px;">
+            <h4 style="color: #66bb6a; font-size: 20px;">Saif</h4>
+            <p style="color: var(--white); font-size: 14px;">Amazing as always. Going above and beyond for the company. 🔥</p>
+        </div>
+    </div>
+    <p style="margin-top: 20px; text-align: center; font-size: 20px; color: var(--white);">This is what good looks like. More of this.</p>
+    <div class="slide-number">15</div>
+</div>
+
+<!-- SLIDE 16: Final Word -->
+<div class="slide overlay-dark" style="background-image: url('deck-images/finale.png');">
+    <img src="deck-images/logo-small-transparent.png" class="logo" alt="FAST">
+    <div class="corner-accent">Final Word</div>
+    <h1>We're in a fight.<br>And we're <span class="highlight">swinging</span>.</h1>
+    <p style="font-size: 24px; margin-top: 20px; color: var(--white);">
+        We have each other. We have the skills. We have the products.
+    </p>
+    <p style="font-size: 28px; margin-top: 20px; color: var(--white);"><strong>Now we need the effort.</strong></p>
+    <div class="slide-number">16</div>
+</div>
+
+<!-- SLIDE 17: Let's Go -->
+<div class="slide bg-gradient" style="justify-content: center; align-items: center; text-align: center;">
+    <h1 style="font-size: 80px;">Let's fucking<br><span class="highlight">go.</span></h1>
+    <div class="slide-number">17</div>
+</div>
+
+<!-- SLIDE 18: Questions -->
+<div class="slide bg-dark" style="justify-content: center; align-items: center; text-align: center;">
+    <img src="deck-images/logo-transparent.png" class="logo" alt="FAST">
+    <h3>Open Floor</h3>
+    <h1>Questions?</h1>
+    <div class="divider" style="margin: 20px auto;"></div>
+    <p style="font-size: 28px; text-align: center;">Let's hear it.</p>
+    <div class="slide-number">18</div>
+</div>
+
+</body>
+</html>

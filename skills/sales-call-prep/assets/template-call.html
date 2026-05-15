@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raj Call — 30min Conversation Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pathway+Extreme:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --deep-blue: #151795;
+    --blue: #006aff;
+    --cyan: #00d5ff;
+    --purple: #8c18c5;
+    --bright-purple: #b42aff;
+    --dark: #0a0a12;
+    --white: #ffffff;
+    --gray: #a0a0b0;
+    --light-gray: #d0d0dd;
+    --green: #66bb6a;
+    --amber: #ffb74d;
+    --red: #ef5350;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Pathway Extreme', sans-serif;
+    background: var(--dark);
+    color: var(--light-gray);
+    font-size: 17px;
+    line-height: 1.7;
+}
+.page { max-width: 900px; margin: 0 auto; padding: 40px 32px; }
+
+.hero {
+    background: linear-gradient(135deg, var(--deep-blue) 0%, var(--purple) 100%);
+    padding: 48px 48px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+}
+.hero-label {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    margin-bottom: 12px;
+}
+.hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 12px;
+}
+.hero h1 .hl {
+    background: linear-gradient(90deg, var(--cyan), var(--bright-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero p { font-size: 18px; color: var(--light-gray); }
+.hero-meta {
+    display: flex; gap: 32px; margin-top: 24px; flex-wrap: wrap;
+}
+.hero-meta-item .label {
+    font-family: 'Outfit', sans-serif; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 2px; color: var(--gray);
+}
+.hero-meta-item .value {
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    font-size: 18px; color: var(--white);
+}
+
+.section { margin-bottom: 40px; }
+.section h2 {
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    font-size: 28px; color: var(--white); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+}
+.section h3 {
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    font-size: 20px; color: var(--white); margin: 24px 0 12px;
+}
+
+.card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 24px; margin-bottom: 14px;
+}
+.card-cyan { border-color: rgba(0,213,255,0.25); }
+.card-green { border-color: rgba(102,187,106,0.25); }
+.card-purple { border-color: rgba(180,42,255,0.25); }
+.card-blue { border-color: rgba(0,106,255,0.25); }
+.card-amber { border-color: rgba(255,183,77,0.25); }
+.card-red { border-color: rgba(239,83,80,0.25); }
+
+.card-title {
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    font-size: 17px; color: var(--white); margin-bottom: 10px;
+}
+
+.time-badge {
+    font-family: 'Outfit', sans-serif; font-weight: 700;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+    padding: 5px 14px; border-radius: 8px; display: inline-block;
+    margin-bottom: 14px;
+}
+.t-green { background: rgba(102,187,106,0.15); color: var(--green); }
+.t-cyan { background: rgba(0,213,255,0.15); color: var(--cyan); }
+.t-blue { background: rgba(0,106,255,0.15); color: var(--blue); }
+.t-purple { background: rgba(180,42,255,0.15); color: var(--bright-purple); }
+.t-amber { background: rgba(255,183,77,0.15); color: var(--amber); }
+
+.quote {
+    border-left: 3px solid var(--cyan); padding: 14px 20px;
+    margin: 12px 0; background: rgba(0,213,255,0.05);
+    border-radius: 0 10px 10px 0; font-style: italic;
+    color: var(--white); font-size: 16px;
+}
+.quote-amber { border-left-color: var(--amber); background: rgba(255,183,77,0.05); }
+.quote-green { border-left-color: var(--green); background: rgba(102,187,106,0.05); }
+.quote-purple { border-left-color: var(--bright-purple); background: rgba(180,42,255,0.05); }
+
+.callout {
+    background: linear-gradient(135deg, rgba(0,106,255,0.08), rgba(180,42,255,0.08));
+    border: 1px solid rgba(0,213,255,0.2);
+    border-radius: 14px; padding: 24px; margin: 20px 0;
+}
+.callout-title {
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    color: var(--cyan); font-size: 13px; text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 10px;
+}
+
+ul { padding-left: 0; list-style: none; }
+ul li { position: relative; padding-left: 22px; margin-bottom: 8px; }
+ul li::before { content: '→'; position: absolute; left: 0; color: var(--cyan); font-weight: 600; }
+
+.divider {
+    width: 50px; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    border-radius: 2px; margin: 40px 0;
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } .hero h1 { font-size: 30px; } }
+
+.tag {
+    display: inline-block; padding: 3px 10px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;
+    margin-right: 6px;
+}
+.tag-listen { background: rgba(0,213,255,0.15); color: var(--cyan); }
+.tag-say { background: rgba(102,187,106,0.15); color: var(--green); }
+.tag-note { background: rgba(255,183,77,0.15); color: var(--amber); }
+.tag-close { background: rgba(180,42,255,0.15); color: var(--bright-purple); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-label">Tonight's Call</div>
+    <h1>Raj Dubey — <span class="hl">30min Guide</span></h1>
+    <p>VP of Development, LT Agency. Cold meeting via LinkedIn outreach. He's looking for GA4 help — that's your entry point.</p>
+    <div class="hero-meta">
+        <div class="hero-meta-item">
+            <span class="label">Goal</span>
+            <span class="value">Learn & Position</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="label">Talk Ratio</span>
+            <span class="value">Him 70% / You 30%</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="label">Outcome</span>
+            <span class="value">Free Audit → Next Call</span>
+        </div>
+    </div>
+</div>
+
+<!-- RULES -->
+<div class="callout">
+    <div class="callout-title">⚡ 3 Rules for Tonight</div>
+    <div class="grid-2">
+        <div>
+            <ul>
+                <li><strong style="color:var(--white)">Ask, don't pitch.</strong> Every time you want to talk about yourself, ask a question instead.</li>
+                <li><strong style="color:var(--white)">Follow-up everything.</strong> "Tell me more about that." "What happens then?" "How does that work?"</li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li><strong style="color:var(--white)">Mirror his language.</strong> If he says "tracking" don't say "measurement infrastructure." Match him.</li>
+                <li><strong style="color:var(--white)">Take notes.</strong> Write down every pain point. You'll use them in the follow-up.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BLOCK 1: OPEN -->
+<div class="section">
+    <h2>🟢 Open — Build Rapport (0:00–3:00)</h2>
+
+    <div class="card card-green">
+        <div class="time-badge t-green">3 minutes</div>
+        <div class="card-title">Warm Up — Don't Pitch Yet</div>
+        <div class="quote quote-green">"Raj, appreciate you making the time. Before I get into anything, I'd love to hear a bit about you — how long have you been at LT, and what does your day-to-day look like?"</div>
+        <br>
+        <p><span class="tag tag-listen">LISTEN</span> Let him talk. He might mention team size, challenges, recent projects. Note everything.</p>
+        <br>
+        <p><strong style="color:var(--white)">If he asks "what do you guys do?" keep it to 15 seconds:</strong></p>
+        <div class="quote">"We're a martech and analytics engineering team. We work with agencies as their backend partner for measurement, attribution, and data infrastructure. But I want to understand your world first — that'll tell me if there's even a fit."</div>
+    </div>
+</div>
+
+<!-- BLOCK 2: DISCOVER -->
+<div class="section">
+    <h2>🔵 Discover — Understand Their World (3:00–18:00)</h2>
+
+    <p style="margin-bottom:16px;color:var(--amber)"><strong>This is 50% of the call. Don't rush it. Go deep on every answer.</strong></p>
+
+    <div class="card card-cyan" style="margin-bottom:14px">
+        <div class="card-title">Start with GA4 — His Intent Signal</div>
+        <div class="quote">"I saw there was interest around GA4. What's the situation there — is that for a specific client, or is it something across the board?"</div>
+        <p style="margin-top:10px"><span class="tag tag-listen">LISTEN</span> This reveals: scope of need, specific client, and whether it's an audit or implementation.</p>
+        <br>
+        <p><strong style="color:var(--white)">Follow-ups:</strong></p>
+        <ul>
+            <li>"What's currently set up? Are you on UA still or migrated?"</li>
+            <li>"Who manages the analytics day-to-day — your team, the client, or a third party?"</li>
+            <li>"What's the biggest frustration with the current setup?"</li>
+        </ul>
+    </div>
+
+    <div class="card card-cyan" style="margin-bottom:14px">
+        <div class="card-title">Understand Their Stack & Process</div>
+        <div class="quote">"Walk me through how a typical analytics or tracking project works at LT. Client asks for something — then what happens?"</div>
+        <p style="margin-top:10px"><span class="tag tag-listen">LISTEN</span> You're looking for: bottlenecks, handoff gaps, who does what.</p>
+        <br>
+        <p><strong style="color:var(--white)">Follow-ups:</strong></p>
+        <ul>
+            <li>"How much of your dev team's time goes to tracking vs. building product?"</li>
+            <li>"Do you have dedicated analytics people, or does the dev team handle it?"</li>
+            <li>"What tools are you guys running? GTM? Segment? Any CDPs?"</li>
+        </ul>
+    </div>
+
+    <div class="card card-cyan" style="margin-bottom:14px">
+        <div class="card-title">Find the Pain</div>
+        <div class="quote">"What's the hardest part about delivering analytics and measurement work for your clients?"</div>
+        <p style="margin-top:10px"><span class="tag tag-listen">LISTEN</span> This is the golden question. Whatever he says = your pitch angle later.</p>
+        <br>
+        <p><strong style="color:var(--white)">Follow-ups based on his answer:</strong></p>
+        <ul>
+            <li><strong>If "bandwidth":</strong> "How often does tracking work get deprioritized because the team is on a bigger build?"</li>
+            <li><strong>If "expertise":</strong> "What happens when you need server-side tracking or CAPI and your team hasn't done it before?"</li>
+            <li><strong>If "client expectations":</strong> "Do clients ever ask for attribution or measurement that's hard to deliver?"</li>
+            <li><strong>If "tooling":</strong> "Are you locked into tools you'd rather move off of?"</li>
+        </ul>
+    </div>
+
+    <div class="card card-cyan">
+        <div class="card-title">Understand the Business Context</div>
+        <div class="quote">"How does the analytics/martech work fit into LT's business model? Is it a standalone service line, or bundled into bigger engagements?"</div>
+        <p style="margin-top:10px"><span class="tag tag-note">NOTE</span> This tells you how they price it and where the margin opportunity is.</p>
+        <br>
+        <p><strong style="color:var(--white)">Follow-ups:</strong></p>
+        <ul>
+            <li>"Do you bill analytics work separately, or is it part of a retainer?"</li>
+            <li>"Have you ever turned down analytics work because it wasn't worth the effort for your team?"</li>
+            <li>"What verticals have the most complex measurement needs?"</li>
+        </ul>
+    </div>
+</div>
+
+<!-- BLOCK 3: POSITION -->
+<div class="section">
+    <h2>🟣 Position — Connect Your Value (18:00–24:00)</h2>
+
+    <div class="card card-purple">
+        <div class="time-badge t-purple">6 minutes</div>
+        <div class="card-title">Mirror Back, Then Position</div>
+
+        <p style="margin-bottom:16px"><span class="tag tag-say">SAY</span> Use his own words. Start with what you heard:</p>
+
+        <div class="quote quote-purple">"So if I'm hearing you right, [mirror his pain back]. That's actually exactly the kind of problem we solve every day."</div>
+
+        <br>
+        <p><strong style="color:var(--white)">Then your 60-second pitch (adapt based on what he said):</strong></p>
+
+        <div class="quote quote-purple">"Here's what we do in a nutshell — we're a measurement and analytics engineering team. I've been in this space for 15 years. Started as a data modeler, became a solutions architect at Visier, and for the last four years I've been running Autonomous focused specifically on martech infrastructure and analytics measurement.<br><br>We work with agencies as their backend analytics partner. The stuff that's too specialized for a generalist dev team and too technical for a strategist — measurement architecture, attribution, server-side tracking, data pipelines, composable stacks. We handle the plumbing so your team can focus on the high-value builds.<br><br>And we do it white-label — your brand, your client relationship. We're invisible."</div>
+
+        <br>
+        <p><strong style="color:var(--white)">Key phrases to weave in (based on what resonates):</strong></p>
+        <ul>
+            <li>"Composable martech stack" — tools that don't lock you in</li>
+            <li>"We measure what matters, then build the infrastructure to capture it"</li>
+            <li>"Audit → Roadmap → Implementation — we handle the full lifecycle"</li>
+            <li>"We've done this for clients managing $50M+ in ad spend"</li>
+        </ul>
+    </div>
+
+    <div class="callout">
+        <div class="callout-title">⚠️ Don't over-sell</div>
+        <p>You're not closing tonight. You're planting seeds. If you've done the discovery right, he's already connecting the dots himself. Less is more here.</p>
+    </div>
+</div>
+
+<!-- BLOCK 4: OFFER -->
+<div class="section">
+    <h2>🔶 Offer — The Free Audit (24:00–28:00)</h2>
+
+    <div class="card card-amber">
+        <div class="time-badge t-amber">4 minutes</div>
+        <div class="card-title">Zero-Risk Next Step</div>
+
+        <div class="quote quote-amber">"Here's what I'd like to do — and there's zero cost or commitment on your end. Let me run a MarTech Stack Blueprint on one of your clients. I'll audit their analytics setup, measurement infrastructure, and tracking health. You'll get a white-label PDF you can use in your next client meeting — either as an upsell or just to show you're on top of their data.<br><br>If the findings are valuable, we talk about next steps. If not, no hard feelings. Either way, you walk away with ammunition."</div>
+
+        <br>
+        <p><strong style="color:var(--white)">If he's interested:</strong></p>
+        <ul>
+            <li>"Which client would be the best fit? Maybe one of the casino or healthcare accounts where tracking is complex?"</li>
+            <li>"Can you share GA4/GTM access for that property? I'll have the Blueprint back in 3-5 business days."</li>
+        </ul>
+
+        <br>
+        <p><strong style="color:var(--white)">If he's hesitant:</strong></p>
+        <div class="quote quote-amber">"Totally fair. How about this — send me any GA4 property ID, even an internal one. I'll do a surface-level audit just from what's publicly observable and send you a sample of what the full Blueprint looks like. No access needed."</div>
+    </div>
+</div>
+
+<!-- BLOCK 5: CLOSE -->
+<div class="section">
+    <h2>✅ Close — Lock Next Step (28:00–30:00)</h2>
+
+    <div class="card card-green">
+        <div class="time-badge t-green">2 minutes</div>
+        <div class="card-title">Confirm & Schedule</div>
+
+        <div class="quote quote-green">"Raj, this was really helpful — I appreciate you walking me through how things work at LT. Let me put together [the Blueprint / a summary of what we discussed] and I'll send it over by [day]. Can we grab 15 minutes next week to walk through it?"</div>
+
+        <br>
+        <p><strong style="color:var(--white)">Lock it down:</strong></p>
+        <ul>
+            <li>Get a specific date for the next call</li>
+            <li>Get his email for the follow-up</li>
+            <li>If he offered a client for the audit, confirm which one</li>
+            <li>Send a calendar invite within 1 hour of hanging up</li>
+        </ul>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CHEAT SHEET -->
+<div class="section">
+    <h2>📋 Quick Reference Cheat Sheet</h2>
+
+    <div class="grid-2">
+        <div class="card card-green">
+            <div class="card-title">✅ DO</div>
+            <ul>
+                <li>Ask open-ended questions</li>
+                <li>Say "tell me more" often</li>
+                <li>Take notes on pain points</li>
+                <li>Mirror his language back</li>
+                <li>Keep your pitch under 60 seconds</li>
+                <li>Offer the free audit</li>
+                <li>Lock a next step before hanging up</li>
+            </ul>
+        </div>
+        <div class="card card-red">
+            <div class="card-title">❌ DON'T</div>
+            <ul>
+                <li>Talk about yourself for more than 2 min total</li>
+                <li>Mention pricing (too early)</li>
+                <li>Name-drop clients (NDA)</li>
+                <li>Pitch services he hasn't expressed need for</li>
+                <li>Rush the discovery section</li>
+                <li>Try to close a deal tonight</li>
+                <li>Say "we can do everything" — be specific</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card card-amber" style="margin-top:14px">
+        <div class="card-title">🔑 If You Forget Everything Else</div>
+        <p style="font-size:20px;color:var(--white);text-align:center;padding:16px 0">"What's the biggest analytics or measurement challenge you're dealing with right now?"</p>
+        <p style="text-align:center;color:var(--gray)">Ask this. Shut up. Let him talk. Everything flows from his answer.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT YOU -->
+<div class="section">
+    <h2>🧠 Your Credibility Bullets (use sparingly)</h2>
+    <div class="card card-blue">
+        <ul>
+            <li><strong style="color:var(--white)">15 years</strong> in analytics & data</li>
+            <li><strong style="color:var(--white)">MIS background</strong> → data modeler → BI consultant → solutions architect at Visier → agency founder</li>
+            <li><strong style="color:var(--white)">Composable martech stack methodology</strong> — no vendor lock-in, modular, swappable</li>
+            <li><strong style="color:var(--white)">Full stack:</strong> GA4, GTM, Segment, Rudderstack, PostHog, HubSpot, Customer.io, Brevo</li>
+            <li><strong style="color:var(--white)">Services:</strong> Measurement & attribution, analytics audits, server-side tracking, CDP, email/SMS deliverability, CRM integrations</li>
+            <li><strong style="color:var(--white)">White-label model</strong> — built for agency partnerships</li>
+            <li><strong style="color:var(--white)">Worked with clients managing $50M+ in ad spend</strong></li>
+            <li><strong style="color:var(--white)">3-5 day turnaround</strong> on audits and blueprints</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding:32px 0; color:var(--gray); font-size:13px;">
+    <p>Prepared for Riz — Confidential Call Guide</p>
+    <p style="margin-top:6px">January 30, 2026</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LT Agency — Partnership Strategy | Autonomous</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pathway+Extreme:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --deep-blue: #151795;
+    --blue: #006aff;
+    --cyan: #00d5ff;
+    --purple: #8c18c5;
+    --bright-purple: #b42aff;
+    --dark: #0a0a12;
+    --white: #ffffff;
+    --gray: #a0a0b0;
+    --light-gray: #d0d0dd;
+    --green: #66bb6a;
+    --amber: #ffb74d;
+    --red: #ef5350;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Pathway Extreme', sans-serif;
+    background: var(--dark);
+    color: var(--light-gray);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--deep-blue) 0%, var(--purple) 50%, var(--dark) 100%);
+    padding: 80px 60px;
+    border-radius: 24px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,213,255,0.15), transparent 70%);
+    pointer-events: none;
+}
+.hero-label {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    margin-bottom: 16px;
+}
+.hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+.hero h1 .highlight {
+    background: linear-gradient(90deg, var(--cyan), var(--bright-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+    font-size: 20px;
+    color: var(--light-gray);
+    max-width: 700px;
+    margin-bottom: 32px;
+}
+.hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+.hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.hero-meta-item .label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gray);
+}
+.hero-meta-item .value {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--white);
+}
+
+/* Section Headers */
+.section {
+    margin-bottom: 48px;
+}
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.section-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+.icon-blue { background: rgba(0,106,255,0.15); border: 1px solid rgba(0,106,255,0.3); }
+.icon-cyan { background: rgba(0,213,255,0.15); border: 1px solid rgba(0,213,255,0.3); }
+.icon-purple { background: rgba(180,42,255,0.15); border: 1px solid rgba(180,42,255,0.3); }
+.icon-green { background: rgba(102,187,106,0.15); border: 1px solid rgba(102,187,106,0.3); }
+.icon-amber { background: rgba(255,183,77,0.15); border: 1px solid rgba(255,183,77,0.3); }
+.icon-red { background: rgba(239,83,80,0.15); border: 1px solid rgba(239,83,80,0.3); }
+
+.section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: var(--white);
+}
+.section h3 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 16px;
+    margin-top: 32px;
+}
+
+/* Cards */
+.card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(10px);
+}
+.card-cyan { border-color: rgba(0,213,255,0.2); }
+.card-purple { border-color: rgba(180,42,255,0.2); }
+.card-blue { border-color: rgba(0,106,255,0.2); }
+.card-green { border-color: rgba(102,187,106,0.2); }
+.card-amber { border-color: rgba(255,183,77,0.2); }
+.card-red { border-color: rgba(239,83,80,0.2); }
+
+.card-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+/* Grid */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+@media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    .hero { padding: 48px 32px; }
+}
+
+/* Status pills */
+.status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+}
+.status-high { background: rgba(239,83,80,0.2); color: var(--red); }
+.status-medium { background: rgba(255,183,77,0.2); color: var(--amber); }
+.status-low { background: rgba(102,187,106,0.2); color: var(--green); }
+.status-live { background: rgba(102,187,106,0.2); color: var(--green); }
+
+/* Lists */
+ul { padding-left: 0; list-style: none; }
+ul li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 10px;
+}
+ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-weight: 600;
+}
+
+/* Divider */
+.divider {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    border-radius: 2px;
+    margin: 48px 0;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+th {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--cyan);
+    background: rgba(0,213,255,0.08);
+    padding: 14px 20px;
+    text-align: left;
+}
+td {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 15px;
+}
+tr:hover td { background: rgba(255,255,255,0.03); }
+
+/* Stat blocks */
+.stat-block {
+    text-align: center;
+    padding: 24px;
+}
+.stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    background: linear-gradient(90deg, var(--cyan), var(--bright-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.stat-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gray);
+    margin-top: 6px;
+}
+
+/* Callout box */
+.callout {
+    background: linear-gradient(135deg, rgba(0,106,255,0.1), rgba(180,42,255,0.1));
+    border: 1px solid rgba(0,213,255,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 24px 0;
+}
+.callout-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: var(--cyan);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+/* Quote */
+.quote {
+    border-left: 3px solid var(--cyan);
+    padding: 16px 24px;
+    margin: 20px 0;
+    background: rgba(0,213,255,0.05);
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: var(--light-gray);
+}
+
+/* Phase badges */
+.phase-badge {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+.phase-1 { background: rgba(0,213,255,0.15); color: var(--cyan); }
+.phase-2 { background: rgba(0,106,255,0.15); color: var(--blue); }
+.phase-3 { background: rgba(180,42,255,0.15); color: var(--bright-purple); }
+
+/* Print styles */
+@media print {
+    body { background: #fff; color: #333; }
+    .hero { background: var(--deep-blue) !important; }
+    .card { border-color: #ddd; background: #f9f9f9; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-label">Partnership Strategy</div>
+    <h1>LT Agency × <span class="highlight">Autonomous</span></h1>
+    <p class="hero-subtitle">White-label martech execution partner for a $35-40M agency with a strategy → execution gap. We fill the gap, they scale revenue.</p>
+    <div class="hero-meta">
+        <div class="hero-meta-item">
+            <span class="label">Target Revenue</span>
+            <span class="value">$120K – $360K / yr</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="label">Risk Level</span>
+            <span class="value">Medium</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="label">Entry Point</span>
+            <span class="value">Raj Dubey, VP Dev</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="label">Timeline</span>
+            <span class="value">Q1 2026 Start</span>
+        </div>
+    </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-cyan">🎯</div>
+        <h2>Executive Summary</h2>
+    </div>
+    <div class="card card-cyan">
+        <p><strong style="color: var(--white);">The Opportunity:</strong> LT Agency (formerly LaneTerralever) is a $35-40M full-service marketing agency with ~120 employees managing high-value clients across <strong style="color: var(--cyan);">gaming, healthcare, education, and tourism</strong> verticals. They acquired Convince & Convert (C&C), a strategic consultancy, creating a <strong style="color: var(--cyan);">strategy → execution gap</strong> that Autonomous is perfectly positioned to fill.</p>
+        <br>
+        <p><strong style="color: var(--white);">The Play:</strong> Position Autonomous as their white-label technical implementation partner for martech infrastructure work that C&C identifies but doesn't execute, and that LT's dev team lacks bandwidth/specialization to handle.</p>
+    </div>
+</div>
+
+<!-- KEY NUMBERS -->
+<div class="section">
+    <div class="grid-3">
+        <div class="card card-cyan">
+            <div class="stat-block">
+                <div class="stat-value">$35-40M</div>
+                <div class="stat-label">Agency Revenue</div>
+            </div>
+        </div>
+        <div class="card card-purple">
+            <div class="stat-block">
+                <div class="stat-value">~120</div>
+                <div class="stat-label">Employees</div>
+            </div>
+        </div>
+        <div class="card card-blue">
+            <div class="stat-block">
+                <div class="stat-value">15-20</div>
+                <div class="stat-label">Dev Team Size</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COMPANY OVERVIEW -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-blue">🏢</div>
+        <h2>Company Overview</h2>
+    </div>
+
+    <div class="grid-2">
+        <div class="card card-blue">
+            <div class="card-title">LT Agency (LaneTerralever)</div>
+            <ul>
+                <li><strong style="color:var(--white)">Founded:</strong> 1991 (33 years)</li>
+                <li><strong style="color:var(--white)">HQ:</strong> Phoenix, Arizona</li>
+                <li><strong style="color:var(--white)">Revenue:</strong> $35-40M (est.)</li>
+                <li><strong style="color:var(--white)">Dev Team:</strong> 15-20 under VP Raj Dubey</li>
+                <li><strong style="color:var(--white)">Website:</strong> lt.agency</li>
+            </ul>
+            <br>
+            <p style="font-size:14px;color:var(--gray)">Services: Brand strategy, creative, web/app dev, digital media, SEO, social, PR, video production</p>
+        </div>
+        <div class="card card-purple">
+            <div class="card-title">Convince & Convert (C&C)</div>
+            <ul>
+                <li><strong style="color:var(--white)">Founded by:</strong> Jay Baer (NYT bestselling author)</li>
+                <li><strong style="color:var(--white)">Acquired by:</strong> LT Agency</li>
+                <li><strong style="color:var(--white)">Focus:</strong> Strategic consulting only</li>
+                <li><strong style="color:var(--white)">Key gap:</strong> They recommend, they don't build</li>
+                <li><strong style="color:var(--white)">Team:</strong> Daniel Lemin (President), Mary Nice (VP)</li>
+            </ul>
+            <br>
+            <p style="font-size:14px;color:var(--gray)">Both operate under umbrella brand "Experience Dynamic" alongside EX Agency and Mod Op</p>
+        </div>
+    </div>
+
+    <h3>Key Clients</h3>
+    <div class="grid-3">
+        <div class="card">
+            <div class="card-title" style="color:var(--cyan)">🎰 Gaming & Resorts</div>
+            <ul>
+                <li>Desert Diamond Casinos</li>
+                <li>Talking Stick Resort</li>
+                <li>Casino Arizona</li>
+                <li>Fort McDowell</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-title" style="color:var(--bright-purple)">🏥 Healthcare</div>
+            <ul>
+                <li>HonorHealth</li>
+                <li>LifeStance Health</li>
+                <li>Barrow Neurological</li>
+                <li>Sonora Quest</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-title" style="color:var(--blue)">🎓 Education & More</div>
+            <ul>
+                <li>Arizona State University</li>
+                <li>UArizona Global</li>
+                <li>Grand Canyon University</li>
+                <li>Visit Phoenix / Mesa</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- THE GAP -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-cyan">⚡</div>
+        <h2>The Strategy → Execution Gap</h2>
+    </div>
+
+    <div class="callout">
+        <div class="callout-title">Core Insight</div>
+        <p>C&C identifies the problems and recommends solutions. LT's dev team handles builds but lacks martech specialization. <strong style="color:var(--white)">Neither side has dedicated martech infrastructure expertise.</strong> That's where Autonomous comes in.</p>
+    </div>
+
+    <div class="grid-3">
+        <div class="card card-cyan">
+            <div class="card-title">C&C Says</div>
+            <p>"You need server-side tracking, better attribution, and a CDP."</p>
+            <br>
+            <p style="font-size:14px;color:var(--gray)">Strategy ✅ — Execution ❌</p>
+        </div>
+        <div class="card card-amber">
+            <div class="card-title">LT Dev Team</div>
+            <p>"We're busy building websites and apps. We can do it... eventually."</p>
+            <br>
+            <p style="font-size:14px;color:var(--gray)">Bandwidth ❌ — Specialization ❌</p>
+        </div>
+        <div class="card card-green">
+            <div class="card-title">Autonomous</div>
+            <p>"We'll implement it in 72 hours. White-label. Your client never knows."</p>
+            <br>
+            <p style="font-size:14px;color:var(--gray)">Speed ✅ — Specialization ✅</p>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICE OPPORTUNITIES -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-purple">💰</div>
+        <h2>Service Opportunities</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Our Cost</th>
+                <th>Suggested Price to LT</th>
+                <th>LT Bills Client</th>
+                <th>Fit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="color:var(--white);font-weight:600">Meta/Google CAPI Setup</td>
+                <td>~$200</td>
+                <td>$2,500–$5,000</td>
+                <td>$10-15K</td>
+                <td><span class="status status-high">🔥 Immediate</span></td>
+            </tr>
+            <tr>
+                <td style="color:var(--white);font-weight:600">GA4 Audit + Fix</td>
+                <td>~$250</td>
+                <td>$3,000–$6,000</td>
+                <td>$8-12K</td>
+                <td><span class="status status-high">🔥 Immediate</span></td>
+            </tr>
+            <tr>
+                <td style="color:var(--white);font-weight:600">GTM Server-Side</td>
+                <td>~$300</td>
+                <td>$3,500–$7,000</td>
+                <td>$10-20K</td>
+                <td><span class="status status-high">🔥 Immediate</span></td>
+            </tr>
+            <tr>
+                <td style="color:var(--white);font-weight:600">CDP Implementation</td>
+                <td>~$500</td>
+                <td>$5,000–$10,000</td>
+                <td>$15-30K</td>
+                <td><span class="status status-medium">Phase 2</span></td>
+            </tr>
+            <tr>
+                <td style="color:var(--white);font-weight:600">Email/CRM Automation</td>
+                <td>~$400</td>
+                <td>$4,000–$8,000</td>
+                <td>$10-20K</td>
+                <td><span class="status status-medium">Phase 2</span></td>
+            </tr>
+            <tr>
+                <td style="color:var(--white);font-weight:600">MarTech Stack Audit</td>
+                <td>~$150</td>
+                <td>FREE (lead gen)</td>
+                <td>N/A</td>
+                <td><span class="status status-live">Entry Point</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout" style="margin-top:24px">
+        <div class="callout-title">💡 Pricing Strategy Note</div>
+        <p>Don't price too low. At $999 for a CAPI fix when LT charges clients $15K, Raj may question quality. Price at <strong style="color:var(--white)">$2,500–$5,000</strong> — still gives LT 65-85%+ gross profit margin, while signaling expertise and professionalism. You're not a Fiverr contractor, you're a specialist partner.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FINANCIAL MODEL -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-green">📊</div>
+        <h2>Financial Impact for LT</h2>
+    </div>
+
+    <p style="margin-bottom:24px;">This is what makes the partnership irresistible. Show Raj these numbers:</p>
+
+    <div class="grid-2">
+        <div class="card card-green">
+            <div class="card-title">Current State (In-House)</div>
+            <table>
+                <tr><td>Developer salary</td><td style="color:var(--white)">$90K/yr</td></tr>
+                <tr><td>Overhead (benefits, tools)</td><td style="color:var(--white)">+30%</td></tr>
+                <tr><td>Effective cost per CAPI job</td><td style="color:var(--white)">~$7,500</td></tr>
+                <tr><td style="color:var(--amber)">Gross profit margin</td><td style="color:var(--amber)">50%</td></tr>
+            </table>
+        </div>
+        <div class="card card-cyan">
+            <div class="card-title">With Autonomous</div>
+            <table>
+                <tr><td>Our cost to LT</td><td style="color:var(--white)">$2,500–$5,000</td></tr>
+                <tr><td>LT bills client</td><td style="color:var(--white)">$15,000</td></tr>
+                <tr><td>Delivery time</td><td style="color:var(--white)">72 hours</td></tr>
+                <tr><td style="color:var(--green)">Gross profit margin</td><td style="color:var(--green)">67–83%</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+        <div class="callout-title">The Real Pitch to Raj</div>
+        <p style="font-size:19px">Don't lead with "$22-55K in Year 1 revenue" — that's a rounding error for a $40M agency. Instead, lead with:</p>
+        <br>
+        <div class="grid-2">
+            <div style="text-align:center">
+                <div class="stat-value">$450K</div>
+                <div class="stat-label">Annual Developer Costs Saved</div>
+            </div>
+            <div style="text-align:center">
+                <div class="stat-value">$840K</div>
+                <div class="stat-label">Freed Capacity for Higher-Value Work</div>
+            </div>
+        </div>
+        <br>
+        <p>Frame it as: <em style="color:var(--white)">"Your dev team is spending 20% of their time on martech plumbing. We take that off their plate in 72 hours at a fraction of the cost, so they can focus on the $100K website builds."</em></p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ENGAGEMENT PLAN -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-blue">🚀</div>
+        <h2>Engagement Plan</h2>
+    </div>
+
+    <div class="card card-cyan" style="margin-bottom:24px">
+        <div class="phase-badge phase-1">Phase 1 — Prove Value (Month 1-2)</div>
+        <div class="card-title">Free MarTech Stack Blueprint</div>
+        <ul>
+            <li>Run free audit on one casino or healthcare client</li>
+            <li>Identify tracking gaps, broken pixels, attribution issues</li>
+            <li>Deliver report that becomes client upsell ammunition</li>
+            <li>Fix one CAPI implementation at partner pricing ($2,500–$5K)</li>
+            <li>Deliver in 72 hours to establish credibility</li>
+        </ul>
+        <br>
+        <p style="color:var(--gray);font-size:14px"><strong style="color:var(--cyan)">Goal:</strong> $5-10K revenue, prove speed & quality, build trust</p>
+    </div>
+
+    <div class="card card-blue" style="margin-bottom:24px">
+        <div class="phase-badge phase-2">Phase 2 — Scale (Month 3-6)</div>
+        <div class="card-title">Preferred MarTech Partner</div>
+        <ul>
+            <li>Become go-to for all CAPI, GTM, GA4 work across portfolio</li>
+            <li>Quarterly "MarTech Health Check" across their top 10 clients</li>
+            <li>Monthly retainer structure: $5-10K/mo for ongoing support</li>
+            <li>Introduce CDP and automation services</li>
+            <li>Train LT account managers to identify martech opportunities</li>
+        </ul>
+        <br>
+        <p style="color:var(--gray);font-size:14px"><strong style="color:var(--blue)">Goal:</strong> $60-120K/yr revenue, embedded in their workflow</p>
+    </div>
+
+    <div class="card card-purple">
+        <div class="phase-badge phase-3">Phase 3 — Strategic Partner (Month 6-12)</div>
+        <div class="card-title">Revenue Share & Joint Proposing</div>
+        <ul>
+            <li>White-label martech section in all new LT proposals</li>
+            <li>Revenue share model on martech upsells</li>
+            <li>Joint case studies and co-marketing</li>
+            <li>Expand to Experience Dynamic's other agencies (EX Agency, Mod Op)</li>
+            <li>Potential: introduce AI-powered marketing tools</li>
+        </ul>
+        <br>
+        <p style="color:var(--gray);font-size:14px"><strong style="color:var(--bright-purple)">Goal:</strong> $120-360K/yr revenue, strategic lock-in</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONVINCE & CONVERT PLAY -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-purple">🧠</div>
+        <h2>The C&C Direct Play</h2>
+    </div>
+
+    <div class="callout">
+        <div class="callout-title">💡 Strategic Recommendation</div>
+        <p>Don't just pitch LT's dev team. <strong style="color:var(--white)">Go directly to Convince & Convert too.</strong></p>
+        <br>
+        <p>C&C's entire model is "we recommend, others execute." If you position as <em style="color:var(--cyan)">"We execute what you recommend"</em>, you become their go-to referral for EVERY client — not just LT's portfolio.</p>
+        <br>
+        <p>Jay Baer's network alone (6 NYT bestsellers, massive speaking circuit) could be worth more than the entire LT relationship. One mention from Jay = instant credibility with hundreds of enterprise marketers.</p>
+        <br>
+        <ul>
+            <li><strong style="color:var(--white)">Pitch to Daniel Lemin (President)</strong> — "We're the hands to your brain"</li>
+            <li><strong style="color:var(--white)">Pitch to Mary Nice (VP)</strong> — "Your recommendations get implemented in 72 hours"</li>
+            <li><strong style="color:var(--white)">Ask for referrals</strong> — C&C consults for clients beyond LT's portfolio</li>
+        </ul>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OBJECTION HANDLING -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-amber">🛡️</div>
+        <h2>Objection Handling</h2>
+    </div>
+
+    <div class="card card-amber" style="margin-bottom:16px">
+        <div class="card-title">"We already have a dev team that does this"</div>
+        <div class="quote">"That's exactly why this works. Your team is great at building websites and apps — that's high-value work. We take the martech plumbing off their plate so they can focus on what generates the most revenue. Think of us as an extension of your team for a very specific skill set, not a replacement."</div>
+    </div>
+
+    <div class="card card-amber" style="margin-bottom:16px">
+        <div class="card-title">"We don't outsource our dev work"</div>
+        <div class="quote">"I get that. But this isn't outsourcing your dev work — it's outsourcing a specialty. You wouldn't ask your web devs to do your tax accounting. Server-side tracking, CAPI integrations, and CDP implementations are a specialized skill set that most agency dev teams don't touch daily. We do it all day, every day."</div>
+    </div>
+
+    <div class="card card-amber" style="margin-bottom:16px">
+        <div class="card-title">"Our clients are sensitive about third parties"</div>
+        <div class="quote">"Totally understand — especially in healthcare and gaming with compliance requirements. That's why we work 100% white-label. We operate under your brand, your project management, your client relationships. The client never knows we exist. We're ghosts with GTM access."</div>
+    </div>
+
+    <div class="card card-amber" style="margin-bottom:16px">
+        <div class="card-title">"We use freelancers when we need extra help"</div>
+        <div class="quote">"How's that working? Are they reliable? Do they deliver in 72 hours? Do they have a proven process? Our value isn't just doing the work — it's doing it predictably, quickly, and without you having to vet a new contractor for each project."</div>
+    </div>
+
+    <div class="card card-amber">
+        <div class="card-title">"This isn't a priority right now"</div>
+        <div class="quote">"Fair enough. Can I just run one free MarTech Stack Blueprint on one of your casino or healthcare clients? If we don't find anything meaningful, we'll leave you alone. If we do, you'll have ammunition for a client upsell. Either way, you win."</div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- RISK FACTORS -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-red">⚠️</div>
+        <h2>Risk Factors & Mitigation</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Risk</th>
+                <th>Likelihood</th>
+                <th>Mitigation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="color:var(--white)">Strong in-house capabilities</td>
+                <td><span class="status status-medium">Medium</span></td>
+                <td>Qualify early: "Walk me through how you currently handle CAPI implementations"</td>
+            </tr>
+            <tr>
+                <td style="color:var(--white)">C&C has preferred partners</td>
+                <td><span class="status status-low">Low-Med</span></td>
+                <td>Position as complementary; white-label model doesn't threaten relationships</td>
+            </tr>
+            <tr>
+                <td style="color:var(--white)">Raj lacks budget authority</td>
+                <td><span class="status status-low">Low</span></td>
+                <td>VP-level, likely has $5-10k discretionary; we start FREE anyway</td>
+            </tr>
+            <tr>
+                <td style="color:var(--white)">Too busy to onboard vendor</td>
+                <td><span class="status status-medium">Medium</span></td>
+                <td>"We handle everything, you just introduce us to the client"</td>
+            </tr>
+            <tr>
+                <td style="color:var(--white)">Want to build internally</td>
+                <td><span class="status status-medium">Medium</span></td>
+                <td>Hiring takes 6-12 months; we're available now. Build switching costs with proprietary dashboards & monitoring.</td>
+            </tr>
+            <tr>
+                <td style="color:var(--white);font-weight:600">They learn our playbook</td>
+                <td><span class="status status-high">New Risk</span></td>
+                <td>Build lock-in: proprietary tools, monitoring dashboards, institutional knowledge of their client stacks. Stay 2 steps ahead.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- FIRST MEETING SCRIPT -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon icon-green">🎙️</div>
+        <h2>First Meeting Script</h2>
+    </div>
+
+    <div class="callout">
+        <div class="callout-title">Opening (2 min)</div>
+        <p style="color:var(--white);font-style:italic">"Raj, thanks for making the time. I'll keep this tight — I know you're managing a lot. I run Autonomous, a martech implementation studio. We work white-label with agencies like yours, handling the technical martech work that's too specialized for generalist dev teams and too operational for strategists like C&C. I wanted to see if there's a fit."</p>
+    </div>
+
+    <div class="card card-green" style="margin-bottom:16px">
+        <div class="card-title">Discovery Questions (10 min)</div>
+        <ul>
+            <li><strong style="color:var(--white)">"How do you currently handle CAPI implementations?"</strong> — Reveals capability gap</li>
+            <li><strong style="color:var(--white)">"When C&C recommends a CDP or tracking overhaul, who executes that?"</strong> — Exposes the gap directly</li>
+            <li><strong style="color:var(--white)">"What % of your dev team's time goes to martech vs. product builds?"</strong> — Quantifies the opportunity</li>
+            <li><strong style="color:var(--white)">"Have you lost any client upsells because the implementation timeline was too long?"</strong> — Creates urgency</li>
+            <li><strong style="color:var(--white)">"Which verticals have the most complex tracking needs?"</strong> — Identifies first target client</li>
+        </ul>
+    </div>
+
+    <div class="card card-cyan" style="margin-bottom:16px">
+        <div class="card-title">The Offer (3 min)</div>
+        <div class="quote">"Here's what I'd like to do — zero cost, zero commitment. Let me run a MarTech Stack Blueprint on one of your casino or healthcare clients. I'll audit their tracking setup, find gaps, and give you a report you can use as a client upsell. If the findings are meaningful, we talk next steps. If not, we shake hands and move on. You literally can't lose."</div>
+    </div>
+
+    <div class="card card-blue">
+        <div class="card-title">Close (2 min)</div>
+        <ul>
+            <li>"Which client would be the best fit for the free audit?"</li>
+            <li>"Can you share GTM/GA4 access for that account this week?"</li>
+            <li>"I'll have the Blueprint back to you in 5 business days."</li>
+        </ul>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BOTTOM LINE -->
+<div class="section">
+    <div class="hero" style="text-align:center; padding:60px">
+        <div class="hero-label">The Bottom Line</div>
+        <h1 style="font-size:38px">LT gets <span class="highlight">higher margins</span>, <span class="highlight">faster delivery</span>, and <span class="highlight">freed dev capacity</span>.</h1>
+        <p class="hero-subtitle" style="margin:20px auto">Autonomous gets a recurring revenue stream with one of Phoenix's top agencies — and a foot in the door to the entire Experience Dynamic network.</p>
+        <div class="hero-meta" style="justify-content:center;margin-top:32px">
+            <div class="hero-meta-item">
+                <span class="label">Year 1 Target</span>
+                <span class="value">$60–120K</span>
+            </div>
+            <div class="hero-meta-item">
+                <span class="label">Year 2+ Target</span>
+                <span class="value">$120–360K</span>
+            </div>
+            <div class="hero-meta-item">
+                <span class="label">Entry Cost</span>
+                <span class="value">$0 (Free Audit)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding:40px 0; color:var(--gray); font-size:14px;">
+    <p>Prepared by Autonomous Technologies — Confidential</p>
+    <p style="margin-top:8px; font-size:12px;">January 2026</p>
+</div>
+
+</div>
+</body>
+</html>
