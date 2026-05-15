@@ -1,3 +1,8 @@
+---
+name: wagtail-nextjs-stack
+description: "Code implementation skill for marketing websites on Django + Wagtail (headless CMS) + Next.js (App Router) + React + Tailwind CSS. Use this skill whenever generating components, pages, content models, StreamField blocks, or configuration for this stack. Trigger on any mention of 'Wagtail', 'Django CMS', 'Next.js component', 'React component for marketing site', 'Tailwind', or when asked to implement designs, build sections, create page templates, or set up content block architectures. Also trigger for SEO metadata, image optimization, font loading, performance tuning, or deployment configuration on this stack. This skill handles code output — pair with `b2b-marketing-ux` for UX decisions and page architecture, use `b2b-wireframe` for visual layout review, and reference `frontend-design` for visual aesthetics."
+---
+
 # wagtail-nextjs-stack
 
 Django + Wagtail LTS + Next.js implementation skill for Hazn framework projects.

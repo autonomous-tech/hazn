@@ -56,7 +56,7 @@ Strategist, UX Architect, Copywriter, Wireframer, Developer, WordPress Developer
 
 ## Status
 
-`v0.2.0` — consolidated 2026-05-15 from 5 scattered locations into this single source. See `CONTRIBUTING.md` for the single-source policy.
+`v0.3.1` — consolidated 2026-05-15 from 5 scattered locations into this single source. See `CONTRIBUTING.md` for the single-source policy.
 
 ## Repository
 

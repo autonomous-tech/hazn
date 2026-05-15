@@ -32,7 +32,7 @@ phases:
     depends_on: [data-collection]
     agent: analytics-teaser-writer
     skills: [analytics-teaser-report]
-    references: [.hazn/skills/analytics-audit/references/teaser-template.md]
+    references: [skills/analytics-audit/references/teaser-template.md]
     outputs: [.hazn/outputs/analytics-teaser/<domain>/index.html]
 
   - id: verification

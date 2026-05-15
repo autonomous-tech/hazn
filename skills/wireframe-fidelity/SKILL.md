@@ -1,3 +1,8 @@
+---
+name: wireframe-fidelity
+description: "Deep wireframe-to-implementation fidelity verification. Uses Playwright tests and manual audit to ensure built pages match wireframe specs exactly: copy, CSS, layout, typography, visual details. Extract wireframe specs before building, audit implementation after. Prevents the drift that degrades UX."
+---
+
 # wireframe-fidelity
 
 Deep wireframe-to-implementation review skill. Ensures every page built matches its wireframe HTML source of truth — copy, CSS, layout, typography, and visual details.
