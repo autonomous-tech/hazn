@@ -21,7 +21,7 @@ Do not run this skill for Standard or Free tier requests.
 
 Expand a Phase 1 GA4 audit into a comprehensive MarTech & Attribution assessment. This produces sections K-P of the full audit report. Steps 5-11 below continue from the GA4 & Site Inspection Audit skill (Steps 1-4).
 
-Refer to `.hazn/skills/analytics-audit/references/report-template.md` for the expected output structure of sections K-P.
+Refer to `skills/analytics-audit/references/report-template.md` for the expected output structure of sections K-P.
 
 ## Step 0: Audience — Ask First (if not already set in Phase 1)
 
@@ -358,7 +358,7 @@ Section P must close with a **full-width dark CTA block**:
 
 ## Step 10.5: Write Phase 2 Report Sections (K-P)
 
-Append sections K-P to the existing Phase 1 report at `.hazn/outputs/analytics-audit/<domain>-audit.md`. Follow the section structure defined in `.hazn/skills/analytics-audit/references/report-template.md`. Use the `analytics-report-writer` agent for full report generation if both phases are being written together.
+Append sections K-P to the existing Phase 1 report at `.hazn/outputs/analytics-audit/<domain>-audit.md`. Follow the section structure defined in `skills/analytics-audit/references/report-template.md`. Use the `analytics-report-writer` agent for full report generation if both phases are being written together.
 
 ## Step 11: Run Adversarial Review
 

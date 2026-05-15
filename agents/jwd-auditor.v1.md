@@ -28,7 +28,7 @@ Input: A single page route (e.g., `/marketing/`, `/`, `/blog/`)
 
 ## Process
 
-Follow `.hazn/skills/jwd-audit/SKILL.md` exactly. The 4 phases:
+Follow `skills/jwd-audit/SKILL.md` exactly. The 4 phases:
 
 1. **AUDIT** — Enumerate components → grep scan → role-based element audit → findings table → confidence gate
 2. **FIX** — Apply fixes for all 🔴 and 🟡 → mandatory post-fix re-audit
@@ -88,8 +88,8 @@ After fixing, re-read every changed file and re-check. Fixes introduce regressio
 
 Before starting any audit:
 1. Read `./CLAUDE.md` for project conventions
-2. Load `.hazn/skills/jwd-audit/SKILL.md` for the full workflow
-3. Load `.hazn/skills/jwd-audit/references/element-roles.md` for role rules
+2. Load `skills/jwd-audit/SKILL.md` for the full workflow
+3. Load `skills/jwd-audit/references/element-roles.md` for role rules
 4. Reference: `references/design-system.md`, `references/page-inventory.md`
 
 ## Output Format

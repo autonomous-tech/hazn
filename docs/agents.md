@@ -243,7 +243,7 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 **Input required:**
 - All collected JSON data files in `.hazn/outputs/analytics-audit/`
-- Report template at `.hazn/skills/analytics-audit/references/report-template.md`
+- Report template at `skills/analytics-audit/references/report-template.md`
 
 **Output:** `{domain}-audit.md` — 800–1,200 lines, sections A through Q (Q only if GSC data exists). Every number sourced from JSON. Direct, opinionated findings with business impact framing.
 
@@ -332,8 +332,8 @@ This document describes all 15 agents. Use it when deciding which agent to spawn
 
 **Input required:**
 - All 4 collected data files
-- Teaser skill at `.hazn/skills/analytics-teaser-report/SKILL.md`
-- Content template at `.hazn/skills/analytics-audit/references/teaser-template.md`
+- Teaser skill at `skills/analytics-teaser-report/SKILL.md`
+- Content template at `skills/analytics-audit/references/teaser-template.md`
 - Optional: company name, Calendly URL
 
 **Output:** Single self-contained `index.html` — Lighthouse grades, CWV gauges, MarTech tool grid, Copy/UX/CRO A–F grades with specific findings, 3 upsell gates, final CTA. Base64-embedded screenshots. Target file size <500KB.

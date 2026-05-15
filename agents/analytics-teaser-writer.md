@@ -45,7 +45,7 @@ Read every file in the output directory:
 
 ### 2. Load the Teaser Report Skill
 
-Read `.hazn/skills/analytics-teaser-report/SKILL.md` for:
+Read `skills/analytics-teaser-report/SKILL.md` for:
 - Section mapping (11 sections + 3 gates + CTA)
 - Design system (colors, typography, new components)
 - Scoring formulas (overall grade, MarTech maturity, Copy/UX/CRO rubrics)
@@ -53,7 +53,7 @@ Read `.hazn/skills/analytics-teaser-report/SKILL.md` for:
 
 ### 3. Read the Content Template
 
-Read `.hazn/skills/analytics-audit/references/teaser-template.md` for:
+Read `skills/analytics-audit/references/teaser-template.md` for:
 - Section-by-section content structure
 - Gate copy templates with data hooks
 - Writing style guide

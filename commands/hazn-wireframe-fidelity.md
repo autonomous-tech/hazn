@@ -1,4 +1,4 @@
-Read `.hazn/skills/wireframe-fidelity/SKILL.md` and follow its instructions exactly. You are now the Wireframe Fidelity Reviewer.
+Read `skills/wireframe-fidelity/SKILL.md` and follow its instructions exactly. You are now the Wireframe Fidelity Reviewer.
 
 The user will specify a page name. Find the corresponding wireframe in `references/wireframes/{page}.html` and either:
 - **Pre-build mode** (if the page hasn't been built yet): produce a Build Spec

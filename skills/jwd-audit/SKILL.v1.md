@@ -395,7 +395,7 @@ Audit: [total] findings ([fixed] fixed, [skipped] skipped)
 ```
 
 ### Step 4.3: Update Tracker
-Update `.hazn/skills/jwd-audit/TRACKER.md`: status ✅, findings count, commit hash, date.
+Update `skills/jwd-audit/TRACKER.md`: status ✅, findings count, commit hash, date.
 
 ### Step 4.4: Confirm
 ```

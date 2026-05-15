@@ -53,7 +53,7 @@ You generate polished, single-file HTML client reports from audit data. Your out
    - `.hazn/outputs/analytics-audit/gsc_audit_data.json` — organic search data (if available)
    - `.hazn/outputs/analytics-audit/site_inspection.json` — tracking code inventory (if available)
 
-2. **Load the analytics-audit-client-report skill** at `.hazn/skills/analytics-audit-client-report/SKILL.md` for:
+2. **Load the analytics-audit-client-report skill** at `skills/analytics-audit-client-report/SKILL.md` for:
    - Section mapping (markdown → HTML sections)
    - Design system reference (colors, typography, components)
    - CSS component library (classes and usage patterns)

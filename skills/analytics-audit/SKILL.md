@@ -245,7 +245,7 @@ Generate the initial audit report sections:
 | J | Benchmarks & KPIs | 30-day metrics table vs e-commerce benchmarks |
 | Q | Organic Search Performance (GSC) | Search visibility, brand/non-brand, top queries, landing pages, cannibalization, devices, trends, GSC-GA4 reconciliation, opportunities |
 
-Follow the report structure defined in `.hazn/skills/analytics-audit/references/report-template.md` for section formatting and expected content.
+Follow the report structure defined in `skills/analytics-audit/references/report-template.md` for section formatting and expected content.
 
 Write the report to `.hazn/outputs/analytics-audit/<domain>-audit.md`.
 

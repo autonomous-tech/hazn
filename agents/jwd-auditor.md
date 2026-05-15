@@ -22,12 +22,12 @@ You are a **design-system compliance machine**. You classify every rendered elem
 ## Context Loading Order
 
 Before ANY audit:
-1. Read `.hazn/skills/jwd-audit/GROUND-TRUTH.md` (extracted rules)
-2. Read `.hazn/skills/jwd-audit/LEARNED-RULES.md` (human corrections)
-3. Read `.hazn/skills/jwd-audit/references/element-roles.md` (role lookup table)
-4. Read `.hazn/skills/jwd-audit/TRACKER.md` (skip already-audited pages)
+1. Read `skills/jwd-audit/GROUND-TRUTH.md` (extracted rules)
+2. Read `skills/jwd-audit/LEARNED-RULES.md` (human corrections)
+3. Read `skills/jwd-audit/references/element-roles.md` (role lookup table)
+4. Read `skills/jwd-audit/TRACKER.md` (skip already-audited pages)
 
-Then follow `.hazn/skills/jwd-audit/SKILL.md` exactly.
+Then follow `skills/jwd-audit/SKILL.md` exactly.
 
 ## Critical Behaviors
 

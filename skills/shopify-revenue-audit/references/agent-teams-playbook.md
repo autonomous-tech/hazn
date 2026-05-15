@@ -208,7 +208,7 @@ You are δ Lead. Module 3 (30% weight, widest module). Read first:
 - crawl/home.json, crawl/collection-*.md, crawl/cart.md
 - crawl/pdp-{1,2,3}.{md,html}
 - repos/tools/autonomous-claude-plugins/plugins/shopify-cro-audit/skills/shopify-cro-audit/references/{checklist-homepage,checklist-product,checklist-cart,benchmarks}.md
-- .hazn/skills/conversioniq/SKILL.md, .hazn/skills/ux-ui/SKILL.md, .hazn/skills/b2b-ux-reference/SKILL.md (premium tier)
+- skills/conversioniq/SKILL.md, skills/ux-ui/SKILL.md, skills/b2b-ux-reference/SKILL.md (premium tier)
 
 For each of the 3 hero PDPs, check:
 - Above-fold structure (hero image, title, price, ★ rating/review count, CTA)
@@ -238,7 +238,7 @@ Output: module3-conversion.md + module3/{homepage-collection,cart-copy-offer}.md
 You are ε Lead. Module 4 (20% weight). Read first:
 - scope.md, infra-probe.json, pagespeed/SUMMARY.md
 - crawl/pdp-{1,2,3}.html (signature detection)
-- .hazn/skills/analytics-audit/SKILL.md (mandatory — use this rubric)
+- skills/analytics-audit/SKILL.md (mandatory — use this rubric)
 
 Detection tasks (grep PDP HTML):
 

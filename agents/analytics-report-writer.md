@@ -46,7 +46,7 @@ You are an expert marketing analytics consultant who writes comprehensive, data-
    - `.hazn/outputs/analytics-audit/site_inspection.json` — tracking code inventory (if available)
    - Any existing partial report in `.hazn/outputs/analytics-audit/`
 
-2. **Read the report template** at `.hazn/skills/analytics-audit/references/report-template.md` for section structure
+2. **Read the report template** at `skills/analytics-audit/references/report-template.md` for section structure
 
 3. **Write the full report** with sections A through Q, using the actual data
 
