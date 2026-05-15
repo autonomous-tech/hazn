@@ -1,0 +1,531 @@
+<!--
+Editorial Warmth v2 — Audit Template Snippets
+
+Copy-paste components extracted from the canonical Sene Studio audit
+(audits/senestudio-revenue-audit-2026-04-20/index.html). All snippets
+assume the design-tokens.md :root variables are in scope.
+
+NOT a full HTML doc. These are component fragments — wire them up
+into the 10-section structure per references/section-structure.md.
+-->
+
+<!-- =================================================== -->
+<!-- 1. ROOT CSS BLOCK (paste in <head><style>...</style>) -->
+<!-- =================================================== -->
+<style>
+:root {
+  --parchment: #F5EFE0;
+  --parchment-light: #FAF7F0;
+  --parchment-dark: #EDE5D3;
+  --midnight: #0D0D1F;
+  --midnight-light: #1A1A35;
+  --vermillion: #E8513D;
+  --vermillion-light: #F06B59;
+  --vermillion-dark: #C43E2C;
+  --indigo: #1E3A8A;
+  --sage: #7CA982;
+  --gold: #D4A853;
+  --ocean: #0EA5E9;
+  --ink: #1A1A2E;
+  --prose: #4A4A60;
+  --caption: #7A7A90;
+  --rule: rgba(0,0,0,0.08);
+  --shadow-card: 0 2px 16px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 6px 28px rgba(0,0,0,0.09);
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--parchment);
+  color: var(--prose);
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+p { margin: 0; }
+a { color: var(--vermillion); text-decoration: none; }
+a:hover { color: var(--vermillion-dark); }
+
+/* Subtle noise texture */
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.3;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vermillion);
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--parchment-dark);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+/* Layout — sticky sidebar + main */
+.layout { display: grid; grid-template-columns: 240px 1fr; gap: 0; min-height: 100vh; }
+
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .toc { display: none; } }
+</style>
+
+<!-- =================================================== -->
+<!-- 2. STICKY TOC SIDEBAR -->
+<!-- =================================================== -->
+<aside class="toc" role="navigation" aria-label="Audit sections">
+  <div class="toc-brand">
+    <h3 class="toc-title">Autonomous × <span>Sene Studio</span></h3>
+    <div class="eyebrow">SHOPIFY REVENUE AUDIT</div>
+  </div>
+  <nav class="toc-nav">
+    <a href="#hero" class="toc-link"><span class="toc-num">01</span> Executive verdict</a>
+    <a href="#alarm" class="toc-link"><span class="toc-num">02</span> The alarm</a>
+    <a href="#scores" class="toc-link"><span class="toc-num">03</span> Module scores</a>
+    <a href="#root-cause" class="toc-link"><span class="toc-num">04</span> Root cause</a>
+    <a href="#module1" class="toc-link"><span class="toc-num">05</span> AI discovery (28/100)</a>
+    <a href="#module2" class="toc-link"><span class="toc-num">06</span> Search & catalog (38/100)</a>
+    <a href="#module3" class="toc-link"><span class="toc-num">07</span> Conversion (53/100)</a>
+    <a href="#module4" class="toc-link"><span class="toc-num">08</span> Technical (51/100)</a>
+    <a href="#revenue" class="toc-link"><span class="toc-num">09</span> Revenue & quick wins</a>
+    <a href="#roadmap" class="toc-link"><span class="toc-num">10</span> Roadmap & workstreams</a>
+  </nav>
+  <div class="toc-meta">
+    <div><strong>Prepared</strong> Apr 20, 2026</div>
+    <div><strong>SiteHealth</strong> 42/100</div>
+    <div><strong>Status</strong> Partner review</div>
+  </div>
+</aside>
+
+<style>
+.toc {
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  background: var(--parchment); padding: 2rem 1.5rem;
+  border-right: 1px solid var(--parchment-dark);
+}
+.toc-title { font-size: 1.1rem; }
+.toc-nav { display: flex; flex-direction: column; gap: 0.2rem; margin-top: 1.5rem; }
+.toc-link {
+  display: flex; gap: 0.6rem; padding: 0.5rem 0.7rem;
+  font-size: 14.5px; color: var(--prose); border-radius: 0.4rem;
+  transition: all 0.15s;
+}
+.toc-link:hover { background: var(--parchment-dark); color: var(--ink); }
+.toc-link.active { background: var(--vermillion); color: white; }
+.toc-num { font-family: var(--font-mono); font-size: 11px; color: var(--caption); flex-shrink: 0; padding-top: 2px; }
+.toc-link.active .toc-num { color: white; opacity: 0.7; }
+.toc-meta { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--parchment-dark); font-size: 13px; color: var(--caption); }
+</style>
+
+<!-- =================================================== -->
+<!-- 3. HERO SECTION (midnight-backed) -->
+<!-- =================================================== -->
+<section id="hero" class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <div class="eyebrow" style="color: var(--vermillion-light);">AUTONOMOUS × SENE STUDIO · SHOPIFY REVENUE AUDIT</div>
+    <h1 class="hero-headline">
+      Sene Studio is conversion-healthy — and invisible to the
+      <span class="squiggle">next wave of commerce</span>.
+    </h1>
+    <div class="hero-meta">April 20, 2026 · Partner review</div>
+    <div class="score-pill">
+      <span class="score-num">42</span>
+      <span class="score-label">OVERALL SITEHEALTH · /100</span>
+    </div>
+    <div class="hero-verdict">
+      <p>Sene sits on a 42/100 SiteHealth score because the discovery layer that governs the next 12-24 months of commerce — LLMs, AI Overviews, agentic checkout, structured product feeds — is functionally absent, and every supporting layer (catalog taxonomy, PDP surfacing, MarTech, Core Web Vitals) silently drags the conversion surfaces that <em>do</em> work.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero {
+  position: relative; background: var(--midnight); color: var(--parchment-light);
+  padding: 6rem 0 5rem; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(232,81,61,0.15), transparent 60%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  font-variation-settings: 'opsz' 144;
+  color: var(--parchment-light);
+  max-width: 900px;
+  margin-top: 1.5rem;
+}
+.squiggle {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23E8513D' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: 100% 0.4em;
+  padding-bottom: 0.2em;
+}
+.hero-meta { color: var(--caption); margin-top: 1.4rem; font-size: 14px; }
+.score-pill {
+  display: inline-flex; align-items: center; gap: 0.9rem;
+  background: var(--vermillion); color: white;
+  padding: 0.5rem 1.4rem 0.5rem 0.5rem;
+  border-radius: 100px; margin-top: 2rem;
+  font-family: var(--font-mono);
+}
+.score-num {
+  background: white; color: var(--vermillion);
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 22px; font-weight: 600;
+}
+.score-label { font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+.hero-verdict {
+  margin-top: 2.4rem; max-width: 720px;
+  padding-left: 1.4rem; border-left: 3px solid var(--vermillion);
+  font-size: 17px; color: var(--parchment-light); opacity: 0.9;
+}
+</style>
+
+<!-- =================================================== -->
+<!-- 4. SCORE CARD (1 of 4 in grid) -->
+<!-- =================================================== -->
+<article class="score-card">
+  <div class="score-card-circle">
+    <svg viewBox="0 0 100 100" width="100" height="100">
+      <circle cx="50" cy="50" r="42" stroke="var(--parchment-dark)" stroke-width="6" fill="none"/>
+      <circle cx="50" cy="50" r="42" stroke="var(--vermillion)" stroke-width="6" fill="none"
+        stroke-dasharray="263.9" stroke-dashoffset="190.0" stroke-linecap="round"
+        transform="rotate(-90 50 50)"/>
+      <text x="50" y="55" text-anchor="middle" font-family="Fraunces" font-size="26" font-weight="500" fill="var(--ink)">28</text>
+    </svg>
+  </div>
+  <div class="score-card-meta">
+    <div class="eyebrow">Module 01 · Weight 30%</div>
+    <h3 class="card-title">AI Discovery & Agentic Commerce</h3>
+    <p>No llms.txt, 0% GTIN, zero AggregateRating across 916 reviews. Structurally invisible to ChatGPT Shopping, Perplexity Shop, AI Overviews.</p>
+    <a href="#module1" class="text-link">View deep dive →</a>
+  </div>
+</article>
+
+<style>
+.score-card {
+  display: grid; grid-template-columns: auto 1fr; gap: 1.4rem;
+  background: white; border-radius: var(--radius-xl);
+  padding: 1.6rem; box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s;
+}
+.score-card:hover { box-shadow: var(--shadow-card-hover); }
+.score-card-meta .card-title { font-size: 1.2rem; margin: 0.4rem 0 0.6rem; font-family: var(--font-display); font-weight: 500; }
+.score-card-meta p { color: var(--prose); font-size: 14.5px; line-height: 1.55; }
+.text-link { display: inline-block; margin-top: 0.8rem; color: var(--vermillion); font-weight: 500; font-size: 14px; }
+</style>
+
+<!-- =================================================== -->
+<!-- 5. CALLOUT (4 variants: critical / warning / strength / opportunity) -->
+<!-- =================================================== -->
+<div class="callout critical">
+  <h4>WE WILL NOT PUBLISH A TOTAL RECOVERY NUMBER UNTIL ADMIN BASELINE LANDS</h4>
+  <p>The dominant uncertainty in every recovery dollar is the baseline itself — your actual GA4 sessions, blended CVR, and AOV. Until that lands, a single "total recoverable" figure is a forecast we cannot defend.</p>
+</div>
+
+<style>
+.callout {
+  background: var(--parchment-light); border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem; margin: 1.4rem 0;
+  border-left: 4px solid var(--vermillion);
+}
+.callout h4 {
+  font-family: var(--font-mono); font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--vermillion); margin-bottom: 0.6rem;
+}
+.callout p { font-size: 15.5px; color: var(--prose); line-height: 1.6; }
+
+.callout.critical { border-left-color: var(--vermillion); background: rgba(232,81,61,0.05); }
+.callout.warning { border-left-color: var(--gold); background: rgba(212,168,83,0.07); }
+.callout.warning h4 { color: var(--gold); }
+.callout.strength { border-left-color: var(--sage); background: rgba(124,169,130,0.07); }
+.callout.strength h4 { color: var(--sage); }
+.callout.opportunity { border-left-color: var(--ocean); background: rgba(14,165,233,0.06); }
+.callout.opportunity h4 { color: var(--ocean); }
+</style>
+
+<!-- =================================================== -->
+<!-- 6. IMPACT CARD (Alarm section, 3 across) -->
+<!-- =================================================== -->
+<div class="impact-card">
+  <div class="label">F17 · CWV remediation · HIGH</div>
+  <div class="big">$420K–$660K/yr</div>
+  <div class="sub">PageSpeed 28-32/100 with 9-28s mobile LCP. Google 2024: 1s→5s LCP = +90% mobile bounce. 65% mobile traffic share, 8-15% recoverable. 50 hours.</div>
+</div>
+
+<style>
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+@media (max-width: 800px) { .grid-3 { grid-template-columns: 1fr; } }
+.impact-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 1.4rem; box-shadow: var(--shadow-card);
+  border-top: 3px solid var(--vermillion);
+}
+.impact-card .label {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--vermillion); margin-bottom: 0.8rem;
+}
+.impact-card .big {
+  font-family: var(--font-display); font-size: 1.8rem;
+  font-weight: 500; color: var(--ink); line-height: 1.05;
+  margin-bottom: 0.6rem;
+}
+.impact-card .sub { font-size: 13.5px; color: var(--prose); line-height: 1.5; }
+</style>
+
+<!-- =================================================== -->
+<!-- 7. FINDING CARD (left-border severity) -->
+<!-- =================================================== -->
+<article class="finding critical">
+  <div class="finding-head">
+    <div class="finding-num">FINDING 01 · CRITICAL</div>
+    <span class="badge critical">Affects all 3 PDPs</span>
+  </div>
+  <h4>PDP DOM ordering bug — Judge.me review-submission modal renders before product H1</h4>
+  <p>Judge.me review-submission modal renders ~60-90 lines before the product <code class="kbd">&lt;h1&gt;</code> on BreezeTech shirt, Soho FlexTech Suit, and Air Straight Jeans. Costs: accessibility, AI-crawler indexing, latent CLS. Fix: lazy-mount submission modal into a portal after <code class="kbd">#MainContent</code>.</p>
+</article>
+
+<style>
+.finding {
+  background: white; border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+  border-left: 4px solid var(--vermillion);
+  box-shadow: var(--shadow-card);
+}
+.finding.critical { border-left-color: var(--vermillion); }
+.finding.warning { border-left-color: var(--gold); }
+.finding.strength { border-left-color: var(--sage); }
+.finding-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.6rem; gap: 1rem;
+}
+.finding-num {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--vermillion);
+}
+.finding h4 {
+  font-family: var(--font-display); font-size: 1.15rem;
+  font-weight: 500; margin-bottom: 0.6rem;
+}
+.finding p { font-size: 15px; color: var(--prose); line-height: 1.55; }
+
+.badge {
+  font-family: var(--font-mono); font-size: 10.5px;
+  padding: 3px 10px; border-radius: 12px;
+  background: rgba(232,81,61,0.12); color: var(--vermillion);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.badge.warning { background: rgba(212,168,83,0.15); color: var(--gold); }
+.badge.pass    { background: rgba(124,169,130,0.15); color: var(--sage); }
+.badge.critical{ background: rgba(232,81,61,0.12); color: var(--vermillion); }
+</style>
+
+<!-- =================================================== -->
+<!-- 8. SCHEMA COVERAGE MATRIX TABLE -->
+<!-- =================================================== -->
+<div class="table-wrap">
+  <table class="schema-matrix">
+    <thead>
+      <tr>
+        <th>Template</th>
+        <th>Product</th><th>Offer</th><th>AggregateRating</th>
+        <th>Review</th><th>FAQPage</th><th>BreadcrumbList</th>
+        <th>Organization</th><th>WebSite</th><th>SearchAction</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Home</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="ok">✓</td><td class="ok">✓</td><td>—</td></tr>
+      <tr><td>Collection</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="bad">✗</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>PDP — Shirt</td><td class="ok">✓</td><td class="ok">✓</td><td class="bad">✗</td><td class="bad">✗</td><td>—</td><td class="bad">✗</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>PDP — Suit</td><td class="ok">✓</td><td class="ok">✓</td><td class="bad">✗</td><td class="bad">✗</td><td>—</td><td class="bad">✗</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>PDP — Jeans</td><td class="ok">✓</td><td class="ok">✓</td><td class="bad">✗</td><td class="bad">✗</td><td>—</td><td class="bad">✗</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>FAQ page</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="bad">✗</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Blog post</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="bad">✗</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+.table-wrap { overflow-x: auto; margin: 1.4rem 0; }
+.schema-matrix {
+  width: 100%; border-collapse: collapse; font-size: 13.5px;
+  background: white; border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.schema-matrix th {
+  background: var(--parchment-dark); color: var(--ink);
+  padding: 0.7rem 0.6rem; text-align: center; font-family: var(--font-mono);
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.schema-matrix th:first-child { text-align: left; }
+.schema-matrix td {
+  padding: 0.7rem 0.6rem; text-align: center;
+  border-top: 1px solid var(--parchment-dark);
+}
+.schema-matrix td:first-child { text-align: left; font-weight: 500; color: var(--ink); }
+.schema-matrix .ok { color: var(--sage); font-size: 18px; }
+.schema-matrix .bad { color: var(--vermillion); font-size: 18px; }
+</style>
+
+<!-- =================================================== -->
+<!-- 9. METHODOLOGY UPDATE CALLOUT (v2 rebuild notice) -->
+<!-- =================================================== -->
+<div class="callout critical methodology-callout">
+  <h4>METHODOLOGY UPDATE (APRIL 20, 2026) — PROJECTION V2.0</h4>
+  <p>This projection was rebuilt after internal red-team review identified that the prior v1 figures used a min×min×min → max×max×max range construction (a 1-in-1000 joint tail, not a confidence interval) and applied SERP CTR benchmarks as if they were CVR lifts. V2 uses <strong>P25-P75 interquartile bands</strong> around a central baseline (~$2.3M annual, triangulated from ZoomInfo, Glossy 2019, founder's Pitch-podcast run rate, SimilarWeb peer calibration, and Judge.me review-volume back-solve), cites only verifiable benchmarks, applies a <strong>40% overlap discount</strong> for correlated findings + <strong>30% execution haircut</strong>, and refuses to project totals until admin baseline data is plugged in. Underlying findings are unchanged — only dollar framing is corrected. See <code class="kbd">diagnostics/REVENUE-PROJECTION-v2.json</code>.</p>
+</div>
+
+<!-- =================================================== -->
+<!-- 10. QUICK WIN CARD (in grid-3) -->
+<!-- =================================================== -->
+<article class="qw-card">
+  <div class="qw-head">
+    <span class="qw-rank">01</span>
+    <span class="qw-module">M1 · Schema · F1</span>
+  </div>
+  <h4>Add AggregateRating + Review JSON-LD to PDP template</h4>
+  <div class="qw-meta">
+    <span class="badge pass">Low · 8h</span>
+    <span class="badge critical">Impact HIGH</span>
+  </div>
+  <div class="qw-dollar">$6K–$25K/mo · $72K–$300K/yr</div>
+</article>
+
+<style>
+.qw-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 1.2rem; box-shadow: var(--shadow-card);
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.qw-head {
+  display: flex; gap: 0.8rem; align-items: baseline;
+  font-family: var(--font-mono); font-size: 11.5px;
+}
+.qw-rank {
+  background: var(--vermillion); color: white;
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600;
+}
+.qw-module { color: var(--caption); text-transform: uppercase; letter-spacing: 0.05em; }
+.qw-card h4 {
+  font-family: var(--font-display); font-size: 1.05rem;
+  font-weight: 500; line-height: 1.3;
+}
+.qw-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.qw-dollar {
+  font-family: var(--font-mono); font-size: 13.5px;
+  color: var(--ink); font-weight: 500;
+  padding-top: 0.5rem; border-top: 1px solid var(--parchment-dark);
+}
+</style>
+
+<!-- =================================================== -->
+<!-- 11. ROADMAP 3-COLUMN GRID -->
+<!-- =================================================== -->
+<div class="roadmap-grid">
+  <div class="roadmap-col">
+    <div class="eyebrow">THIS WEEK</div>
+    <ul>
+      <li><strong>F1 · Add AggregateRating schema</strong> · 8h · Unlocks rich-result stars + LLM citation surface.</li>
+      <li><strong>F2 · Wrap /pages/faq in FAQPage schema</strong> · 3h · Blue-ocean LLM citation.</li>
+      <li><strong>F3 · Render ★ aggregate near price on 3 PDPs</strong> · 4h · Bundled with F1.</li>
+    </ul>
+  </div>
+  <div class="roadmap-col">
+    <div class="eyebrow">THIS SPRINT</div>
+    <ul>
+      <li><strong>F4 · Publish /llms.txt + /llms-full.txt</strong></li>
+      <li><strong>F5 · Surface global standard-size on PDP</strong> · Geo-aware messaging</li>
+      <li><strong>F6 · MerchantReturnPolicy + ShippingDetails</strong></li>
+    </ul>
+  </div>
+  <div class="roadmap-col">
+    <div class="eyebrow">NEXT QUARTER</div>
+    <ul>
+      <li><strong>F17 · CWV remediation</strong> · Lazy-load apps, image optimization, LCP &lt; 4s mobile</li>
+      <li><strong>F13 · Collection consolidation</strong> · 230 → ~129 with 22-entry 301 map</li>
+      <li><strong>F18 · Shopify Markets proper</strong> · 1-2 non-US markets with hreflang</li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.roadmap-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;
+  margin: 2rem 0;
+}
+@media (max-width: 800px) { .roadmap-grid { grid-template-columns: 1fr; } }
+.roadmap-col {
+  background: white; border-radius: var(--radius-lg);
+  padding: 1.4rem; box-shadow: var(--shadow-card);
+}
+.roadmap-col .eyebrow { color: var(--vermillion); margin-bottom: 0.8rem; }
+.roadmap-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.roadmap-col li { font-size: 14px; line-height: 1.55; padding-left: 1rem; position: relative; }
+.roadmap-col li::before { content: '→'; position: absolute; left: 0; color: var(--vermillion); }
+</style>
+
+<!-- =================================================== -->
+<!-- 12. PRINT STYLESHEET -->
+<!-- =================================================== -->
+<style>
+@media print {
+  .toc { display: none; }
+  .layout { display: block; }
+  body { font-size: 10pt; }
+  .hero { padding: 2rem 0; }
+  .hero-headline { font-size: 24pt; }
+  section { page-break-inside: avoid; }
+  .grid-3, .grid-2 { grid-template-columns: 1fr 1fr; }
+  body::after { display: none; } /* no noise overlay */
+}
+</style>
+
+<!-- =================================================== -->
+<!-- 13. SCROLL-SPY JS (minimal, ~30 lines) -->
+<!-- =================================================== -->
+<script>
+(function() {
+  const links = document.querySelectorAll('.toc-link');
+  const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+
+  function updateActive() {
+    const scrollY = window.scrollY + 100;
+    let active = sections[0];
+    for (const s of sections) { if (s && s.offsetTop <= scrollY) active = s; }
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + active.id));
+  }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+})();
+</script>

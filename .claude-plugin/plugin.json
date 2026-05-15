@@ -1,0 +1,12 @@
+{
+  "name": "hazn",
+  "version": "0.2.0",
+  "description": "Hazn — AI orchestrator for B2B and institutional website projects. Ships specialist skills (strategy, UX, copywriting, wireframes, development, SEO, analytics, audits, red-team validation, Shopify revenue rescue), parallel sub-agents, and end-to-end workflows as a single installable Claude Code plugin.",
+  "author": {
+    "name": "Autonomous Technologies",
+    "url": "https://autonomoustech.ca"
+  },
+  "homepage": "https://github.com/autonomous-tech/hazn",
+  "repository": "https://github.com/autonomous-tech/hazn",
+  "license": "UNLICENSED"
+}
