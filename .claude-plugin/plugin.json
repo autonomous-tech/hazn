@@ -1,7 +1,7 @@
 {
   "name": "hazn",
-  "version": "0.2.0",
-  "description": "Hazn — AI orchestrator for B2B and institutional website projects. Ships specialist skills (strategy, UX, copywriting, wireframes, development, SEO, analytics, audits, red-team validation, Shopify revenue rescue), parallel sub-agents, and end-to-end workflows as a single installable Claude Code plugin.",
+  "version": "0.3.0",
+  "description": "Hazn \u2014 AI orchestrator for B2B/ecommerce/political website projects. 55 skills covering strategy, UX, copy, wireframes, dev, SEO/AEO/GEO, analytics, audits (revenue rescue, CRO), and client deliverables. 22 sub-agents, 17 slash commands, brand-config support. Installable as a Claude Code plugin.",
   "author": {
     "name": "Autonomous Technologies",
     "url": "https://autonomoustech.ca"
