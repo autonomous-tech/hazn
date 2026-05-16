@@ -37,9 +37,9 @@ shopify-revenue-audit (v1.0.0)
 
 Print direct links to:
 
-- `${HAZN_PLUGIN_ROOT}/../../README.md` — marketplace overview
-- `${HAZN_PLUGIN_ROOT}/references/brand-schema.md` — how brand configs work
-- `docs/decisions/003-hazn-marketplace.md` — architecture decision record
+- `${CLAUDE_PLUGIN_ROOT}/../../README.md` — marketplace overview
+- `${CLAUDE_PLUGIN_ROOT}/references/brand-schema.md` — how brand configs work
+- `${CLAUDE_PLUGIN_ROOT}/../../docs/decisions/003-hazn-marketplace.md` — architecture decision record (in the canonical hazn checkout)
 - `https://github.com/autonomous-tech/hazn` — canonical repo for filing feedback
 
 End with a one-line nudge: `Run /hazn:doctor if anything looks wrong, or /hazn:feedback to suggest improvements.`
