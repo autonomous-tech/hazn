@@ -5,10 +5,26 @@
   },
   "metadata": {
     "description": "Hazn marketplace — AI orchestrator plugin suite for B2B/ecommerce/political website projects.",
-    "version": "0.4.0",
+    "version": "1.0.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
+    {
+      "name": "hazn",
+      "source": "./plugins/hazn",
+      "description": "Runtime kernel — cross-cutting orchestration, brand-config loader, red-team baseline skills, editorial deliverable renderer, frontend-design primitives. Required by every Hazn job plugin.",
+      "version": "1.0.0",
+      "category": "ai-orchestration",
+      "tags": ["runtime", "shared", "brand", "red-team"]
+    },
+    {
+      "name": "shopify-revenue-audit",
+      "source": "./plugins/shopify-revenue-audit",
+      "description": "Deep Shopify revenue audit — 4-module composite scoring, honest P25-P75 quantification, mandatory red-team, Editorial Warmth v2 deliverable. Depends on hazn runtime.",
+      "version": "1.0.0",
+      "category": "audits",
+      "tags": ["shopify", "revenue", "cro", "aeo"]
+    },
     {
       "name": "hazn-legacy",
       "source": "./plugins/hazn-legacy",
