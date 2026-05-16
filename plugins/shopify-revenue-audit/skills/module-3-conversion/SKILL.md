@@ -37,7 +37,7 @@ Cross-reference (when present):
 - `ux-ui` skill — visual hierarchy rubric
 - `b2b-ux-reference` skill — premium-tier trust patterns (mandatory for highest-AOV PDP)
 
-> **Note (ADR-003 Phase 1):** The granular checklist files (`checklist-homepage.md`, `checklist-product.md`, `checklist-cart.md`, `benchmarks.md`) were referenced by the legacy `shopify-cro-audit` skill. They have NOT yet been folded into this plugin — use the inline rubrics below until they are migrated. This is a known gap.
+> **Reference files restored (2026-05-16):** The granular checklist files from the deleted `shopify-cro-audit` skill have been restored to `references/` in this module. See the References section at the bottom of this file.
 
 ## Audit criteria
 
@@ -135,5 +135,16 @@ If RED, rebuild this module and re-run the failing red team before composite is 
 - `conversioniq`, `ux-ui`, `b2b-ux-reference` — rubric source skills
 - See `../shopify-revenue-audit/references/agent-teams-playbook.md` § Wave 2 δ for the full agent prompt
 
-## Known gap
-The granular checklist references (`checklist-homepage.md`, `checklist-product.md`, `checklist-cart.md`, `benchmarks.md`) noted in `agent-teams-playbook.md` § Wave 2 δ have not yet been migrated into this plugin from the deleted `shopify-cro-audit` skill. Until they are, use the inline rubrics above. Track as a Phase 2 followup.
+## References
+
+The following files are available at `plugins/shopify-revenue-audit/skills/module-3-conversion/references/`:
+
+| File | Description |
+|------|-------------|
+| `checklist-homepage.md` | Granular homepage CRO checklist — hero, social proof, nav, mobile layout |
+| `checklist-product.md` | PDP-level checklist — above-fold structure, trust signals, reviews, upsell |
+| `checklist-cart.md` | Cart experience checklist — shipping threshold, badges, upsell, persistence |
+| `market-practices.md` | Regional CRO tactics for Pakistan, MENA, US, and EU — currency, trust norms, duty messaging |
+| `app-recommendations.md` | Shopify app-to-issue mapping — recommended apps keyed to specific CRO problem types |
+
+> `cdp-schema.md` (RudderStack CDP event schema) was placed in `module-4-technical/references/` — it is general MarTech/data-collection infrastructure, not CRO-specific.
