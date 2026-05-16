@@ -1,0 +1,12 @@
+{
+  "name": "shopify-revenue-audit",
+  "version": "1.0.0",
+  "description": "Hazn job plugin — deep Shopify revenue audit. 4-module composite scoring (AI Discovery 30%, Search & Catalog 20%, Conversion Experience 30%, Technical Foundation 20%), P25-P75 honest quantification with overlap and execution haircuts, mandatory 4-pass red-team on every projection, Editorial Warmth v2 branded HTML deliverable. Depends on the hazn runtime kernel for red-team skills, brand resolution, and editorial rendering.",
+  "author": {
+    "name": "Autonomous Technologies",
+    "url": "https://autonomoustech.ca"
+  },
+  "homepage": "https://github.com/autonomous-tech/hazn",
+  "repository": "https://github.com/autonomous-tech/hazn",
+  "license": "UNLICENSED"
+}
