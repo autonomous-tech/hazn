@@ -1,7 +1,7 @@
 {
   "name": "hazn-legacy",
   "version": "0.4.0",
-  "description": "Hazn — AI orchestrator for B2B/ecommerce/political website projects. 55 skills covering strategy, UX, copy, wireframes, dev, SEO/AEO/GEO, analytics, audits (revenue rescue, CRO), and client deliverables. 22 sub-agents, 17 slash commands, brand-config support. Installable as a Claude Code plugin.",
+  "description": "Hazn holding pen — content from v0.3.x that has not yet been split into purpose-built marketplace plugins. Auto-discovers remaining skills, agents, commands, and workflows. Extracted in Phase 1 (ADR-003): 7 runtime skills + brand configs + brand assets moved to the hazn plugin; shopify-revenue-audit skill + audit deliverable pipeline moved to the shopify-revenue-audit plugin; shopify-cro-audit deleted as superseded. Remaining content (websites, content pipelines, analytics, NGO, deliverables) will be drained over Phase 3+.",
   "author": {
     "name": "Autonomous Technologies",
     "url": "https://autonomoustech.ca"
