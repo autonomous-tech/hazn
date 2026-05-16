@@ -1,42 +1,56 @@
 ---
 name: shopify-revenue-audit
-description: Use when auditing a Shopify store for revenue opportunities. Covers AI Discovery & Agentic Commerce (30%), Search & Catalog (20%), Conversion Experience (30%), Technical Foundation (20%). Uses 4-module composite scoring 0-100, honest quantification (P25-P75 bands not min×min×min), MANDATORY red-team pass on projections (4 separate red-team skills), Editorial Warmth v2 branded HTML deliverable. Triggers on "audit shopify store", "shopify revenue audit", "deep shopify audit".
+description: Use when auditing a Shopify store for revenue opportunities. Orchestrator that dispatches 4 module skills (AI Discovery 30%, Search & Catalog 20%, Conversion Experience 30%, Technical Foundation 20%) in a 4-wave pipeline. Owns composite scoring 0-100, honest P25-P75 quantification, MANDATORY red-team pass on every projection, Editorial Warmth v2 branded HTML deliverable. Triggers on "audit shopify store", "shopify revenue audit", "deep shopify audit".
 ---
 
-# Shopify Revenue Audit
+# Shopify Revenue Audit (orchestrator)
 
 ## When to use
 - User has a Shopify store URL and wants revenue opportunities surfaced
 - Existing client wants an optimization review (partner framing, not sales)
 - Phrases: "audit this shopify store", "shopify revenue audit", "deep shopify audit", "AEO/GEO audit for shopify"
 
+This skill is the **orchestrator**. It does not perform any module audit work itself — it dispatches to 4 module skills and owns the wave pipeline, composite score, red-team gating, and deliverable rendering.
+
 ## What this skill produces
 - 10-section HTML audit report (parchment + vermillion, ~140 KB, single self-contained file)
 - 4-module SiteHealth composite score 0-100 (e.g., Sene = 42/100)
-- Per-module deep-dive sections with cited evidence
+- Per-module deep-dive sections with cited evidence (produced by the 4 module skills)
 - $-quantified Quick Wins (P25-P75 bands, NOT a single midpoint)
 - Roadmap + Recommended Workstreams (partner close, no sales CTA)
 
-## Scoring framework
+## Module dispatch
 
-| # | Module | Weight | Covers |
+| # | Module skill | Weight | Trigger |
 |---|---|---|---|
-| 1 | **AI Discovery & Agentic Commerce** | 30% | ChatGPT Shopping / Perplexity Shop / Google AI Shopping / Sidekick enrollment + llms.txt / agents.txt / ai-plugin.json + AI-crawler robots policy + schema.org coverage matrix + LLM answer-fit testing + product-feed JSON-LD (GTIN/MPN/brand) + checkout-via-agent support |
-| 2 | **Search & Catalog Performance** (GEO + SEO) | 20% | Google classical + AI Overviews + collection sprawl triage + jean-fragmentation-style mapping + canonical audit + internal linking + sitemap + Core Web Vitals + image SEO |
-| 3 | **Conversion Experience** | 30% | Homepage + 2 collection UX + 3 hero PDP teardowns (mid-price + highest-AOV + SEO canary) + cart + copy/offer + B2B trust patterns for premium tier |
-| 4 | **Technical Foundation** | 20% | Platform fingerprint + Functions migration + Shopify Markets + B2B + variant limits + app conflicts + MarTech presence (GA4/Meta Pixel/Web Pixels Manager) |
+| 1 | `module-1-ai-discovery`   | 30% | Wave 2 β lead |
+| 2 | `module-2-search-catalog` | 20% | Wave 2 γ lead |
+| 3 | `module-3-conversion`     | 30% | Wave 2 δ lead |
+| 4 | `module-4-technical`      | 20% | Wave 2 ε lead |
+
+**Wave 2 invokes `module-1-ai-discovery`, `module-2-search-catalog`, `module-3-conversion`, `module-4-technical` skills in parallel.** Each module skill owns its own audit criteria, scoring rubric, evidence requirements, and red-team gates. The orchestrator only collects their scores into the composite and gates progression.
+
+For single-module reruns, the orchestrator dispatches to one module skill via `/shopify-revenue-audit:rerun-module <audit-dir> <N>`.
 
 ## The 4-wave pipeline
 
 | Wave | Team | Output |
 |---|---|---|
-| 1 | α (3 agents): Crawler + Infra Probe + PageSpeed | crawl/, infra-probe.json, pagespeed/ |
-| 2 | β/γ/δ/ε (4 module leads, parallel) | module{1-4}-*.md + sub-JSON evidence |
-| 3 | η (4 agents): Synthesis lead + Calculator + Quick-Wins ranker + Fact-check | SYNTHESIS.md, REVENUE-PROJECTION.json, QUICK-WINS.json, FACT-CHECK.md |
-| Red-team | A/B/C/D (parallel, mandatory) | RED-TEAM-{A,B,C,D}-*.md → REVENUE-PROJECTION-v2.json |
-| 4 | θ (HTML builder + QA) | audits/<client>-*.html |
+| 1 | α (3 agents): Crawler + Infra Probe + PageSpeed | `crawl/`, `infra-probe.json`, `pagespeed/` |
+| 2 | β/γ/δ/ε — invokes the 4 module skills in parallel | `module{1-4}-*.md` + sub-JSON evidence |
+| 3 | η (4 agents): Synthesis lead + Calculator + Quick-Wins ranker + Fact-check | `SYNTHESIS.md`, `REVENUE-PROJECTION.json`, `QUICK-WINS.json`, `FACT-CHECK.md` |
+| Red-team | A/B/C/D (parallel, mandatory) | `RED-TEAM-{A,B,C,D}-*.md` → `REVENUE-PROJECTION-v2.json` |
+| 4 | θ (HTML builder + QA) | `audits/<client>-*.html` |
 
-Each wave gates on the next. See `references/agent-teams-playbook.md` for the full team briefs and copy-pasteable agent prompts.
+Each wave gates on the next. See `references/agent-teams-playbook.md` for the full team briefs, copy-pasteable agent prompts, and Wave 1 / Wave 3 / Wave 4 agent specs. The Wave 2 module prompts live in each module skill's `SKILL.md`.
+
+## Composite scoring formula
+
+```
+composite = 0.30 × M1 + 0.20 × M2 + 0.30 × M3 + 0.20 × M4
+```
+
+Each module score is 0-100. Composite is rounded to nearest integer.
 
 ## Mandatory practices
 
@@ -45,8 +59,8 @@ Every $ figure traces to `docs/strategy/revenue-leak-calculator.md` 8 categories
 - **P25-P75 interquartile bands** (not min×min×min — that's a P1-P99 Cartesian extreme, not a range)
 - **40% overlap haircut** on the SUM of correlated findings (trust cluster, AI-surface cluster, etc.)
 - **30% execution haircut** for deployment friction
-- **Ramp model**: month 1-3 = 20% of steady state; full ramp by month 6
-- **Triangulated baseline**: never accept analyst-guessed `sessions × CVR × AOV`. Pull from ZoomInfo, SimilarWeb, Glossy, founder podcasts, review-volume back-solve.
+- **Ramp model:** month 1-3 = 20% of steady state; full ramp by month 6
+- **Triangulated baseline:** never accept analyst-guessed `sessions × CVR × AOV`. Pull from ZoomInfo, SimilarWeb, Glossy, founder podcasts, review-volume back-solve.
 
 ### Mandatory red-team pass
 Every audit MUST run all 4 red-team skills before publishing any $ projection:
@@ -56,6 +70,8 @@ Every audit MUST run all 4 red-team skills before publishing any $ projection:
 - `audit-red-team-domain-check` — kills semantic errors a practitioner would catch
 
 If ANY returns RED, rebuild the projection (v2) and re-run that red team to confirm.
+
+Individual module skills also declare their own red-team gates (subset of the 4) that must clear before the module's score is final.
 
 ### Branding
 Use **only** the Editorial Warmth v2 design system from `repos/products/website/references/docs/editorial-warmth-v2.html`. Render via `editorial-warmth-audit-renderer` skill.
@@ -67,16 +83,22 @@ This skill produces partner audits, not sales pitches. Close with **Recommended 
 
 ## Required inputs from caller
 - Shopify domain (just the URL)
-- Optional: client name override, audit date override, --skip-red-team flag (DISCOURAGED — only for internal sandbox runs)
+- Optional: client name override, audit date override, `--skip-red-team` flag (DISCOURAGED — only for internal sandbox runs)
 
 ## Required outputs
-See `.claude/commands/shopify-revenue-audit.md` for full file tree. Key deliverable: `audits/<client>-revenue-audit-YYYY-MM-DD/index.html`.
+Key deliverable: `audits/<client>-revenue-audit-YYYY-MM-DD/index.html`. See `references/agent-teams-playbook.md` for the full file tree.
+
+Deliverable variants:
+- **10-section deep-dive HTML** (default) — via `/shopify-revenue-audit:run`
+- **Executive one-pager** — via `/shopify-revenue-audit:one-pager <audit-dir>` (skim artifact for board / CFO / Slack)
+- **Build-brief** (post-engagement) — produced manually from `QUICK-WINS.json` + `SYNTHESIS.md`
 
 ## Related skills
+- `module-1-ai-discovery`, `module-2-search-catalog`, `module-3-conversion`, `module-4-technical` — the 4 audit modules dispatched in Wave 2
 - `audit-red-team-baseline`, `audit-red-team-uplifts`, `audit-red-team-cfo`, `audit-red-team-domain-check` — 4 mandatory red-team passes
 - `editorial-warmth-audit-renderer` — Wave 4 HTML build
-- `analytics-audit` (existing) — referenced by Module 4 ε team
-- `b2b-ux-reference` (existing) — referenced by Module 3 δ team for premium-AOV trust patterns
+- `analytics-audit` — referenced by `module-4-technical`
+- `b2b-ux-reference` — referenced by `module-3-conversion` for premium-AOV trust patterns
 
 ## Canonical example
 **Sene Studio (April 2026)** — `audits/senestudio-revenue-audit-2026-04-20/index.html`
