@@ -35,7 +35,7 @@ Brand config files control the visual identity of all Hazn-generated audit repor
 
 1. Copy `autonomous.json` as a starting point:
    ```bash
-   cp ~/hazn/brands/autonomous.json ~/hazn/brands/{partner-slug}.json
+   cp "${CLAUDE_PLUGIN_ROOT}/brands/autonomous.json" "${CLAUDE_PLUGIN_ROOT}/brands/{partner-slug}.json"
    ```
 
 2. Edit the new file:
@@ -59,9 +59,9 @@ Brand config files control the visual identity of all Hazn-generated audit repor
 
 Skills follow this resolution order during intake:
 
-1. **Explicit partner slug** — load `~/hazn/brands/{partner-slug}.json`
+1. **Explicit partner slug** — load `${CLAUDE_PLUGIN_ROOT}/brands/{partner-slug}.json`
 2. **End-customer inline** — build config object from intake answers (not persisted)
-3. **Default fallback** — load `~/hazn/brands/autonomous.json`
+3. **Default fallback** — load `${CLAUDE_PLUGIN_ROOT}/brands/autonomous.json`
 
 If a partner slug is specified but the file doesn't exist, the skill should prompt to run brand setup before proceeding.
 
