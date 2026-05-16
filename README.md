@@ -4,9 +4,19 @@ AI orchestrator for B2B and institutional website projects, packaged as an insta
 
 Hazn coordinates 22 specialist agents through 7 structured workflows, drawing on 47 deep skills covering the full project lifecycle — strategy, UX, copywriting, wireframes, development (Next.js + Payload, Wagtail, WordPress), SEO/AEO/GEO, analytics, audits, and client deliverables.
 
-## Marketplace layout (v0.4.0+)
+## Marketplace layout (v1.0.0+)
 
-This repo is structured as a Claude Code plugin marketplace. All v0.3.x plugin content lives under `plugins/hazn-legacy/` as a single installable entry. Specialist plugins (hazn-runtime, shopify-revenue-audit, etc.) will be extracted from hazn-legacy and added as peer entries over subsequent phases. See [docs/decisions/003-hazn-marketplace.md](docs/decisions/003-hazn-marketplace.md) for the full migration plan.
+This repo is a Claude Code plugin marketplace. Phase 1 of ADR-003 split content into three peer plugins:
+
+| Plugin | Version | Role |
+|--------|---------|------|
+| `hazn` | 1.0.0 | Runtime kernel — orchestrator, brand-config loader, 4 red-team skills, editorial renderer, frontend-design. Required by every job plugin. |
+| `shopify-revenue-audit` | 1.0.0 | First job plugin — 4-module Shopify revenue audit with mandatory red-team and Editorial Warmth v2 deliverable. |
+| `hazn-legacy` | 0.4.0 | Holding pen for v0.3.x content not yet split into purpose-built plugins. Drained over Phase 3+. |
+
+After install, runtime commands are namespaced under `/hazn:` (`/hazn:help`, `/hazn:doctor`, `/hazn:feedback`) and job-plugin commands under their own namespace (`/shopify-revenue-audit:run`, etc.).
+
+See [docs/decisions/003-hazn-marketplace.md](docs/decisions/003-hazn-marketplace.md) for the full migration plan.
 
 ## Install
 
