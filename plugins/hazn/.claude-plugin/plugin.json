@@ -1,0 +1,12 @@
+{
+  "name": "hazn",
+  "version": "1.0.0",
+  "description": "Hazn runtime kernel — cross-cutting orchestration, brand-config loader, red-team baseline skills, editorial deliverable renderer, and frontend-design primitives shared by every Hazn job plugin (audits, websites, content). Provides the /hazn:feedback, /hazn:doctor, /hazn:help commands and the brand resolution contract.",
+  "author": {
+    "name": "Autonomous Technologies",
+    "url": "https://autonomoustech.ca"
+  },
+  "homepage": "https://github.com/autonomous-tech/hazn",
+  "repository": "https://github.com/autonomous-tech/hazn",
+  "license": "UNLICENSED"
+}
