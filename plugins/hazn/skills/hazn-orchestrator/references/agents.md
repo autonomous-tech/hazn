@@ -21,18 +21,19 @@ sessions_spawn({
 })
 ```
 
-### Sub-Agent Templates
+### Sub-Agent Roles
 
-Load from `sub-agents/{name}.md`:
-- `strategist.md`
-- `ux-architect.md`
-- `copywriter.md`
-- `wireframer.md`
-- `developer.md`
-- `seo-specialist.md`
-- `content-writer.md`
-- `auditor.md`
-- `case-study-builder.md`
+These role briefs are composed inline by the orchestrator when spawning sub-agents — there is no shared `sub-agents/` directory in this plugin. The 9 canonical roles:
+
+- strategist
+- ux-architect
+- copywriter
+- wireframer
+- developer
+- seo-specialist
+- content-writer
+- auditor
+- case-study-builder
 
 ### Context to Include
 

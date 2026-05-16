@@ -36,20 +36,20 @@ This determines the entire strategy, IA, tone, and compliance requirements.
 
 4. DEVELOPMENT (required)
    └─→ Ask: Which stack?
-       ├── WordPress → Spawn: WordPress Developer (sub-agents/wordpress-developer.md)
+       ├── WordPress → Spawn: WordPress Developer (role: wordpress-developer)
        │   └─→ Stack: GeneratePress Premium + Meta Box + Filter Everything (see skill)
        │   └─→ Needs: HestiaCP SSH access + domain
-       ├── Next.js + Payload → Spawn: Developer (sub-agents/developer.md)
+       ├── Next.js + Payload → Spawn: Developer (role: developer)
        │   └─→ Stack: Next.js + Payload CMS + Tailwind
        │   └─→ Best for: B2B commercial, greenfield marketing sites
-       └── Django + Wagtail + Next.js → Spawn: Wagtail Developer (sub-agents/wagtail-developer.md)
+       └── Django + Wagtail + Next.js → Spawn: Wagtail Developer (role: wagtail-developer)
            └─→ Stack: cookiecutter-django + Wagtail LTS + Next.js
            └─→ Best for: Content-heavy, existing Django backend, Autonomous own properties, case study import workflow
    └─→ Input: ux-blueprint.md, copy/, wireframes/
    └─→ CHECKPOINT: Review in browser
 
 4.5. QA TESTING (required — no exceptions)
-   └─→ Spawn: QA Tester (sub-agents/qa-tester.md)
+   └─→ Spawn: QA Tester (role: qa-tester)
    └─→ Input: Built site URL, ux-blueprint.md, dev-progress.md
    └─→ Output: qa-report.md (PASS / CONDITIONAL PASS / FAIL)
    └─→ If FAIL → Return to Developer with qa-report.md, do NOT advance
@@ -426,7 +426,7 @@ Just spawn with a clear, focused task.
 ## `/sow` — Statement of Work Generator
 
 **Duration:** 10–15 minutes  
-**Skill:** `sow` (skills/sow/SKILL.md)  
+**Skill:** `sow` (resolved by name from the hazn-legacy plugin)  
 **Output:** `autonomous-proposals/proposals/{client-slug}-sow.pdf`
 
 ### Overview
@@ -508,13 +508,13 @@ autonomous-proposals/
     {slug}-sow.html   ← generated source
     {slug}-sow.pdf    ← final output
 
-hazn/
-  skills/sow/
-    SKILL.md
-    references/
-      copy-guide.md   ← You-view writing rules
-      logo-fetch.md   ← logo handling
-      components.md   ← copy-paste HTML for all 14 components
-  logos/
-    {slug}.svg/.png   ← cached client logos
+hazn-legacy plugin · sow skill
+  SKILL.md
+  references/
+    copy-guide.md   ← You-view writing rules
+    logo-fetch.md   ← logo handling
+    components.md   ← copy-paste HTML for all 14 components
+
+autonomous-proposals/logos/
+  {slug}.svg/.png   ← cached client logos
 ```

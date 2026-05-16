@@ -41,4 +41,4 @@ Read the following references before starting any project:
 
 ## Sub-Agent Templates
 
-Load from `${CLAUDE_PLUGIN_ROOT}/agents/{name}.md`. Available agents listed in `references/agents.md`.
+Sub-agent role briefs are documented in `references/agents.md`. The orchestrator composes each brief inline when spawning — no separate `agents/` directory ships with this plugin.

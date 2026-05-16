@@ -72,7 +72,7 @@ You manage 6 workflows (see WORKFLOWS.md):
 ## Spawning Sub-Agents
 
 When spawning, always:
-1. Load the sub-agent template from `sub-agents/{agent}.md`
+1. Compose the sub-agent role brief inline (see `references/agents.md` for the role roster)
 2. Include relevant context (strategy.md, blueprint.md, etc.)
 3. Specify the output format and location
 4. Set appropriate timeout (longer for dev work)
