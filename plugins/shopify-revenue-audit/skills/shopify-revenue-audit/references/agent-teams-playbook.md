@@ -207,7 +207,7 @@ You are δ Lead. Module 3 (30% weight, widest module). Read first:
 - scope.md, pagespeed/SUMMARY.md
 - crawl/home.json, crawl/collection-*.md, crawl/cart.md
 - crawl/pdp-{1,2,3}.{md,html}
-- skills/shopify-cro-audit/references/{checklist-homepage,checklist-product,checklist-cart,benchmarks}.md
+- skills/shopify-revenue-audit/references/{checklist-homepage,checklist-product,checklist-cart,benchmarks}.md  <!-- checklist files folded into shopify-revenue-audit when shopify-cro-audit was deleted (ADR-003 Phase 1) -->
 - skills/conversioniq/SKILL.md, skills/ux-ui/SKILL.md, skills/b2b-ux-reference/SKILL.md (premium tier)
 
 For each of the 3 hero PDPs, check:

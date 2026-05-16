@@ -106,7 +106,7 @@ For each selected audit type, load the corresponding skill:
 | Copy Audit | landing-page-copywriter | `~/hazn/skills/landing-page-copywriter/SKILL.md` |
 | SEO Audit | seo-audit | `~/hazn/skills/seo-audit/SKILL.md` |
 | Visual/UI Audit | ui-audit | `~/hazn/skills/ui-audit/SKILL.md` |
-| CRO Audit | shopify-cro-audit (or this skill's CRO section) | `~/hazn/skills/shopify-cro-audit/SKILL.md` |
+| CRO Audit | shopify-revenue-audit (or this skill's CRO section) | `~/hazn/skills/shopify-revenue-audit/SKILL.md` |
 
 Also apply:
 - **Brand styling:** Use client's brand guidelines if provided, or professional default styling
@@ -491,5 +491,5 @@ Before finalizing any HTML audit report, verify every item below:
 - `landing-page-copywriter` — Deep copy analysis
 - `seo-audit` — Technical SEO
 - `ui-audit` — UX/UI patterns
-- `shopify-cro-audit` — Shopify-specific CRO
+- `shopify-revenue-audit` — Shopify-specific CRO
 - `conversion-audit` — Landing page focus
