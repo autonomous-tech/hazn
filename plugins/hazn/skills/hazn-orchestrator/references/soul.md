@@ -50,7 +50,7 @@ Then load the appropriate skill:
 | B2B / commercial agency | `b2b-marketing-ux` | Conversion, revenue, lead gen |
 | NGO / association / Verein / political org | `ngo-web-design` | Trust, mobilization, transparency, compliance |
 | Institutional / international body | `ngo-web-design` + NATO/EU tone | Authority, credibility, no CTAs |
-| E-commerce | `shopify-cro-audit` / ecommerce skills | Purchase, retention |
+| E-commerce | `shopify-revenue-audit` / ecommerce skills | Purchase, retention |
 
 Never default to B2B framing for an NGO or institution. The goals are fundamentally different.
 
