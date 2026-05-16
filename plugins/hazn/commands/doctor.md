@@ -11,11 +11,11 @@ Diagnostic check for the Hazn marketplace install. Verifies the runtime kernel, 
 
 ### 1. hazn runtime kernel installed
 
-Confirm `hazn@1.x` is present in the active Claude Code marketplace registry. Read its manifest from `${HAZN_PLUGIN_ROOT}/.claude-plugin/plugin.json` and report version. If missing, instruct user to install the marketplace.
+Confirm `hazn@1.x` is present in the active Claude Code marketplace registry. Read its manifest from `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json` and report version. If missing, instruct user to install the marketplace.
 
 ### 2. Runtime skills resolvable
 
-Verify each of the 7 runtime skills exists under `${HAZN_PLUGIN_ROOT}/skills/`:
+Verify each of the 7 runtime skills exists under `${CLAUDE_PLUGIN_ROOT}/skills/`:
 
 - `hazn-orchestrator`
 - `editorial-warmth-audit-renderer`
@@ -29,7 +29,7 @@ Print a check / cross per skill. Any missing skill is a `FAIL`.
 
 ### 3. Brand registry healthy
 
-- `${HAZN_PLUGIN_ROOT}/brands/autonomous.json` exists and parses as JSON
+- `${CLAUDE_PLUGIN_ROOT}/brands/autonomous.json` exists and parses as JSON
 - All required fields per `references/brand-schema.md` are present
 - Any additional partner brand files in `brands/` parse and validate against the same schema
 
@@ -43,9 +43,9 @@ If a job plugin's manifest declares no dependencies, print a `WARN` — most job
 
 Locate the user's local clone of `autonomous-tech/hazn` (used by `/hazn:feedback`). Check, in order:
 
-1. `~/repos/autonomous-tech/hazn`
+1. `$HAZN_REPO_PATH` if set
 2. `~/Work/autonomous/repos/products/hazn`
-3. `$HAZN_REPO_PATH` if set
+3. `~/repos/autonomous-tech/hazn`
 
 Report which path was found, the current branch, and whether the working tree is clean. If none found, print a `WARN` with installation instructions — `/hazn:feedback` will fall back to issue mode.
 

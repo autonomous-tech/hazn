@@ -18,7 +18,7 @@ Closes the feedback loop between Hazn consumers and the canonical hazn marketpla
 
 ### 1. Identify target
 
-If the user passed `$ARGUMENTS`, treat it as the plugin or skill name. Otherwise, auto-detect: scan the current session for the last skill that ran (look in `${CLAUDE_PLUGIN_ROOT}/../../`, transcript markers, or recent file writes under `audits/`, `.hazn/outputs/`, etc.). Confirm the target with the user before continuing.
+If the user passed `$ARGUMENTS`, treat it as the plugin or skill name. Otherwise, look back through the current conversation for the most recent skill that ran or plugin command that was invoked, and propose that. If you genuinely cannot tell, ask the user which plugin or skill the feedback is about — do NOT guess. Confirm the target with the user before continuing.
 
 ### 2. Ask 3 questions
 
@@ -34,9 +34,9 @@ Also infer severity from the answers: `severity:critical` (broken output, factua
 
 Look for the local clone in this order:
 
-1. `~/repos/autonomous-tech/hazn`
-2. `~/Work/autonomous/repos/products/hazn`
-3. Anywhere in `$HAZN_REPO_PATH` if set
+1. `$HAZN_REPO_PATH` if set
+2. `~/Work/autonomous/repos/products/hazn` (the canonical workspace location)
+3. `~/repos/autonomous-tech/hazn`
 
 If none found, skip to step 5 (GitHub issue fallback).
 
