@@ -4,6 +4,10 @@ AI orchestrator for B2B and institutional website projects, packaged as an insta
 
 Hazn coordinates 22 specialist agents through 7 structured workflows, drawing on 47 deep skills covering the full project lifecycle — strategy, UX, copywriting, wireframes, development (Next.js + Payload, Wagtail, WordPress), SEO/AEO/GEO, analytics, audits, and client deliverables.
 
+## Marketplace layout (v0.4.0+)
+
+This repo is structured as a Claude Code plugin marketplace. All v0.3.x plugin content lives under `plugins/hazn-legacy/` as a single installable entry. Specialist plugins (hazn-runtime, shopify-revenue-audit, etc.) will be extracted from hazn-legacy and added as peer entries over subsequent phases. See [docs/decisions/003-hazn-marketplace.md](docs/decisions/003-hazn-marketplace.md) for the full migration plan.
+
 ## Install
 
 ```bash
