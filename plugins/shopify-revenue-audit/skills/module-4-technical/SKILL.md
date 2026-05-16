@@ -108,6 +108,14 @@ Module 4 findings must pass:
 
 If RED, rebuild and re-run before composite is final.
 
+## References
+
+The following files are available at `plugins/shopify-revenue-audit/skills/module-4-technical/references/`:
+
+| File | Description |
+|------|-------------|
+| `cdp-schema.md` | RudderStack CDP event schema (funnel events, order events, supporting events) — use when querying or validating client CDP data during the MarTech section |
+
 ## Related skills
 - `shopify-revenue-audit` — orchestrator
 - `audit-red-team-domain-check`, `audit-red-team-cfo` — mandatory gates
