@@ -1,0 +1,21 @@
+{
+  "name": "hazn",
+  "owner": {
+    "name": "Autonomous Technologies"
+  },
+  "metadata": {
+    "description": "Hazn marketplace — AI orchestrator plugin suite for B2B/ecommerce/political website projects.",
+    "version": "0.4.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "hazn-legacy",
+      "source": "./plugins/hazn-legacy",
+      "description": "Holding pen for v0.3.x consolidated content — drained over Phase 3+ per ADR-003",
+      "version": "0.4.0",
+      "category": "ai-orchestration",
+      "tags": ["strategy", "ux", "copy", "seo", "aeo", "geo", "analytics", "audits", "ecommerce", "b2b"]
+    }
+  ]
+}
