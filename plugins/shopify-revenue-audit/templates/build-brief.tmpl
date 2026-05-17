@@ -1,0 +1,109 @@
+# {{store_name}} Revenue Audit — Build Brief
+
+**Audit date:** {{audit_date}}
+**Deliverable path:** `audits/{{slug}}-revenue-audit-{{audit_date}}/`
+**Reference for the dev team executing the Quick Wins.**
+
+---
+
+## Locked decisions
+
+| Decision | Value |
+|---|---|
+| Audit scope | {{audit_scope}} |
+| Lead angle | {{lead_angle}} |
+| Tone | {{tone}} |
+| PDP focus (Module 3) | {{pdp_focus}} |
+| Score framing | {{score_framing}} |
+| Competitors (bonus) | {{competitors}} |
+| 1-pager CTA | {{cta_description}} |
+| Time budget | {{time_budget}} |
+| Final deliverables | index.html · 1-pager.html · outreach-email.md · outreach-linkedin.md · BUILD-BRIEF.md |
+
+---
+
+## Composite score
+
+```
+M1 (AI Discovery, 30%)   = {{m1_score}}
+M2 (Search & Catalog, 20%) = {{m2_score}}
+M3 (Conversion, 30%)     = {{m3_score}}
+M4 (Technical, 20%)      = {{m4_score}}
+---------------------------------
+Composite                = {{composite_score}}/100
+```
+
+## Year-1 P50 recovery
+
+- **Year 1:** {{total_recovery_band_year1}}
+- **Steady state:** {{total_recovery_band_steady}}
+- Net of {{overlap_haircut}}% cluster overlap haircut, {{execution_haircut}}% execution haircut, ramp 20% months 1-3 to full by month 6.
+
+---
+
+## Quick Wins — implementation spec
+
+{{#each quick_wins}}
+### QW-{{rank}}. {{title}}
+
+- **Module:** {{module}}
+- **Effort:** {{effort}} · {{effort_estimate_hours}} hours
+- **Impact:** {{impact}} · {{annual_leak_band}} / yr
+- **Mechanism:** {{mechanism}}
+- **Source:** {{source_findings}}
+- **Implementation:**
+  - File / surface to change: {{implementation_target}}
+  - Change description: {{implementation_steps}}
+  - Verification: {{verification_metric}}
+- **Dependencies:** {{dependencies}}
+- **Reversibility:** {{reversibility_notes}}
+
+{{/each}}
+
+---
+
+## Foundational items (not Quick Wins)
+
+{{#each foundational_items}}
+### F-{{rank}}. {{title}}
+
+- **Why not a Quick Win:** {{why_not_quick_win}}
+- **Module:** {{module}}
+- **Estimated scope:** {{scope_estimate}}
+- **Dependencies:** {{dependencies}}
+
+{{/each}}
+
+---
+
+## Red-team verdict summary
+
+| Red Team | Verdict | Notes |
+|---|---|---|
+| A. Baseline | {{red_team_a_verdict}} | {{red_team_a_notes}} |
+| B. Uplifts | {{red_team_b_verdict}} | {{red_team_b_notes}} |
+| C. CFO | {{red_team_c_verdict}} | {{red_team_c_notes}} |
+| D. Domain | {{red_team_d_verdict}} | {{red_team_d_notes}} |
+
+## Methodology v1 → v2 rebuilds
+
+{{methodology_rebuild_log}}
+
+---
+
+## QA checklist (before commit)
+
+- [ ] All required hex colors present: #F5EFE0, #E8513D, #0D0D1F, #7CA982, #D4A853
+- [ ] Forbidden tokens absent: #0a0a12, Outfit, Pathway Extreme
+- [ ] No em-dashes in body copy (grep `—`)
+- [ ] No "$7,500" / "Revenue Rescue engagement" copy
+- [ ] All module scores match SYNTHESIS.md
+- [ ] Revenue ranges match REVENUE-PROJECTION-v2.json
+- [ ] Recommended Workstreams section present (no sales CTA)
+- [ ] Hosted-URL placeholder replaced in outreach assets
+
+---
+
+## Sources cited
+
+{{sources_list}}

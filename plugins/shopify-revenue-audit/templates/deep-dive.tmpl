@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{store_name}} Revenue Audit · Deep Dive</title>
+<meta name="description" content="{{hero_subhead}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #f1f0ea;
+  --vermillion: #f05a43;
+  --midnight: #0f1730;
+  --ink: #111827;
+  --body: #404a5c;
+  --caption: #7a7a90;
+  --rule: rgba(17, 24, 39, 0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.5; color: var(--body); background: var(--parchment); }
+h1, h2, h3, h4 { font-family: 'Archivo', sans-serif; color: var(--ink); font-weight: 700; letter-spacing: -0.02em; }
+.page { max-width: 920px; margin: 0 auto; padding: 0 44px; }
+.eyebrow { font-family: 'Source Code Pro', monospace; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--vermillion); }
+.toc { position: sticky; top: 0; background: var(--parchment); padding: 12px 0; border-bottom: 1px solid var(--rule); z-index: 10; }
+.toc a { color: var(--ink); text-decoration: none; margin-right: 20px; font-family: 'Source Code Pro', monospace; font-size: 11px; }
+section { padding: 60px 0; border-bottom: 1px solid var(--rule); }
+.alarm { background: var(--midnight); color: white; padding: 80px 44px; margin: 0 -44px; }
+.alarm .eyebrow { color: var(--vermillion); }
+.module-card { background: white; padding: 32px; margin: 24px 0; border-left: 6px solid var(--vermillion); }
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 32px 0; }
+.score-cell { background: white; padding: 24px; text-align: center; }
+.score-cell .num { font-family: 'Archivo', sans-serif; font-size: 64px; font-weight: 900; color: var(--vermillion); }
+table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--rule); }
+@media print {
+  .toc { display: none; }
+  section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header style="padding: 24px 0; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between;">
+    <strong>AUTONOMOUS.</strong>
+    <span class="eyebrow">{{store_name}} · {{audit_date}} · CONFIDENTIAL</span>
+  </header>
+
+  <nav class="toc">
+    <a href="#hero">Hero</a>
+    <a href="#alarm">Alarm</a>
+    <a href="#scores">Scores</a>
+    <a href="#root-cause">Root Cause</a>
+    <a href="#m1">M1</a>
+    <a href="#m2">M2</a>
+    <a href="#m3">M3</a>
+    <a href="#m4">M4</a>
+    <a href="#revenue">Revenue</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+
+  <section id="hero">
+    <div class="eyebrow">Shopify Revenue Audit</div>
+    <h1 style="font-size: 56px; margin: 16px 0;">{{store_name}}. {{lead_finding_headline}}</h1>
+    <p>{{hero_subhead}}</p>
+  </section>
+
+  <section id="alarm" class="alarm">
+    <div class="eyebrow">The Alarm</div>
+    <h2 style="color: white; font-size: 48px; margin: 16px 0;">{{dominant_blocker_headline}}</h2>
+    <p style="color: rgba(255,255,255,0.85);">{{dominant_blocker_narrative}}</p>
+  </section>
+
+  <section id="scores">
+    <div class="eyebrow">SiteHealth Composite</div>
+    <h2 style="font-size: 96px; color: var(--vermillion); margin: 16px 0;">{{composite_score}}/100</h2>
+    <div class="score-grid">
+      <div class="score-cell"><div class="eyebrow">M1 · 30%</div><div class="num">{{m1_score}}</div><p>AI Discovery</p></div>
+      <div class="score-cell"><div class="eyebrow">M2 · 20%</div><div class="num">{{m2_score}}</div><p>Search & Catalog</p></div>
+      <div class="score-cell"><div class="eyebrow">M3 · 30%</div><div class="num">{{m3_score}}</div><p>Conversion</p></div>
+      <div class="score-cell"><div class="eyebrow">M4 · 20%</div><div class="num">{{m4_score}}</div><p>Technical</p></div>
+    </div>
+  </section>
+
+  <section id="root-cause">
+    <div class="eyebrow">Root Cause</div>
+    <h2>Why these scores compound</h2>
+    {{root_cause_narrative_html}}
+  </section>
+
+  <section id="m1">
+    <div class="eyebrow">Module 1 · AI Discovery & Agentic Commerce · 30%</div>
+    <h2>{{m1_headline}}</h2>
+    {{m1_findings_html}}
+  </section>
+
+  <section id="m2">
+    <div class="eyebrow">Module 2 · Search & Catalog · 20%</div>
+    <h2>{{m2_headline}}</h2>
+    {{m2_findings_html}}
+  </section>
+
+  <section id="m3">
+    <div class="eyebrow">Module 3 · Conversion Experience · 30%</div>
+    <h2>{{m3_headline}}</h2>
+    {{m3_findings_html}}
+  </section>
+
+  <section id="m4">
+    <div class="eyebrow">Module 4 · Technical Foundation · 20%</div>
+    <h2>{{m4_headline}}</h2>
+    {{m4_findings_html}}
+  </section>
+
+  <section id="revenue">
+    <div class="eyebrow">The Math</div>
+    <h2>P25-P75 revenue projections</h2>
+    <table>
+      <thead><tr><th>Finding</th><th>Module</th><th>P25 / yr</th><th>P50 / yr</th><th>P75 / yr</th><th>Effort</th></tr></thead>
+      <tbody>{{revenue_table_rows}}</tbody>
+    </table>
+    <p><strong>Year 1 P50 recoverable:</strong> {{total_recovery_band_year1}}. <strong>Steady state P50:</strong> {{total_recovery_band_steady}}.</p>
+    <p>Net of {{overlap_haircut}}% cluster overlap haircut, {{execution_haircut}}% execution haircut, ramp 20% months 1-3 to full by month 6.</p>
+    {{methodology_update_callout_html}}
+  </section>
+
+  <section id="roadmap">
+    <div class="eyebrow">Recommended Workstreams</div>
+    <h2>What we'd do, in what order</h2>
+    {{roadmap_html}}
+  </section>
+
+  <section id="data-requested">
+    <div class="eyebrow">Appendix</div>
+    <h2>Data we'd ask for in a paid Teardown</h2>
+    {{data_requested_html}}
+  </section>
+
+  <footer style="padding: 32px 0; color: var(--caption); font-size: 12px;">
+    Sources cited inline. Public-data audit. Methodology: Autonomous Revenue Leak Calculator v2. {{audit_date}}.
+  </footer>
+
+</div>
+</body>
+</html>
