@@ -1,0 +1,120 @@
+# Shopify Revenue Audit Workflow
+# Triggered by: /shopify-revenue-audit:run
+#
+# 4-wave pipeline. Each wave gates on the next.
+# Reference: skills/shopify-revenue-audit/references/agent-teams-playbook.md
+
+name: revenue-audit
+description: 4-wave Shopify revenue audit with mandatory red-team and Editorial Warmth v2 deliverable
+trigger: /shopify-revenue-audit:run
+
+inputs:
+  - name: domain
+    required: true
+    description: Shopify store URL (e.g., brand.com)
+  - name: client_name
+    required: false
+    description: Client display name (defaults to derived from domain)
+  - name: audit_date
+    required: false
+    description: YYYY-MM-DD (defaults to today)
+  - name: skip_red_team
+    required: false
+    default: false
+    description: DISCOURAGED — sandbox runs only
+
+phases:
+  - id: wave-0
+    name: Orchestration
+    description: Scope, dir setup, hypothesis seeding
+    actions:
+      - Pick client slug + audit date
+      - Create projects/<slug>/diagnostics/{crawl,pagespeed,module1,module2,module3/pdp,module4}
+      - Create audits/<slug>-revenue-audit-YYYY-MM-DD/assets
+      - Write scope.md (business, stack, catalog scale, pre-audit hypotheses, 8-10 LLM probes)
+      - Identify 3 hero PDPs (mid-price, highest-AOV, SEO canary)
+
+  - id: wave-1
+    name: Discovery & Crawl
+    description: Wave 1 α team, 3 agents in parallel
+    parallel_tracks:
+      - agent: crawler
+        output: projects/<slug>/diagnostics/crawl/
+      - agent: infra-probe
+        output: projects/<slug>/diagnostics/infra-probe.json
+      - agent: pagespeed
+        output: projects/<slug>/diagnostics/pagespeed/
+    gate: all 3 agents complete + files present
+
+  - id: wave-2
+    name: Module Audits
+    description: Wave 2 β/γ/δ/ε skills in parallel, 4 modules
+    parallel_tracks:
+      - skill: module-1-ai-discovery
+        weight: 30
+        output: projects/<slug>/diagnostics/module1-ai-discovery.md
+      - skill: module-2-search-catalog
+        weight: 20
+        output: projects/<slug>/diagnostics/module2-search-catalog.md
+      - skill: module-3-conversion
+        weight: 30
+        output: projects/<slug>/diagnostics/module3-conversion.md
+      - skill: module-4-technical
+        weight: 20
+        output: projects/<slug>/diagnostics/module4-technical.md
+    gate: every module returns score 0-100 + cited evidence
+
+  - id: wave-3
+    name: Synthesis
+    description: Wave 3 η team, sequential then concurrent
+    steps:
+      - agent: synthesis-lead
+        output: SYNTHESIS.md
+      - parallel:
+          - agent: revenue-calculator
+            output: REVENUE-PROJECTION.json
+          - agent: quick-wins-ranker
+            output: QUICK-WINS.json
+      - agent: fact-checker
+        output: FACT-CHECK.md
+        gate: PASS or PASS-WITH-NOTES
+
+  - id: red-team
+    name: Red-Team Pass (mandatory)
+    description: 4 parallel red-team skills. Any RED → rebuild v2.
+    parallel_tracks:
+      - skill: audit-red-team-baseline
+        output: RED-TEAM-A-baseline.md
+      - skill: audit-red-team-uplifts
+        output: RED-TEAM-B-uplifts.md
+      - skill: audit-red-team-cfo
+        output: RED-TEAM-C-cfo.md
+      - skill: audit-red-team-domain-check
+        output: RED-TEAM-D-domain-check.md
+    on_red:
+      - Rebuild REVENUE-PROJECTION-v2.json
+      - Re-run the failing red team
+    gate: all GREEN or YELLOW
+
+  - id: wave-4
+    name: Deliverable Build
+    description: HTML render + QA grep + commit
+    steps:
+      - skill: editorial-warmth-audit-renderer
+        output: audits/<slug>-revenue-audit-YYYY-MM-DD/index.html
+      - qa:
+          required_hex: ["#F5EFE0", "#E8513D", "#0D0D1F", "#7CA982", "#D4A853"]
+          forbidden_tokens: ["#0a0a12", "Outfit", "Pathway Extreme"]
+          forbidden_copy: ["$7,500", "Revenue Rescue engagement"]
+
+deliverables:
+  - audits/<slug>-revenue-audit-YYYY-MM-DD/index.html  # 10-section HTML
+  - audits/<slug>-revenue-audit-YYYY-MM-DD/1-pager.html  # exec one-pager
+  - audits/<slug>-revenue-audit-YYYY-MM-DD/outreach-email.md
+  - audits/<slug>-revenue-audit-YYYY-MM-DD/outreach-linkedin.md
+
+estimated_duration: "45-90 minutes (full depth, all red-teams)"
+
+budget:
+  firecrawl_credits: 25-30
+  pagespeed_api_calls: 10 (free tier)

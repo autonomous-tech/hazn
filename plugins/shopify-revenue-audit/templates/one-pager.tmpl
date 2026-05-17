@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{store_name}} Revenue Audit · Autonomous Technologies</title>
+<meta name="description" content="Public-data revenue audit of {{domain}}. {{audit_date}}. {{lead_finding_one_liner}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #f1f0ea;
+  --parchment-dim: #e8e6dd;
+  --vermillion: #f05a43;
+  --vermillion-dark: #da4d37;
+  --midnight: #0f1730;
+  --ink: #111827;
+  --body: #404a5c;
+  --caption: #7a7a90;
+  --rule: rgba(17, 24, 39, 0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.5; color: var(--body); background: var(--parchment); }
+h1, h2, h3 { font-family: 'Archivo', sans-serif; color: var(--ink); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; }
+.page { max-width: 920px; margin: 0 auto; padding: 0 44px; }
+.eyebrow { font-family: 'Source Code Pro', monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--vermillion); }
+.doc-head { border-bottom: 1px solid var(--rule); padding: 18px 0; display: flex; justify-content: space-between; }
+.hero { padding: 60px 0 40px; }
+.hero h1 { font-size: 48px; margin: 20px 0; }
+.findings { display: grid; gap: 24px; padding: 40px 0; }
+.finding { border-left: 4px solid var(--vermillion); padding-left: 20px; }
+.finding h3 { font-size: 20px; margin-bottom: 8px; }
+.finding .impact { font-family: 'Source Code Pro', monospace; color: var(--vermillion); font-weight: 600; }
+.cta { background: var(--vermillion); color: white; padding: 16px 32px; text-decoration: none; font-family: 'Archivo', sans-serif; font-weight: 700; display: inline-block; margin-top: 24px; }
+.score-block { background: var(--midnight); color: white; padding: 40px; margin: 40px 0; }
+.score-block .composite { font-family: 'Archivo', sans-serif; font-size: 96px; font-weight: 900; color: var(--vermillion); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="doc-head">
+    <div><strong>AUTONOMOUS.</strong></div>
+    <div class="eyebrow">{{store_name}} · {{audit_date}} · CONFIDENTIAL</div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Shopify Revenue Audit</div>
+    <h1>{{store_name}}. {{lead_finding_headline}}</h1>
+    <p>{{hero_subhead}}</p>
+  </section>
+
+  <section class="score-block">
+    <div class="eyebrow" style="color: var(--vermillion);">SiteHealth Composite</div>
+    <div class="composite">{{composite_score}}<span style="font-size: 36px; color: white;">/100</span></div>
+    <p>M1 {{m1_score}} · M2 {{m2_score}} · M3 {{m3_score}} · M4 {{m4_score}}</p>
+  </section>
+
+  <section class="findings">
+    <div class="eyebrow">What we found</div>
+    <div class="finding">
+      <h3>{{quick_wins[0].title}}</h3>
+      <p>{{quick_wins[0].mechanism}}</p>
+      <p class="impact">{{quick_wins[0].annual_leak_band}} / yr</p>
+    </div>
+    <div class="finding">
+      <h3>{{quick_wins[1].title}}</h3>
+      <p>{{quick_wins[1].mechanism}}</p>
+      <p class="impact">{{quick_wins[1].annual_leak_band}} / yr</p>
+    </div>
+    <div class="finding">
+      <h3>{{quick_wins[2].title}}</h3>
+      <p>{{quick_wins[2].mechanism}}</p>
+      <p class="impact">{{quick_wins[2].annual_leak_band}} / yr</p>
+    </div>
+  </section>
+
+  <section style="padding: 40px 0;">
+    <div class="eyebrow">Total recoverable</div>
+    <h2 style="font-size: 36px; margin: 12px 0;">{{total_recovery_band_year1}} year 1 · {{total_recovery_band_steady}} steady state</h2>
+    <p>Net of {{overlap_haircut}}% cluster overlap haircut, {{execution_haircut}}% execution haircut, ramp to steady state by month 6.</p>
+  </section>
+
+  <section style="padding: 40px 0;">
+    <div class="eyebrow">What we'd do about it</div>
+    <ul>
+      <li>{{roadmap[0]}}</li>
+      <li>{{roadmap[1]}}</li>
+      <li>{{roadmap[2]}}</li>
+    </ul>
+    <a class="cta" href="{{booking_link}}">Book a 30-minute teardown call</a>
+  </section>
+
+  <footer style="border-top: 1px solid var(--rule); padding: 24px 0; margin-top: 40px; color: var(--caption); font-size: 12px;">
+    Sources cited inline. Public-data audit, no admin access. Autonomous Technologies · {{audit_date}}.
+  </footer>
+
+</div>
+</body>
+</html>
