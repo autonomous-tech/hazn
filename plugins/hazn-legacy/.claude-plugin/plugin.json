@@ -1,7 +1,7 @@
 {
   "name": "hazn-legacy",
   "version": "0.4.0",
-  "description": "Hazn holding pen — content from v0.3.x that has not yet been split into purpose-built marketplace plugins. Auto-discovers remaining skills, agents, commands, and workflows. Extracted in Phase 1 (ADR-003): 7 runtime skills + brand configs + brand assets moved to the hazn plugin; shopify-revenue-audit skill + audit deliverable pipeline moved to the shopify-revenue-audit plugin; shopify-cro-audit deleted as superseded. Remaining content (websites, content pipelines, analytics, NGO, deliverables) will be drained over Phase 3+.",
+  "description": "Hazn holding pen — content from v0.3.x that has not yet been split into purpose-built marketplace plugins. Auto-discovers remaining skills, agents, commands, and workflows. Extracted in Phase 1 (ADR-003): 7 runtime skills + brand configs + brand assets moved to the hazn plugin; shopify-revenue-audit skill + audit deliverable pipeline moved to the shopify-revenue-audit plugin; shopify-cro-audit deleted as superseded. Extracted in Phase 2 (ADR-003): case-study, sow, project-plan moved to the hazn-deliverables plugin. Remaining content (websites, content pipelines, analytics, NGO) will be drained over Phase 3+.",
   "author": {
     "name": "Autonomous Technologies",
     "url": "https://autonomoustech.ca"

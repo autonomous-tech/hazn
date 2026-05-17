@@ -1,0 +1,12 @@
+{
+  "name": "hazn-deliverables",
+  "version": "1.0.0",
+  "description": "Cross-engagement client deliverables: case-study, sow, project-plan. Used across job plugins.",
+  "author": {
+    "name": "Autonomous Technologies",
+    "url": "https://autonomoustech.ca"
+  },
+  "homepage": "https://github.com/autonomous-tech/hazn",
+  "repository": "https://github.com/autonomous-tech/hazn",
+  "license": "UNLICENSED"
+}

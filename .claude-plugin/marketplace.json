@@ -26,6 +26,14 @@
       "tags": ["shopify", "revenue", "cro", "aeo"]
     },
     {
+      "name": "hazn-deliverables",
+      "source": "./plugins/hazn-deliverables",
+      "description": "Cross-engagement client deliverables (case-study, sow, project-plan)",
+      "version": "1.0.0",
+      "category": "deliverables",
+      "tags": ["case-study", "sow", "project-plan", "proposals"]
+    },
+    {
       "name": "hazn-legacy",
       "source": "./plugins/hazn-legacy",
       "description": "Holding pen for v0.3.x consolidated content — drained over Phase 3+ per ADR-003",
